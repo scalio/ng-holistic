@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
 import { RouterModule } from '@angular/router';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ListComponent],
   imports: [
     BrowserModule,
     NxModule.forRoot(),

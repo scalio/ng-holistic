@@ -134,7 +134,7 @@
       "typescriptMismatch": false,
       "versionMismatch": false
     },
-    "defaultCollection": "@nrwl/schematics"
+    "//defaultCollection": "@nrwl/schematics"
   },
   "defaultProject": "sandbox",
   "schematics": {
