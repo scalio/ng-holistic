@@ -11,7 +11,7 @@ import { ListComponent } from './list/list.component';
     imports: [
         BrowserModule,
         NxModule.forRoot(),
-        RouterModule.forRoot([], { initialNavigation:    'enabled' })
+        RouterModule.forRoot([], { initialNavigation: 'enabled' })
     ],
     providers: [],
     bootstrap: [AppComponent]
