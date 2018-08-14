@@ -11,7 +11,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss",
-          "changeDetection": "OnPush"
+          "changeDetection": "OnPush",
+          "spec": false
         }
       },
       "architect": {
@@ -135,5 +136,12 @@
     },
     "defaultCollection": "@nrwl/schematics"
   },
-  "defaultProject": "sandbox"
+  "defaultProject": "sandbox",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss",
+      "changeDetection": "OnPush",
+      "spec": false
+    }
+  }
 }
