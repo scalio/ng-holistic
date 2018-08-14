@@ -7,13 +7,13 @@ import { RouterModule } from '@angular/router';
 import { ListComponent } from './list/list.component';
 
 @NgModule({
-  declarations: [AppComponent, ListComponent],
-  imports: [
-    BrowserModule,
-    NxModule.forRoot(),
-    RouterModule.forRoot([], { initialNavigation: 'enabled' })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, ListComponent],
+    imports: [
+        BrowserModule,
+        NxModule.forRoot(),
+        RouterModule.forRoot([], { initialNavigation: 'enabled' })
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
