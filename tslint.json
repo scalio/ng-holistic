@@ -58,6 +58,7 @@
         "max-line-length": [true, 120],
         "quotemark": [true, "single"],
         "no-unused-variable":true,
+        "no-unused-variable-wrapped": true,
         "nx-enforce-module-boundaries": [
             true,
             {
