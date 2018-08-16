@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import * as prop from 'ramda/src/prop';
 
 @Component({
     selector: 'hc-lol',
@@ -9,5 +10,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 export class LolComponent implements OnInit {
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log('check ramda package size', prop('a', { a: 1 }));
+    }
 }
