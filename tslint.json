@@ -45,6 +45,12 @@
         "variable-name": false,
         "directive-selector": [true, "attribute", "hc", "camelCase"],
         "component-selector": [true, "element", "hc", "kebab-case"],
+        "semicolon": [
+            true,
+            "always",
+            "ignore-bound-class-methods"
+        ],
+        "no-unnecessary-semicolons": true,
         "no-output-on-prefix": true,
         "use-input-property-decorator": true,
         "use-output-property-decorator": true,
