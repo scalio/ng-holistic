@@ -13,6 +13,12 @@
     },
     "sandbox-e2e": {
       "tags": []
+    },
+    "core": {
+      "tags": []
+    },
+    "forms": {
+      "tags": []
     }
   }
 }

@@ -14,7 +14,11 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2017", "dom"],
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "@ng-holistic/ramda": ["libs/core/src/lib/r.ts"],
+            "@ng-holistic/core": ["libs/core/src/lib/index.ts"],
+            "@ng-holistic/forms": ["libs/forms/src/index.ts"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }

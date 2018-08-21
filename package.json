@@ -34,7 +34,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "run-s precise-commits lint-staged"
+            "pre-commit": "run-s lint-staged"
         }
     },
     "lint-staged": {
@@ -57,6 +57,7 @@
         "@ngrx/store": "6.0.1",
         "@nrwl/nx": "6.2.0",
         "core-js": "^2.5.4",
+        "date-fns": "^2.0.0-alpha.16",
         "ramda": "^0.25.0",
         "rxjs": "^6.0.0",
         "source-map-explorer": "^1.6.0",
@@ -73,7 +74,9 @@
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "~8.9.4",
         "@types/ramda": "github:types/npm-ramda#dist",
+        "angular2-template-loader": "^0.6.2",
         "codelyzer": "~4.2.1",
+        "electron": "^2.0.7",
         "husky": "^1.0.0-rc.13",
         "jasmine-core": "~2.99.1",
         "jasmine-marbles": "0.3.1",
@@ -92,6 +95,7 @@
         "ts-node": "~5.0.1",
         "tslint": "~5.11.0",
         "typescript": "2.7.2",
+        "wallaby-webpack": "^3.9.10",
         "webpack-bundle-analyzer": "^2.13.1"
     }
 }
