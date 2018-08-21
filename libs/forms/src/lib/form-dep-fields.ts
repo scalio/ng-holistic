@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-import * as R from '@ng-holistic/ramda';
+import * as R from 'ramda';
 import { merge, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { FormFields } from './models';

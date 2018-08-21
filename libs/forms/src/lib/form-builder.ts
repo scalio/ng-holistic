@@ -1,5 +1,5 @@
 import { FormBuilder } from '@angular/forms';
-import * as R from '@ng-holistic/ramda';
+import * as R from 'ramda';
 import { FormFields } from './models';
 import { createValidation } from './form-validation-builder';
 

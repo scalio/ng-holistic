@@ -735,8 +735,9 @@
       "dev": true
     },
     "@types/ramda": {
-      "version": "github:types/npm-ramda#9529aa3c8ff70ff84afcbc0be83443c00f30ea90",
-      "from": "github:types/npm-ramda#dist",
+      "version": "0.25.24",
+      "resolved": "https://registry.npmjs.org/@types/ramda/-/ramda-0.25.24.tgz",
+      "integrity": "sha512-c0TmWA7d4y9KLJJwL/cLPEfSReSgFQK9BtemcCATT48lMeyD7HG8IfGY8bamSuz/Byx1l+13hZV0PCvHsgMB3w==",
       "dev": true
     },
     "@types/selenium-webdriver": {

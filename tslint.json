@@ -8,7 +8,7 @@
             "severity": "warn"
         },
         "forin": true,
-        "import-blacklist": [true, "rxjs/Rx", "ramda"],
+        "import-blacklist": [true, "rxjs/Rx"],
         "interface-over-type-literal": true,
         "member-access": false,
         "member-ordering": [
@@ -45,11 +45,7 @@
         "variable-name": false,
         "directive-selector": [true, "attribute", "hc", "camelCase"],
         "component-selector": [true, "element", "hc", "kebab-case"],
-        "semicolon": [
-            true,
-            "always",
-            "ignore-bound-class-methods"
-        ],
+        "semicolon": [true, "always", "ignore-bound-class-methods"],
         "no-unnecessary-semicolons": true,
         "no-output-on-prefix": true,
         "use-input-property-decorator": true,
@@ -63,7 +59,7 @@
         "directive-class-suffix": true,
         "max-line-length": [true, 120],
         "quotemark": [true, "single"],
-        "no-unused-variable":true,
+        "no-unused-variable": true,
         "no-unused-variable-wrapped": true,
         "nx-enforce-module-boundaries": [
             true,
