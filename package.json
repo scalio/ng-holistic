@@ -9,7 +9,6 @@
         "test:forms": "ng test forms",
         "test": "run-s test:forms",
         "lint": "./node_modules/.bin/nx lint && ng lint",
-        "e2e": "ng e2e",
         "affected:apps": "./node_modules/.bin/nx affected:apps",
         "affected:libs": "./node_modules/.bin/nx affected:libs",
         "affected:build": "./node_modules/.bin/nx affected:build",
@@ -31,7 +30,9 @@
         "build:prod-bundle-report": "ng build --prod --source-map --stats-json --output-hashing=none --output-path=dist/for-report/sandbox",
         "stats:webpack-bundle-analyzer": "run-s build:prod-bundle-report webpack-bundle-analyzer",
         "source-map-explorer": "source-map-explorer dist/for-report/sandbox/main.js",
-        "stats": "run-s build:prod-bundle-report source-map-explorer"
+        "stats": "run-s build:prod-bundle-report source-map-explorer",
+        "e2e:sandbox": "./node_modules/.bin/cypress open --project=apps/sandbox",
+        "e2e": " run-s e2e:sandbox"
     },
     "husky": {
         "hooks": {
@@ -77,6 +78,7 @@
         "@types/ramda": "^0.25.24",
         "angular2-template-loader": "^0.6.2",
         "codelyzer": "~4.2.1",
+        "cypress": "^3.1.0",
         "electron": "^2.0.7",
         "husky": "^1.0.0-rc.13",
         "jasmine-core": "~2.99.1",

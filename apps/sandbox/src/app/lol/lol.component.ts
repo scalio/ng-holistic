@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import * as prop from 'ramda/src/prop';
+import { prop } from 'ramda';
 
 @Component({
     selector: 'hc-lol',
