@@ -1,222 +1,171 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "",
-  "projects": {
-    "sandbox": {
-      "root": "apps/sandbox/",
-      "sourceRoot": "apps/sandbox/src",
-      "projectType": "application",
-      "prefix": "hc",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/sandbox",
-            "index": "apps/sandbox/src/index.html",
-            "main": "apps/sandbox/src/main.ts",
-            "polyfills": "apps/sandbox/src/polyfills.ts",
-            "tsConfig": "apps/sandbox/tsconfig.app.json",
-            "assets": [
-              "apps/sandbox/src/favicon.ico",
-              "apps/sandbox/src/assets"
-            ],
-            "styles": [
-              "apps/sandbox/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/sandbox/src/environments/environment.ts",
-                  "with": "apps/sandbox/src/environments/environment.prod.ts"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "",
+    "projects": {
+        "sandbox": {
+            "root": "apps/sandbox/",
+            "sourceRoot": "apps/sandbox/src",
+            "projectType": "application",
+            "prefix": "hc",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/sandbox",
+                        "index": "apps/sandbox/src/index.html",
+                        "main": "apps/sandbox/src/main.ts",
+                        "polyfills": "apps/sandbox/src/polyfills.ts",
+                        "tsConfig": "apps/sandbox/tsconfig.app.json",
+                        "assets": ["apps/sandbox/src/favicon.ico", "apps/sandbox/src/assets"],
+                        "styles": ["apps/sandbox/src/styles.scss"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/sandbox/src/environments/environment.ts",
+                                    "with": "apps/sandbox/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "sandbox:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "sandbox:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "sandbox:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "apps/sandbox/src/test.ts",
+                        "polyfills": "apps/sandbox/src/polyfills.ts",
+                        "tsConfig": "apps/sandbox/tsconfig.spec.json",
+                        "karmaConfig": "apps/sandbox/karma.conf.js",
+                        "styles": ["apps/sandbox/src/styles.scss"],
+                        "scripts": [],
+                        "assets": ["apps/sandbox/src/favicon.ico", "apps/sandbox/src/assets"]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["apps/sandbox/tsconfig.app.json", "apps/sandbox/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "sandbox:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "sandbox:build:production"
+        "core": {
+            "root": "libs/core",
+            "sourceRoot": "libs/core/src",
+            "projectType": "library",
+            "prefix": "ng-holistic",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/core/src/test.ts",
+                        "tsConfig": "libs/core/tsconfig.spec.json",
+                        "karmaConfig": "libs/core/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/core/tsconfig.lib.json", "libs/core/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
+                }
             }
-          }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "sandbox:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "apps/sandbox/src/test.ts",
-            "polyfills": "apps/sandbox/src/polyfills.ts",
-            "tsConfig": "apps/sandbox/tsconfig.spec.json",
-            "karmaConfig": "apps/sandbox/karma.conf.js",
-            "styles": [
-              "apps/sandbox/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "apps/sandbox/src/favicon.ico",
-              "apps/sandbox/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/sandbox/tsconfig.app.json",
-              "apps/sandbox/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "sandbox-e2e": {
-      "root": "apps/sandbox-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/sandbox-e2e/protractor.conf.js",
-            "devServerTarget": "sandbox:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sandbox:serve:production"
+        "forms": {
+            "root": "libs/forms",
+            "sourceRoot": "libs/forms/src",
+            "projectType": "library",
+            "prefix": "ng-holistic",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/forms/src/test.ts",
+                        "tsConfig": "libs/forms/tsconfig.spec.json",
+                        "polyfills": "libs/forms/src/polyfills.ts",
+                        "karmaConfig": "libs/forms/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/forms/tsconfig.lib.json", "libs/forms/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
+                }
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/sandbox-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
-      }
     },
-    "core": {
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "projectType": "library",
-      "prefix": "ng-holistic",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/core/src/test.ts",
-            "tsConfig": "libs/core/tsconfig.spec.json",
-            "karmaConfig": "libs/core/karma.conf.js"
-          }
+    "cli": {
+        "warnings": {
+            "typescriptMismatch": false,
+            "versionMismatch": false
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/core/tsconfig.lib.json",
-              "libs/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
+        "defaultCollection": "@nrwl/schematics"
     },
-    "forms": {
-      "root": "libs/forms",
-      "sourceRoot": "libs/forms/src",
-      "projectType": "library",
-      "prefix": "ng-holistic",
-      "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/forms/src/test.ts",
-            "tsConfig": "libs/forms/tsconfig.spec.json",
-            "karmaConfig": "libs/forms/karma.conf.js"
-          }
+    "defaultProject": "sandbox",
+    "schematics": {
+        "@schematics/angular:component": {
+            "styleext": "scss",
+            "changeDetection": "OnPush",
+            "spec": false,
+            "skipImport": true
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/forms/tsconfig.lib.json",
-              "libs/forms/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
+        "@nrwl/schematics:component": {
+            "styleext": "scss",
+            "changeDetection": "OnPush",
+            "spec": false,
+            "skipImport": true,
+            "skipFormat": false
+        },
+        "@schematics/angular:service": {
+            "spec": false,
+            "skipImport": true
+        },
+        "@nrwl/schematics:service": {
+            "spec": false,
+            "skipImport": true,
+            "skipFormat": false
+        },
+        "@schematics/angular:directive": {
+            "spec": false,
+            "skipImport": true
+        },
+        "@nrwl/schematics:directive": {
+            "spec": false,
+            "skipImport": true,
+            "skipFormat": false
         }
-      }
     }
-  },
-  "cli": {
-    "warnings": {
-      "typescriptMismatch": false,
-      "versionMismatch": false
-    },
-    "defaultCollection": "@nrwl/schematics"
-  },
-  "defaultProject": "sandbox",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss",
-      "changeDetection": "OnPush",
-      "spec": false,
-      "skipImport": true
-    },
-    "@nrwl/schematics:component": {
-      "styleext": "scss",
-      "changeDetection": "OnPush",
-      "spec": false,
-      "skipImport": true,
-      "skipFormat": false
-    },
-    "@schematics/angular:service": {
-      "spec": false,
-      "skipImport": true
-    },
-    "@nrwl/schematics:service": {
-      "spec": false,
-      "skipImport": true,
-      "skipFormat": false
-    },
-    "@schematics/angular:directive": {
-      "spec": false,
-      "skipImport": true
-    },
-    "@nrwl/schematics:directive": {
-      "spec": false,
-      "skipImport": true,
-      "skipFormat": false
-    }
-  }
 }
