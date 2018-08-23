@@ -29,6 +29,9 @@
       ],
       "@ng-holistic/clr-forms": [
         "libs/clr-forms/src/index.ts"
+      ],
+      "@ng-holistic/clr-controls": [
+        "libs/clr-controls/src/index.ts"
       ]
     }
   },
