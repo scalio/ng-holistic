@@ -1,0 +1,15 @@
+<span [class.clr-select-wrapper]="!naked">
+    <select
+        (change)="onChange($event)"
+        [value]="value">
+        <option
+            *ngIf="!disallowEmpty"
+            [value]="null"></option>
+
+        <option
+            *ngFor="let item of items; trackBy: trackBy"
+            [value]="mapKey(item)">
+            {{mapLabel(item)}}
+        </option>
+    </select>
+</span>

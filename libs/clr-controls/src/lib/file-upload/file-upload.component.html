@@ -1,0 +1,23 @@
+<hlc-file-uploader
+    [accept]="accept"
+    *ngIf="isFileObject || isFileEmpty else fileNotEmpty"
+    (fileChange)="onFileChange($event)">
+</hlc-file-uploader>
+
+<ng-template #fileNotEmpty>
+    <div class="input-group">
+        <input
+            readonly
+            type="text"
+            [value]="file">
+
+        <div class="input-group-append">
+            <button
+                class="btn btn-danger-flat btn-icon"
+                type="button"
+                (click)="onFileRemove()">
+                <clr-icon shape="trash"></clr-icon>
+            </button>
+        </div>
+    </div>
+</ng-template>

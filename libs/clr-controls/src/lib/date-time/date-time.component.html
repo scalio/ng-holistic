@@ -1,0 +1,23 @@
+<clr-date-container>
+    <input
+        #input
+        type="date"
+        [(clrDate)]="date">
+</clr-date-container>
+
+<hlc-select
+    [disallowEmpty]="true"
+    [items]="hours"
+    [value]="hour"
+    (valueChange)="onHourChange($event)"></hlc-select>
+
+<hlc-select
+    [disallowEmpty]="true"
+    [items]="minutes"
+    [value]="minute"
+    (valueChange)="onMinuteChange($event)"></hlc-select>
+
+<clr-icon
+    shape="times"
+    (click)="onReset()"
+    class="is-info remove__icon"></clr-icon>

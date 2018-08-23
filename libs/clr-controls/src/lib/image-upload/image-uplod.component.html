@@ -1,0 +1,22 @@
+<hlc-file-upload
+    accept=".png, .jpg, .jpeg"
+    *ngIf="isImageFile || isImageEmpty else imageFromUrl"
+    (fileChange)="onImageChange($event)">
+</hlc-file-upload>
+
+<ng-template #imageFromUrl>
+    <div class="card-media-block">
+        <img
+            [src]="image"
+            class="card-media-image">
+
+        <div class="card-media-description">
+            <button
+                class="btn btn-danger-outline btn-sm"
+                (click)="onImageRemove()">
+                <clr-icon shape="trash"></clr-icon>
+                Delete
+            </button>
+        </div>
+    </div>
+</ng-template>
