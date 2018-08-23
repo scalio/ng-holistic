@@ -54,5 +54,5 @@ export class HlcFileUploadComponent implements OnInit, ControlValueAccessor {
     registerOnChange(fn: any) {
         this.propagateChange = fn;
     }
-    registerOnTouched(fn: any) {}
+    registerOnTouched(_: any) {}
 }

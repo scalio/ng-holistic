@@ -80,7 +80,7 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor {
         return this.mapper.mapLabel(obj);
     }
 
-    trackBy = (i: number, obj: any) => {
+    trackBy = (_: number, obj: any) => {
         return this.mapKey(obj);
     };
 
@@ -94,5 +94,5 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor {
         this.propagateChange = fn;
     }
 
-    registerOnTouched(fn: any) {}
+    registerOnTouched(_: any) {}
 }

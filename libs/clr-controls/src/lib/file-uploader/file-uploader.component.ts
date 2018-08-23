@@ -37,9 +37,9 @@ export class FileUploaderComponent implements OnInit {
         fileEntry.file(file => this.updateFile(file));
     }
 
-    onFileOver(event: any) {}
+    onFileOver(_: any) {}
 
-    onFileLeave(event: any) {}
+    onFileLeave(_: any) {}
 
     onRemove() {
         this.selectedFileName = null;

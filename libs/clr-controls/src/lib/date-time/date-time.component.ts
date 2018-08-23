@@ -59,11 +59,11 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
         @Inject(DATE_TIME_CONFIG)
         private readonly config: DateTimeConfig | undefined
     ) {
-        this.hours = Array.from({ length: 24 }, (v, i) => ({
+        this.hours = Array.from({ length: 24 }, (_, i) => ({
             key: i,
             label: i.toString().padStart(2, '0')
         }));
-        this.minutes = Array.from({ length: 60 }, (m, i) => ({
+        this.minutes = Array.from({ length: 60 }, (_, i) => ({
             key: i,
             label: i.toString().padStart(2, '0')
         }));
@@ -129,7 +129,7 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
         this.propagateChange = fn;
     }
 
-    registerOnTouched(fn: any) {}
+    registerOnTouched(_: any) {}
 
     get hour() {
         return this.date ? getHours(this.date) : undefined;
