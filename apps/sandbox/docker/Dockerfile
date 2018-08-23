@@ -23,7 +23,7 @@ RUN npm install
 RUN npm install -g @angular/cli@1.7.1 --unsafe
 
 # add app
-COPY ../.. /usr/src/app
+COPY . /usr/src/app
 
 # run tests
 # RUN ng test --watch=false
@@ -40,7 +40,7 @@ FROM nginx:1.13.9-alpine
 
 # copy artifact build from the 'build environment'
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /usr/src/app/dist/apps/scalio-base /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/apps/sandbox /usr/share/nginx/html
 
 # expose port 80
 EXPOSE 80

@@ -1,21 +1,24 @@
 {
-    "npmScope": "ng-holistic",
-    "implicitDependencies": {
-        "angular.json": "*",
-        "package.json": "*",
-        "tsconfig.json": "*",
-        "tslint.json": "*",
-        "nx.json": "*"
+  "npmScope": "ng-holistic",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "sandbox": {
+      "tags": []
     },
-    "projects": {
-        "sandbox": {
-            "tags": []
-        },
-        "core": {
-            "tags": []
-        },
-        "forms": {
-            "tags": []
-        }
+    "core": {
+      "tags": []
+    },
+    "forms": {
+      "tags": []
+    },
+    "clr-forms": {
+      "tags": []
     }
+  }
 }

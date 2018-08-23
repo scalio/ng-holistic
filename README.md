@@ -42,3 +42,26 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Run ci e2e (in Docker)
+
+### Sandbox app
+
+```
+docker-compose -f apps/sandbox/docker/docker-compose.yml up -d --build
+docker-compose -f apps/sandbox/docker/docker-compose.yml run cypress ./node_modules/.bin/cypress run \
+    --config baseUrl=http://127.0.0.1
+```
+
+## Commands
+
+-   `npm run start` - run dev server for cabinet project 4200 port
+-   `npm run start:admin` - run dev server for admin project 4201 port
+-   `npm run test:admin-core` - run unit tests for admin-core project (watch mode)
+-   `npm run test` - run unit tests for entire solution
+-   `npm run test:admin-core:all` - run unit tests for admin-core project in chrome, IE, Edge (only once)
+-   `npm run test:all` - run unit tests for whole project in chrome, IE, Edge (only once)
+-   `npm run test:ci:admin-core` - run unit tests for admin-core project in chrome headless only once
+-   `npm run test:ci" - run unit tests for entire solution in chrome headless only once
+-   `npm run lint`- lint only `admin project`npm run e2e:admin`- run cypress tests for admin project (watch mode)
+-   `npm run e2e` - run cypress tests for entire solution (watch mode)

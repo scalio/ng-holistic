@@ -3,14 +3,14 @@ version: '3.6'
 services:
     angular:
         build:
-            context: .
-            dockerfile: Dockerfile
+            context: ..\..\..
+            dockerfile: ./apps/sandbox/docker/Dockerfile
         ports:
             - '80:80'
     cypress:
         build:
-            context: .
-            dockerfile: Dockerfile-cypress
+            context: ..\..\..
+            dockerfile: ./apps/sandbox/docker/Dockerfile-cypress
         depends_on:
             - angular
         network_mode: 'host'
