@@ -1,16 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { NxModule } from '@nrwl/nx';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { ListComponent } from './list/list.component';
-import { LolComponent } from './lol/lol.component';
+import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
+import { NxModule } from '@nrwl/nx';
+import { AppComponent } from './app.component';
+import { AppRoutingModule, routes } from './app.routing.module';
+import { ClrControlsModule } from './clr-controls/clr-controls.module';
 
 @NgModule({
-    declarations: [AppComponent, ListComponent, LolComponent],
-    imports: [BrowserModule, NxModule.forRoot(), RouterModule.forRoot([], { initialNavigation: 'enabled' })],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ClrMainContainerModule,
+        ClrLayoutModule,
+        NxModule.forRoot(),
+        RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+        ClrControlsModule
+    ],
     providers: [],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+    constructor() {}
+}

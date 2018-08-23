@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'hc-root',
+    selector: 'hlc-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'sandbox';
+    constructor() {
+        console.log('111');
+    }
 }

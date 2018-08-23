@@ -18,8 +18,15 @@
                         "polyfills": "apps/sandbox/src/polyfills.ts",
                         "tsConfig": "apps/sandbox/tsconfig.app.json",
                         "assets": ["apps/sandbox/src/favicon.ico", "apps/sandbox/src/assets"],
-                        "styles": ["apps/sandbox/src/styles.scss"],
-                        "scripts": []
+                        "styles": [
+                            "apps/sandbox/src/styles.scss",
+                            "node_modules/@clr/ui/clr-ui.min.css",
+                            "node_modules/@clr/icons/clr-icons.min.css"
+                        ],
+                        "scripts": [
+                            "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+                            "node_modules/@clr/icons/clr-icons.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

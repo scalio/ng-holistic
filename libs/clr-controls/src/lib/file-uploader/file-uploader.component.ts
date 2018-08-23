@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input
 import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
 @Component({
     selector: 'hlc-file-uploader',
-    templateUrl: './file-upload.component.html',
-    styleUrls: ['./file-upload.component.scss'],
+    templateUrl: './file-uploader.component.html',
+    styleUrls: ['./file-uploader.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploaderComponent implements OnInit {
