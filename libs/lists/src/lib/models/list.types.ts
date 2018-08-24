@@ -40,9 +40,9 @@ export namespace List {
         revers: boolean;
     }
 
-    export interface StateModel<TItem extends List.ItemBase> {
+    export interface StateModel<TItem extends List.ItemBase, TFilter extends KeyValue = KeyValue> {
         items: TItem[];
-        filter: KeyValue | null;
+        filter: TFilter | null;
         sort: Sort | null;
         paginator: List.Paginator | null;
     }

@@ -39,4 +39,5 @@ export class ListLayoutComponent implements OnInit {
     onRefresh(prms: List.SearchParams) {
         this.refresh.emit(prms);
     }
+
 }

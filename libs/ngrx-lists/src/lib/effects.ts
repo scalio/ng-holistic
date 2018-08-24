@@ -13,12 +13,18 @@ const load = (dataProvider: ListDataProvider) => (action: SubListActions.Load) =
 
 const handleSubAction = (dataProvider: ListDataProvider) => (
     subAction$: Observable<SubListActions.SubListAction>
-): Observable<SubListActions.SubListAction | undefined> =>
-    merge(subAction$.pipe(filter(R.propEq('type', SubListActions.Load.Type), switchMap(load(dataProvider)))));
+): Observable<SubListActions.SubListAction> =>
+    merge(
+        subAction$.pipe(
+            filter(R.propEq('type', SubListActions.Load.Type)),
+            switchMap(load(dataProvider))
+        )
+    );
 
 export const subListEffects = (dataProvider: ListDataProvider, pair: SubActionContainerPair) => (actions: Actions) =>
     actions.pipe(
         filter(pair.pred),
         map(R.prop('subAction')),
-        handleSubAction(dataProvider)
+        handleSubAction(dataProvider),
+        map(pair.ctr)
     );

@@ -22,7 +22,7 @@ export const subListReducer = (pair: SubActionContainerPair) => (
         return state;
     }
 
-    switch (action.type) {
+    switch (action.subAction.type) {
         case SubListActions.Load.Type:
             return load(state, action.subAction as SubListActions.Load);
         case SubListActions.LoadSuccess.Type:

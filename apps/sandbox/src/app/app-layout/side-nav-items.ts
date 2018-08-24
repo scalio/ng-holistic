@@ -40,6 +40,10 @@ export default [
             {
                 title: 'base',
                 path: ['/clr-lists', 'base']
+            },
+            {
+                title: 'ngrx',
+                path: ['/clr-lists', 'ngrx']
             }
         ]
     }

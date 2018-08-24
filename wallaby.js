@@ -61,14 +61,18 @@ module.exports = function(wallaby) {
             { pattern: 'libs/**/*.+(ts|css|less|scss|sass|styl|html|json|svg)', load: false },
             { pattern: 'libs/**/*.d.ts', ignore: true },
             { pattern: 'libs/**/*spec.ts', ignore: true },
-            { pattern: 'libs/**/*-e2e/**', ignore: true }
+            { pattern: 'libs/**/*-e2e/**', ignore: true },
+            { pattern: 'apps/**/cypress/**', ignore: true },
+            { pattern: 'libs/**/cypress/**', ignore: true }
         ],
 
         tests: [
             { pattern: 'apps/**/*spec.ts', load: false },
             { pattern: 'libs/**/*spec.ts', load: false },
             { pattern: 'apps/**/*-e2e/**', ignore: true },
-            { pattern: 'libs/**/*-e2e/**', ignore: true }
+            { pattern: 'libs/**/*-e2e/**', ignore: true },
+            { pattern: 'apps/**/cypress/**', ignore: true },
+            { pattern: 'libs/**/cypress/**', ignore: true }
         ],
 
         testFramework: 'jasmine',

@@ -122,7 +122,7 @@ export class ListTableComponent implements OnInit, OnChanges {
             return;
         }
         this.selected = event;
-        const selectedItems = this.items.filter(f => event.indexOf(f.id) !== -1);
+        const selectedItems = (this.items || []).filter(f => event.indexOf(f.id) !== -1);
         this.selectedChange.emit(selectedItems);
     }
 
