@@ -7,8 +7,28 @@ export default [
         icon: 'blocks-group',
         children: [
             {
-                title: 'Select',
-                path: ['select']
+                title: 'date-range',
+                path: ['/clr-controls', 'date-range']
+            },
+            {
+                title: 'date-time',
+                path: ['/clr-controls', 'date-time']
+            },
+            {
+                title: 'file-upload',
+                path: ['/clr-controls', 'file-upload']
+            },
+            {
+                title: 'file-uploader',
+                path: ['/clr-controls', 'file-uploader']
+            },
+            {
+                title: 'image-upload',
+                path: ['/clr-controls', 'image-upload']
+            },
+            {
+                title: 'select',
+                path: ['/clr-controls', 'select']
             }
         ]
     }

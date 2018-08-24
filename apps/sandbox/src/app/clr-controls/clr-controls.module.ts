@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ClrControlsComponent } from './clr-controls.component';
-import { SelectModule } from '@ng-holistic/clr-controls';
+import { routes, ClrControlsRoutingModule } from './clr-controls.routing.module';
 
 @NgModule({
     declarations: [ClrControlsComponent],
-    imports: [CommonModule, SelectModule],
-    providers: [],
-    bootstrap: []
+    imports: [CommonModule, RouterModule.forChild(routes), ClrControlsRoutingModule]
 })
 export class ClrControlsModule {}

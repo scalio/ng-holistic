@@ -9,12 +9,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => HlcFileUploadComponent),
+            useExisting: forwardRef(() => FileUploadComponent),
             multi: true
         }
     ]
 })
-export class HlcFileUploadComponent implements OnInit, ControlValueAccessor {
+export class FileUploadComponent implements OnInit, ControlValueAccessor {
     @Input() file: string | File | undefined | null;
     @Input() accept: string | undefined;
     propagateChange = (_: any) => {};

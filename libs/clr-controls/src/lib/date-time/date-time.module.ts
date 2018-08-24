@@ -10,6 +10,6 @@ import { DateConvertService } from '../date-convert.service';
     exports: [DateTimeComponent],
     providers: [DateConvertService]
 })
-export class HlcDateTimeModule {
+export class DateTimeModule {
     constructor() {}
 }

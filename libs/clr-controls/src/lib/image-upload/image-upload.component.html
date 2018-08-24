@@ -1,8 +1,8 @@
-<hlc-file-upload
+<hlc-file-uploader
     accept=".png, .jpg, .jpeg"
     *ngIf="isImageFile || isImageEmpty else imageFromUrl"
     (fileChange)="onImageChange($event)">
-</hlc-file-upload>
+</hlc-file-uploader>
 
 <ng-template #imageFromUrl>
     <div class="card-media-block">

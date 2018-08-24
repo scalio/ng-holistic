@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClrControlsComponent } from './clr-controls/clr-controls.component';
-import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AppLayoutModule } from './app-layout/app-layout.module';
+import { ClrControlsComponent } from './clr-controls/clr-controls.component';
+import { ClrControlsModule } from './clr-controls/clr-controls.module';
+import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
 
 export const routes: Routes = [
     {
@@ -17,7 +18,8 @@ export const routes: Routes = [
         children: [
             {
                 path: 'clr-controls',
-                component: ClrControlsComponent
+                component: ClrControlsComponent,
+                children: clrControlsRoutes
             }
         ]
     }

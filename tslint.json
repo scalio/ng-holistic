@@ -64,6 +64,7 @@
         "quotemark": [true, "single"],
         "no-unused-variable": true,
         "no-unused-variable-wrapped": true,
+        "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
         "nx-enforce-module-boundaries": [
             true,
             {
