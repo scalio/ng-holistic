@@ -31,5 +31,16 @@ export default [
                 path: ['/clr-controls', 'select']
             }
         ]
+    },
+    {
+        title: 'Clr-Lists',
+        path: ['/clr-lists'],
+        icon: 'list',
+        children: [
+            {
+                title: 'base',
+                path: ['/clr-lists', 'base']
+            }
+        ]
     }
 ] as SideNavItem[];

@@ -35,13 +35,13 @@
 
         <clr-dg-footer>
             {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} / {{pagination.totalItems}}
-            <scalio-select
+            <hlc-select
                 class="page-size-selector"
                 [naked]="true"
                 [disallowEmpty]="true"
                 [value]="_paginator.pageSize"
                 (valueChange)="onPageSizeChanged($event)"
-                [items]="pageSizeItems"></scalio-select>
+                [items]="pageSizeItems"></hlc-select>
             <clr-dg-pagination
                 #pagination
                 [clrDgPageSize]="_paginator.pageSize"
@@ -110,7 +110,7 @@
             </div>
         </ng-template>
         <ng-template ngSwitchCase="Html">
-            <div [innerHTML]="cell.value | sanitizeHtml"></div>
+            <div [innerHTML]="cell.value | hlcSanitizeHtml"></div>
         </ng-template>
         <ng-template ngSwitchCase="Custom">
             <ng-container *ngTemplateOutlet="cellTemplate; context: { $implicit : cell, row: row }"></ng-container>
