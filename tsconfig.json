@@ -35,6 +35,9 @@
       ],
       "@ng-holistic/clr-misc": [
         "libs/clr-misc/src/index.ts"
+      ],
+      "@ng-holistic/clr-layout": [
+        "libs/clr-layout/src/index.ts"
       ]
     }
   },

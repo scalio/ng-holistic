@@ -156,24 +156,24 @@
                 }
             }
         },
-        "clr-misc": {
-            "root": "libs/clr-misc",
-            "sourceRoot": "libs/clr-misc/src",
+        "clr-layout": {
+            "root": "libs/clr-layout",
+            "sourceRoot": "libs/clr-layout/src",
             "projectType": "library",
             "prefix": "hlc",
             "architect": {
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "libs/clr-misc/src/test.ts",
-                        "tsConfig": "libs/clr-misc/tsconfig.spec.json",
-                        "karmaConfig": "libs/clr-misc/karma.conf.js"
+                        "main": "libs/clr-layout/src/test.ts",
+                        "tsConfig": "libs/clr-layout/tsconfig.spec.json",
+                        "karmaConfig": "libs/clr-layout/karma.conf.js"
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": ["libs/clr-misc/tsconfig.lib.json", "libs/clr-misc/tsconfig.spec.json"],
+                        "tsConfig": ["libs/clr-layout/tsconfig.lib.json", "libs/clr-layout/tsconfig.spec.json"],
                         "exclude": ["**/node_modules/**"]
                     }
                 }
