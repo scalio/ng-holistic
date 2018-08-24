@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { prop } from 'ramda';
 
 @Component({
-    selector: 'hc-lol',
+    selector: 'hlc-lol',
     templateUrl: './lol.component.html',
     styleUrls: ['./lol.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

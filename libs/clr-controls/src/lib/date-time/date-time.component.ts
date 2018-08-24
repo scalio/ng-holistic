@@ -1,28 +1,11 @@
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Inject,
-    InjectionToken,
-    Input,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { getHours, getMinutes, setHours, setMinutes } from 'date-fns/esm/fp';
 import * as R from 'ramda';
-import { format as formatDate, getHours, getMinutes, parse as parseDate, setHours, setMinutes } from 'date-fns/esm/fp';
+import { DateConvertService } from '../date-convert.service';
 
 // Fast and dirty implementation of date time input
 // Original version should be available soon https://github.com/vmware/clarity/issues/474
-
-export interface DateTimeConfig {
-    format?: string;
-}
-
-export const DATE_TIME_CONFIG = new InjectionToken('DATE_TIME_CONFIG');
 
 interface ListItem {
     key: number;
@@ -54,11 +37,7 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
 
     propagateChange = (_: any) => {};
 
-    constructor(
-        @Optional()
-        @Inject(DATE_TIME_CONFIG)
-        private readonly config: DateTimeConfig | undefined
-    ) {
+    constructor(private readonly dateConvertService: DateConvertService) {
         this.hours = Array.from({ length: 24 }, (_, i) => ({
             key: i,
             label: i.toString().padStart(2, '0')
@@ -69,20 +48,8 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
         }));
     }
 
-    private get dateTimeFormat() {
-        if (this.format) {
-            return this.format;
-        }
-        if (this.config && this.config.format) {
-            return this.config.format;
-        }
-        // tslint:disable-next-line:quotemark
-        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    }
-
     get date() {
-        const x = parseDate(new Date(), this.dateTimeFormat, this.value);
-        return this.value ? x : undefined;
+        return this.dateConvertService.parseDomainDate(this.value);
     }
 
     set date(val: Date | undefined) {
@@ -90,6 +57,7 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
             return;
         }
 
+        // control formatted val -> domain date
         this.value = R.pipe(
             // if perviouse value not empty take hours + minutes from there
             R.when(
@@ -99,8 +67,7 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
                     setMinutes(getMinutes(this.value))
                 )
             ),
-            // convert to correct format
-            formatDate(this.dateTimeFormat)
+            this.formatToDomainStr
         )(val);
 
         this.onChange();
@@ -144,7 +111,7 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
             setHours(hour),
             // reset minutes if value still not defined
             R.when(R.always(!this.value), setMinutes(0)),
-            formatDate(this.dateTimeFormat)
+            this.formatToDomainStr
         )(this.date || new Date());
 
         this.onChange();
@@ -155,9 +122,11 @@ export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
             setMinutes(min),
             // reset hours if value still not defined
             R.when(R.always(!this.value), setHours(0)),
-            formatDate(this.dateTimeFormat)
+            this.formatToDomainStr
         )(this.date || new Date());
 
         this.onChange();
     }
+
+    private formatToDomainStr = (date: Date) => this.dateConvertService.formatToDomainStr(date);
 }
