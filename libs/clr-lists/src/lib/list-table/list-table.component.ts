@@ -27,7 +27,7 @@ export class ListTableComponent implements OnInit, OnChanges {
 
     @Input() activeItemId: string | undefined;
 
-    @Input() items: any[];
+    @Input() items: any[] | undefined;
 
     @Input() paginator: List.Paginator;
 
@@ -90,6 +90,9 @@ export class ListTableComponent implements OnInit, OnChanges {
     }
 
     get rows(): Row[] {
+        if (!this.items) {
+            return [];
+        }
         return mapRows(this.config, this.items) as any;
     }
 
