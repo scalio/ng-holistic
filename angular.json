@@ -155,6 +155,29 @@
                     }
                 }
             }
+        },
+        "clr-misc": {
+            "root": "libs/clr-misc",
+            "sourceRoot": "libs/clr-misc/src",
+            "projectType": "library",
+            "prefix": "hlc",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/clr-misc/src/test.ts",
+                        "tsConfig": "libs/clr-misc/tsconfig.spec.json",
+                        "karmaConfig": "libs/clr-misc/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/clr-misc/tsconfig.lib.json", "libs/clr-misc/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
+                }
+            }
         }
     },
     "cli": {
@@ -170,14 +193,16 @@
             "styleext": "scss",
             "changeDetection": "OnPush",
             "spec": false,
-            "skipImport": true
+            "skipImport": true,
+            "prefix": "hlc"
         },
         "@nrwl/schematics:component": {
             "styleext": "scss",
             "changeDetection": "OnPush",
             "spec": false,
             "skipImport": true,
-            "skipFormat": false
+            "skipFormat": false,
+            "prefix": "hlc"
         },
         "@schematics/angular:service": {
             "spec": false,
@@ -190,12 +215,14 @@
         },
         "@schematics/angular:directive": {
             "spec": false,
-            "skipImport": true
+            "skipImport": true,
+            "prefix": "hlc"
         },
         "@nrwl/schematics:directive": {
             "spec": false,
             "skipImport": true,
-            "skipFormat": false
+            "skipFormat": false,
+            "prefix": "hlc"
         }
     }
 }

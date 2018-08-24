@@ -32,6 +32,9 @@
       ],
       "@ng-holistic/clr-controls": [
         "libs/clr-controls/src/index.ts"
+      ],
+      "@ng-holistic/clr-misc": [
+        "libs/clr-misc/src/index.ts"
       ]
     }
   },

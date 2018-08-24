@@ -6,6 +6,7 @@ import { NxModule } from '@nrwl/nx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { ClrControlsModule } from './clr-controls/clr-controls.module';
+import { SideNavModule } from '@ng-holistic/clr-misc';
 
 @NgModule({
     declarations: [AppComponent],
@@ -16,7 +17,8 @@ import { ClrControlsModule } from './clr-controls/clr-controls.module';
         ClrLayoutModule,
         NxModule.forRoot(),
         RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
-        ClrControlsModule
+        ClrControlsModule,
+        SideNavModule
     ],
     providers: [],
     bootstrap: [AppComponent]
