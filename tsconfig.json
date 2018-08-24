@@ -38,6 +38,9 @@
       ],
       "@ng-holistic/clr-layout": [
         "libs/clr-layout/src/index.ts"
+      ],
+      "@ng-holistic/ngrx-lists": [
+        "libs/ngrx-lists/src/index.ts"
       ]
     }
   },
