@@ -11,7 +11,7 @@ describe('list-table', () => {
         TestBed.configureTestingModule({
             declarations: [],
             providers: [],
-            imports: [ListTableModule],
+            imports: [ListTableModule]
         });
 
         fixture = TestBed.createComponent(ListTableComponent);
@@ -29,9 +29,9 @@ describe('list-table', () => {
                     {
                         id: 'id',
                         type: 'Text',
-                        title: 'Id',
-                    },
-                ],
+                        title: 'Id'
+                    }
+                ]
             };
 
             comp.config = listConfig;
@@ -54,14 +54,14 @@ describe('list-table', () => {
                     {
                         id: 'id',
                         type: 'Text',
-                        title: 'Id',
+                        title: 'Id'
                     },
                     {
                         id: 'id',
                         type: 'Text',
-                        title: 'Title',
-                    },
-                ],
+                        title: 'Title'
+                    }
+                ]
             };
 
             comp.config = listConfig;

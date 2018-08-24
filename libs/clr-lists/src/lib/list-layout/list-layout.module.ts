@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
     imports: [ListTableModule, CommonModule],
     declarations: [ListLayoutComponent],
-    exports: [ListLayoutComponent],
+    exports: [ListLayoutComponent]
 })
 export class ListLayoutModule {
     constructor() {}
