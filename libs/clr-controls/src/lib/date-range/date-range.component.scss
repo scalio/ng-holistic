@@ -1,0 +1,44 @@
+::ng-deep .select {
+    display: inline-block;
+}
+
+::ng-deep .date-container {
+    width: 150px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.divider {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: #333333;
+    margin: 0 15px;
+}
+.data-wraper {
+    display: flex;
+    align-items: center;
+}
+
+.content-wrapper:first-child {
+    margin-right: 40px;
+}
+.content-wrapper:last-child {
+    margin-left: 40px;
+    align-self: flex-end;
+}
+
+.btn {
+    color: white;
+    border: none;
+    outline: none;
+    font-weight: 100;
+    transition: opacity 0.3s;
+    background-color: #dd5d06;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}

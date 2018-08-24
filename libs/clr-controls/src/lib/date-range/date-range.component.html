@@ -1,0 +1,16 @@
+<label for="dateFrom">С</label>
+<input
+    type="date"
+    id="dateFrom"
+    name="dateFrom"
+    [ngModel]="dateFrom"
+    (ngModelChange)="onDateFromChange($event)"
+    clrDate>
+<label for="dateTo">По</label>
+<input
+    type="date"
+    id="dateTo"
+    name="dateTo"
+    [ngModel]="dateTo"
+    (ngModelChange)="onDateToChange($event)"
+    clrDate>
