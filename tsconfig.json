@@ -41,6 +41,9 @@
       ],
       "@ng-holistic/ngrx-lists": [
         "libs/ngrx-lists/src/index.ts"
+      ],
+      "@ng-holistic/lists": [
+        "libs/lists/src/index.ts"
       ]
     }
   },

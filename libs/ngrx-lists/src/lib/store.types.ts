@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
-import { List } from './list.types';
-import { SubList } from './actions';
+import { List } from '@ng-holistic/lists';
+import { SubListActions } from './actions';
 import { Action } from '@ngrx/store';
 
 export interface SubActionContainer {
     type: string;
-    subAction: SubList.SubListAction;
+    subAction: SubListActions.SubListAction;
 }
 
-export type SubActionContainerCtr = (subAction: SubList.SubListAction) => SubActionContainer;
+export type SubActionContainerCtr = (subAction: SubListActions.SubListAction) => SubActionContainer;
 export type SubActionContainerPred = (action: Action) => action is SubActionContainer;
 
 export interface SubActionContainerPair {

@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
-import { List } from './list.types';
+import { List } from '@ng-holistic/lists';
 
-export namespace SubList {
+export namespace SubListActions {
     export class Load implements Action {
         static Type = '[SubList] Load';
 

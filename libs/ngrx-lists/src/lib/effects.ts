@@ -2,19 +2,19 @@ import { Actions } from '@ngrx/effects';
 import * as R from 'ramda';
 import { merge, Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
-import { SubList } from './actions';
+import { SubListActions } from './actions';
 import { ListDataProvider, SubActionContainerPair } from './store.types';
 
-const load = (dataProvider: ListDataProvider) => (action: SubList.Load) =>
+const load = (dataProvider: ListDataProvider) => (action: SubListActions.Load) =>
     dataProvider.load(action.data).pipe(
-        map(res => new SubList.LoadSuccess(res)),
-        catchError(err => of(new SubList.LoadError(err)))
+        map(res => new SubListActions.LoadSuccess(res)),
+        catchError(err => of(new SubListActions.LoadError(err)))
     );
 
 const handleSubAction = (dataProvider: ListDataProvider) => (
-    subAction$: Observable<SubList.SubListAction>
-): Observable<SubList.SubListAction | undefined> =>
-    merge(subAction$.pipe(filter(R.propEq('type', SubList.Load.Type), switchMap(load(dataProvider)))));
+    subAction$: Observable<SubListActions.SubListAction>
+): Observable<SubListActions.SubListAction | undefined> =>
+    merge(subAction$.pipe(filter(R.propEq('type', SubListActions.Load.Type), switchMap(load(dataProvider)))));
 
 export const subListEffects = (dataProvider: ListDataProvider, pair: SubActionContainerPair) => (actions: Actions) =>
     actions.pipe(
