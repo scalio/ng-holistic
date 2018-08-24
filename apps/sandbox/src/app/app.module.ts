@@ -5,8 +5,6 @@ import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
 import { NxModule } from '@nrwl/nx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
-import { ClrControlsModule } from './clr-controls/clr-controls.module';
-import { SideNavModule } from '@ng-holistic/clr-layout';
 
 @NgModule({
     declarations: [AppComponent],
@@ -16,12 +14,11 @@ import { SideNavModule } from '@ng-holistic/clr-layout';
         ClrMainContainerModule,
         ClrLayoutModule,
         NxModule.forRoot(),
-        RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
-        ClrControlsModule,
-        SideNavModule
+        RouterModule.forRoot(routes, { initialNavigation: 'enabled' })
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: []
 })
 export class AppModule {
     constructor() {}
