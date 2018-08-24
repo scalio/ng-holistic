@@ -1,0 +1,12 @@
+<scalio-list-table
+    [loading]="loading"
+    [cellTemplate]="cellTemplate"
+    [rowDetailTemplate]="rowDetailTemplate"
+    [config]="tableConfig"
+    [items]="items"
+    [activeItemId]="activeItemId"
+    [selected]="selected"
+    [paginator]="paginator"
+    (selectedChange)="selectedChange.emit($event)"
+    (cellClick)="cellClick.emit($event)"
+    (refresh)="onRefresh($event)"></scalio-list-table>

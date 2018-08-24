@@ -44,6 +44,9 @@
       ],
       "@ng-holistic/lists": [
         "libs/lists/src/index.ts"
+      ],
+      "@ng-holistic/clr-lists": [
+        "libs/clr-lists/src/index.ts"
       ]
     }
   },

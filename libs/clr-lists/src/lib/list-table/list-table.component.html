@@ -1,0 +1,120 @@
+<clr-datagrid
+    (clrDgRefresh)="onRefresh($event)"
+    [clrDgLoading]="loading"
+    [clrDgSelected]="selected"
+    (clrDgSelectedChange)="onSelectedChanged($event)">
+    <clr-dg-column
+        *ngFor="let col of columns; trackBy: trackByCol"
+        [class.sortable]="col.isSortable"
+        [clrDgField]="col.isSortable ? col.id : undefined">
+        {{col.title}}
+    </clr-dg-column>
+
+    <!-- The following 2 templates just copies of themselfs.
+        Latest contains row details template.
+        It best what I could do right now, since moving rows in separted component not working because waterflow of components
+        must be exactly as it is, no intermediate tags between parent-children. -->
+
+    <ng-template
+        [ngIf]="!config?.rowDetails"
+        [ngIfElse]="rowDetail">
+
+        <clr-dg-row
+            *ngFor="let row of rows; trackBy: trackByRow; let i = index;"
+            [class.active]="isActiveRow(items[i])"
+            [clrDgItem]="row.id">
+
+            <clr-dg-cell
+                *ngFor="let cell of row.cells; trackBy: trackByCell;"
+                (click)="onCellClick(cell, items[i])">
+
+                <ng-container *ngTemplateOutlet="rowCell; context: { cell : cell, row: items[i] }"></ng-container>
+            </clr-dg-cell>
+
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} / {{pagination.totalItems}}
+            <scalio-select
+                class="page-size-selector"
+                [naked]="true"
+                [disallowEmpty]="true"
+                [value]="_paginator.pageSize"
+                (valueChange)="onPageSizeChanged($event)"
+                [items]="pageSizeItems"></scalio-select>
+            <clr-dg-pagination
+                #pagination
+                [clrDgPageSize]="_paginator.pageSize"
+                [clrDgPage]="_paginator.pageIndex"
+                [clrDgTotalItems]="_paginator.length">
+            </clr-dg-pagination>
+
+        </clr-dg-footer>
+
+    </ng-template>
+
+    <ng-template #rowDetail>
+
+        <clr-dg-row
+            *ngFor="let row of rows; trackBy: trackByRow; let i = index;"
+            [class.active]="isActiveRow(items[i])"
+            [clrDgItem]="row.id">
+
+            <clr-dg-cell
+                *ngFor="let cell of row.cells; trackBy: trackByCell;"
+                (click)="onCellClick(cell, items[i])">
+
+                <ng-container *ngTemplateOutlet="rowCell; context: { cell : cell, row: items[i] }"></ng-container>
+            </clr-dg-cell>
+
+            <ng-container
+                ngProjectAs="clr-dg-row-detail"
+                *ngFor="let detail of getDetails(items[i])">
+                <clr-dg-row-detail *clrIfExpanded>
+
+                    <clr-dg-cell *ngFor="let cell of row.cells; trackBy: trackByCell;">
+
+                        <ng-container *ngTemplateOutlet="rowDetailTemplate; context: {  $implicit: detail, row: items[i], cell: cell }"></ng-container>
+
+                    </clr-dg-cell>
+
+                </clr-dg-row-detail>
+            </ng-container>
+
+        </clr-dg-row>
+
+    </ng-template>
+
+</clr-datagrid>
+
+<ng-template
+    #rowCell
+    let-cell="cell"
+    let-row="row">
+
+    <ng-container [ngSwitch]="cell.column.type">
+        <ng-template ngSwitchCase="Text">
+            <ng-container [ngSwitch]="cell.column.meta?.format">
+                <ng-template ngSwitchCase="date">{{cell.value | date}}</ng-template>
+                <ng-template ngSwitchDefault>{{cell.value}}</ng-template>
+            </ng-container>
+        </ng-template>
+        <ng-template ngSwitchCase="Check">
+            <clr-icon
+                shape="check"
+                *ngIf="cell.value"></clr-icon>
+        </ng-template>
+        <ng-template ngSwitchCase="Image">
+            <div class="table-img">
+                <img [src]="cell.value">
+            </div>
+        </ng-template>
+        <ng-template ngSwitchCase="Html">
+            <div [innerHTML]="cell.value | sanitizeHtml"></div>
+        </ng-template>
+        <ng-template ngSwitchCase="Custom">
+            <ng-container *ngTemplateOutlet="cellTemplate; context: { $implicit : cell, row: row }"></ng-container>
+        </ng-template>
+    </ng-container>
+
+</ng-template>

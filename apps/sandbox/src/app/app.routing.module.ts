@@ -5,6 +5,7 @@ import { AppLayoutModule } from './app-layout/app-layout.module';
 import { ClrControlsComponent } from './clr-controls/clr-controls.component';
 import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
+import { ClrListsModule } from './clr-lists/clr-lists.module';
 
 export const routes: Routes = [
     {
@@ -26,7 +27,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule],
+    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule, ClrListsModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
