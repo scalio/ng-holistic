@@ -11,13 +11,12 @@
 
             <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: item}"></ng-container>
 
-            <ng-container>
-                <clr-vertical-nav-group-children *clrIfExpanded>
-                    <ng-container *ngFor="let child of item.children">
-                        <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: item}"></ng-container>
-                    </ng-container>
-                </clr-vertical-nav-group-children>
-            </ng-container>
+            <clr-vertical-nav-group-children *clrIfExpanded>
+                <ng-container *ngFor="let child of item.children">
+                    <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: child}"></ng-container>
+                </ng-container>
+            </clr-vertical-nav-group-children>
+
         </clr-vertical-nav-group>
         <clr-vertical-nav
             *ngIf="!item.children"
@@ -35,7 +34,7 @@
     <a
         *ngIf="item.path"
         aria-hidden="true"
-        hidden
+        clrVerticalNavLink
         [routerLink]="item.path">
         <ng-container *ngTemplateOutlet="citem; context: {$implicit: item}"></ng-container>
     </a>
@@ -50,7 +49,6 @@
     let-item>
     <clr-icon
         *ngIf="item.icon"
-        [attr.shape]="item.icon"
-        clrVerticalNavIcon></clr-icon>
+        [attr.shape]="item.icon"></clr-icon>
     {{item.title}}
 </ng-template>
