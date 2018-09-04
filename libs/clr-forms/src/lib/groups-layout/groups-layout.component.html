@@ -1,0 +1,11 @@
+<div *ngFor="let group of items">
+    <div>{{group.title}}</div>
+    <hlc-fields-layout
+        *ngIf="group.content.kind === 'FormFieldsCollection'"
+        [items]="group.content.items">
+    </hlc-fields-layout>
+    <hlc-tabs-layout
+        *ngIf="group.content.kind === 'FormTabsCollection'"
+        [items]="group.content.items">
+    </hlc-tabs-layout>
+</div>

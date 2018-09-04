@@ -1,5 +1,5 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
-import * as R from '@ng-holistic/ramda';
+import * as R from 'ramda';
 import { FormFields } from './models';
 
 export const flatGroups = R.chain<FormFields.FormField | FormFields.FormGroup, FormFields.FormField>(
