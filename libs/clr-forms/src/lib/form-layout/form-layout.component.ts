@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormLayout } from '@ng-holistic/forms';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { buildForm, flatForm, FormLayout } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-form-layout',
@@ -8,11 +9,20 @@ import { FormLayout } from '@ng-holistic/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormLayoutComponent implements OnInit {
+
     @Input() form: FormLayout.Form | undefined;
 
-    constructor() {}
+    formGroup: FormGroup;
 
-    ngOnInit() {}
+    constructor(private readonly fb: FormBuilder) {
+    }
+
+    ngOnInit() {
+        if (!this.form) {
+            return;
+        }
+        this.formGroup = buildForm(this.fb, flatForm(this.form));
+    }
 
     get fields() {
         return this.form && this.form.content.kind === 'FormFieldsCollection' ? this.form.content.items : null;

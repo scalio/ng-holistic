@@ -1,12 +1,17 @@
 <hlc-groups-layout
     *ngIf="groups"
+    [formGroup]="formGroup"
     [items]="groups">
 </hlc-groups-layout>
 <hlc-fields-layout
     *ngIf="fields"
+    [formGroup]="formGroup"
     [items]="fields">
 </hlc-fields-layout>
 <hlc-tabs-layout
     *ngIf="tabs"
+    [formGroup]="formGroup"
     [items]="tabs">
 </hlc-tabs-layout>
+<ng-content selector="[footer]">
+</ng-content>

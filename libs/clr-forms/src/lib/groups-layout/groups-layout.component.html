@@ -2,10 +2,12 @@
     <div>{{group.title}}</div>
     <hlc-fields-layout
         *ngIf="group.content.kind === 'FormFieldsCollection'"
+        [formGroup]="formGroup"
         [items]="group.content.items">
     </hlc-fields-layout>
     <hlc-tabs-layout
         *ngIf="group.content.kind === 'FormTabsCollection'"
+        [formGroup]="formGroup"
         [items]="group.content.items">
     </hlc-tabs-layout>
 </div>

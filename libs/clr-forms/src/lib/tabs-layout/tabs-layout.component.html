@@ -4,10 +4,12 @@
         <clr-tab-content *clrIfActive>
             <hlc-fields-layout
                 *ngIf="tab.content.kind === 'FormFieldsCollection'"
+                [formGroup]="formGroup"
                 [items]="tab.content.items">
             </hlc-fields-layout>
             <hlc-groups-layout
                 *ngIf="tab.content.kind === 'FormGroupsCollection'"
+                [formGroup]="formGroup"
                 [items]="tab.content.items">
             </hlc-groups-layout>
         </clr-tab-content>

@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { createDepFieldsMapFromValidation, FormFields, updateDepFieldsValidation } from '@ng-holistic/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormFields, createDepFieldsMapFromValidation, updateDepFieldsValidation, buildForm } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-fields-layout',
@@ -10,19 +10,19 @@ import { FormFields, createDepFieldsMapFromValidation, updateDepFieldsValidation
     styleUrls: ['./fields-layout.component.scss']
 })
 export class FieldsLayoutComponent implements OnInit, OnDestroy {
-    formGroup: FormGroup;
+    @Input() formGroup: FormGroup;
 
     @Input() items: FormFields.FormField[];
     @Input() readonly: boolean;
 
     private destroy$ = new Subject();
 
-    constructor(private readonly fb: FormBuilder) {
+    constructor() {
     }
 
     ngOnInit() {
 
-        this.formGroup = buildForm(this.fb, this.items);
+        console.log('111', this.formGroup);
 
         // build dependent field map from validations
         const depMap = createDepFieldsMapFromValidation(this.items);
