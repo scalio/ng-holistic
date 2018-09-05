@@ -3,7 +3,7 @@
     [formGroup]="formGroup"
     novalidate>
 
-    <ng-container *ngFor="let field of fields; trackBy: trackByFun">
+    <ng-container *ngFor="let field of items; trackBy: trackByFun">
 
         <hlc-input-container
             *ngIf="!isJustField(field)"
@@ -47,6 +47,20 @@
             <hlc-image-upload
                 *ngSwitchCase="'ImageField'"
                 [formControlName]="field.id"></hlc-image-upload>
+
+            <!-- DateTimeField -->
+
+            <input
+                type="date"
+                clrDate
+                *ngSwitchCase="'DateField'"
+                [formControlName]="field.id">
+
+            <hlc-input-error
+                #err
+                for="compare">
+                {{err.error}}
+            </hlc-input-error>
 
             <!-- DateTimeField -->
 

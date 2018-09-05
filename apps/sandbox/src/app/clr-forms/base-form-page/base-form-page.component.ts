@@ -9,7 +9,38 @@ const config: FormLayout.Form = {
                 title: 'Fields',
                 content: {
                     kind: 'FormFieldsCollection',
-                    items: []
+                    items: [
+                        {
+                            kind: 'TextField',
+                            id: 'title',
+                            label: 'Title'
+                        },
+                        {
+                            kind: 'DateField',
+                            id: 'date',
+                            label: 'Date'
+                        },
+                        {
+                            kind: 'SelectField',
+                            id: 'items',
+                            label: 'Items',
+                            items: [
+                                {
+                                    key: 'one',
+                                    label: 'one'
+                                },
+                                {
+                                    key: 'two',
+                                    label: 'two'
+                                }
+                            ]
+                        },
+                        {
+                            kind: 'TextareaField',
+                            id: 'textarea',
+                            label: 'Textarea'
+                        }
+                    ]
                 }
             },
             {

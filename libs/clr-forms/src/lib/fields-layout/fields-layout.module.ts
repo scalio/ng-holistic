@@ -4,6 +4,7 @@ import { FieldsLayoutComponent } from './fields-layout.component';
 import { InputContainerModule } from '../input-container';
 import { SelectModule, ImageUploadModule, FileUploadModule, DateTimeModule } from '@ng-holistic/clr-controls';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ClrDatepickerModule } from '@clr/angular';
 @NgModule({
     imports: [
         CommonModule,
@@ -13,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         FileUploadModule,
         DateTimeModule,
         ReactiveFormsModule,
+        ClrDatepickerModule
     ],
     declarations: [FieldsLayoutComponent],
     exports: [FieldsLayoutComponent]
