@@ -1,3 +1,116 @@
-<p>
-  fields-layout works!
-</p>
+<form
+    clrForm
+    [formGroup]="formGroup"
+    novalidate>
+
+    <ng-container *ngFor="let field of fields; trackBy: trackByFun">
+
+        <hlc-input-container
+            *ngIf="!isJustField(field)"
+            [label]="field.label"
+            [ngSwitch]="field.kind">
+
+            <!-- TextField -->
+
+            <input
+                *ngSwitchCase="'TextField'"
+                type="text"
+                [readonly]="readonly"
+                [formControlName]="field.id">
+
+            <hlc-input-error
+                *ngSwitchCase="'TextField'"
+                for="email">
+                Email has wrong format
+            </hlc-input-error>
+
+            <!-- SelectField -->
+
+            <hlc-select
+                *ngSwitchCase="'SelectField'"
+                [formControlName]="field.id"
+                [items]="field.items">
+            </hlc-select>
+
+            <!-- CategoryField -->
+
+            <!--
+            <hlc-category-field
+                *ngSwitchCase="'CategoryField'"
+                [formControlName]="field.id"
+                [categories]="field.categories">
+            </hlc-category-field>
+            -->
+
+            <!-- ImageField -->
+
+            <hlc-image-upload
+                *ngSwitchCase="'ImageField'"
+                [formControlName]="field.id"></hlc-image-upload>
+
+            <!-- DateTimeField -->
+
+            <hlc-date-time
+                *ngSwitchCase="'DateTimeField'"
+                [formControlName]="field.id">
+            </hlc-date-time>
+
+            <hlc-input-error
+                #err
+                for="compare">
+                {{err.error}}
+            </hlc-input-error>
+
+            <!-- RichTextField -->
+
+            <!--
+            <hlc-rich-text
+                *ngSwitchCase="'RichTextField'"
+                [formControlName]="field.id"></hlc-rich-text>
+            -->
+
+            <!-- TextareaField -->
+
+            <textarea
+                *ngSwitchCase="'TextareaField'"
+                [formControlName]="field.id"
+                rows="5">
+            </textarea>
+
+            <!-- FileField -->
+            <hlc-file-upload
+                *ngSwitchCase="'FileField'"
+                [accept]="field.accept"
+                [formControlName]="field.id"></hlc-file-upload>
+
+            <!-- Base Validators -->
+
+            <hlc-input-error for="required">Field is required</hlc-input-error>
+        </hlc-input-container>
+
+        <ng-container
+            *ngIf="isJustField(field)"
+            [ngSwitch]="field.kind">
+
+            <!-- TextReadonlyField -->
+            <ng-template ngSwitchCase="TextReadonlyField">
+                <div
+                    *ngIf="!field.showWhenDefined || formGroup.value[field.id]"
+                    class="clr-form-control">
+                    <label class="clr-control-label">{{field.label}}</label>
+                    <div [ngSwitch]="field.format">
+                        <ng-template ngSwitchCase="date">
+                            {{ formGroup.value[field.id] | date:'mediumDate' }}
+                        </ng-template>
+                        <ng-template ngSwitchCase="dateTime">
+                            {{ formGroup.value[field.id] | date:'medium' }}
+                        </ng-template>
+                        <ng-template ngSwitchDefault>{{ formGroup.value[field.id] }}</ng-template>
+                    </div>
+                </div>
+            </ng-template>
+
+        </ng-container>
+
+    </ng-container>
+</form>

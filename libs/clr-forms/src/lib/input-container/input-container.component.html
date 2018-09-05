@@ -1,0 +1,10 @@
+<div class="clr-form-control">
+    <label class="clr-control-label">
+        {{label}}
+        <span *ngIf="isOptional">- Optional</span>
+    </label>
+
+    <ng-content select="[formControlName]"></ng-content>
+
+    <ng-content select="scalio-input-error"></ng-content>
+</div>

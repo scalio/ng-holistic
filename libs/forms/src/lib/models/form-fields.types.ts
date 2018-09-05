@@ -79,6 +79,12 @@ export namespace FormFields {
         categories: any[];
     }
 
+    export interface TextReadonlyField extends BaseField {
+        kind: 'TextReadonlyField';
+        format?: 'date' | 'dateTime';
+        showWhenDefined?: boolean;
+    }
+
     export type FormField =
         | TextField
         | SelectField
@@ -90,7 +96,8 @@ export namespace FormFields {
         | FileField
         | ImageField
         | UrlField
-        | CategoryField;
+        | CategoryField
+        | TextReadonlyField;
 
     export type FieldValidation = BaseFieldValidation | TextFieldValidation;
 

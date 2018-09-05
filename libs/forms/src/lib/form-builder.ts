@@ -10,7 +10,7 @@ export const buildControlsConfig = (inputs: FormFields.FormField[]): { [key: str
     R.pipe(
         R.map<FormFields.FormField, [string, any]>(field => [
             field.id,
-            [null, ((field.validators as any) || []).map(createValidation(field))]
+            [null, R.propOr<any, any, any[]>([], 'validators', field).map(createValidation(field))]
         ]),
         R.fromPairs as any
     )(inputs);
@@ -19,7 +19,7 @@ export const buildForm = (fb: FormBuilder, inputs: FormFields.FormField[]) =>
     R.pipe(
         R.map<FormFields.FormField, [string, any]>(field => [
             field.id,
-            [null, ((field.validators as any) || []).map(createValidation(field))]
+            [null, R.propOr<any, any, any[]>([], 'validators', field).map(createValidation(field))]
         ]),
         R.fromPairs as any,
         obj => fb.group(obj)
