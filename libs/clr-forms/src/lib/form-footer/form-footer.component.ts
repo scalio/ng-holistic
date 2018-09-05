@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -7,25 +16,19 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'hlc-form-footer',
     templateUrl: './form-footer.component.html',
     styleUrls: ['./form-footer.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormFooterComponent implements OnInit, OnDestroy {
-
     private destroy$ = new Subject();
     @Input() form: FormGroup;
 
-    @Output()
-    save = new EventEmitter();
-    @Output()
-    cancel = new EventEmitter();
+    @Output() save = new EventEmitter();
+    @Output() cancel = new EventEmitter();
 
-    @Input()
-    isNew: boolean | undefined;
-    @Input()
-    disabled: boolean | undefined;
+    @Input() isNew: boolean | undefined;
+    @Input() disabled: boolean | undefined;
 
-    constructor(private readonly cdr: ChangeDetectorRef) {
-    }
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         if (this.form) {
