@@ -12,6 +12,8 @@ import { SelectPageModule } from './select-page/select-page.module';
 import { DateTimePageComponent } from './date-time-page/date-time-page.component';
 import { ImageUploadPageComponent } from './image-upload-page/image-upload-page.component';
 import { SelectPageComponent } from './select-page/select-page.component';
+import { OrderedListComponent } from '@ng-holistic/clr-controls';
+import { OrderedListPageModule } from './oredred-list-page/ordered-list-page.module';
 
 export const routes: Routes = [
     {
@@ -37,6 +39,10 @@ export const routes: Routes = [
     {
         path: 'select',
         component: SelectPageComponent
+    },
+    {
+        path: 'ordered-list',
+        component: OrderedListComponent
     }
 ];
 
@@ -48,7 +54,8 @@ export const routes: Routes = [
         FileUploadPageModule,
         FileUploaderPageModule,
         ImageUploaderPageModule,
-        SelectPageModule
+        SelectPageModule,
+        OrderedListPageModule
     ],
     exports: [RouterModule],
     entryComponents: []

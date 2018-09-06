@@ -29,6 +29,10 @@ export default [
             {
                 title: 'select',
                 path: ['/clr-controls', 'select']
+            },
+            {
+                title: 'ordered-list',
+                path: ['/clr-controls', 'ordered-list']
             }
         ]
     },
