@@ -6,3 +6,4 @@ export * from './lib/date-time';
 export * from './lib/date-range';
 export * from './lib/select';
 export * from './lib/ordered-list';
+export * from './lib/list-items.config';
