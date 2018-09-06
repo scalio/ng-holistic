@@ -4,7 +4,7 @@
     "directive-selector": [
       true,
       "attribute",
-      "ng-holistic",
+      "hlc",
       "camelCase"
     ],
     "component-selector": [

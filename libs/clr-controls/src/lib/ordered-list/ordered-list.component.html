@@ -1,5 +1,24 @@
-<ul>
-    <li *ngFor="let item of items; trackBy: trackByFun">
+<ul class="list-group" dnd-sortable-container  [sortableData]="items">
+    <li *ngFor="let item of items; trackBy: trackByFun; let i = index;" dnd-sortable [sortableIndex]="i"  (onDragSuccess)="onDragSuccess()">
         {{ mapLabel(item) }}
+        <button class="btn btn-link btn-sm" [hlcLayoutTrigger]="createItem" [context]="item"><clr-icon shape="plus"></clr-icon></button>
+        <button class="btn btn-link btn-sm" (click)="onRemove(i)"><clr-icon shape="trash"></clr-icon></button>
     </li>
 </ul>
+
+<ng-template #createItem let-ctrl="controller" let-item>
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                Add Item
+            </div>
+            <div class="card-block">
+                <input autofocus type="text" #itemName (keyup.enter)="onCreate(itemName.value, item); ctrl.hide();" (keyup.escape)="ctrl.hide();">
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-link btn-footer btn-success" (click)="onCreate(itemName.value, item); ctrl.hide();">Create</button>
+                <button class="btn btn-sm btn-link btn-footer" (click)="ctrl.hide();">Cancel</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

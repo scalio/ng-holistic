@@ -51,6 +51,7 @@
     "private": true,
     "dependencies": {
         "@angular/animations": "^6.1.0",
+        "@angular/cdk": "^6.4.7",
         "@angular/common": "^6.1.0",
         "@angular/compiler": "^6.1.0",
         "@angular/core": "^6.1.0",
@@ -69,6 +70,7 @@
         "core-js": "^2.5.4",
         "date-fns": "^2.0.0-alpha.16",
         "lib": "^3.0.2",
+        "ng2-dnd": "^5.0.2",
         "ngx-file-drop": "^4.0.6",
         "ramda": "^0.25.0",
         "rxjs": "^6.0.0",

@@ -8,6 +8,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/nx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
     declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { AppRoutingModule, routes } from './app.routing.module';
         RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
-        StoreDevtoolsModule.instrument()
+        StoreDevtoolsModule.instrument(),
+        DndModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent],
