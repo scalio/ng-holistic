@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import * as R from 'ramda';
 
 @Component({
     selector: 'hlc-image-upload',
@@ -15,34 +16,33 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     ]
 })
 export class ImageUploadComponent implements OnInit, ControlValueAccessor {
-    @Input() image: string | File | undefined | null;
+    @Input() images: (string | File)[] | undefined | null;
+
+    isStr(file: File | string) {
+        return !(file instanceof File);
+    }
 
     propagateChange = (_: any) => {};
 
     constructor() {}
 
-    get isImageUrl() {
-        return this.image instanceof String;
-    }
-
-    get isImageFile() {
-        return this.image instanceof File;
-    }
-
-    get isImageEmpty() {
-        return !this.image;
-    }
-
     ngOnInit() {}
 
-    onImageRemove() {
-        this.image = null;
-        this.propagateChange(null);
+    get imagesObjects() {
+        return (this.images || []).filter(file => file instanceof File);
     }
 
-    onImageChange(file: File) {
-        this.image = file;
-        this.propagateChange(file);
+    onImageRemove(index: number) {
+        if (!this.images) {
+            return;
+        }
+        this.images = R.remove(index, 1, this.images);
+        this.propagateChange(this.images);
+    }
+
+    onImagesChange(files: File[]) {
+        this.images = files;
+        this.propagateChange(this.images);
     }
 
     //
@@ -52,7 +52,7 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     }
 
     writeValue(obj: any) {
-        this.image = obj;
+        this.images = obj;
     }
 
     registerOnChange(fn: any) {

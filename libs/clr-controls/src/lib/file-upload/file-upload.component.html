@@ -1,3 +1,9 @@
+<hlc-file-multi-uploader
+    [accept]="accept"
+    [files]="filesObjects"
+    (filesChange)="onFilesChange($event)">
+</hlc-file-multi-uploader>
+
 <div
     class="input-group"
     *ngFor="let file of files; let i = index;">
@@ -17,9 +23,3 @@
         </div>
     </ng-container>
 </div>
-
-<hlc-file-multi-uploader
-    [accept]="accept"
-    [files]="filesObjects"
-    (filesChange)="onFilesChange($event)">
-</hlc-file-multi-uploader>
