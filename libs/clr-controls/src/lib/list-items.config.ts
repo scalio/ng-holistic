@@ -5,18 +5,15 @@ import { InjectionToken } from '@angular/core';
  */
 
 export interface ListItemsObjectMapper {
-    mapKey: (obj: any) => string;
-    mapLabel: (obj: any) => string;
+    keyField: string;
+    labelField: string;
+    isNewField?: string;
 }
 
 export const listItemsDefaultObjectMapper: ListItemsObjectMapper = {
-    mapKey(obj) {
-        return obj['key'];
-    },
-
-    mapLabel(obj) {
-        return obj['label'];
-    }
+    keyField: 'key',
+    labelField: 'label',
+    isNewField: 'isNew'
 };
 
 export interface ListItemsConfig {

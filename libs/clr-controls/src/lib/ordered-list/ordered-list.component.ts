@@ -6,7 +6,8 @@ import {
     Optional,
     Inject,
     Output,
-    EventEmitter
+    EventEmitter,
+    forwardRef
 } from '@angular/core';
 import {
     LIST_ITEMS_CONFIG,
@@ -15,16 +16,26 @@ import {
     listItemsDefaultObjectMapper
 } from '../list-items.config';
 import * as R from 'ramda';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
     selector: 'hlc-ordered-list',
     templateUrl: './ordered-list.component.html',
     styleUrls: ['./ordered-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => OrderedListComponent),
+            multi: true
+        }
+    ]
 })
-export class OrderedListComponent implements OnInit {
+export class OrderedListComponent implements OnInit, ControlValueAccessor {
+
     @Input() items: any[];
     @Output() itemsChange = new EventEmitter<any[]>();
+    propagateChange = (_: any) => {};
 
     constructor(
         @Optional()
@@ -35,18 +46,30 @@ export class OrderedListComponent implements OnInit {
     ngOnInit() {}
 
     onDragSuccess() {
-        this.itemsChange.emit(this.items);
+        this.onChange();
     }
 
     onCreate(text: string, item: any) {
         const itemIndex = this.items.indexOf(item);
-        this.items = R.insert(itemIndex + 1, { key: text, label: text }, this.items);
-        this.itemsChange.emit(this.items);
+        const newItem = {
+            [this.mapper.keyField]: text,
+            [this.mapper.labelField]: text
+        };
+        if (this.mapper.isNewField) {
+            newItem[this.mapper.isNewField] = true as any;
+        }
+        this.items = R.insert(itemIndex + 1, newItem, this.items);
+        this.onChange();
     }
 
     onRemove(index: number) {
         this.items = R.remove(index, 1, this.items);
+        this.onChange();
+    }
+
+    onChange() {
         this.itemsChange.emit(this.items);
+        this.propagateChange(this.items);
     }
 
     // list-items mapper
@@ -56,16 +79,27 @@ export class OrderedListComponent implements OnInit {
     }
 
     mapKey(obj: any) {
-        return this.mapper.mapKey(obj);
+        return obj[this.mapper.keyField];
     }
 
     mapLabel(obj: any) {
-        return this.mapper.mapLabel(obj);
+        return obj[this.mapper.labelField];
     }
 
     //
-
     trackByFun = (_: number, item: any) => {
         return this.mapKey(item);
     };
+
+    //
+    writeValue(obj: any) {
+        this.items = obj;
+    }
+
+    registerOnChange(fn: any) {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched(_: any) {}
+
 }
