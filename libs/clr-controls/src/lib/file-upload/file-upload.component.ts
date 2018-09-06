@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import * as R from 'ramda';
 
 @Component({
     selector: 'hlc-file-upload',
@@ -15,7 +16,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     ]
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
-    @Input() file: string | File | undefined | null;
+    @Input() files: (string | File)[] | undefined | null;
     @Input() accept: string | undefined;
     propagateChange = (_: any) => {};
 
@@ -23,22 +24,25 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
     ngOnInit() {}
 
-    get isFileObject() {
-        return this.file instanceof File;
+    get filesObjects() {
+        return (this.files || []).filter(file => file instanceof File);
     }
 
-    get isFileEmpty() {
-        return !this.file;
+    isStr(file: File | string) {
+        return !(file instanceof File);
     }
 
-    onFileRemove() {
-        this.file = null;
-        this.propagateChange(null);
+    onFileRemove(index: number) {
+        if (!this.files) {
+            return;
+        }
+        this.files = R.remove(index, 1, this.files);
+        this.propagateChange(this.files);
     }
 
-    onFileChange(file: File) {
-        this.file = file;
-        this.propagateChange(file);
+    onFilesChange(files: File[]) {
+        this.files = files;
+        this.propagateChange(this.files);
     }
 
     //
@@ -48,7 +52,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     }
 
     writeValue(obj: any) {
-        this.file = obj;
+        this.files = obj;
     }
 
     registerOnChange(fn: any) {

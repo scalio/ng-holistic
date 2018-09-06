@@ -1,7 +1,7 @@
 <p
     *ngFor="let name of fileNames; let i = index"
     class="file-drop__selected">
-    File: {{name}}
+    Upload File: {{name}}
     <button
         class="btn btn-link btn-sm remove__btn"
         (click)="onRemove(i)"

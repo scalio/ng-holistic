@@ -1,11 +1,7 @@
-<hlc-file-uploader
-    [accept]="accept"
-    *ngIf="isFileObject || isFileEmpty else fileNotEmpty"
-    (fileChange)="onFileChange($event)">
-</hlc-file-uploader>
-
-<ng-template #fileNotEmpty>
-    <div class="input-group">
+<div
+    class="input-group"
+    *ngFor="let file of files; let i = index;">
+    <ng-container *ngIf="isStr(file)">
         <input
             readonly
             type="text"
@@ -15,9 +11,15 @@
             <button
                 class="btn btn-danger-flat btn-icon"
                 type="button"
-                (click)="onFileRemove()">
+                (click)="onFileRemove(i)">
                 <clr-icon shape="trash"></clr-icon>
             </button>
         </div>
-    </div>
-</ng-template>
+    </ng-container>
+</div>
+
+<hlc-file-multi-uploader
+    [accept]="accept"
+    [files]="filesObjects"
+    (filesChange)="onFilesChange($event)">
+</hlc-file-multi-uploader>

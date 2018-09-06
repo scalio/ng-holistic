@@ -9,7 +9,7 @@ import * as R from 'ramda';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileMultiUploaderComponent implements OnInit {
-    files: File[];
+    @Input() files: File[];
     @Input() multiple = true;
     @Input() accept: string | undefined;
     @Output() filesChange = new EventEmitter<File[] | null>();
@@ -45,7 +45,6 @@ export class FileMultiUploaderComponent implements OnInit {
     onFileLeave(_: any) {}
 
     get fileNames() {
-        console.log('+++', this.files);
         return (this.files || []).map(file => file.name);
     }
 
