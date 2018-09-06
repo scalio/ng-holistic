@@ -16,6 +16,8 @@ import * as R from 'ramda';
     ]
 })
 export class ImageUploadComponent implements OnInit, ControlValueAccessor {
+    // ControlValueAccessor - expect value to be single item (also emit value as single item), array otherwice
+    @Input() single: boolean | undefined;
     @Input() images: (string | File)[] | undefined | null;
 
     isStr(file: File | string) {
@@ -37,26 +39,26 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
             return;
         }
         this.images = R.remove(index, 1, this.images);
-        this.propagateChange(this.images);
+        this.onChange();
     }
 
     onImagesChange(files: File[]) {
         this.images = files;
-        this.propagateChange(this.images);
+        this.onChange();
     }
 
     //
-    onChange(val: string | null) {
-        this.writeValue(val);
-        this.propagateChange(val);
-    }
-
     writeValue(obj: any) {
-        this.images = obj;
+        this.images = this.single ? [obj] : obj;
     }
 
     registerOnChange(fn: any) {
         this.propagateChange = fn;
     }
+
     registerOnTouched(_: any) {}
+
+    private onChange() {
+        this.propagateChange(this.single ? (this.images || [])[0] : this.images);
+    }
 }

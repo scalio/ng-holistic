@@ -10,7 +10,8 @@ import * as R from 'ramda';
 })
 export class FileMultiUploaderComponent implements OnInit {
     @Input() files: File[];
-    @Input() multiple = true;
+    // allows add only single file
+    @Input() single: boolean | undefined;
     @Input() accept: string | undefined;
     @Output() filesChange = new EventEmitter<File[] | null>();
 
@@ -36,7 +37,6 @@ export class FileMultiUploaderComponent implements OnInit {
         if (!files || files.length === 0) {
             return;
         }
-
         files.filter((file: any) => file.fileEntry.isFile).map((file: any) => this.addFile(file.fileEntry));
     }
 
@@ -72,7 +72,11 @@ export class FileMultiUploaderComponent implements OnInit {
         if (!this.checkAccept(file.name)) {
             return;
         }
-        this.files = [...(this.files || []), file];
+        if (this.single) {
+            this.files = [file];
+        } else {
+            this.files = [...(this.files || []), file];
+        }
         this.filesChange.emit(this.files);
     }
 }

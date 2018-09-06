@@ -17,6 +17,7 @@ import * as R from 'ramda';
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
     @Input() files: (string | File)[] | undefined | null;
+    @Input() single: boolean | undefined;
     @Input() accept: string | undefined;
     propagateChange = (_: any) => {};
 
@@ -37,26 +38,27 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
             return;
         }
         this.files = R.remove(index, 1, this.files);
-        this.propagateChange(this.files);
+        this.onChange();
     }
 
     onFilesChange(files: File[]) {
         this.files = files;
-        this.propagateChange(this.files);
+        this.onChange();
     }
 
     //
-    onChange(val: string | null) {
-        this.writeValue(val);
-        this.propagateChange(val);
-    }
 
     writeValue(obj: any) {
-        this.files = obj;
+        this.files = this.single ? [obj] : obj;
     }
 
     registerOnChange(fn: any) {
         this.propagateChange = fn;
     }
+
     registerOnTouched(_: any) {}
+
+    private onChange() {
+        this.propagateChange(this.single ? (this.files || [])[0] : this.files);
+    }
 }

@@ -33,7 +33,7 @@
         id="file-upload"
         type="file"
         [accept]="accept"
-        [multiple]="multiple"
+        [multiple]="!single"
         (change)="onFileChange($event)">
 </file-drop>
 
