@@ -2115,6 +2115,15 @@
                 "hoek": "2.x.x"
             }
         },
+        "bootstrap": {
+            "version": "4.0.0-alpha.5",
+            "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.0.0-alpha.5.tgz",
+            "integrity": "sha1-oSa2SMO9L1K4+tS7xeLQrSq/cGQ=",
+            "requires": {
+                "jquery": "1.9.1 - 3",
+                "tether": "^1.3.7"
+            }
+        },
         "brace-expansion": {
             "version": "1.1.11",
             "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz",
@@ -7558,6 +7567,11 @@
                 "pretty-format": "^23.5.0"
             }
         },
+        "jquery": {
+            "version": "3.3.1",
+            "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
+            "integrity": "sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg=="
+        },
         "js-base64": {
             "version": "2.4.8",
             "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.4.8.tgz",
@@ -12732,6 +12746,11 @@
             "resolved": "https://registry.npmjs.org/temp/-/temp-0.4.0.tgz",
             "integrity": "sha1-ZxrWPVe+D+nXKUZks/xABjZnimA=",
             "dev": true
+        },
+        "tether": {
+            "version": "1.4.4",
+            "resolved": "https://registry.npmjs.org/tether/-/tether-1.4.4.tgz",
+            "integrity": "sha512-bagKeRRo3vEynHnO3GB7/jB3Q4YIf0mN7gXM/nR0wZvNHkPrwmZemg1w0C32JZP0prHZUwxGwoX5CdA7tuIDEw=="
         },
         "text-table": {
             "version": "0.2.0",
