@@ -1,10 +1,10 @@
 <p
-    class="file-drop__selected"
-    *ngIf="selectedFileName">
-    Chosen file: {{selectedFileName}}
+    *ngFor="let name of fileNames; let i = index"
+    class="file-drop__selected">
+    Upload File: {{name}}
     <button
         class="btn btn-link btn-sm remove__btn"
-        (click)="onRemove()"
+        (click)="onRemove(i)"
         type="button">
         <clr-icon shape="trash"></clr-icon>
     </button>
@@ -33,6 +33,7 @@
         id="file-upload"
         type="file"
         [accept]="accept"
+        [multiple]="!single"
         (change)="onFileChange($event)">
 </file-drop>
 

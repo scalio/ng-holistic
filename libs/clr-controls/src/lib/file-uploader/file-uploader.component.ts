@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
+import { UploadEvent } from 'ngx-file-drop';
+import * as R from 'ramda';
+
 @Component({
     selector: 'hlc-file-uploader',
     templateUrl: './file-uploader.component.html',
@@ -7,9 +9,11 @@ import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploaderComponent implements OnInit {
-    selectedFileName: string | null;
+    @Input() files: File[];
+    // allows add only single file
+    @Input() single: boolean | undefined;
     @Input() accept: string | undefined;
-    @Output() fileChange = new EventEmitter<File | null>();
+    @Output() filesChange = new EventEmitter<File[] | null>();
 
     constructor() {}
 
@@ -20,30 +24,33 @@ export class FileUploaderComponent implements OnInit {
             return;
         }
         const ctrl = event.target;
-        if (ctrl.files && ctrl.files.length === 0) {
+        const files = Array.prototype.slice.call(ctrl.files, 0);
+        if (files && files.length === 0) {
             return;
         }
 
-        this.updateFile(ctrl.files[0]);
+        files.forEach((file: any) => this.addFile(file));
     }
 
     onFileDrop(event: UploadEvent) {
-        const files = event.files;
-        if (!files || files.length === 0 || !files[0].fileEntry.isFile) {
+        const files = Array.prototype.slice.call(event.files, 0);
+        if (!files || files.length === 0) {
             return;
         }
-
-        const fileEntry = files[0].fileEntry as FileSystemFileEntry;
-        fileEntry.file(file => this.updateFile(file));
+        files.filter((file: any) => file.fileEntry.isFile).map((file: any) => this.addFile(file.fileEntry));
     }
 
     onFileOver(_: any) {}
 
     onFileLeave(_: any) {}
 
-    onRemove() {
-        this.selectedFileName = null;
-        this.fileChange.emit(null);
+    get fileNames() {
+        return (this.files || []).map(file => file.name);
+    }
+
+    onRemove(index: number) {
+        this.files = R.remove(index, 1, this.files);
+        this.filesChange.emit(this.files);
     }
 
     private checkAccept(fileName: string) {
@@ -58,14 +65,18 @@ export class FileUploaderComponent implements OnInit {
         return true;
     }
 
-    private updateFile(file: File | null) {
+    private addFile(file: File | null) {
         if (!file) {
             return;
         }
         if (!this.checkAccept(file.name)) {
             return;
         }
-        this.selectedFileName = file.name;
-        this.fileChange.emit(file);
+        if (this.single) {
+            this.files = [file];
+        } else {
+            this.files = [...(this.files || []), file];
+        }
+        this.filesChange.emit(this.files);
     }
 }

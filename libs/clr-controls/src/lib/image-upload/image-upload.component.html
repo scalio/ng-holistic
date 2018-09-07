@@ -1,9 +1,9 @@
-<hlc-file-multi-uploader
+<hlc-file-uploader
     [single]="single"
     accept=".png, .jpg, .jpeg"
     [files]="imagesObjects"
     (filesChange)="onImagesChange($event)">
-</hlc-file-multi-uploader>
+</hlc-file-uploader>
 
 <ng-container *ngFor="let file of files; let i = index;">
     <div
