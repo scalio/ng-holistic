@@ -51,6 +51,7 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor {
     @Input() naked: boolean | undefined;
     // true - Don't generate empty list item
     @Input() disallowEmpty: boolean | undefined;
+    @Input() readonly: boolean;
     @Output() valueChange = new EventEmitter<string | undefined>();
     propagateChange = (_: any) => {};
 

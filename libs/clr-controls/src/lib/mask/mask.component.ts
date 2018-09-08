@@ -19,6 +19,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
 
     @Input() mask: string;
     @Input() unmask: ((val: string) => any) | undefined;
+    @Input() readonly: boolean;
 
     propagateChange = (_: any) => {};
 

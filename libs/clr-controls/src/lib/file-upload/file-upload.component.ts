@@ -19,6 +19,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     @Input() files: (string | File)[] | undefined | null;
     @Input() single: boolean | undefined;
     @Input() accept: string | undefined;
+    @Input() readonly: boolean;
     propagateChange = (_: any) => {};
 
     constructor() {}

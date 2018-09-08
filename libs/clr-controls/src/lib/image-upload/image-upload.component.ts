@@ -18,6 +18,7 @@ import * as R from 'ramda';
 export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     // ControlValueAccessor - expect value to be single item (also emit value as single item), array otherwice
     @Input() single: boolean | undefined;
+    @Input() readonly: boolean;
     @Input() images: (string | File)[] | undefined | null;
 
     isStr(file: File | string) {

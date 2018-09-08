@@ -7,6 +7,7 @@ export namespace FormFields {
     export interface BaseField {
         id: string;
         label: string;
+        readonly?: string;
     }
 
     export type TextFieldValidation = BaseFieldValidation | 'email';

@@ -16,7 +16,7 @@
             <input
                 *ngSwitchCase="'TextField'"
                 type="text"
-                [readonly]="readonly"
+                [readonly]="field.readonly"
                 [formControlName]="field.id">
 
             <hlc-input-error
@@ -30,6 +30,7 @@
             <hlc-select
                 *ngSwitchCase="'SelectField'"
                 [formControlName]="field.id"
+                [readonly]="field.readonly"
                 [items]="field.items">
             </hlc-select>
 
@@ -46,6 +47,7 @@
             <hlc-image-upload
                 *ngSwitchCase="'ImageField'"
                 [single]="!field.multi"
+                [readonly]="field.readonly"
                 [formControlName]="field.id"></hlc-image-upload>
 
             <!-- FileField -->
@@ -53,6 +55,7 @@
                 *ngSwitchCase="'FileField'"
                 [single]="!field.multi"
                 [accept]="field.accept"
+                [readonly]="field.readonly"
                 [formControlName]="field.id"></hlc-file-upload>
 
             <!-- DateTimeField -->
@@ -61,6 +64,7 @@
                 type="date"
                 clrDate
                 *ngSwitchCase="'DateField'"
+                [readonly]="field.readonly"
                 [formControlName]="field.id">
 
             <hlc-input-error
@@ -73,6 +77,7 @@
 
             <hlc-date-time
                 *ngSwitchCase="'DateTimeField'"
+                [readonly]="field.readonly"
                 [formControlName]="field.id">
             </hlc-date-time>
 
@@ -93,6 +98,7 @@
             <textarea
                 *ngSwitchCase="'TextareaField'"
                 [formControlName]="field.id"
+                [readonly]="field.readonly"
                 rows="5">
             </textarea>
 
@@ -100,6 +106,7 @@
             <hlc-mask
                 *ngSwitchCase="'MaskField'"
                 [mask]="field.mask"
+                [readonly]="field.readonly"
                 [formControlName]="field.id">
             </hlc-mask>
 

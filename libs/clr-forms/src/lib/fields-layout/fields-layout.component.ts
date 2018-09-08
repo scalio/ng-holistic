@@ -13,15 +13,12 @@ export class FieldsLayoutComponent implements OnInit, OnDestroy {
     @Input() formGroup: FormGroup;
 
     @Input() items: FormFields.FormField[];
-    @Input() readonly: boolean;
 
     private destroy$ = new Subject();
 
-    constructor() {
-    }
+    constructor() {}
 
     ngOnInit() {
-
         console.log('111', this.formGroup);
 
         // build dependent field map from validations

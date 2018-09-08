@@ -1,4 +1,5 @@
 <hlc-file-uploader
+    *ngIf="!readonly"
     [accept]="accept"
     [files]="filesObjects"
     [single]="single"

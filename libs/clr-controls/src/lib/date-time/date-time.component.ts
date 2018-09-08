@@ -27,6 +27,7 @@ interface ListItem {
 export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor {
     @Input() value: string | undefined;
     @Input() format: string | undefined;
+    @Input() readonly: boolean;
 
     @ViewChild('input') input: ElementRef<any>;
 

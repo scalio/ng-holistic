@@ -1,5 +1,6 @@
 <span [class.clr-select-wrapper]="!naked">
     <select
+        [disabled]="readonly"
         (change)="onChange($event)"
         [value]="value">
         <option

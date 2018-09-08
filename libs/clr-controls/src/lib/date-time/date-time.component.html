@@ -1,17 +1,20 @@
 <clr-date-container>
     <input
+        [readonly]="readonly"
         #input
         type="date"
         [(clrDate)]="date">
 </clr-date-container>
 
 <hlc-select
+    [readonly]="readonly"
     [disallowEmpty]="true"
     [items]="hours"
     [value]="hour"
     (valueChange)="onHourChange($event)"></hlc-select>
 
 <hlc-select
+    [readonly]="readonly"
     [disallowEmpty]="true"
     [items]="minutes"
     [value]="minute"
