@@ -7,10 +7,6 @@ export const routes: Routes = [
     {
         path: 'base',
         component: BaseFormPageComponent
-    },
-    {
-        path: '',
-        component: BaseFormPageComponent
     }
 ];
 

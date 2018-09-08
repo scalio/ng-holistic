@@ -13,10 +13,6 @@ export const routes: Routes = [
     {
         path: 'ngrx',
         component: NgrxListPageComponent
-    },
-    {
-        path: '',
-        component: BaseListPageComponent
     }
 ];
 

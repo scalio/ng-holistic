@@ -13,7 +13,7 @@ import { ClrFormsModule } from './clr-forms/clr-forms.module';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/clr-controls',
+        redirectTo: '/clr-forms/base',
         pathMatch: 'full'
     },
     {
