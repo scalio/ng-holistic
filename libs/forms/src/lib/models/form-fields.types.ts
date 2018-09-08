@@ -91,6 +91,7 @@ export namespace FormFields {
         kind: 'MaskField';
         mask: (string | RegExp)[];
         unmask?: (val: string) => any;
+        validators?: BaseFieldValidation[];
     }
 
     export type FormField =
