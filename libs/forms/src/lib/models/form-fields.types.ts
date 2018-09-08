@@ -59,11 +59,13 @@ export namespace FormFields {
     export interface FileField extends BaseField {
         kind: 'FileField';
         accept: string;
+        mullti?: boolean;
         validators?: BaseFieldValidation[];
     }
 
     export interface ImageField extends BaseField {
         kind: 'ImageField';
+        mullti?: boolean;
         validators?: BaseFieldValidation[];
     }
 

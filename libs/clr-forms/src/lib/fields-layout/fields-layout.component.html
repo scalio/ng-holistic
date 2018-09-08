@@ -35,19 +35,25 @@
 
             <!-- CategoryField -->
 
-            <!--
-            <hlc-category-field
+            <!-- <hlc-category-field
                 *ngSwitchCase="'CategoryField'"
                 [formControlName]="field.id"
                 [categories]="field.categories">
-            </hlc-category-field>
-            -->
+            </hlc-category-field> -->
 
             <!-- ImageField -->
 
             <hlc-image-upload
                 *ngSwitchCase="'ImageField'"
+                [single]="!field.multi"
                 [formControlName]="field.id"></hlc-image-upload>
+
+            <!-- FileField -->
+            <hlc-file-upload
+                *ngSwitchCase="'FileField'"
+                [single]="!field.multi"
+                [accept]="field.accept"
+                [formControlName]="field.id"></hlc-file-upload>
 
             <!-- DateTimeField -->
 
@@ -78,11 +84,9 @@
 
             <!-- RichTextField -->
 
-            <!--
-            <hlc-rich-text
+            <!-- <hlc-rich-text
                 *ngSwitchCase="'RichTextField'"
-                [formControlName]="field.id"></hlc-rich-text>
-            -->
+                [formControlName]="field.id"></hlc-rich-text> -->
 
             <!-- TextareaField -->
 
@@ -91,12 +95,6 @@
                 [formControlName]="field.id"
                 rows="5">
             </textarea>
-
-            <!-- FileField -->
-            <hlc-file-upload
-                *ngSwitchCase="'FileField'"
-                [accept]="field.accept"
-                [formControlName]="field.id"></hlc-file-upload>
 
             <!-- Base Validators -->
 
