@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormLayout } from '@ng-holistic/forms';
+import { TextMask } from '@ng-holistic/clr-controls';
 
 const config: FormLayout.Form = {
     content: {
@@ -39,6 +40,12 @@ const config: FormLayout.Form = {
                             kind: 'TextareaField',
                             id: 'textarea',
                             label: 'Textarea'
+                        },
+                        {
+                            kind: 'MaskField',
+                            id: 'mask',
+                            label: 'Number',
+                            mask: TextMask.int(3)
                         }
                     ]
                 }

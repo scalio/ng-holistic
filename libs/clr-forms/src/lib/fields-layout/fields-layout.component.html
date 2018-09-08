@@ -96,6 +96,13 @@
                 rows="5">
             </textarea>
 
+            <!-- TextareaField -->
+            <hlc-mask
+                *ngSwitchCase="'MaskField'"
+                [mask]="field.mask"
+                [formControlName]="field.id">
+            </hlc-mask>
+
             <!-- Base Validators -->
 
             <hlc-input-error for="required">Field is required</hlc-input-error>

@@ -87,6 +87,11 @@ export namespace FormFields {
         showWhenDefined?: boolean;
     }
 
+    export interface MaskField extends BaseField {
+        kind: 'MaskField';
+        mask: (string | RegExp)[];
+    }
+
     export type FormField =
         | TextField
         | SelectField
@@ -99,7 +104,8 @@ export namespace FormFields {
         | ImageField
         | UrlField
         | CategoryField
-        | TextReadonlyField;
+        | TextReadonlyField
+        | MaskField;
 
     export type FieldValidation = BaseFieldValidation | TextFieldValidation;
 

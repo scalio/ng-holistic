@@ -1,10 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldsLayoutComponent } from './fields-layout.component';
-import { InputContainerModule } from '../input-container';
-import { SelectModule, ImageUploadModule, FileUploadModule, DateTimeModule } from '@ng-holistic/clr-controls';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClrDatepickerModule } from '@clr/angular';
+import {
+    DateTimeModule,
+    FileUploadModule,
+    ImageUploadModule,
+    MaskModule,
+    SelectModule
+} from '@ng-holistic/clr-controls';
+import { InputContainerModule } from '../input-container';
+import { FieldsLayoutComponent } from './fields-layout.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -14,7 +20,8 @@ import { ClrDatepickerModule } from '@clr/angular';
         FileUploadModule,
         DateTimeModule,
         ReactiveFormsModule,
-        ClrDatepickerModule
+        ClrDatepickerModule,
+        MaskModule
     ],
     declarations: [FieldsLayoutComponent],
     exports: [FieldsLayoutComponent]
