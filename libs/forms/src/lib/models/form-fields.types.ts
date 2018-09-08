@@ -83,13 +83,14 @@ export namespace FormFields {
 
     export interface TextReadonlyField extends BaseField {
         kind: 'TextReadonlyField';
-        format?: 'date' | 'dateTime';
+        unmask?: 'date' | 'dateTime';
         showWhenDefined?: boolean;
     }
 
     export interface MaskField extends BaseField {
         kind: 'MaskField';
         mask: (string | RegExp)[];
+        unmask?: (val: string) => any;
     }
 
     export type FormField =

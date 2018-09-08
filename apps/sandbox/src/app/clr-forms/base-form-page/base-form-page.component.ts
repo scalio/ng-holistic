@@ -45,7 +45,8 @@ const config: FormLayout.Form = {
                             kind: 'MaskField',
                             id: 'mask',
                             label: 'Number',
-                            mask: TextMask.int(3)
+                            mask: TextMask.int(3),
+                            unmask: TextMask.unmaskNumber
                         }
                     ]
                 }

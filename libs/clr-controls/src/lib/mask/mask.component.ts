@@ -18,6 +18,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
     @Input() value: string;
 
     @Input() mask: string;
+    @Input() unmask: ((val: string) => any) | undefined;
 
     propagateChange = (_: any) => {};
 
@@ -26,8 +27,12 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
     ngOnInit() {}
 
     onChange($event: any) {
+        if (($event.target.value || '') === (this.value || '')) {
+            return;
+        }
         this.value = $event.target.value;
-        this.propagateChange(this.value);
+        const val = this.unmask ? this.unmask(this.value) : this.value;
+        this.propagateChange(val);
     }
 
     //
