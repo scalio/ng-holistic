@@ -323,6 +323,34 @@
           }
         }
       }
+    },
+    "ngrx-forms": {
+      "root": "libs/ngrx-forms",
+      "sourceRoot": "libs/ngrx-forms/src",
+      "projectType": "library",
+      "prefix": "ng-holistic",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/ngrx-forms/src/test.ts",
+            "tsConfig": "libs/ngrx-forms/tsconfig.spec.json",
+            "karmaConfig": "libs/ngrx-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ngrx-forms/tsconfig.lib.json",
+              "libs/ngrx-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
