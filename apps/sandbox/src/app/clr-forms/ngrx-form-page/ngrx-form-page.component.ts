@@ -5,8 +5,9 @@ import { FormLayout } from '@ng-holistic/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { selectPage } from './store';
+import { selectPage, SubFormAction } from './store';
 import { NgrxPageStateModel } from './store/models';
+import { SubFormActions } from '@ng-holistic/ngrx-forms';
 
 const config: FormLayout.Form = {
     content: {
@@ -66,7 +67,7 @@ export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild('layout') layout: FormLayoutComponent;
 
-    constructor(store: Store<any>) {
+    constructor(private readonly store: Store<any>) {
         this.page$ = store.select(selectPage);
     }
 
@@ -86,5 +87,13 @@ export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private get form() {
         return this.layout && this.layout.formGroup;
+    }
+
+    onSave() {
+        this.store.dispatch(new SubFormAction(new SubFormActions.Update(this.form.value)));
+    }
+
+    onCancel() {
+        // this.store.dispatch(new SubFormAction(new SubFormActions.Update(this.form.value)));
     }
 }

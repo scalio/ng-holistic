@@ -1,3 +1,9 @@
-<hlc-form-layout [form]="config" #layout>
-    <hlc-form-footer footer [form]="layout.formGroup"></hlc-form-footer>
+<hlc-form-layout
+    [form]="config"
+    #layout>
+    <hlc-form-footer
+        footer
+        [form]="layout.formGroup"
+        (save)="onSave()"
+        (cancel)="onCancel()"></hlc-form-footer>
 </hlc-form-layout>
