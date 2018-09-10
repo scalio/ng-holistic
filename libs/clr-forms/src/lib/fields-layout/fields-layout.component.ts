@@ -19,8 +19,6 @@ export class FieldsLayoutComponent implements OnInit, OnDestroy {
     constructor() {}
 
     ngOnInit() {
-        console.log('111', this.formGroup);
-
         // build dependent field map from validations
         const depMap = createDepFieldsMapFromValidation(this.items);
 

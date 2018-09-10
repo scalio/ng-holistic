@@ -9,8 +9,6 @@ import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.mo
 import { ClrFormsModule } from './clr-forms/clr-forms.module';
 import { routes as clrListsModuleRoutes } from './clr-lists/clr-lists-routing.module';
 import { ClrListsModule } from './clr-lists/clr-lists.module';
-import { routes as ngrxFormsModuleRoutes } from './ngrx-forms/ngrx-forms-routing.module';
-import { NgrxFormsModule } from './ngrx-forms/ngrx-forms.module';
 
 export const routes: Routes = [
     {
@@ -34,24 +32,13 @@ export const routes: Routes = [
             {
                 path: 'clr-forms',
                 children: clrFormsModuleRoutes
-            },
-            {
-                path: 'ngrx-forms',
-                children: ngrxFormsModuleRoutes
             }
         ]
     }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-        ClrControlsModule,
-        AppLayoutModule,
-        ClrListsModule,
-        ClrFormsModule,
-        NgrxFormsModule
-    ],
+    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule, ClrListsModule, ClrFormsModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

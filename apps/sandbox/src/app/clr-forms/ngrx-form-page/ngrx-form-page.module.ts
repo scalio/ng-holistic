@@ -9,4 +9,4 @@ import { StoreModule } from './store';
     imports: [CommonModule, ClrFormsModule, FormFooterModule, StoreModule],
     exports: [NgrxFormPageComponent]
 })
-export class BaseFormPageModule {}
+export class NgrxFormPageModule {}

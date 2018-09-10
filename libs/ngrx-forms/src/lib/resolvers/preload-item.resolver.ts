@@ -6,6 +6,7 @@ import { SubFormActions } from '../actions';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { PreloadItemConfig } from './preload-item.config';
+import * as R from 'ramda';
 
 const filterSuccess = ($: Observable<SubFormActions.ReadSuccess | SubFormActions.ReadError>) =>
     $.pipe(
@@ -38,7 +39,7 @@ export const resolvePreloadItem = (pair: SubActionContainerPair) => (
 ) => {
     return (route: ActivatedRouteSnapshot) => {
         const id = config.getItemId(route);
-        if (!id) {
+        if (R.isNil(id)) {
             return null;
         }
 
@@ -46,7 +47,7 @@ export const resolvePreloadItem = (pair: SubActionContainerPair) => (
         // since one could load item immmediately
         const item = actions$.pipe(mapActions(pair.pred)).toPromise();
 
-        store.dispatch(pair.ctr(new SubFormActions.Read(null)));
+        store.dispatch(pair.ctr(new SubFormActions.Read(id)));
 
         return item;
     };
