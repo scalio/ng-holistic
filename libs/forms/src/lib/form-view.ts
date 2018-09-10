@@ -16,7 +16,7 @@ import { FormFields } from './models';
  */
 //
 
-const mapFieldToView = (dicts: Dicts) => (field: FormFields.FormField) => {
+const mapFieldToView = (dicts: Dicts | undefined) => (field: FormFields.FormField) => {
     if (!R.isNil(field.readonly) && !(field.readonly instanceof Observable)) {
         field = { ...field, readonly: of(field.readonly) };
     }
@@ -25,11 +25,11 @@ const mapFieldToView = (dicts: Dicts) => (field: FormFields.FormField) => {
             field = { ...field, items: of(field.items) };
         }
         if (R.isNil(field.items)) {
-            field = { ...field, items: of(dicts[field.id]) };
+            field = { ...field, items: of(dicts ? dicts[field.id] : []) };
         }
     }
     return field;
 };
 
-export const mapFieldsToView = (dicts: Dicts, fields: FormFields.FormField[]): FormFields.FormField[] =>
+export const mapFieldsToView = (dicts: Dicts | undefined, fields: FormFields.FormField[]): FormFields.FormField[] =>
     R.map(mapFieldToView(dicts), fields);
