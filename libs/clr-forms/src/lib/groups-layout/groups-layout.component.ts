@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class GroupsLayoutComponent implements OnInit {
     @Input() formGroup: FormGroup;
+    @Input() dicts: FormLayout.Dicts;
     @Input() items: FormLayout.FormGroup[] | undefined;
 
     constructor() {}

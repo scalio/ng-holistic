@@ -3,11 +3,13 @@
     <hlc-fields-layout
         *ngIf="group.content.kind === 'FormFieldsCollection'"
         [formGroup]="formGroup"
+        [dicts]="dicts"
         [items]="group.content.items">
     </hlc-fields-layout>
     <hlc-tabs-layout
         *ngIf="group.content.kind === 'FormTabsCollection'"
         [formGroup]="formGroup"
+        [dicts]="dicts"
         [items]="group.content.items">
     </hlc-tabs-layout>
 </div>

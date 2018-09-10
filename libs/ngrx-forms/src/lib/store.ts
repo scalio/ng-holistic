@@ -14,6 +14,10 @@ const updateSuccess = (state: FormStateModel, action: SubFormActions.UpdateSucce
     return { ...state, item: action.data };
 };
 
+const initDictsSuccess = (state: FormStateModel, action: SubFormActions.InitDictsSuccess): FormStateModel => {
+    return { ...state, dicts: action.dicts };
+};
+
 export const subFormReducer = (pair: SubActionContainerPair) => (state: FormStateModel, action: Action) => {
     if (!pair.pred(action)) {
         return state;
@@ -26,6 +30,8 @@ export const subFormReducer = (pair: SubActionContainerPair) => (state: FormStat
             return readSuccess(state, action.subAction as SubFormActions.ReadSuccess);
         case SubFormActions.UpdateSuccess.Type:
             return updateSuccess(state, action.subAction as SubFormActions.UpdateSuccess);
+        case SubFormActions.InitDictsSuccess.Type:
+            return initDictsSuccess(state, action.subAction as SubFormActions.InitDictsSuccess);
     }
 
     return state;

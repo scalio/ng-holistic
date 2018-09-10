@@ -4,7 +4,7 @@
     [formGroup]="formGroup"
     novalidate>
 
-    <ng-container *ngFor="let field of items; trackBy: trackByFun">
+    <ng-container *ngFor="let field of itemsView; trackBy: trackByFun">
 
         <hlc-input-container
             *ngIf="!isJustField(field)"
@@ -16,7 +16,7 @@
             <input
                 *ngSwitchCase="'TextField'"
                 type="text"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id">
 
             <hlc-input-error
@@ -30,8 +30,8 @@
             <hlc-select
                 *ngSwitchCase="'SelectField'"
                 [formControlName]="field.id"
-                [readonly]="field.readonly"
-                [items]="field.items">
+                [readonly]="field.readonly | async"
+                [items]="field.items | async">
             </hlc-select>
 
             <!-- CategoryField -->
@@ -47,7 +47,7 @@
             <hlc-image-upload
                 *ngSwitchCase="'ImageField'"
                 [single]="!field.multi"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id"></hlc-image-upload>
 
             <!-- FileField -->
@@ -55,7 +55,7 @@
                 *ngSwitchCase="'FileField'"
                 [single]="!field.multi"
                 [accept]="field.accept"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id"></hlc-file-upload>
 
             <!-- DateTimeField -->
@@ -64,7 +64,7 @@
                 type="date"
                 clrDate
                 *ngSwitchCase="'DateField'"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id">
 
             <hlc-input-error
@@ -77,7 +77,7 @@
 
             <hlc-date-time
                 *ngSwitchCase="'DateTimeField'"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id">
             </hlc-date-time>
 
@@ -98,7 +98,7 @@
             <textarea
                 *ngSwitchCase="'TextareaField'"
                 [formControlName]="field.id"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 rows="5">
             </textarea>
 
@@ -106,7 +106,7 @@
             <hlc-mask
                 *ngSwitchCase="'MaskField'"
                 [mask]="field.mask"
-                [readonly]="field.readonly"
+                [readonly]="field.readonly | async"
                 [formControlName]="field.id">
             </hlc-mask>
 

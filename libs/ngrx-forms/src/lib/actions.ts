@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Dicts } from './store.types';
 
 export namespace SubFormActions {
     // Create
@@ -105,6 +106,42 @@ export namespace SubFormActions {
         constructor(public err: any) {}
     }
 
+    //InitDicts
+
+    export class InitDicts implements Action {
+        static Type = '[SubForm] InitDicts';
+
+        public type = InitDicts.Type;
+
+        constructor(public id: any) {}
+    }
+
+    export class InitDictsSuccess implements Action {
+        static Type = '[SubForm] InitDictsSuccess';
+
+        public type = InitDictsSuccess.Type;
+
+        constructor(public dicts: Dicts) {}
+    }
+
+    export class InitDictsError implements Action {
+        static Type = '[SubForm] InitDictsError';
+
+        public type = InitDictsError.Type;
+
+        constructor(public err: any) {}
+    }
+
+    // Cancel
+
+    export class Cancel implements Action {
+        static Type = '[SubForm] Cancel';
+
+        public type = Cancel.Type;
+
+        constructor(public err: any) {}
+    }
+
     export type SubFormAction =
         | Create
         | CreateSuccess
@@ -117,5 +154,9 @@ export namespace SubFormActions {
         | UpdateError
         | Delete
         | DeleteSuccess
-        | DeleteError;
+        | DeleteError
+        | InitDicts
+        | InitDictsSuccess
+        | InitDictsError
+        | Cancel;
 }

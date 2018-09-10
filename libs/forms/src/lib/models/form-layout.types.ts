@@ -29,4 +29,8 @@ export namespace FormLayout {
     export interface Form {
         content: FormFieldsCollection | FormTabsCollection | FormGroupsCollection;
     }
+
+    export interface Dicts {
+        [key: string]: any[];
+    }
 }

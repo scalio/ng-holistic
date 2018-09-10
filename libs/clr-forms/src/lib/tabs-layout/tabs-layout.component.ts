@@ -10,5 +10,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class TabsLayoutComponent {
     @Input() formGroup: FormGroup;
+    @Input() dicts: FormLayout.Dicts;
     @Input() items: FormLayout.FormTab[] | undefined;
 }

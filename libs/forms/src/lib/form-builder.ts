@@ -1,7 +1,7 @@
 import { FormBuilder } from '@angular/forms';
 import * as R from 'ramda';
-import { FormFields, FormLayout } from './models';
 import { createValidation } from './form-validation-builder';
+import { FormFields, FormLayout } from './models';
 
 export const flatItems = (
     coll: FormLayout.FormFieldsCollection | FormLayout.FormGroupsCollection | FormLayout.FormTabsCollection
@@ -20,7 +20,7 @@ export const flatForm = (form: FormLayout.Form): FormFields.FormField[] => flatI
 
 /**
  * To use with EditBaseComponent
- */
+
 export const buildControlsConfig = (inputs: FormFields.FormField[]): { [key: string]: any } =>
     R.pipe(
         R.map<FormFields.FormField, [string, any]>(field => [
@@ -29,6 +29,7 @@ export const buildControlsConfig = (inputs: FormFields.FormField[]): { [key: str
         ]),
         R.fromPairs as any
     )(inputs);
+*/
 
 export const buildForm = (fb: FormBuilder, inputs: FormFields.FormField[]) =>
     R.pipe(

@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 export class FormLayoutComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
     @Input() form: FormLayout.Form | undefined;
+    @Input() dicts: FormLayout.Dicts | undefined;
 
     formGroup: FormGroup;
 

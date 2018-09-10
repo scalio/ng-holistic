@@ -29,6 +29,12 @@ const del = (dataProvider: FormDataProvider) => (action: SubFormActions.Delete) 
         catchError(err => of(new SubFormActions.DeleteError(err)))
     );
 
+const initDicts = (dataProvider: FormDataProvider) => (action: SubFormActions.InitDicts) =>
+    dataProvider.loadDicts(action.id).pipe(
+        map(res => new SubFormActions.InitDictsSuccess(res)),
+        catchError(err => of(new SubFormActions.InitDictsError(err)))
+    );
+
 const handleSubAction = (dataProvider: FormDataProvider) => (
     subAction$: Observable<SubFormActions.SubFormAction>
 ): Observable<SubFormActions.SubFormAction> =>
@@ -48,6 +54,10 @@ const handleSubAction = (dataProvider: FormDataProvider) => (
         subAction$.pipe(
             filter(R.propEq('type', SubFormActions.Delete.Type)),
             switchMap(del(dataProvider))
+        ),
+        subAction$.pipe(
+            filter(R.propEq('type', SubFormActions.InitDicts)),
+            switchMap(initDicts(dataProvider))
         )
     );
 

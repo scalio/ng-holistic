@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormDataProvider } from '@ng-holistic/ngrx-forms';
 import { of } from 'rxjs';
 import { Item } from '../models';
-import { item } from './mock.data';
+import { item, dicts } from './mock.data';
 
 @Injectable()
 export class DataAccessService implements FormDataProvider<string, Item> {
@@ -20,5 +20,9 @@ export class DataAccessService implements FormDataProvider<string, Item> {
 
     delete(_: string) {
         return of();
+    }
+
+    loadDicts(_: any) {
+        return of(dicts);
     }
 }

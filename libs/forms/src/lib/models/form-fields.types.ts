@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 export namespace FormFields {
     export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
 
@@ -7,7 +9,7 @@ export namespace FormFields {
     export interface BaseField {
         id: string;
         label: string;
-        readonly?: string;
+        readonly?: boolean | Observable<boolean>;
     }
 
     export type TextFieldValidation = BaseFieldValidation | 'email';
@@ -19,7 +21,7 @@ export namespace FormFields {
 
     export interface SelectField extends BaseField {
         kind: 'SelectField';
-        items: any[];
+        items?: any[] | Observable<any[]>;
         validators?: BaseFieldValidation[];
     }
 

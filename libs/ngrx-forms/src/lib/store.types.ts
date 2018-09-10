@@ -20,8 +20,14 @@ export interface FormDataProvider<TId = any, TData = any> {
     read(id: TId): Observable<TData>;
     update(data: TData): Observable<TData>;
     delete(id: TId): Observable<any>;
+    loadDicts(id: TId): Observable<Dicts>;
 }
 
 export interface FormStateModel<TItem = any> {
     item?: TItem;
+    dicts?: Dicts;
+}
+
+export interface Dicts {
+    [key: string]: any[];
 }

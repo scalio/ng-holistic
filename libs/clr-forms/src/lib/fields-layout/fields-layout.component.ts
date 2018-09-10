@@ -1,6 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { createDepFieldsMapFromValidation, FormFields, updateDepFieldsValidation } from '@ng-holistic/forms';
+import {
+    createDepFieldsMapFromValidation,
+    FormFields,
+    mapFieldsToView,
+    updateDepFieldsValidation
+} from '@ng-holistic/forms';
+import { Dicts } from '@ng-holistic/ngrx-forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -11,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class FieldsLayoutComponent implements OnInit, OnDestroy {
     @Input() formGroup: FormGroup;
+    @Input() dicts: Dicts;
 
     @Input() items: FormFields.FormField[];
 
@@ -26,6 +33,10 @@ export class FieldsLayoutComponent implements OnInit, OnDestroy {
         updateDepFieldsValidation(depMap, this.formGroup)
             .pipe(takeUntil(this.destroy$))
             .subscribe(x => x);
+    }
+
+    get itemsView() {
+        return mapFieldsToView(this.dicts, this.items);
     }
 
     ngOnDestroy() {

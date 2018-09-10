@@ -4,3 +4,4 @@ export * from './form-misc';
 export * from './form-validation-builder';
 export * from './models';
 export * from './validators';
+export * from './form-view';
