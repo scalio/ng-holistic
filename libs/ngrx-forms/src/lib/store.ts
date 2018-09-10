@@ -14,7 +14,7 @@ const updateSuccess = (state: FormStateModel, action: SubFormActions.UpdateSucce
     return { ...state, item: action.data };
 };
 
-export const subListReducer = (pair: SubActionContainerPair) => (state: FormStateModel, action: Action) => {
+export const subFormReducer = (pair: SubActionContainerPair) => (state: FormStateModel, action: Action) => {
     if (!pair.pred(action)) {
         return state;
     }

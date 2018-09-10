@@ -51,7 +51,7 @@ const handleSubAction = (dataProvider: FormDataProvider) => (
         )
     );
 
-export const subListEffects = (dataProvider: FormDataProvider, pair: SubActionContainerPair) => (actions: Actions) =>
+export const subFormEffects = (dataProvider: FormDataProvider, pair: SubActionContainerPair) => (actions: Actions) =>
     actions.pipe(
         filter(pair.pred),
         map(R.prop('subAction')),

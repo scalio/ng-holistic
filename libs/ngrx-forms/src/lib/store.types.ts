@@ -19,7 +19,7 @@ export interface FormDataProvider<TId = any, TData = any> {
     create(data: TData): Observable<TData>;
     read(id: TId): Observable<TData>;
     update(data: TData): Observable<TData>;
-    delete(id: TId): Observable<void>;
+    delete(id: TId): Observable<any>;
 }
 
 export interface FormStateModel<TItem = any> {
