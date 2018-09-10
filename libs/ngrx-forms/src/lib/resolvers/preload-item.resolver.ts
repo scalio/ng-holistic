@@ -48,6 +48,8 @@ export const resolvePreloadItem = (pair: SubActionContainerPair) => (
         const item = actions$.pipe(mapActions(pair.pred)).toPromise();
 
         store.dispatch(pair.ctr(new SubFormActions.Read(id)));
+        // Needs to wait and handle error for init dicts
+        store.dispatch(pair.ctr(new SubFormActions.InitDicts(id)));
 
         return item;
     };

@@ -1,5 +1,7 @@
 <hlc-form-layout
+    *ngIf="(page$ | async) as page"
     [form]="config"
+    [dicts]="page.dicts"
     #layout>
     <hlc-form-footer
         footer

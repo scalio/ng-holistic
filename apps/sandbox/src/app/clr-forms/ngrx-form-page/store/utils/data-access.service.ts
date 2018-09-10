@@ -23,6 +23,7 @@ export class DataAccessService implements FormDataProvider<string, Item> {
     }
 
     loadDicts(_: any) {
+        console.log('111', dicts);
         return of(dicts);
     }
 }

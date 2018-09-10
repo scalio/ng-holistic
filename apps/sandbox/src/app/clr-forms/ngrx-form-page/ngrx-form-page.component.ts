@@ -26,17 +26,7 @@ const config: FormLayout.Form = {
             {
                 kind: 'SelectField',
                 id: 'color',
-                label: 'Items',
-                items: [
-                    {
-                        key: 'one',
-                        label: 'one'
-                    },
-                    {
-                        key: 'two',
-                        label: 'two'
-                    }
-                ]
+                label: 'Items'
             },
             {
                 kind: 'TextareaField',

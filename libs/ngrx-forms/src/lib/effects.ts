@@ -56,7 +56,7 @@ const handleSubAction = (dataProvider: FormDataProvider) => (
             switchMap(del(dataProvider))
         ),
         subAction$.pipe(
-            filter(R.propEq('type', SubFormActions.InitDicts)),
+            filter(R.propEq('type', SubFormActions.InitDicts.Type)),
             switchMap(initDicts(dataProvider))
         )
     );
