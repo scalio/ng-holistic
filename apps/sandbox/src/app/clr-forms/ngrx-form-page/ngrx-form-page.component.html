@@ -2,6 +2,7 @@
     *ngIf="(page$ | async) as page"
     [form]="config"
     [dicts]="page.dicts"
+    [value]="page.item"
     #layout>
     <hlc-form-footer
         footer

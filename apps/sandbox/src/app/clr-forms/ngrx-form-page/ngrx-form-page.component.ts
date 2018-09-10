@@ -70,7 +70,7 @@ export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit() {
         this.page$.pipe(takeUntil(this.destroy$)).subscribe(page => {
             if (this.form && page.item) {
-                this.form.patchValue(page.item);
+                // this.form.patchValue(page.item);
             }
         });
     }
