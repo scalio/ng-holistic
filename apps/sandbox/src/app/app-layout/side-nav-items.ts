@@ -61,5 +61,16 @@ export default [
                 path: ['/clr-forms', 'base']
             }
         ]
+    },
+    {
+        title: 'Ngrx-Forms',
+        path: ['/ngrx-forms'],
+        icon: 'list',
+        children: [
+            {
+                title: 'ngrx',
+                path: ['/ngrx-forms', 'base']
+            }
+        ]
     }
 ] as SideNavItem[];

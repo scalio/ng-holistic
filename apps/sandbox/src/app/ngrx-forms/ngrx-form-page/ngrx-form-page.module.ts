@@ -1,0 +1,11 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ClrFormsModule, FormFooterModule } from '@ng-holistic/clr-forms';
+import { NgrxFormPageComponent } from './ngrx-form-page.component';
+
+@NgModule({
+    declarations: [NgrxFormPageComponent],
+    imports: [CommonModule, ClrFormsModule, FormFooterModule],
+    exports: [NgrxFormPageComponent]
+})
+export class BaseFormPageModule {}
