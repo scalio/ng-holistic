@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormLayout } from '@ng-holistic/forms';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TextMask } from '@ng-holistic/clr-controls';
+import { FormLayoutComponent } from '@ng-holistic/clr-forms';
+import { FormLayout } from '@ng-holistic/forms';
+import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { selectPage } from './store';
+import { NgrxPageStateModel } from './store/models';
 
 const config: FormLayout.Form = {
     content: {
@@ -8,8 +14,8 @@ const config: FormLayout.Form = {
         items: [
             {
                 kind: 'TextField',
-                id: 'title',
-                label: 'Title'
+                id: 'name',
+                label: 'Name'
             },
             {
                 kind: 'DateField',
@@ -18,7 +24,7 @@ const config: FormLayout.Form = {
             },
             {
                 kind: 'SelectField',
-                id: 'items',
+                id: 'color',
                 label: 'Items',
                 items: [
                     {
@@ -33,13 +39,13 @@ const config: FormLayout.Form = {
             },
             {
                 kind: 'TextareaField',
-                id: 'textarea',
-                label: 'Textarea'
+                id: 'description',
+                label: 'Description'
             },
             {
                 kind: 'MaskField',
-                id: 'mask',
-                label: 'Number',
+                id: 'age',
+                label: 'Age',
                 mask: TextMask.int(3),
                 unmask: TextMask.unmaskNumber
             }
@@ -53,10 +59,32 @@ const config: FormLayout.Form = {
     styleUrls: ['./ngrx-form-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgrxFormPageComponent implements OnInit {
+export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
+    destroy$ = new Subject();
+    readonly page$: Observable<NgrxPageStateModel>;
     config = config;
 
-    constructor() {}
+    @ViewChild('layout') layout: FormLayoutComponent;
+
+    constructor(store: Store<any>) {
+        this.page$ = store.select(selectPage);
+    }
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
+
+    ngAfterViewInit() {
+        this.page$.pipe(takeUntil(this.destroy$)).subscribe(page => {
+            if (this.form && page.item) {
+                this.form.patchValue(page.item);
+            }
+        });
+    }
+
+    private get form() {
+        return this.layout && this.layout.formGroup;
+    }
 }

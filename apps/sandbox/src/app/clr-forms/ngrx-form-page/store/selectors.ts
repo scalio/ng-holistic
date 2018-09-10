@@ -1,4 +1,4 @@
 import { createFeatureSelector } from '@ngrx/store';
-import { ItemStateModel } from './models';
+import { NgrxPageStateModel } from './models';
 
-export const selectTemplateList = createFeatureSelector<ItemStateModel>('ngrxForm');
+export const selectPage = createFeatureSelector<NgrxPageStateModel>('ngrxForm');

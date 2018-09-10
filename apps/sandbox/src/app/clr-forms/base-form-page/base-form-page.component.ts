@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormLayout } from '@ng-holistic/forms';
 import { TextMask } from '@ng-holistic/clr-controls';
+import { FormLayout } from '@ng-holistic/forms';
 
 const config: FormLayout.Form = {
     content: {

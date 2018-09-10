@@ -1,9 +1,9 @@
 import { Action } from '@ngrx/store';
 import { pair } from './utils';
-import { ItemStateModel } from './models';
+import { NgrxPageStateModel } from './models';
 import { subFormReducer } from '@ng-holistic/ngrx-forms';
 
-export const initialState: ItemStateModel = {
+export const initialState: NgrxPageStateModel = {
     item: undefined
 };
 
