@@ -1,13 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { TextMask } from '@ng-holistic/clr-controls';
 import { FormLayoutComponent } from '@ng-holistic/clr-forms';
 import { FormLayout } from '@ng-holistic/forms';
+import { SubFormActions } from '@ng-holistic/ngrx-forms';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { selectPage, SubFormAction } from './store';
 import { NgrxPageStateModel } from './store/models';
-import { SubFormActions } from '@ng-holistic/ngrx-forms';
 
 const config: FormLayout.Form = {
     content: {
@@ -50,8 +49,7 @@ const config: FormLayout.Form = {
     styleUrls: ['./ngrx-form-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
-    destroy$ = new Subject();
+export class NgrxFormPageComponent implements OnInit {
     readonly page$: Observable<NgrxPageStateModel>;
     config = config;
 
@@ -62,18 +60,6 @@ export class NgrxFormPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnInit() {}
-
-    ngOnDestroy() {
-        this.destroy$.next();
-    }
-
-    ngAfterViewInit() {
-        this.page$.pipe(takeUntil(this.destroy$)).subscribe(page => {
-            if (this.form && page.item) {
-                // this.form.patchValue(page.item);
-            }
-        });
-    }
 
     private get form() {
         return this.layout && this.layout.formGroup;
