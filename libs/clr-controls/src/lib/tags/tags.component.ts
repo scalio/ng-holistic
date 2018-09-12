@@ -1,9 +1,9 @@
 import { Component, forwardRef, Inject, Input, Optional, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { flatMap, tap, withLatestFrom } from 'rxjs/operators';
+import { flatMap, withLatestFrom } from 'rxjs/operators';
 import { ListItemsConfig, LIST_ITEMS_CONFIG, ObjectMap, objectMap } from '../list-items.config';
-import { TypeaheadConfig, TypeaheadComponent } from '../typeahead';
+import { TypeaheadComponent, TypeaheadConfig } from '../typeahead';
 
 @Component({
     selector: 'hlc-tags',
