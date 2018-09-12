@@ -1,1 +1,4 @@
-<hlc-typeahead [config]="config"></hlc-typeahead>
+<hlc-typeahead
+    [config]="config"
+    [ngModel]="value"
+    (ngModelChange)="onInput($event)"></hlc-typeahead>

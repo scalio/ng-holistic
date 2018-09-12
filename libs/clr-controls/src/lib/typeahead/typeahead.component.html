@@ -1,3 +1,5 @@
 <input
     type="text"
-    [hlcTypeahead]="search">
+    [hlcTypeahead]="search"
+    [value]="value"
+    (valueChange)="onChange($event)">

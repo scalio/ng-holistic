@@ -33,6 +33,10 @@ export class TypeaheadComponent implements OnInit, ControlValueAccessor {
         return this.config && this.config.search;
     }
 
+    onChange($event: any) {
+        console.log('+++', $event);
+    }
+
     //
 
     writeValue(obj: any) {

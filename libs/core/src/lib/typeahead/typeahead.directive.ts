@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnDestroy, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { Observable, fromEvent, Subscription, merge } from 'rxjs';
 import { map, startWith, flatMap, filter, merge as mergeOper, shareReplay, mapTo } from 'rxjs/operators';
 import { OverlayHelperService } from './overlay-helper.service';
@@ -51,6 +51,8 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
     @Input() resultTemplate: TemplateRef<any> | undefined;
     @Input() skipPredicate: SkipPredicate | undefined;
     @Input() resultKey: ResultKeyFun | undefined;
+
+    @Output() valueChange = new EventEmitter<any | undefined>();
 
     constructor(private _elementRef: ElementRef<HTMLInputElement>, private overlayHelper: OverlayHelperService) {
         this._valueChanges$ = fromEvent<Event>(_elementRef.nativeElement, 'input').pipe(
@@ -130,6 +132,7 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
                 if (item) {
                     this.value = item;
                     this._elementRef.nativeElement.value = this.resultFormatter ? this.resultFormatter(item) : item;
+                    this.valueChange.emit(this.value);
                 }
             });
 
@@ -141,6 +144,7 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        // TODO: destroy$
         if (this.resultsSub) {
             this.resultsSub.unsubscribe();
         }

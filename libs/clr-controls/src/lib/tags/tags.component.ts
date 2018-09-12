@@ -22,10 +22,15 @@ export class TagsComponent implements ControlValueAccessor {
 
     constructor() {}
 
+    onInput($event: any) {
+        console.log('!!!', $event);
+    }
+
     onValueChange(val: any) {
         this.value = val;
         this.propagateChange(this.value);
     }
+
     //
 
     writeValue(obj: any) {
