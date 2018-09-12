@@ -1,3 +1,6 @@
 <tag-input
+    [onlyFromAutocomplete]="true"
     [ngModel]="value"
-    (ngModelChange)="onValueChange($event)"></tag-input>
+    (ngModelChange)="onValueChange($event)">
+    <tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>
+</tag-input>
