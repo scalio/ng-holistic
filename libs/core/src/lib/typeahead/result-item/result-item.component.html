@@ -1,0 +1,12 @@
+<div
+    class="hlc-typeahead-result-item"
+    [class.active]="isActive"
+    tabindex="-1">
+
+    <ng-container *ngIf="resultTemplate else defaultResultTemplate">
+        <ng-container *ngTemplateOutlet="resultTemplate; context: { $implicit : result }"></ng-container>
+    </ng-container>
+
+</div>
+
+<ng-template #defaultResultTemplate>{{ result }}</ng-template>

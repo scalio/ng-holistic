@@ -7,11 +7,13 @@ import {
     FileUploadModule,
     ImageUploadModule,
     MaskModule,
-    SelectModule
+    SelectModule,
+    TypeaheadModule
 } from '@ng-holistic/clr-controls';
 import { InputContainerModule } from '../input-container';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { TagsModule } from '../../../../clr-controls/src/lib/tags';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -23,7 +25,8 @@ import { TagsModule } from '../../../../clr-controls/src/lib/tags';
         ReactiveFormsModule,
         ClrDatepickerModule,
         MaskModule,
-        TagsModule
+        TagsModule,
+        TypeaheadModule
     ],
     declarations: [FieldsLayoutComponent],
     exports: [FieldsLayoutComponent]

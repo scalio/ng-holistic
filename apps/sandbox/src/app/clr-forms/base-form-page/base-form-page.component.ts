@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TextMask } from '@ng-holistic/clr-controls';
 import { FormLayout } from '@ng-holistic/forms';
+import { of } from 'rxjs';
 
 const config: FormLayout.Form = {
     content: {
@@ -17,9 +18,14 @@ const config: FormLayout.Form = {
                             label: 'Title'
                         },
                         {
-                            kind: 'TagsField',
-                            id: 'tags',
-                            label: 'Tags'
+                            kind: 'TypeaheadField',
+                            id: 'typeahead',
+                            label: 'Typeahead',
+                            config: {
+                                search: (_: string) => {
+                                    return of(['one', 'two']);
+                                }
+                            }
                         },
                         {
                             kind: 'DateField',

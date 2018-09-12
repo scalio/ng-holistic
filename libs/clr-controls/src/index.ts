@@ -8,3 +8,4 @@ export * from './lib/select';
 export * from './lib/ordered-list';
 export * from './lib/list-items.config';
 export * from './lib/mask';
+export * from './lib/typeahead';

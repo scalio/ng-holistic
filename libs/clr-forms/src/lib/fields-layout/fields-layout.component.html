@@ -117,6 +117,14 @@
                 [formControlName]="field.id">
             </hlc-tags>
 
+            <!-- TagsField -->
+            <hlc-typeahead
+                *ngSwitchCase="'TypeaheadField'"
+                [config]="field.config"
+                [readonly]="field.readonly | async"
+                [formControlName]="field.id">
+            </hlc-typeahead>
+
             <!-- Base Validators -->
 
             <hlc-input-error for="required">Field is required</hlc-input-error>
