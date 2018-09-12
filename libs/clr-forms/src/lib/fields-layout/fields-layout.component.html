@@ -110,6 +110,13 @@
                 [formControlName]="field.id">
             </hlc-mask>
 
+            <!-- TagsField -->
+            <hlc-tags
+                *ngSwitchCase="'TagsField'"
+                [readonly]="field.readonly | async"
+                [formControlName]="field.id">
+            </hlc-tags>
+
             <!-- Base Validators -->
 
             <hlc-input-error for="required">Field is required</hlc-input-error>

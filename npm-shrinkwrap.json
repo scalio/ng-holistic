@@ -7137,6 +7137,7 @@
             "version": "1.1.0",
             "resolved": "https://registry.npmjs.org/is-observable/-/is-observable-1.1.0.tgz",
             "integrity": "sha512-NqCa4Sa2d+u7BWc6CukaObG3Fh+CU9bvixbpcXYhy2VvYS7vVGIdAgnIS5Ks3A/cqk4rebLJ9s8zBstT2aKnIA==",
+            "dev": true,
             "requires": {
                 "symbol-observable": "^1.1.0"
             }
@@ -9188,6 +9189,14 @@
             "resolved": "https://registry.npmjs.org/ng2-dnd/-/ng2-dnd-5.0.2.tgz",
             "integrity": "sha512-5mWWBePwvEPsNd/HkdbD543Q9mPyJofL6zkNydl8/Ah3qrrvZT2DaEPbknY08OgkXpI2qUGksc01OzzVlRQ9dQ=="
         },
+        "ng2-material-dropdown": {
+            "version": "0.10.1",
+            "resolved": "https://registry.npmjs.org/ng2-material-dropdown/-/ng2-material-dropdown-0.10.1.tgz",
+            "integrity": "sha512-dOmk4+T6Rbtk60Un7sxOOFU546z5JEYupSL+RiG0/rN4DmJvxPp297AvA2Qm9LSMNszUZMi55cRzj79zQYu85g==",
+            "requires": {
+                "tslib": "^1.9.0"
+            }
+        },
         "ngrx-store-freeze": {
             "version": "0.2.4",
             "resolved": "https://registry.npmjs.org/ngrx-store-freeze/-/ngrx-store-freeze-0.2.4.tgz",
@@ -9195,6 +9204,15 @@
             "dev": true,
             "requires": {
                 "deep-freeze-strict": "^1.1.1"
+            }
+        },
+        "ngx-chips": {
+            "version": "1.9.7",
+            "resolved": "https://registry.npmjs.org/ngx-chips/-/ngx-chips-1.9.7.tgz",
+            "integrity": "sha512-AJyKJ24V5a19ANYTNgaftsv9zffpZgR4hNBJfrQ3Pct6zs545NPz5DVIiUBOTWbH4YMgcCpS2uDcbec+J1N06g==",
+            "requires": {
+                "ng2-material-dropdown": "0.10.1",
+                "tslib": "^1.9.0"
             }
         },
         "ngx-file-drop": {
@@ -12727,7 +12745,8 @@
         "symbol-observable": {
             "version": "1.2.0",
             "resolved": "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz",
-            "integrity": "sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ=="
+            "integrity": "sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==",
+            "dev": true
         },
         "tapable": {
             "version": "1.0.0",

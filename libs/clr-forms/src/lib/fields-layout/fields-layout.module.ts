@@ -11,6 +11,7 @@ import {
 } from '@ng-holistic/clr-controls';
 import { InputContainerModule } from '../input-container';
 import { FieldsLayoutComponent } from './fields-layout.component';
+import { TagsModule } from '../../../../clr-controls/src/lib/tags';
 @NgModule({
     imports: [
         CommonModule,
@@ -21,7 +22,8 @@ import { FieldsLayoutComponent } from './fields-layout.component';
         DateTimeModule,
         ReactiveFormsModule,
         ClrDatepickerModule,
-        MaskModule
+        MaskModule,
+        TagsModule
     ],
     declarations: [FieldsLayoutComponent],
     exports: [FieldsLayoutComponent]

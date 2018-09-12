@@ -17,6 +17,11 @@ const config: FormLayout.Form = {
                             label: 'Title'
                         },
                         {
+                            kind: 'TagsField',
+                            id: 'tags',
+                            label: 'Tags'
+                        },
+                        {
                             kind: 'DateField',
                             id: 'date',
                             label: 'Date'

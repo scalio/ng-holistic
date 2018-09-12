@@ -97,6 +97,11 @@ export namespace FormFields {
         validators?: BaseFieldValidation[];
     }
 
+    export interface TagsField extends BaseField {
+        kind: 'TagsField';
+        validators?: BaseFieldValidation[];
+    }
+
     export type FormField =
         | TextField
         | SelectField
@@ -110,7 +115,8 @@ export namespace FormFields {
         | UrlField
         | CategoryField
         | TextReadonlyField
-        | MaskField;
+        | MaskField
+        | TagsField;
 
     export type FieldValidation = BaseFieldValidation | TextFieldValidation;
 
