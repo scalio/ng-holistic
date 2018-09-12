@@ -1,5 +1,5 @@
-import { Component, forwardRef, OnInit, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export interface TypeaheadConfig {
@@ -22,6 +22,11 @@ export class TypeaheadComponent implements OnInit, ControlValueAccessor {
     @Input() value: any;
     @Input() config: TypeaheadConfig | undefined;
     @Input() readonly: boolean | undefined;
+    @Input() placeholder: string;
+
+    @Output() valueChange = new EventEmitter<any>();
+
+    @ViewChild('input') input: any;
 
     propagateChange = (_: any) => {};
 
@@ -36,6 +41,12 @@ export class TypeaheadComponent implements OnInit, ControlValueAccessor {
     onChange($event: any) {
         this.value = $event;
         this.propagateChange(this.value);
+        this.valueChange.emit(this.value);
+    }
+
+    resetValue() {
+        this.value = undefined;
+        this.input.nativeElement.value = '';
     }
 
     //

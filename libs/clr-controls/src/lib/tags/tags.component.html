@@ -2,6 +2,7 @@
     [items]="value"
     (remove)="onRemove($event)"></hlc-tags-list>
 <hlc-typeahead
+    #typeahead
     [config]="_config"
-    [ngModel]="value"
-    (ngModelChange)="onChange($event)"></hlc-typeahead>
+    placeholder="Type to add a tag..."
+    (valueChange)="onChange($event)"></hlc-typeahead>

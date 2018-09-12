@@ -1,9 +1,9 @@
-import { Component, forwardRef, Inject, Input, Optional } from '@angular/core';
+import { Component, forwardRef, Inject, Input, Optional, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { flatMap, tap, withLatestFrom } from 'rxjs/operators';
 import { ListItemsConfig, LIST_ITEMS_CONFIG, ObjectMap, objectMap } from '../list-items.config';
-import { TypeaheadConfig } from '../typeahead';
+import { TypeaheadConfig, TypeaheadComponent } from '../typeahead';
 
 @Component({
     selector: 'hlc-tags',
@@ -29,6 +29,8 @@ export class TagsComponent implements ControlValueAccessor {
     @Input() config: TypeaheadConfig | undefined;
     @Input() readonly: boolean | undefined;
 
+    @ViewChild('typeahead') typeahead: TypeaheadComponent;
+
     private readonly objMap: ObjectMap;
 
     propagateChange = (_: any) => {};
@@ -43,7 +45,6 @@ export class TagsComponent implements ControlValueAccessor {
 
     private search = (term$: Observable<string>) => {
         return term$.pipe(
-            tap(console.log),
             flatMap((this.config as TypeaheadConfig).search),
             withLatestFrom(this.value$, (items, val) => this.filterItems(val || [])(items))
         );
@@ -62,7 +63,7 @@ export class TagsComponent implements ControlValueAccessor {
 
     onChange($event: any) {
         this.value = [...(this.value || []), $event];
-        console.log(this.value);
+        this.typeahead.resetValue();
     }
 
     onRemove(item: any) {
