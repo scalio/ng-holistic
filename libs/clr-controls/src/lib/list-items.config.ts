@@ -21,3 +21,17 @@ export interface ListItemsConfig {
 }
 
 export const LIST_ITEMS_CONFIG = new InjectionToken('LIST_ITEMS_CONFIG');
+
+export interface ObjectMap<T = any, TId = any> {
+    getKey(item: T, undef: any): TId;
+    getLabel(item: T, undef: any): string;
+}
+
+export const objectMap = (config: ListItemsConfig | undefined): ObjectMap => ({
+    getKey(item: any, undef: any) {
+        return config && config.objectMapper ? item[config.objectMapper.keyField] : undef;
+    },
+    getLabel(item: any, undef: any) {
+        return config && config.objectMapper ? item[config.objectMapper.labelField] : undef;
+    }
+});

@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { TypeaheadModule } from '../typeahead';
 import { TagsComponent } from './tags.component';
 import { FormsModule } from '@angular/forms';
+import { TagsListModule } from '../tags-list';
 
 @NgModule({
-    imports: [CommonModule, TypeaheadModule, FormsModule],
+    imports: [CommonModule, TypeaheadModule, FormsModule, TagsListModule],
     declarations: [TagsComponent],
     exports: [TagsComponent]
 })

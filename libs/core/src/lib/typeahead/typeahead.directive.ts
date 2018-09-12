@@ -1,9 +1,9 @@
-import { Directive, Input, ElementRef, OnInit, OnDestroy, TemplateRef, Output, EventEmitter } from '@angular/core';
-import { Observable, fromEvent, Subscription, merge } from 'rxjs';
-import { map, startWith, flatMap, filter, merge as mergeOper, shareReplay, mapTo } from 'rxjs/operators';
+import { A, BACKSPACE, DOWN_ARROW, ENTER, ESCAPE, NINE, TAB, UP_ARROW, Z, ZERO } from '@angular/cdk/keycodes';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
+import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { filter, flatMap, map, mapTo, merge as mergeOper, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { OverlayHelperService } from './overlay-helper.service';
-import { ENTER, ESCAPE, TAB, DOWN_ARROW, UP_ARROW, ZERO, NINE, A, Z, BACKSPACE } from '@angular/cdk/keycodes';
-import { ResultFormatter, SkipPredicate, ResultKeyFun } from './results-container/results-container.component';
+import { ResultFormatter, ResultKeyFun, SkipPredicate } from './results-container/results-container.component';
 
 export interface SearchArgInit {
     kind: 'SearchArgInit';
@@ -39,10 +39,7 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
     private readonly _keyDown$: Observable<KeyboardEvent>;
     private readonly _focus$: Observable<void>;
     private readonly _valueChanges$: Observable<string>;
-
-    private closeSub: Subscription;
-    private closeTabSub: Subscription;
-    private resultsSub: Subscription;
+    private readonly _destroy$ = new Subject();
 
     @Input() value: any | null | undefined;
     // tslint:disable-next-line:no-input-rename
@@ -89,7 +86,7 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
             );
 
             // subscribe immediately to emit SearchArgInit
-            this.resultsSub = results$.subscribe(x => x);
+            results$.pipe(takeUntil(this._destroy$)).subscribe(x => x);
 
             // open
             const openKeys$ = this._keyDown$.pipe(filter(evt => isOpenKey(evt.keyCode)));
@@ -125,35 +122,36 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
 
             const close$ = merge(select$, closeKeys$);
 
-            this.closeSub = close$.pipe(filter(() => this.overlayHelper.isOpen)).subscribe(item => {
-                // important : focus should be set before hide since ovewise open$ will emit event
-                this._elementRef.nativeElement.focus();
-                this.overlayHelper.hide();
-                if (item) {
-                    this.value = item;
-                    this._elementRef.nativeElement.value = this.resultFormatter ? this.resultFormatter(item) : item;
-                    this.valueChange.emit(this.value);
-                }
-            });
+            close$
+                .pipe(
+                    takeUntil(this._destroy$),
+                    filter(() => this.overlayHelper.isOpen)
+                )
+                .subscribe(item => {
+                    // important : focus should be set before hide since ovewise open$ will emit event
+                    this._elementRef.nativeElement.focus();
+                    this.overlayHelper.hide();
+                    if (item) {
+                        this.value = item;
+                        this._elementRef.nativeElement.value = this.resultFormatter ? this.resultFormatter(item) : item;
+                        this.valueChange.emit(this.value);
+                    }
+                });
 
             // special case close, no need to set focus on input
-            this.closeTabSub = this._keyDown$.pipe(filter(evt => evt.keyCode === TAB)).subscribe(() => {
-                this.overlayHelper.hide();
-            });
+            this._keyDown$
+                .pipe(
+                    takeUntil(this._destroy$),
+                    filter(evt => evt.keyCode === TAB)
+                )
+                .subscribe(() => {
+                    this.overlayHelper.hide();
+                });
         }
     }
 
     ngOnDestroy() {
-        // TODO: destroy$
-        if (this.resultsSub) {
-            this.resultsSub.unsubscribe();
-        }
-        if (this.closeSub) {
-            this.closeSub.unsubscribe();
-        }
-        if (this.closeTabSub) {
-            this.closeTabSub.unsubscribe();
-        }
+        this._destroy$.next();
         this.overlayHelper.destroy();
     }
 }

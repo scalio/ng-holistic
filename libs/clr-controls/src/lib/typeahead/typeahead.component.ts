@@ -34,7 +34,8 @@ export class TypeaheadComponent implements OnInit, ControlValueAccessor {
     }
 
     onChange($event: any) {
-        console.log('+++', $event);
+        this.value = $event;
+        this.propagateChange(this.value);
     }
 
     //

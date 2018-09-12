@@ -1,0 +1,11 @@
+<ng-container *ngIf="items?.length">
+    <div class="cat-field__group">
+        <a
+            class="label label-info clickable"
+            *ngFor="let item of items"
+            (click)="onRemove(item)">
+            <clr-icon shape="trash"></clr-icon>
+            {{getLabel(item)}}
+        </a>
+    </div>
+</ng-container>
