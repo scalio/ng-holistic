@@ -113,6 +113,7 @@
             <!-- TagsField -->
             <hlc-tags
                 *ngSwitchCase="'TagsField'"
+                [config]="field.config"
                 [readonly]="field.readonly | async"
                 [formControlName]="field.id">
             </hlc-tags>

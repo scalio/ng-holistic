@@ -18,6 +18,16 @@ const config: FormLayout.Form = {
                             label: 'Title'
                         },
                         {
+                            kind: 'TagsField',
+                            id: 'tags',
+                            label: 'Tags',
+                            config: {
+                                search: (_: string) => {
+                                    return of(['one', 'two']);
+                                }
+                            }
+                        },
+                        {
                             kind: 'TypeaheadField',
                             id: 'typeahead',
                             label: 'Typeahead',

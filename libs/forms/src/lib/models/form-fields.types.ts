@@ -100,6 +100,7 @@ export namespace FormFields {
 
     export interface TagsField extends BaseField {
         kind: 'TagsField';
+        config: TypeaheadConfig;
         validators?: BaseFieldValidation[];
     }
 

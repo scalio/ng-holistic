@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TypeaheadConfig } from '../typeahead';
 
 @Component({
     selector: 'hlc-tags',
@@ -14,8 +15,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     ]
 })
 export class TagsComponent implements ControlValueAccessor {
+    @Input() config: TypeaheadConfig;
     @Input() value: any[];
-    @Input() readonly: any[];
+    @Input() readonly: boolean;
     propagateChange = (_: any) => {};
 
     constructor() {}
