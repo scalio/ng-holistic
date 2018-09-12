@@ -1,7 +1,7 @@
 import { A, BACKSPACE, DOWN_ARROW, ENTER, ESCAPE, NINE, TAB, UP_ARROW, Z, ZERO } from '@angular/cdk/keycodes';
 import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
 import { fromEvent, merge, Observable, Subject } from 'rxjs';
-import { filter, flatMap, map, mapTo, merge as mergeOper, shareReplay, startWith, takeUntil } from 'rxjs/operators';
+import { filter, flatMap, map, mapTo, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { OverlayHelperService } from './overlay-helper.service';
 import { ResultFormatter, ResultKeyFun, SkipPredicate } from './results-container/results-container.component';
 
@@ -65,6 +65,16 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.search) {
+            // open
+            const openKeys$ = this._keyDown$.pipe(filter(evt => isOpenKey(evt.keyCode)));
+
+            const open$ = merge(this._focus$, this._click$, openKeys$).pipe(
+                // check here focus returns from dropdown
+                filter(() => !this.overlayHelper.isOpen)
+            );
+
+            // search
+
             const focusSearch$ = this._focus$.pipe(
                 // real focus, ignore reurn from dropdown
                 filter(() => !this.overlayHelper.isOpen),
@@ -73,11 +83,18 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
                 }))
             );
 
-            const results$ = this._valueChanges$.pipe(
+            const openSearch$ = open$.pipe(
+                map(() => ({
+                    kind: 'SearchArgOpen'
+                }))
+            );
+
+            const typingSearch$ = this._valueChanges$.pipe(
                 // search by user typing
-                map(term => ({ kind: 'SearchArgTyping', term })),
-                // search when control got focus
-                mergeOper(focusSearch$),
+                map(term => ({ kind: 'SearchArgTyping', term }))
+            );
+
+            const results$ = merge(focusSearch$, openSearch$, typingSearch$).pipe(
                 // search when control initialized
                 startWith({ kind: 'SearchArgInit' }),
                 this.search,
@@ -87,14 +104,6 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
 
             // subscribe immediately to emit SearchArgInit
             results$.pipe(takeUntil(this._destroy$)).subscribe(x => x);
-
-            // open
-            const openKeys$ = this._keyDown$.pipe(filter(evt => isOpenKey(evt.keyCode)));
-
-            const open$ = merge(this._focus$, this._click$, openKeys$).pipe(
-                // check here focus returns from dropdown
-                filter(() => !this.overlayHelper.isOpen)
-            );
 
             // select
             const select$ = open$.pipe(

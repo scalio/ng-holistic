@@ -1,8 +1,9 @@
-import { Component, forwardRef, Input, Optional, Inject } from '@angular/core';
+import { Component, forwardRef, Inject, Input, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { flatMap, tap, withLatestFrom } from 'rxjs/operators';
+import { ListItemsConfig, LIST_ITEMS_CONFIG, ObjectMap, objectMap } from '../list-items.config';
 import { TypeaheadConfig } from '../typeahead';
-import { ObjectMap, LIST_ITEMS_CONFIG, ListItemsConfig, objectMap } from '../list-items.config';
-import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'hlc-tags',
@@ -17,7 +18,14 @@ import { map } from 'rxjs/operators';
     ]
 })
 export class TagsComponent implements ControlValueAccessor {
-    @Input() value: any[];
+    value$ = new BehaviorSubject<any>([]);
+    @Input()
+    set value(val: any[]) {
+        this.value$.next(val);
+    }
+    get value(): any[] {
+        return this.value$.getValue();
+    }
     @Input() config: TypeaheadConfig | undefined;
     @Input() readonly: boolean | undefined;
 
@@ -33,18 +41,28 @@ export class TagsComponent implements ControlValueAccessor {
         this.objMap = objectMap(config);
     }
 
-    get search() {
-        return this.config
-            ? // filter already selected items
-              (term: any) => {
-                  console.log('111', term);
-                  return (this.config as TypeaheadConfig).search(term).pipe(map(this.filterItems(this.value || [])));
-              }
-            : undefined;
+    private search = (term$: Observable<string>) => {
+        return term$.pipe(
+            tap(console.log),
+            flatMap((this.config as TypeaheadConfig).search),
+            withLatestFrom(this.value$, (items, val) => this.filterItems(val || [])(items))
+        );
+    };
+
+    get _config() {
+        if (!this.config) {
+            return;
+        }
+        // modify default search, remove already selected tags
+        return {
+            ...this.config,
+            search: this.search
+        };
     }
 
     onChange($event: any) {
-        this.value = [$event, ...(this.value || [])];
+        this.value = [...(this.value || []), $event];
+        console.log(this.value);
     }
 
     onRemove(item: any) {
@@ -68,6 +86,6 @@ export class TagsComponent implements ControlValueAccessor {
     }
 
     private filterItems = (excl: any[]) => (items: any[]) => {
-        return items.filter(item => !excl.some(i => this.objMap.getKey(i, i) !== this.objMap.getKey(item, item)));
+        return items.filter(item => !excl.some(i => this.objMap.getKey(i, i) === this.objMap.getKey(item, item)));
     };
 }
