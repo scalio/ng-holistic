@@ -3,7 +3,6 @@ import {
     ApplicationRef,
     ComponentFactoryResolver,
     Directive,
-    ElementRef,
     HostListener,
     Injector,
     Input,
@@ -25,7 +24,7 @@ export class PortalTriggerDirective implements OnDestroy {
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcPortalTrigger') template: TemplateRef<any>;
-    @Input() placeholder: ElementRef<any>;
+    @Input() placeholder: any;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -39,8 +38,6 @@ export class PortalTriggerDirective implements OnDestroy {
             return;
         }
 
-        console.log('+++', this.placeholder);
-
         this.portalHost = new DomPortalHost(
             this.placeholder as any,
             this.componentFactoryResolver,
@@ -51,7 +48,6 @@ export class PortalTriggerDirective implements OnDestroy {
         const portal = new TemplatePortal(this.template, this.viewContainerRef);
 
         portal.attach(this.portalHost);
-        // component.instance.close.pipe(take(1)).subscribe(() => this.hide());
     }
 
     hide() {
@@ -70,8 +66,6 @@ export class PortalTriggerDirective implements OnDestroy {
         // Toggle layout display on host click
 
         if (!$event) {
-            // TODO: not clear why click event doubled
-            // Doubled event always has undefined arg
             return;
         }
 
@@ -81,6 +75,17 @@ export class PortalTriggerDirective implements OnDestroy {
         if (!this.portalHost) {
             this.show();
         } else {
+            this.hide();
+        }
+    }
+
+    // click outside
+    @HostListener('document:click', ['onDocumentClick($event)'])
+    onDocumentClick($event: MouseEvent) {
+        if (!$event) {
+            return;
+        }
+        if (!this.placeholder.contains($event.target)) {
             this.hide();
         }
     }
