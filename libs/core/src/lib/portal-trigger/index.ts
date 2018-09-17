@@ -1,2 +1,2 @@
-export * from './layout-trigger.directive';
-export * from './layout-trigger.module';
+export * from './portal-trigger.directive';
+export * from './portal-trigger.module';

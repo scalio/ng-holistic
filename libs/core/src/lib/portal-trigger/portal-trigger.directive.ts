@@ -3,11 +3,11 @@ import {
     ApplicationRef,
     ComponentFactoryResolver,
     Directive,
+    ElementRef,
     HostListener,
     Injector,
-    OnDestroy,
-    ElementRef,
     Input,
+    OnDestroy,
     TemplateRef,
     ViewContainerRef
 } from '@angular/core';
@@ -25,12 +25,12 @@ export class PortalTriggerDirective implements OnDestroy {
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcPortalTrigger') template: TemplateRef<any>;
+    @Input() placeholder: ElementRef<any>;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
         private readonly appRef: ApplicationRef,
-        private readonly elementRef: ElementRef,
         private readonly viewContainerRef: ViewContainerRef
     ) {}
 
@@ -39,14 +39,17 @@ export class PortalTriggerDirective implements OnDestroy {
             return;
         }
 
+        console.log('+++', this.placeholder);
+
         this.portalHost = new DomPortalHost(
-            this.elementRef.nativeElement,
+            this.placeholder as any,
             this.componentFactoryResolver,
             this.appRef,
             this.injector
         );
 
         const portal = new TemplatePortal(this.template, this.viewContainerRef);
+
         portal.attach(this.portalHost);
         // component.instance.close.pipe(take(1)).subscribe(() => this.hide());
     }
