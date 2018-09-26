@@ -40,7 +40,11 @@ module.exports = function(wallaby) {
             alias: {
                 '@ng-holistic/ramda': path.join(wallaby.projectCacheDir, 'libs/core/src/lib/r'),
                 '@ng-holistic/core': path.join(wallaby.projectCacheDir, 'libs/core/src/lib/index'),
-                '@ng-holistic/forms': path.join(wallaby.projectCacheDir, 'libs/forms/src/lib/index')
+                '@ng-holistic/forms': path.join(wallaby.projectCacheDir, 'libs/forms/src/lib/index'),
+                '@ng-holistic/clr-controls': path.join(wallaby.projectCacheDir, 'libs/clr-controls/src/lib/index'),
+                '@ng-holistic/clr-forms': path.join(wallaby.projectCacheDir, 'libs/clr-forms/src/lib/index'),
+                '@ng-holistic/clr-lists': path.join(wallaby.projectCacheDir, 'libs/clr-lists/src/lib/index'),
+                '@ng-holistic/lists': path.join(wallaby.projectCacheDir, 'libs/lists/src/lib/index')
             }
         },
         node: {
