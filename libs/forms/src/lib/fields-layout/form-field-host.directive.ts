@@ -85,7 +85,10 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
         if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
             const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
-            valueAccessor.registerOnChange((val: any) => this.control.setValue(val));
+            valueAccessor.registerOnChange((val: any) => {
+                console.log('???');
+                this.control.setValue(val);
+            });
             this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => valueAccessor.writeValue(val));
         }
     }

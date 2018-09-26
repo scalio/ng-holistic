@@ -7,7 +7,7 @@ import { FieldsLayoutModule } from './fields-layout.module';
 
 @Component({
     selector: 'hlc-text-field',
-    template: `<input type="text" [value]="value" (change)="onChange($event.target.value)" >`,
+    template: `<input type="text" [value]="value || ''" (change)="onChange($event.target.value)" >`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -98,14 +98,18 @@ describe('fields-layout', () => {
         });
 
         describe('with 1 text input', () => {
+            let input: HTMLInputElement;
+
             beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
                 comp.formGroup = fb.group({ text: [''] });
                 comp.fields = [{ id: 'text', kind: 'TextField' }];
                 fixture.detectChanges();
+                input = fixture.nativeElement.querySelector('input');
             }));
 
-            it('must render layout with text input', () => {
+            it('must render layout with single text input', () => {
                 // div / form
+
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
                 expect(fixture.nativeElement['children']['length']).toEqual(1);
                 expect(fixture.nativeElement['firstChild'] instanceof HTMLFormElement).toEqual(true);
@@ -114,6 +118,35 @@ describe('fields-layout', () => {
                     fixture.nativeElement['firstChild']['children']['0']['children']['0'] instanceof HTMLInputElement
                 ).toEqual(true);
             });
+
+            it('text input value must be empty string', () => {
+                expect(input.value).toEqual('');
+            });
+
+            it('when user type text form value must be changed', () => {
+                sendKeys(input, '123');
+                expect(input.value).toEqual('123');
+                expect(comp.formGroup.value).toEqual({ text: '123' });
+            });
+
+            it('when form value patched it must update input value', () => {
+                comp.formGroup.patchValue({ text: '567' });
+                fixture.detectChanges();
+                expect(input.value).toEqual('567');
+            });
         });
     });
 });
+
+function sendKeys(element: Element, keys: string) {
+    const e = element as HTMLInputElement;
+    for (const key of keys) {
+        const eventParams = { key, char: key, keyCode: key.charCodeAt(0) };
+        e.dispatchEvent(new KeyboardEvent('keydown', eventParams));
+        e.dispatchEvent(new KeyboardEvent('keypress', eventParams));
+        e.value += key;
+        e.dispatchEvent(new KeyboardEvent('keyup', eventParams));
+        e.dispatchEvent(new KeyboardEvent('change', eventParams));
+        e.dispatchEvent(new Event('input'));
+    }
+}
