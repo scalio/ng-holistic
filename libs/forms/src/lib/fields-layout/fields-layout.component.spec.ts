@@ -7,7 +7,8 @@ import { FieldsLayoutModule } from './fields-layout.module';
 
 @Component({
     selector: 'hlc-text-field',
-    template: `<input type="text" [value]="value || ''" (change)="onChange($event.target.value)" >`,
+    // tslint:disable-next-line:max-line-length
+    template: `<input type="text" [disabled]="readonly === true ? true : undefined" [value]="value || ''" (change)="onChange($event.target.value)" >`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -133,6 +134,19 @@ describe('fields-layout', () => {
                 comp.formGroup.patchValue({ text: '567' });
                 fixture.detectChanges();
                 expect(input.value).toEqual('567');
+            });
+        });
+
+        describe('when field has some property value set', () => {
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', readonly: true }];
+                fixture.detectChanges();
+            }));
+
+            fit('must set property with same name on component', () => {
+                const input = fixture.nativeElement.querySelector('input[disabled]');
+                expect(input).not.toBeNull();
             });
         });
     });

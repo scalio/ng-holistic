@@ -18,7 +18,7 @@ export const HLC_FORM_FIELD = new InjectionToken<FieldsLayoutMap>('HLC_FORM_FIEL
 export class FieldsLayoutComponent implements OnInit {
     private readonly fieldLayoutMap: FieldsLayoutMap;
     @Input() formGroup: FormGroup;
-    @Input() fields: FormField.BaseField<any>[];
+    @Input() fields: FormField.Field[];
 
     constructor(@Inject(HLC_FORM_FIELD) fieldLayoutMaps: FieldsLayoutMap[]) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
@@ -26,7 +26,7 @@ export class FieldsLayoutComponent implements OnInit {
 
     ngOnInit() {}
 
-    getComponentType(field: FormField.BaseField<any>) {
+    getComponentType(field: FormField.Field) {
         return this.fieldLayoutMap[field.kind];
     }
 

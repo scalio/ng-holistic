@@ -19,8 +19,18 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormField, FormFieldComponent } from '../models';
+import * as R from 'ramda';
+import 'reflect-metadata';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
+
+const setComponentProperty = (comp: any) => (val: any, key: string) => {
+    // TODO : check property Input attribute
+
+    if (Reflect.getMetadata('design:type', comp, key)) {
+        comp[key] = val;
+    }
+};
 
 @Directive({
     selector: '[hlcFormFieldHost]'
@@ -86,15 +96,23 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
             const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
             valueAccessor.registerOnChange((val: any) => {
-                console.log('???');
                 this.control.setValue(val);
             });
             this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => valueAccessor.writeValue(val));
         }
+
+        this.initComponentProperties();
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.portalHost.detach();
+    }
+
+    private initComponentProperties() {
+        R.pipe(
+            R.omit(['id', 'kind']),
+            R.forEachObjIndexed(setComponentProperty(this.componentRef.instance))
+        )(this.field);
     }
 }
