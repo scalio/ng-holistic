@@ -1,14 +1,3 @@
-<button
-    [hlcPortalTrigger]="tmpl"
-    [placeholder]="forTrigger">
-    Click Me !
-</button>
-<ng-template #tmpl>hello !!!</ng-template>
-<div #forTrigger></div>
-<hlc-form-layout
-    [form]="config"
-    #layout>
-    <hlc-form-footer
-        footer
-        [form]="layout.formGroup"></hlc-form-footer>
-</hlc-form-layout>
+<hlc-fields-layout
+    [fields]="fields"
+    [formGroup]="formGroup"></hlc-fields-layout>

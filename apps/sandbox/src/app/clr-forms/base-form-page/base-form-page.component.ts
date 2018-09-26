@@ -1,95 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TextMask } from '@ng-holistic/clr-controls';
-import { FormLayout } from '@ng-holistic/forms';
-import { of } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-const config: FormLayout.Form = {
-    content: {
-        kind: 'FormTabsCollection',
-        items: [
-            {
-                title: 'Fields',
-                content: {
-                    kind: 'FormFieldsCollection',
-                    items: [
-                        {
-                            kind: 'TextField',
-                            id: 'title',
-                            label: 'Title'
-                        },
-                        {
-                            kind: 'TagsField',
-                            id: 'tags',
-                            label: 'Tags',
-                            config: {
-                                search: (_: string) => {
-                                    return of(['one', 'two']);
-                                }
-                            }
-                        },
-                        {
-                            kind: 'TypeaheadField',
-                            id: 'typeahead',
-                            label: 'Typeahead',
-                            config: {
-                                search: (_: string) => {
-                                    return of(['one', 'two']);
-                                }
-                            }
-                        },
-                        {
-                            kind: 'DateField',
-                            id: 'date',
-                            label: 'Date'
-                        },
-                        {
-                            kind: 'SelectField',
-                            id: 'items',
-                            label: 'Items',
-                            items: [
-                                {
-                                    key: 'one',
-                                    label: 'one'
-                                },
-                                {
-                                    key: 'two',
-                                    label: 'two'
-                                }
-                            ]
-                        },
-                        {
-                            kind: 'TextareaField',
-                            id: 'textarea',
-                            label: 'Textarea'
-                        },
-                        {
-                            kind: 'MaskField',
-                            id: 'mask',
-                            label: 'Number',
-                            mask: TextMask.int(3),
-                            unmask: TextMask.unmaskNumber
-                        }
-                    ]
-                }
-            },
-            {
-                title: 'Groups',
-                content: {
-                    kind: 'FormGroupsCollection',
-                    items: [
-                        {
-                            title: 'Group A',
-                            content: {
-                                kind: 'FormFieldsCollection',
-                                items: []
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
+const fields = [
+    {
+        kind: 'TextField',
+        id: 'text',
+        label: 'Title'
     }
-};
+];
 
 @Component({
     selector: 'hlc-base-form-page',
@@ -98,9 +16,14 @@ const config: FormLayout.Form = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseFormPageComponent implements OnInit {
-    config = config;
+    fields = fields;
+    formGroup: FormGroup;
 
-    constructor() {}
+    constructor(fb: FormBuilder) {
+        this.formGroup = fb.group({
+            text: ['']
+        });
+    }
 
     ngOnInit() {}
 }

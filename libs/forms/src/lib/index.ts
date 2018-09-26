@@ -5,3 +5,4 @@ export * from './form-validation-builder';
 export * from './models';
 export * from './validators';
 export * from './form-view';
+export * from './fields-layout';

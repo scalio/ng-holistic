@@ -66,13 +66,11 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
         // Attach portal to host
         this.init();
-        setTimeout(() => this.init(), 0);
+        // setTimeout(() => this.init(), 0);
     }
 
     init() {
         this.componentRef = this.portalHost.attach(this.portal);
-
-        console.log(this.componentRef.instance);
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content

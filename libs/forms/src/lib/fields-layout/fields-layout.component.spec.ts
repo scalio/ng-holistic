@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { FieldsLayoutModule } from './fields-layout.module';
-import { Component, forwardRef, OnInit, Input, EventEmitter, Output, NgModule } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'hlc-text-field',
@@ -97,23 +97,22 @@ describe('fields-layout', () => {
             });
         });
 
-        fdescribe('with 1 text input', () => {
+        describe('with 1 text input', () => {
             beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
                 comp.formGroup = fb.group({ text: [''] });
                 comp.fields = [{ id: 'text', kind: 'TextField' }];
                 fixture.detectChanges();
             }));
 
-            it('must render layout with text input', (done: any) => {
+            it('must render layout with text input', () => {
                 // div / form
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
                 expect(fixture.nativeElement['children']['length']).toEqual(1);
                 expect(fixture.nativeElement['firstChild'] instanceof HTMLFormElement).toEqual(true);
                 expect(fixture.nativeElement['firstChild']['children']['length']).toEqual(1);
-                setTimeout(() => {
-                    expect(fixture.nativeElement['firstChild']['firstChild'] instanceof HTMLInputElement).toEqual(true);
-                    done();
-                }, 10);
+                expect(
+                    fixture.nativeElement['firstChild']['children']['0']['children']['0'] instanceof HTMLInputElement
+                ).toEqual(true);
             });
         });
     });
