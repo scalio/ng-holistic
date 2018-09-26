@@ -25,9 +25,7 @@ import 'reflect-metadata';
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
 const setComponentProperty = (comp: any) => (val: any, key: string) => {
-    // TODO : check property Input attribute
-
-    if (Reflect.getMetadata('design:type', comp, key)) {
+    if (Reflect.hasMetadata('design:type', comp, key)) {
         comp[key] = val;
     }
 };
