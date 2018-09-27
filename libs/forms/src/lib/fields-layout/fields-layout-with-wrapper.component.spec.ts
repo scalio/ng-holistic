@@ -14,8 +14,9 @@ import { FieldsLayoutModule } from './fields-layout.module';
     template: `<div><button (click)="onClick()">click</button><label>{{label}}</label><ng-content></ng-content></div>`
 })
 export class FieldWrapperComponent implements OnInit {
+    cnt = 0;
     @Input() label: string;
-    @Output() buttonClick = new EventEmitter();
+    @Output() buttonClick = new EventEmitter<number>();
     //
 
     constructor() {}
@@ -23,7 +24,7 @@ export class FieldWrapperComponent implements OnInit {
     ngOnInit() {}
 
     onClick() {
-        this.buttonClick.emit();
+        this.buttonClick.emit(this.cnt++);
     }
 }
 
@@ -202,6 +203,34 @@ describe('fields-layout with wrapper', () => {
                 expect(label.nativeElement.innerHTML).toEqual('222');
             });
         });
+
+        describe('when field has some Subject property and wrapper has EventEmitter for the same name field', () => {
+            const subj = new Subject();
+            let button: HTMLInputElement;
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', buttonClick: subj }];
+                fixture.detectChanges();
+                button = fixture.nativeElement.querySelector('button');
+            }));
+
+            it('it must emit events to subject when outpust event emited on property', async () => {
+                const p = subj
+                    .pipe(
+                        map((val, i) => {
+                            expect(val).toEqual(i);
+                        }),
+                        take(3)
+                    )
+                    .toPromise();
+                button.click();
+                button.click();
+                button.click();
+                return p;
+            });
+        });
+
+        //
 
         describe('when field has some property value set', () => {
             beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
