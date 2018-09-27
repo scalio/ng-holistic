@@ -25,30 +25,60 @@ import 'reflect-metadata';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
+const PROP_METADATA = '__prop__metadata__';
+const NG_METADATA_NAME = 'ngMetadataName';
+const NG_METADATA_NAME_INPUT = 'Input';
+const NG_METADATA_NAME_OUTPUT = 'Output';
+
+const getMeta = (comp: any) => {
+    const constructor = comp['constructor'];
+    return R.has(PROP_METADATA, constructor) && constructor[PROP_METADATA];
+};
+
+const getPropMeta = (comp: any, propName: string) => {
+    const meta = getMeta(comp);
+    if (!meta) {
+        return undefined;
+    }
+    return R.has(propName, meta) && meta[propName];
+};
+
+const isPropInput = (comp: any, propName: string) => {
+    const meta = getPropMeta(comp, propName);
+    return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_INPUT), meta);
+};
+
+const isPropOutput = (comp: any, propName: string) => {
+    const meta = getPropMeta(comp, propName);
+    return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_OUTPUT), meta);
+};
+
 const setComponentProperty = (comp: any, destroy$: Observable<any>) => (val: any, key: string) => {
-    const propType = Reflect.getMetadata('design:type', comp, key);
-
-    if (propType) {
-        // TODO: check types
-        if (comp[key] instanceof EventEmitter) {
-            if (!(val instanceof Subject)) {
-                throw new Error('For Output properties, field property msut have Subject type');
-            }
-            (comp[key] as EventEmitter<any>)
-                .asObservable()
-                .pipe(takeUntil(destroy$))
-                .subscribe(x => {
-                    (val as Subject<any>).next(x);
-                });
-            return;
+    if (isPropOutput(comp, key)) {
+        if (!(comp[key] instanceof EventEmitter)) {
+            throw new Error('Output property must have EventEmitter type');
         }
+        if (!(val instanceof Subject)) {
+            throw new Error('For Output properties, field property must have Subject type');
+        }
+        // dispatch from output to subject
+        (comp[key] as EventEmitter<any>)
+            .asObservable()
+            .pipe(takeUntil(destroy$))
+            .subscribe(x => {
+                (val as Subject<any>).next(x);
+            });
+        return;
+    }
 
+    if (isPropInput(comp, key)) {
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => (comp[key] = x));
             return;
         }
 
         comp[key] = val;
+        return;
     }
 };
 
