@@ -1,11 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output, DebugElement } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { FieldsLayoutModule } from './fields-layout.module';
-import { take, map } from 'rxjs/operators';
+
+@Component({
+    selector: 'hlc-field-wrapper',
+    // tslint:disable-next-line:max-line-length
+    template: `<div><button (click)="onClick()">click</button><label>{{label}}</label><ng-content></ng-content></div>`
+})
+export class FieldWrapperComponent implements OnInit {
+    @Input() label: string;
+    @Output() buttonClick = new EventEmitter();
+    //
+
+    constructor() {}
+
+    ngOnInit() {}
+
+    onClick() {
+        this.buttonClick.emit();
+    }
+}
 
 @Component({
     selector: 'hlc-text-field',
@@ -53,17 +73,17 @@ export class TextFieldComponent implements OnInit, ControlValueAccessor {
 //
 
 @NgModule({
-    declarations: [TextFieldComponent],
+    declarations: [TextFieldComponent, FieldWrapperComponent],
     exports: [TextFieldComponent],
     imports: [CommonModule, ReactiveFormsModule],
     providers: [],
-    entryComponents: [TextFieldComponent]
+    entryComponents: [TextFieldComponent, FieldWrapperComponent]
 })
 export class TextFieldModule {}
 
 ///
 
-describe('fields-layout', () => {
+describe('fields-layout with wrapper', () => {
     let fixture: ComponentFixture<FieldsLayoutComponent>;
     let comp: FieldsLayoutComponent;
 
@@ -72,7 +92,7 @@ describe('fields-layout', () => {
             declarations: [],
             providers: [],
             imports: [
-                FieldsLayoutModule.forRoot({ TextField: TextFieldComponent }),
+                FieldsLayoutModule.forRoot({ TextField: TextFieldComponent }, FieldWrapperComponent),
                 ReactiveFormsModule,
                 TextFieldModule
             ]
@@ -94,7 +114,7 @@ describe('fields-layout', () => {
             }));
 
             it('must render empty layout', () => {
-                // div / form
+                // div / form / wrapper
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
                 expect(fixture.nativeElement['children']['length']).toEqual(1);
                 expect(fixture.nativeElement['firstChild'] instanceof HTMLFormElement).toEqual(true);
@@ -113,14 +133,18 @@ describe('fields-layout', () => {
             }));
 
             it('must render layout with single text input', () => {
-                // div / form
+                // div / form / hlc-field-wrapper
 
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
                 expect(fixture.nativeElement['children']['length']).toEqual(1);
                 expect(fixture.nativeElement['firstChild'] instanceof HTMLFormElement).toEqual(true);
                 expect(fixture.nativeElement['firstChild']['children']['length']).toEqual(1);
                 expect(
-                    fixture.nativeElement['firstChild']['children']['0']['children']['0'] instanceof HTMLInputElement
+                    fixture.debugElement.children[0].children[0].componentInstance instanceof FieldWrapperComponent
+                ).toEqual(true);
+                expect(
+                    fixture.debugElement.children[0].children[0].children[0].children[2].componentInstance instanceof
+                        TextFieldComponent
                 ).toEqual(true);
             });
 
@@ -138,6 +162,44 @@ describe('fields-layout', () => {
                 comp.formGroup.patchValue({ text: '567' });
                 fixture.detectChanges();
                 expect(input.value).toEqual('567');
+            });
+        });
+
+        describe('when field has some property value set', () => {
+            let wrapperElem: DebugElement;
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', label: 'xxx' }];
+                fixture.detectChanges();
+                wrapperElem = fixture.debugElement.query(By.directive(FieldWrapperComponent));
+            }));
+
+            it('must set property with same name on wrapper', () => {
+                const label = wrapperElem.query(By.css('label'));
+                expect(label.nativeElement.innerHTML).toEqual('xxx');
+            });
+        });
+
+        describe('when field has some property value set to observable', () => {
+            let wrapperElem: DebugElement;
+            const subj = new BehaviorSubject('111');
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', label: subj }];
+                fixture.detectChanges();
+                wrapperElem = fixture.debugElement.query(By.directive(FieldWrapperComponent));
+            }));
+
+            it('must set property to scalar value with same name on wrapper', () => {
+                const label = wrapperElem.query(By.css('label'));
+                expect(label.nativeElement.innerHTML).toEqual('111');
+            });
+
+            it('must update property value on wrapper  when new observable event emited', () => {
+                subj.next('222');
+                fixture.detectChanges();
+                const label = wrapperElem.query(By.css('label'));
+                expect(label.nativeElement.innerHTML).toEqual('222');
             });
         });
 

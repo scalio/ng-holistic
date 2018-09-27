@@ -14,7 +14,8 @@ import {
     Optional,
     Type,
     ViewContainerRef,
-    EventEmitter
+    EventEmitter,
+    ChangeDetectorRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
@@ -53,7 +54,10 @@ const isPropOutput = (comp: any, propName: string) => {
     return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_OUTPUT), meta);
 };
 
-const setComponentProperty = (comp: any, destroy$: Observable<any>) => (val: any, key: string) => {
+const setComponentProperty = (cdr: ChangeDetectorRef, destroy$: Observable<any>, comp: any) => (
+    val: any,
+    key: string
+) => {
     if (isPropOutput(comp, key)) {
         if (!(comp[key] instanceof EventEmitter)) {
             throw new Error('Output property must have EventEmitter type');
@@ -73,13 +77,28 @@ const setComponentProperty = (comp: any, destroy$: Observable<any>) => (val: any
 
     if (isPropInput(comp, key)) {
         if (val instanceof Observable) {
-            val.pipe(takeUntil(destroy$)).subscribe(x => (comp[key] = x));
+            val.pipe(takeUntil(destroy$)).subscribe(x => {
+                comp[key] = x;
+                cdr.markForCheck();
+            });
             return;
         }
 
         comp[key] = val;
         return;
     }
+};
+
+const setComponentProperties = (
+    cdr: ChangeDetectorRef,
+    destroy$: Observable<any>,
+    component: any,
+    field: FormField.BaseField<any>
+) => {
+    R.pipe(
+        R.omit(['id', 'kind']),
+        R.forEachObjIndexed(setComponentProperty(cdr, destroy$, component))
+    )(field);
 };
 
 @Directive({
@@ -109,7 +128,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         private vcr: ViewContainerRef,
         @Optional()
         @Inject(HLC_FORM_FIELD_WRAPPER)
-        private readonly wrapper: Type<any>
+        private readonly wrapper: Type<any>,
+        private readonly cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit() {
@@ -136,9 +156,10 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             // Insert generated component inside wrapper content
             const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
             const children = this.portalHost.outletElement.childNodes;
-            this.vcr.createComponent(componentFactory, undefined, this.injector, [
+            const wrapperInst = this.vcr.createComponent(componentFactory, undefined, this.injector, [
                 [children.item(children.length - 1)]
             ]);
+            setComponentProperties(this.cdr, this.destroy$, wrapperInst.instance, this.field);
         }
 
         // If component implements ValueAccessor interface use one to update it value
@@ -151,18 +172,11 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => valueAccessor.writeValue(val));
         }
 
-        this.initComponentProperties();
+        setComponentProperties(this.cdr, this.destroy$, this.componentRef.instance, this.field);
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.portalHost.detach();
-    }
-
-    private initComponentProperties() {
-        R.pipe(
-            R.omit(['id', 'kind']),
-            R.forEachObjIndexed(setComponentProperty(this.componentRef.instance, this.destroy$))
-        )(this.field);
     }
 }
