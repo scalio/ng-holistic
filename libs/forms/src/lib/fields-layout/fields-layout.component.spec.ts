@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { FieldsLayoutModule } from './fields-layout.module';
-import { of, BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'hlc-text-field',
