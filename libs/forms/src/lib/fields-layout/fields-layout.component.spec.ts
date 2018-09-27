@@ -4,6 +4,7 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { FieldsLayoutModule } from './fields-layout.module';
+import { of, BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'hlc-text-field',
@@ -144,9 +145,30 @@ describe('fields-layout', () => {
                 fixture.detectChanges();
             }));
 
-            fit('must set property with same name on component', () => {
+            it('must set property with same name on component', () => {
                 const input = fixture.nativeElement.querySelector('input[disabled]');
                 expect(input).not.toBeNull();
+            });
+        });
+
+        describe('when field has some property value set to observable', () => {
+            const subj = new BehaviorSubject(true);
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', readonly: subj }];
+                fixture.detectChanges();
+            }));
+
+            it('must set property to scalar value with same name on component', () => {
+                const input = fixture.nativeElement.querySelector('input[disabled]');
+                expect(input).not.toBeNull();
+            });
+
+            it('must update property value when new observable event emited', () => {
+                subj.next(false);
+                fixture.detectChanges();
+                const input = fixture.nativeElement.querySelector('input[disabled]');
+                expect(input).toBeNull();
             });
         });
     });

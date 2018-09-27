@@ -16,7 +16,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormField, FormFieldComponent } from '../models';
 import * as R from 'ramda';
@@ -24,9 +24,16 @@ import 'reflect-metadata';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
-const setComponentProperty = (comp: any) => (val: any, key: string) => {
-    if (Reflect.hasMetadata('design:type', comp, key)) {
-        comp[key] = val;
+const setComponentProperty = (comp: any, destroy$: Observable<any>) => (val: any, key: string) => {
+    const propType = Reflect.getMetadata('design:type', comp, key);
+
+    if (propType) {
+        // TODO: check types
+        if (val instanceof Observable) {
+            val.pipe(takeUntil(destroy$)).subscribe(x => (comp[key] = x));
+        } else {
+            comp[key] = val;
+        }
     }
 };
 
@@ -110,7 +117,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     private initComponentProperties() {
         R.pipe(
             R.omit(['id', 'kind']),
-            R.forEachObjIndexed(setComponentProperty(this.componentRef.instance))
+            R.forEachObjIndexed(setComponentProperty(this.componentRef.instance, this.destroy$))
         )(this.field);
     }
 }
