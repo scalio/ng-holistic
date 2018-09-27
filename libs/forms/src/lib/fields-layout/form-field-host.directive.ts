@@ -13,7 +13,8 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    EventEmitter
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
@@ -29,11 +30,25 @@ const setComponentProperty = (comp: any, destroy$: Observable<any>) => (val: any
 
     if (propType) {
         // TODO: check types
+        if (comp[key] instanceof EventEmitter) {
+            if (!(val instanceof Subject)) {
+                throw new Error('For Output properties, field property msut have Subject type');
+            }
+            (comp[key] as EventEmitter<any>)
+                .asObservable()
+                .pipe(takeUntil(destroy$))
+                .subscribe(x => {
+                    (val as Subject<any>).next(x);
+                });
+            return;
+        }
+
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => (comp[key] = x));
-        } else {
-            comp[key] = val;
+            return;
         }
+
+        comp[key] = val;
     }
 };
 

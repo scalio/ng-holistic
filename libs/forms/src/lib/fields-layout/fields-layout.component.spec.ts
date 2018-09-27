@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { FieldsLayoutComponent } from './fields-layout.component';
 import { FieldsLayoutModule } from './fields-layout.module';
+import { take, map } from 'rxjs/operators';
 
 @Component({
     selector: 'hlc-text-field',
@@ -169,6 +170,39 @@ describe('fields-layout', () => {
                 fixture.detectChanges();
                 const input = fixture.nativeElement.querySelector('input[disabled]');
                 expect(input).toBeNull();
+            });
+        });
+
+        describe('when field has some Subject property and coponent has EventEmitter for the same name field', () => {
+            const subj = new Subject();
+            let input: HTMLInputElement;
+            beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
+                comp.formGroup = fb.group({ text: [''] });
+                comp.fields = [{ id: 'text', kind: 'TextField', valueChange: subj }];
+                fixture.detectChanges();
+                input = fixture.nativeElement.querySelector('input');
+            }));
+
+            it('it must emit events to subject when outpust event emited on property', async () => {
+                const p = subj
+                    .pipe(
+                        map((val, i) => {
+                            if (i === 0) {
+                                expect(val).toEqual('1');
+                            }
+                            if (i === 1) {
+                                expect(val).toEqual('12');
+                            }
+                            if (i === 2) {
+                                expect(val).toEqual('123');
+                            }
+                            return true;
+                        }),
+                        take(3)
+                    )
+                    .toPromise();
+                sendKeys(input, '123');
+                return p;
             });
         });
     });
