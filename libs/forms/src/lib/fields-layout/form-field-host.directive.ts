@@ -1,6 +1,8 @@
 import {
     ChangeDetectorRef,
+    ComponentFactory,
     ComponentFactoryResolver,
+    ComponentRef,
     Directive,
     EmbeddedViewRef,
     EventEmitter,
@@ -12,51 +14,33 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef,
-    ComponentRef
+    ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
-import 'reflect-metadata';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormField } from '../models';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
-const PROP_METADATA = '__prop__metadata__';
-const NG_METADATA_NAME = 'ngMetadataName';
-const NG_METADATA_NAME_INPUT = 'Input';
-const NG_METADATA_NAME_OUTPUT = 'Output';
-
-const getMeta = (comp: any) => {
-    const constructor = comp['constructor'];
-    return R.has(PROP_METADATA, constructor) && constructor[PROP_METADATA];
+const isPropInput = (factory: ComponentFactory<any>, propName: string) => {
+    //const meta = getPropMeta(comp, propName);
+    //return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_INPUT), meta);
+    return !!factory.inputs.find(R.propEq('propName', propName));
 };
 
-const getPropMeta = (comp: any, propName: string) => {
-    const meta = getMeta(comp);
-    if (!meta) {
-        return undefined;
-    }
-    return R.has(propName, meta) && meta[propName];
+const isPropOutput = (factory: ComponentFactory<any>, propName: string) => {
+    return !!factory.outputs.find(R.propEq('propName', propName));
 };
 
-const isPropInput = (comp: any, propName: string) => {
-    const meta = getPropMeta(comp, propName);
-    return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_INPUT), meta);
-};
-
-const isPropOutput = (comp: any, propName: string) => {
-    const meta = getPropMeta(comp, propName);
-    return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_OUTPUT), meta);
-};
-
-const setComponentProperty = (cdr: ChangeDetectorRef, destroy$: Observable<any>, comp: any) => (
-    val: any,
-    key: string
-) => {
-    if (isPropOutput(comp, key)) {
+const setComponentProperty = (
+    factory: ComponentFactory<any>,
+    cdr: ChangeDetectorRef,
+    destroy$: Observable<any>,
+    comp: any
+) => (val: any, key: string) => {
+    if (isPropOutput(factory, key)) {
         if (!(comp[key] instanceof EventEmitter)) {
             throw new Error('Output property must have EventEmitter type');
         }
@@ -73,7 +57,7 @@ const setComponentProperty = (cdr: ChangeDetectorRef, destroy$: Observable<any>,
         return;
     }
 
-    if (isPropInput(comp, key)) {
+    if (isPropInput(factory, key)) {
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => {
                 comp[key] = x;
@@ -88,6 +72,7 @@ const setComponentProperty = (cdr: ChangeDetectorRef, destroy$: Observable<any>,
 };
 
 const setComponentProperties = (
+    componentFactory: ComponentFactory<any>,
     cdr: ChangeDetectorRef,
     destroy$: Observable<any>,
     component: any,
@@ -95,7 +80,7 @@ const setComponentProperties = (
 ) => {
     R.pipe(
         R.omit(['id', 'kind']),
-        R.forEachObjIndexed(setComponentProperty(cdr, destroy$, component))
+        R.forEachObjIndexed(setComponentProperty(componentFactory, cdr, destroy$, component))
     )(field);
 };
 
@@ -136,14 +121,15 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content
-            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
-            this.wrapperRef = this.vcr.createComponent(componentFactory, undefined, this.injector, [
+            const wrapperFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
+            this.wrapperRef = this.vcr.createComponent(wrapperFactory, undefined, this.injector, [
                 [view.rootNodes[view.rootNodes.length - 1]]
             ]);
 
             this.wrapperRef.changeDetectorRef.detach();
 
             setComponentProperties(
+                wrapperFactory,
                 this.wrapperRef.changeDetectorRef,
                 this.destroy$,
                 this.wrapperRef.instance,
@@ -169,6 +155,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         }
 
         setComponentProperties(
+            factory,
             this.componentRef.changeDetectorRef,
             this.destroy$,
             this.componentRef.instance,
