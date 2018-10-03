@@ -64,7 +64,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         view.detach();
 
         setComponentProperties(
-            ['id', 'kind'],
+            ['kind', '$content'],
             factory,
             componentRef.changeDetectorRef,
             this.destroy$,
