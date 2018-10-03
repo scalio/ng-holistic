@@ -12,9 +12,9 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    ComponentRef
 } from '@angular/core';
-import { ComponentRef } from '@angular/core/src/render3';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
 import 'reflect-metadata';
@@ -103,6 +103,8 @@ const setComponentProperties = (
     selector: '[hlcFormFieldHost]'
 })
 export class FormFieldHostDirective implements OnInit, OnDestroy {
+    private componentRef: ComponentRef<any>;
+    private wrapperRef: ComponentRef<any> | undefined;
     private destroy$ = new Subject();
 
     // tslint:disable-next-line:no-input-rename
@@ -122,41 +124,41 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        // Create a portalHost from a DOM element
-
-        // Attach portal to host
         this.init();
     }
 
     init() {
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
-        const componentRef = factory.create(this.injector);
-        const view = componentRef.hostView as EmbeddedViewRef<any>;
+        this.componentRef = factory.create(this.injector);
+        const view = this.componentRef.hostView as EmbeddedViewRef<any>;
 
-        componentRef.changeDetectorRef.detach();
-
-        let wrapperRef: ComponentRef<any>;
+        this.componentRef.changeDetectorRef.detach();
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content
             const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
-            wrapperRef = this.vcr.createComponent(componentFactory, undefined, this.injector, [
+            this.wrapperRef = this.vcr.createComponent(componentFactory, undefined, this.injector, [
                 [view.rootNodes[view.rootNodes.length - 1]]
-            ]) as any;
+            ]);
 
-            wrapperRef.changeDetectorRef.detach();
+            this.wrapperRef.changeDetectorRef.detach();
 
-            setComponentProperties(wrapperRef.changeDetectorRef, this.destroy$, wrapperRef.instance, this.field);
+            setComponentProperties(
+                this.wrapperRef.changeDetectorRef,
+                this.destroy$,
+                this.wrapperRef.instance,
+                this.field
+            );
 
-            wrapperRef.changeDetectorRef.detectChanges();
+            this.wrapperRef.changeDetectorRef.detectChanges();
         } else {
             this.vcr.insert(view);
         }
 
         // If component implements ValueAccessor interface use one to update it value
 
-        if (componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
-            const valueAccessor = (componentRef.instance as any) as ControlValueAccessor;
+        if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
+            const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
             valueAccessor.registerOnChange((val: any) => {
                 this.control.setValue(val);
             });
@@ -166,12 +168,21 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             });
         }
 
-        setComponentProperties(componentRef.changeDetectorRef, this.destroy$, componentRef.instance, this.field);
+        setComponentProperties(
+            this.componentRef.changeDetectorRef,
+            this.destroy$,
+            this.componentRef.instance,
+            this.field
+        );
 
         view.detectChanges();
     }
 
     ngOnDestroy() {
         this.destroy$.next();
+        this.componentRef.destroy();
+        if (this.wrapperRef) {
+            this.wrapperRef.destroy();
+        }
     }
 }
