@@ -61,6 +61,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         const componentRef = factory.create(this.injector);
         const view = componentRef.hostView;
         container.insert(view);
+        view.detach();
 
         setComponentProperties(
             ['id', 'kind'],
@@ -70,6 +71,8 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
             componentRef.instance,
             this.group
         );
+
+        view.detectChanges();
 
         const crfs = R.chain(child => this.init(componentRef.instance['vc'], child), group.$content);
 
