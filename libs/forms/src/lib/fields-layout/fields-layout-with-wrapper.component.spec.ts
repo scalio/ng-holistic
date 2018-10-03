@@ -162,7 +162,6 @@ describe('fields-layout with wrapper', () => {
             it('when form value patched it must update input value', () => {
                 comp.formGroup.patchValue({ text: '567' });
                 fixture.detectChanges();
-                console.log(input);
                 expect(input.value).toEqual('567');
             });
         });

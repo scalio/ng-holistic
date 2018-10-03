@@ -133,6 +133,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         const componentRef = factory.create(this.injector);
         const view = componentRef.hostView as EmbeddedViewRef<any>;
 
+        componentRef.changeDetectorRef.detach();
+
         let wrapperRef: ComponentRef<any>;
 
         if (this.wrapper) {
@@ -142,7 +144,11 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 [view.rootNodes[view.rootNodes.length - 1]]
             ]) as any;
 
+            wrapperRef.changeDetectorRef.detach();
+
             setComponentProperties(wrapperRef.changeDetectorRef, this.destroy$, wrapperRef.instance, this.field);
+
+            wrapperRef.changeDetectorRef.detectChanges();
         } else {
             this.vcr.insert(view);
         }
