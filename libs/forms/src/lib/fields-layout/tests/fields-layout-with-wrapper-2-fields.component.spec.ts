@@ -3,8 +3,8 @@ import { Component, DebugElement, EventEmitter, forwardRef, Input, NgModule, OnI
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FieldsLayoutComponent } from './fields-layout.component';
-import { FieldsLayoutModule } from './fields-layout.module';
+import { FieldsLayoutComponent } from '../fields-layout.component';
+import { FieldsLayoutModule } from '../fields-layout.module';
 
 @Component({
     selector: 'hlc-field-wrapper',

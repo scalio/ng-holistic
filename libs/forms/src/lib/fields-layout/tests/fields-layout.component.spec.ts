@@ -3,8 +3,8 @@ import { Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output } 
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { FieldsLayoutComponent } from './fields-layout.component';
-import { FieldsLayoutModule } from './fields-layout.module';
+import { FieldsLayoutComponent } from '../fields-layout.component';
+import { FieldsLayoutModule } from '../fields-layout.module';
 import { take, map } from 'rxjs/operators';
 
 @Component({

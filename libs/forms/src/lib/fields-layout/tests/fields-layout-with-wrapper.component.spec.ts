@@ -5,8 +5,8 @@ import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, ReactiveFormsModu
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { FieldsLayoutComponent } from './fields-layout.component';
-import { FieldsLayoutModule } from './fields-layout.module';
+import { FieldsLayoutComponent } from '../fields-layout.component';
+import { FieldsLayoutModule } from '../fields-layout.module';
 
 @Component({
     selector: 'hlc-field-wrapper',
