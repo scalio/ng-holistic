@@ -3,6 +3,6 @@
     [formGroup]="formGroup"
     #formContainer>
     <ng-container *ngFor="let field of fields">
-        <ng-container *hlcFormFieldHost="field; componentType: getComponentType(field); container: formContainer; control: getControl(field.id)"></ng-container>
+        <ng-container *hlcFormFieldHost="field; componentType: getComponentType(field); control: getControl(field.id)"></ng-container>
     </ng-container>
 </form>

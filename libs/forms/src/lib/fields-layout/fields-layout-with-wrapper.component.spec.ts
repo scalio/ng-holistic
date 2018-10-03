@@ -133,7 +133,7 @@ describe('fields-layout with wrapper', () => {
                 input = fixture.nativeElement.querySelector('input');
             }));
 
-            it('must render layout with single text input', () => {
+            fit('must render layout with single text input', () => {
                 // div / form / hlc-field-wrapper
 
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);

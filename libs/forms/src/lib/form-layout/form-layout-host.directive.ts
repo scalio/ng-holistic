@@ -1,4 +1,3 @@
-import { DomPortalHost } from '@angular/cdk/portal';
 import {
     ComponentFactoryResolver,
     Directive,
@@ -106,7 +105,6 @@ export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS
 })
 export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     private destroy$ = new Subject();
-    private portalHosts: DomPortalHost[] = [];
     private groupsLayoutMap: GroupsLayoutMap;
 
     // tslint:disable-next-line:no-input-rename
@@ -153,6 +151,5 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next();
-        this.portalHosts.forEach(host => host.detach());
     }
 }

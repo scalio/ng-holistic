@@ -1,4 +1,3 @@
-import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,7 +6,7 @@ import { FormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-hos
 
 @NgModule({
     declarations: [FieldsLayoutComponent, FormFieldHostDirective],
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, PortalModule],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
     providers: [],
     exports: [FieldsLayoutComponent]
 })

@@ -1,10 +1,8 @@
-import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
 import {
-    ApplicationRef,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
-    ComponentRef,
     Directive,
-    ElementRef,
+    EventEmitter,
     Inject,
     InjectionToken,
     Injector,
@@ -13,16 +11,14 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef,
-    EventEmitter,
-    ChangeDetectorRef
+    ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { FormField, FormFieldComponent } from '../models';
 import * as R from 'ramda';
 import 'reflect-metadata';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { FormField } from '../models';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
@@ -106,17 +102,11 @@ const setComponentProperties = (
 })
 export class FormFieldHostDirective implements OnInit, OnDestroy {
     private destroy$ = new Subject();
-    private portalHost: DomPortalHost;
-    private portal: ComponentPortal<FormFieldComponent.IFieldComponent<any>>;
-    private componentRef: ComponentRef<FormFieldComponent.IFieldComponent<any>>;
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHost') field: FormField.BaseField<any>;
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHostComponentType') componentType: any;
-
-    // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHostContainer') container: ElementRef;
+    @Input('hlcFormFieldHostComponentType') componentType: Type<any>;
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostControl') control: FormControl;
@@ -124,7 +114,6 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
-        private readonly appRef: ApplicationRef,
         private vcr: ViewContainerRef,
         @Optional()
         @Inject(HLC_FORM_FIELD_WRAPPER)
@@ -134,15 +123,17 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         // Create a portalHost from a DOM element
+        /*
         this.portalHost = new DomPortalHost(
             this.container as any,
             this.componentFactoryResolver,
             this.appRef,
             this.injector
         );
+        */
 
         // Locate the component factory for the HeaderComponent
-        this.portal = new ComponentPortal(this.componentType) as any;
+        // this.portal = new ComponentPortal(this.componentType) as any;
 
         // Attach portal to host
         this.init();
@@ -150,33 +141,39 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     }
 
     init() {
-        this.componentRef = this.portalHost.attach(this.portal);
+        // this.componentRef = this.portalHost.attach(this.portal);
+
+        const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
+        const componentRef = factory.create(this.injector);
+        const view = componentRef.hostView;
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content
             const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
-            const children = this.portalHost.outletElement.childNodes;
-            const wrapperInst = this.vcr.createComponent(componentFactory, undefined, this.injector, [
-                [children.item(children.length - 1)]
-            ]);
+            const wrapperInst = this.vcr.createComponent(componentFactory, undefined, this.injector, [[view]]);
             setComponentProperties(this.cdr, this.destroy$, wrapperInst.instance, this.field);
+        } else {
+            this.vcr.insert(view);
         }
 
         // If component implements ValueAccessor interface use one to update it value
 
-        if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
-            const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
+        if (componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
+            const valueAccessor = (componentRef.instance as any) as ControlValueAccessor;
             valueAccessor.registerOnChange((val: any) => {
                 this.control.setValue(val);
             });
-            this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => valueAccessor.writeValue(val));
+            this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
+                valueAccessor.writeValue(val);
+                this.cdr.markForCheck();
+            });
         }
 
-        setComponentProperties(this.cdr, this.destroy$, this.componentRef.instance, this.field);
+        setComponentProperties(this.cdr, this.destroy$, componentRef.instance, this.field);
     }
 
     ngOnDestroy() {
         this.destroy$.next();
-        this.portalHost.detach();
+        // this.portalHost.detach();
     }
 }
