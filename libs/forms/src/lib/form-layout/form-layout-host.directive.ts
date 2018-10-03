@@ -1,16 +1,15 @@
-import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
+import { DomPortalHost } from '@angular/cdk/portal';
 import {
-    ApplicationRef,
     ComponentFactoryResolver,
     Directive,
-    ElementRef,
     Inject,
     InjectionToken,
     Injector,
     Input,
     OnDestroy,
     OnInit,
-    Type
+    Type,
+    ViewContainerRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
@@ -117,15 +116,12 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     @Input('hlcGroupLayoutHostForm') form: FormGroup;
 
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcGroupLayoutHostContainer') container: ElementRef;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
-        private readonly appRef: ApplicationRef,
-        // private readonly cdr: ChangeDetectorRef,
-        private readonly elementRef: ElementRef,
-        @Inject(HLC_GROUPS_LAYOUT) groupsLayoutMaps: GroupsLayoutMap[]
+        @Inject(HLC_GROUPS_LAYOUT) groupsLayoutMaps: GroupsLayoutMap[],
+        private readonly vcr: ViewContainerRef
     ) {
         this.groupsLayoutMap = R.mergeAll(groupsLayoutMaps);
     }
@@ -137,24 +133,21 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         if (!this.group) {
             return;
         }
-        this.init(this.elementRef.nativeElement.parentElement, this.group);
+        this.init(this.vcr, this.group);
         // setTimeout(() => this.init(), 0);
     }
 
-    init(container: any, group: IFormGroup<any>) {
-        const portalHost = new DomPortalHost(container, this.componentFactoryResolver, this.appRef, this.injector);
-
-        const portal = new ComponentPortal(this.groupsLayoutMap[group.kind]) as any;
-
-        const componentRef = portalHost.attach(portal);
-
-        this.portalHosts.push(portalHost);
+    init(container: ViewContainerRef, group: IFormGroup<any>) {
+        const factory = this.componentFactoryResolver.resolveComponentFactory(this.groupsLayoutMap[group.kind]);
+        const componentRef = factory.create(this.injector);
+        const view = componentRef.hostView;
+        container.insert(view);
 
         // setComponentProperties(this.cdr, this.destroy$, this.componentRef.instance, this.group);
 
         for (const child of group.$content) {
             // console.log(this.componentRef);
-            this.init(componentRef.location.nativeElement, child);
+            this.init(componentRef.instance['vc'], child);
         }
     }
 
