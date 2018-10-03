@@ -1,11 +1,8 @@
 import {
-    ChangeDetectorRef,
-    ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
     Directive,
     EmbeddedViewRef,
-    EventEmitter,
     Inject,
     InjectionToken,
     Injector,
@@ -17,72 +14,12 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as R from 'ramda';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormField } from '../models';
+import { setComponentProperties } from '../set-component-properties';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
-
-const isPropInput = (factory: ComponentFactory<any>, propName: string) => {
-    //const meta = getPropMeta(comp, propName);
-    //return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_INPUT), meta);
-    return !!factory.inputs.find(R.propEq('propName', propName));
-};
-
-const isPropOutput = (factory: ComponentFactory<any>, propName: string) => {
-    return !!factory.outputs.find(R.propEq('propName', propName));
-};
-
-const setComponentProperty = (
-    factory: ComponentFactory<any>,
-    cdr: ChangeDetectorRef,
-    destroy$: Observable<any>,
-    comp: any
-) => (val: any, key: string) => {
-    if (isPropOutput(factory, key)) {
-        if (!(comp[key] instanceof EventEmitter)) {
-            throw new Error('Output property must have EventEmitter type');
-        }
-        if (!(val instanceof Subject)) {
-            throw new Error('For Output properties, field property must have Subject type');
-        }
-        // dispatch from output to subject
-        (comp[key] as EventEmitter<any>)
-            .asObservable()
-            .pipe(takeUntil(destroy$))
-            .subscribe(x => {
-                (val as Subject<any>).next(x);
-            });
-        return;
-    }
-
-    if (isPropInput(factory, key)) {
-        if (val instanceof Observable) {
-            val.pipe(takeUntil(destroy$)).subscribe(x => {
-                comp[key] = x;
-                cdr.detectChanges();
-            });
-            return;
-        }
-
-        comp[key] = val;
-        return;
-    }
-};
-
-const setComponentProperties = (
-    componentFactory: ComponentFactory<any>,
-    cdr: ChangeDetectorRef,
-    destroy$: Observable<any>,
-    component: any,
-    field: FormField.BaseField<any>
-) => {
-    R.pipe(
-        R.omit(['id', 'kind']),
-        R.forEachObjIndexed(setComponentProperty(componentFactory, cdr, destroy$, component))
-    )(field);
-};
 
 @Directive({
     selector: '[hlcFormFieldHost]'
@@ -129,6 +66,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.wrapperRef.changeDetectorRef.detach();
 
             setComponentProperties(
+                ['id', 'kind'],
                 wrapperFactory,
                 this.wrapperRef.changeDetectorRef,
                 this.destroy$,
@@ -155,6 +93,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         }
 
         setComponentProperties(
+            ['id', 'kind'],
             factory,
             this.componentRef.changeDetectorRef,
             this.destroy$,
