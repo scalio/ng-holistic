@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     Directive,
+    EmbeddedViewRef,
     EventEmitter,
     Inject,
     InjectionToken,
@@ -13,6 +14,7 @@ import {
     Type,
     ViewContainerRef
 } from '@angular/core';
+import { ComponentRef } from '@angular/core/src/render3';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
 import 'reflect-metadata';
@@ -75,7 +77,7 @@ const setComponentProperty = (cdr: ChangeDetectorRef, destroy$: Observable<any>,
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => {
                 comp[key] = x;
-                cdr.markForCheck();
+                cdr.detectChanges();
             });
             return;
         }
@@ -107,7 +109,6 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     @Input('hlcFormFieldHost') field: FormField.BaseField<any>;
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostComponentType') componentType: Type<any>;
-
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostControl') control: FormControl;
 
@@ -117,41 +118,31 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         private vcr: ViewContainerRef,
         @Optional()
         @Inject(HLC_FORM_FIELD_WRAPPER)
-        private readonly wrapper: Type<any>,
-        private readonly cdr: ChangeDetectorRef
+        private readonly wrapper: Type<any>
     ) {}
 
     ngOnInit() {
         // Create a portalHost from a DOM element
-        /*
-        this.portalHost = new DomPortalHost(
-            this.container as any,
-            this.componentFactoryResolver,
-            this.appRef,
-            this.injector
-        );
-        */
-
-        // Locate the component factory for the HeaderComponent
-        // this.portal = new ComponentPortal(this.componentType) as any;
 
         // Attach portal to host
         this.init();
-        // setTimeout(() => this.init(), 0);
     }
 
     init() {
-        // this.componentRef = this.portalHost.attach(this.portal);
-
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
         const componentRef = factory.create(this.injector);
-        const view = componentRef.hostView;
+        const view = componentRef.hostView as EmbeddedViewRef<any>;
+
+        let wrapperRef: ComponentRef<any>;
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content
             const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
-            const wrapperInst = this.vcr.createComponent(componentFactory, undefined, this.injector, [[view]]);
-            setComponentProperties(this.cdr, this.destroy$, wrapperInst.instance, this.field);
+            wrapperRef = this.vcr.createComponent(componentFactory, undefined, this.injector, [
+                [view.rootNodes[view.rootNodes.length - 1]]
+            ]) as any;
+
+            setComponentProperties(wrapperRef.changeDetectorRef, this.destroy$, wrapperRef.instance, this.field);
         } else {
             this.vcr.insert(view);
         }
@@ -165,15 +156,16 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             });
             this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
                 valueAccessor.writeValue(val);
-                this.cdr.markForCheck();
+                view.detectChanges();
             });
         }
 
-        setComponentProperties(this.cdr, this.destroy$, componentRef.instance, this.field);
+        setComponentProperties(componentRef.changeDetectorRef, this.destroy$, componentRef.instance, this.field);
+
+        view.detectChanges();
     }
 
     ngOnDestroy() {
         this.destroy$.next();
-        // this.portalHost.detach();
     }
 }

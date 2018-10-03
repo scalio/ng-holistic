@@ -133,7 +133,7 @@ describe('fields-layout with wrapper', () => {
                 input = fixture.nativeElement.querySelector('input');
             }));
 
-            fit('must render layout with single text input', () => {
+            it('must render layout with single text input', () => {
                 // div / form / hlc-field-wrapper
 
                 expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
@@ -162,6 +162,7 @@ describe('fields-layout with wrapper', () => {
             it('when form value patched it must update input value', () => {
                 comp.formGroup.patchValue({ text: '567' });
                 fixture.detectChanges();
+                console.log(input);
                 expect(input.value).toEqual('567');
             });
         });
