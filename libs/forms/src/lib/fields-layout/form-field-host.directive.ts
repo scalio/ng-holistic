@@ -64,7 +64,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             ]);
 
             setComponentProperties(
-                ['id', 'kind'],
+                ['kind'],
                 wrapperFactory,
                 this.wrapperRef.changeDetectorRef,
                 this.destroy$,
@@ -94,7 +94,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         }
 
         setComponentProperties(
-            ['id', 'kind'],
+            ['kind'],
             factory,
             this.componentRef.changeDetectorRef,
             this.destroy$,

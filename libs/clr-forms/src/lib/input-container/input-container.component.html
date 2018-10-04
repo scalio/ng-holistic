@@ -4,7 +4,9 @@
         <span *ngIf="isOptional">- Optional</span>
     </label>
 
-    <ng-content select="[formControlName]"></ng-content>
+    <ng-container #ref>
+        <ng-content></ng-content>
+    </ng-container>
 
     <!-- <ng-content select="scalio-input-error"></ng-content> -->
 

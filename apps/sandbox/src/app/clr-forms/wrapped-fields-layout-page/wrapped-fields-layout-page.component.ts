@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputContainerComponent } from '@ng-holistic/clr-forms';
 import { HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
 
@@ -19,7 +19,8 @@ const fields = [
     {
         id: 'date',
         kind: 'DateField',
-        label: 'Date'
+        label: 'Date',
+        readonly: true
     },
     {
         id: 'select',
@@ -42,7 +43,7 @@ export class WrappedFiedlsLayoutComponent implements OnInit {
 
     constructor(fb: FormBuilder) {
         this.formGroup = fb.group({
-            text: [''],
+            text: ['', [Validators.required]],
             textarea: [''],
             date: [null],
             select: [null]

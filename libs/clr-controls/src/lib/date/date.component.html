@@ -5,6 +5,7 @@
     [(clrDate)]="date">
 
 <clr-icon
+    *ngIf="!readonly"
     shape="times"
     (click)="onReset()"
     class="is-info remove__icon"></clr-icon>
