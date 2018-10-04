@@ -11,7 +11,6 @@ import {
     ViewContainerRef,
     ComponentRef
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
 import 'reflect-metadata';
 import { Subject } from 'rxjs';
@@ -34,8 +33,6 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcGroupLayoutHost') group: IFormGroup<any>;
-    // tslint:disable-next-line:no-input-rename
-    @Input('hlcGroupLayoutHostForm') form: FormGroup;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,

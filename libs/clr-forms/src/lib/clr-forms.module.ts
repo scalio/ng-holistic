@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldsLayoutMap, HLC_FIELDS_LAYOUT_MAP, FieldsLayoutModule } from '@ng-holistic/forms';
+import { DateModule, SelectModule, TextAreaModule, TextModule } from '@ng-holistic/clr-controls';
+import { FieldsLayoutMap, FieldsLayoutModule, HLC_FIELDS_LAYOUT_MAP } from '@ng-holistic/forms';
 import { clrFieldsLayoutMap } from './fields-layout';
-import { TextModule, TextAreaModule, DateModule, SelectModule } from '@ng-holistic/clr-controls';
 
 @NgModule({
     imports: [
