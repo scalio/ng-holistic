@@ -1,0 +1,12 @@
+<clr-date-container>
+    <input
+        [readonly]="readonly"
+        #input
+        type="date"
+        [(clrDate)]="date">
+</clr-date-container>
+
+<clr-icon
+    shape="times"
+    (click)="onReset()"
+    class="is-info remove__icon"></clr-icon>
