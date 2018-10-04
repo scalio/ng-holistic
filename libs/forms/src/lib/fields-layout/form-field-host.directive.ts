@@ -53,7 +53,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
         this.componentRef = factory.create(this.injector);
         const view = this.componentRef.hostView as EmbeddedViewRef<any>;
-        view.detach();
+        // view.detach();
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content

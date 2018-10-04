@@ -57,12 +57,12 @@ export default [
         icon: 'list',
         children: [
             {
-                title: 'base',
+                title: 'field layout',
                 path: ['/clr-forms', 'base']
             },
             {
-                title: 'ngrx',
-                path: ['/clr-forms', 'ngrx']
+                title: 'warpped fields layout',
+                path: ['/clr-forms', 'wrapped-fields-layout']
             }
         ]
     }
