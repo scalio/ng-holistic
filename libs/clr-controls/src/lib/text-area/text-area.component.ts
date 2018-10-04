@@ -2,6 +2,11 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isNil } from 'ramda';
 
+export interface TextAreaValues {
+    placeholder?: string;
+    readonly?: boolean;
+}
+
 @Component({
     selector: 'hlc-text-area',
     templateUrl: './text-area.component.html',
@@ -14,7 +19,7 @@ import { isNil } from 'ramda';
         }
     ]
 })
-export class TextAreaComponent implements OnInit, ControlValueAccessor {
+export class TextAreaComponent implements OnInit, ControlValueAccessor, TextAreaValues {
     @Input() value: string;
 
     @Input() placeholder: string;

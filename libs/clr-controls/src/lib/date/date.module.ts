@@ -8,7 +8,8 @@ import { DateConvertService } from '../date-convert.service';
     imports: [SelectModule, ClrDatepickerModule, ClrIconModule],
     declarations: [DateComponent],
     exports: [DateComponent],
-    providers: [DateConvertService]
+    providers: [DateConvertService],
+    entryComponents: [DateComponent]
 })
 export class DateModule {
     constructor() {}

@@ -6,6 +6,20 @@ const fields = [
         kind: 'TextField',
         id: 'text',
         placeholder: 'Type something'
+    },
+    {
+        kind: 'TextAreaField',
+        id: 'textarea',
+        placeholder: 'Type something'
+    },
+    {
+        kind: 'DateField',
+        id: 'date'
+    },
+    {
+        kind: 'SelectField',
+        id: 'select',
+        items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
     }
 ];
 
@@ -21,7 +35,10 @@ export class BaseFormPageComponent implements OnInit {
 
     constructor(fb: FormBuilder) {
         this.formGroup = fb.group({
-            text: ['']
+            text: [''],
+            textarea: [''],
+            date: [null],
+            select: [null]
         });
     }
 

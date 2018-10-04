@@ -32,6 +32,12 @@ export interface SelectConfig {
 
 export const SELECT_CONFIG = new InjectionToken('SELECT_CONFIG');
 
+export interface SelectValues {
+    items: any[];
+    disallowEmpty?: boolean;
+    readonly?: boolean;
+}
+
 @Component({
     selector: 'hlc-select',
     templateUrl: './select.component.html',
@@ -44,7 +50,7 @@ export const SELECT_CONFIG = new InjectionToken('SELECT_CONFIG');
         }
     ]
 })
-export class SelectComponent implements OnInit, OnInit, ControlValueAccessor {
+export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, SelectValues {
     @Input() items: any[];
     @Input() value: any | undefined;
     // true - Don't wrap to 'select' class container, use original browser look

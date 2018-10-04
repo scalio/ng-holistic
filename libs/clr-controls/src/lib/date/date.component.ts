@@ -4,6 +4,10 @@ import { getHours, getMinutes, setHours, setMinutes } from 'date-fns/esm/fp';
 import * as R from 'ramda';
 import { DateConvertService } from '../date-convert.service';
 
+export interface DateValues {
+    readonly?: boolean;
+}
+
 @Component({
     selector: 'hlc-date',
     templateUrl: './date.component.html',
@@ -16,7 +20,7 @@ import { DateConvertService } from '../date-convert.service';
         }
     ]
 })
-export class DateComponent implements OnInit, OnInit, ControlValueAccessor {
+export class DateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
     @Input() value: string | undefined;
     @Input() format: string | undefined;
     @Input() readonly: boolean;

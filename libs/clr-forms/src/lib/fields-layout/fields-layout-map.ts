@@ -1,5 +1,8 @@
-import { TextComponent } from '@ng-holistic/clr-controls';
+import { TextComponent, TextAreaComponent, SelectComponent, DateComponent } from '@ng-holistic/clr-controls';
 
 export const clrFieldsLayoutMap = {
-    TextField: TextComponent
+    TextField: TextComponent,
+    TextAreaField: TextAreaComponent,
+    SelectField: SelectComponent,
+    DateField: DateComponent
 };
