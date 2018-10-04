@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormLayout } from '@ng-holistic/forms';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,9 +8,10 @@ import { FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupsLayoutComponent implements OnInit {
-    @Input() formGroup: FormGroup;
-    @Input() dicts: FormLayout.Dicts;
-    @Input() items: FormLayout.FormGroup[] | undefined;
+    @Input() form: FormGroup;
+    @Input() title: string;
+    @ViewChild('vc', { read: ViewContainerRef })
+    vc: ViewContainerRef;
 
     constructor() {}
 

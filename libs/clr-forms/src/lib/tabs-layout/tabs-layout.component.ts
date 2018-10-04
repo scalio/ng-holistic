@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormLayout } from '@ng-holistic/forms';
+import { ChangeDetectionStrategy, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,7 +8,8 @@ import { FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsLayoutComponent {
-    @Input() formGroup: FormGroup;
-    @Input() dicts: FormLayout.Dicts;
-    @Input() items: FormLayout.FormTab[] | undefined;
+    @Input() form: FormGroup;
+    @Input() title: string;
+    @ViewChild('vc', { read: ViewContainerRef })
+    vc: ViewContainerRef;
 }

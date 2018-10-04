@@ -5,7 +5,7 @@ const fields = [
     {
         kind: 'TextField',
         id: 'text',
-        label: 'Title'
+        placeholder: 'Type something'
     }
 ];
 

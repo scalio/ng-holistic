@@ -6,6 +6,7 @@ import { TextComponent } from './text.component';
 @NgModule({
     imports: [CommonModule, FormsModule],
     declarations: [TextComponent],
-    exports: [TextComponent]
+    exports: [TextComponent],
+    entryComponents: [TextComponent]
 })
 export class TextModule {}

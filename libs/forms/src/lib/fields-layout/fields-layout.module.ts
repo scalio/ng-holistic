@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FieldsLayoutComponent, FieldsLayoutMap, HLC_FORM_FIELD } from './fields-layout.component';
+import { FieldsLayoutComponent, FieldsLayoutMap, HLC_FIELDS_LAYOUT_MAP } from './fields-layout.component';
 import { FormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-host.directive';
 
 @NgModule({
@@ -16,7 +16,7 @@ export class FieldsLayoutModule {
             ngModule: FieldsLayoutModule,
             providers: [
                 {
-                    provide: HLC_FORM_FIELD,
+                    provide: HLC_FIELDS_LAYOUT_MAP,
                     multi: true,
                     useValue: fieldsLayoutMap
                 },

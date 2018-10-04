@@ -7,7 +7,7 @@ export interface FieldsLayoutMap {
     [key: string]: Type<any>;
 }
 
-export const HLC_FORM_FIELD = new InjectionToken<FieldsLayoutMap>('HLC_FORM_FIELD');
+export const HLC_FIELDS_LAYOUT_MAP = new InjectionToken<FieldsLayoutMap>('HLC_FIELDS_LAYOUT_MAP');
 
 @Component({
     selector: 'hlc-fields-layout',
@@ -20,7 +20,7 @@ export class FieldsLayoutComponent implements OnInit {
     @Input() formGroup: FormGroup;
     @Input() fields: FormField.Field[];
 
-    constructor(@Inject(HLC_FORM_FIELD) fieldLayoutMaps: FieldsLayoutMap[]) {
+    constructor(@Inject(HLC_FIELDS_LAYOUT_MAP) fieldLayoutMaps: FieldsLayoutMap[]) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
     }
 

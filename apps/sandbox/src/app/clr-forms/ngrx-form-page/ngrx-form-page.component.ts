@@ -1,3 +1,4 @@
+/*
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { TextMask } from '@ng-holistic/clr-controls';
 import { FormLayoutComponent } from '@ng-holistic/clr-forms';
@@ -73,3 +74,4 @@ export class NgrxFormPageComponent implements OnInit {
         // this.store.dispatch(new SubFormAction(new SubFormActions.Update(this.form.value)));
     }
 }
+*/

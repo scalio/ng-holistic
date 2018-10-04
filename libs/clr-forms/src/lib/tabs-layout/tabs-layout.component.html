@@ -1,19 +1,6 @@
 <clr-tabs>
-    <clr-tab *ngFor="let tab of items">
-        <button clrTabLink>{{tab.title}}</button>
-        <clr-tab-content *clrIfActive>
-            <hlc-fields-layout
-                *ngIf="tab.content.kind === 'FormFieldsCollection'"
-                [dicts]="dicts"
-                [formGroup]="formGroup"
-                [items]="tab.content.items">
-            </hlc-fields-layout>
-            <hlc-groups-layout
-                *ngIf="tab.content.kind === 'FormGroupsCollection'"
-                [dicts]="dicts"
-                [formGroup]="formGroup"
-                [items]="tab.content.items">
-            </hlc-groups-layout>
-        </clr-tab-content>
-    </clr-tab>
+    <button clrTabLink>{{title}}</button>
+    <clr-tab-content *clrIfActive>
+        <ng-container #vc></ng-container>
+    </clr-tab-content>
 </clr-tabs>

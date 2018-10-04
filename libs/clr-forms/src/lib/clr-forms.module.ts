@@ -1,14 +1,31 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ClrTabsModule } from '@clr/angular';
-import { FieldsLayoutModule } from './fields-layout/fields-layout.module';
-import { GroupsLayoutComponent } from './groups-layout/groups-layout.component';
-import { TabsLayoutComponent } from './tabs-layout/tabs-layout.component';
-import { FormLayoutComponent } from './form-layout/form-layout.component';
+import { FieldsLayoutMap, HLC_FIELDS_LAYOUT_MAP, FieldsLayoutModule } from '@ng-holistic/forms';
+import { clrFieldsLayoutMap } from './fields-layout';
+import { TextModule } from '@ng-holistic/clr-controls';
+
 @NgModule({
-    imports: [CommonModule, ReactiveFormsModule, ClrTabsModule, FieldsLayoutModule],
-    declarations: [GroupsLayoutComponent, TabsLayoutComponent, FormLayoutComponent],
-    exports: [FormLayoutComponent]
+    imports: [CommonModule, ReactiveFormsModule, FieldsLayoutModule, TextModule],
+    declarations: [],
+    exports: []
 })
-export class ClrFormsModule {}
+export class ClrFormsModule {
+    static forRoot(fieldsLayoutMap?: FieldsLayoutMap): ModuleWithProviders {
+        return {
+            ngModule: ClrFormsModule,
+            providers: [
+                {
+                    provide: HLC_FIELDS_LAYOUT_MAP,
+                    multi: true,
+                    useValue: fieldsLayoutMap
+                },
+                {
+                    provide: HLC_FIELDS_LAYOUT_MAP,
+                    multi: true,
+                    useValue: clrFieldsLayoutMap
+                }
+            ]
+        };
+    }
+}

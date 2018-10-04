@@ -10,6 +10,7 @@ import { NxModule } from '@nrwl/nx';
 import { DndModule } from 'ng2-dnd';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
+import { ClrFormsModule } from '@ng-holistic/clr-forms';
 
 const preloadItemConfig: PreloadItemConfig = {
     getItemId(_) {
@@ -31,6 +32,7 @@ const preloadItemConfig: PreloadItemConfig = {
         EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument(),
         DndModule.forRoot(),
+        ClrFormsModule.forRoot(),
         NgrxFormsModule.forRoot(preloadItemConfig)
     ],
     providers: [],
