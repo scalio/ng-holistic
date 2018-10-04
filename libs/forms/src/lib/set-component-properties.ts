@@ -40,7 +40,7 @@ const setComponentProperty = (
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => {
                 comp[key] = x;
-                cdr.detectChanges();
+                cdr.markForCheck();
             });
             return;
         }

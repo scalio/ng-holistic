@@ -11,7 +11,8 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    ApplicationRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -39,7 +40,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
-        private vcr: ViewContainerRef,
+        private readonly vcr: ViewContainerRef,
+        private readonly appRef: ApplicationRef,
         @Optional()
         @Inject(HLC_FORM_FIELD_WRAPPER)
         private readonly wrapper: Type<any>
@@ -53,7 +55,6 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
         this.componentRef = factory.create(this.injector);
         const view = this.componentRef.hostView as EmbeddedViewRef<any>;
-        // view.detach();
 
         if (this.wrapper) {
             // Insert generated component inside wrapper content
@@ -61,8 +62,6 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.wrapperRef = this.vcr.createComponent(wrapperFactory, undefined, this.injector, [
                 [view.rootNodes[view.rootNodes.length - 1]]
             ]);
-
-            this.wrapperRef.changeDetectorRef.detach();
 
             setComponentProperties(
                 ['id', 'kind'],
@@ -72,6 +71,9 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 this.wrapperRef.instance,
                 this.field
             );
+
+            // control view is not attached dirctly to viewcontainerref, we need to attach it to CD manually
+            this.appRef.attachView(view);
 
             this.wrapperRef.changeDetectorRef.detectChanges();
         } else {
@@ -87,7 +89,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             });
             this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
                 valueAccessor.writeValue(val);
-                view.detectChanges();
+                view.markForCheck();
             });
         }
 

@@ -7,13 +7,14 @@ import { InputErrorComponent } from './input-error/input-error.component';
 import {
     InputErrorDisplayStartegy,
     INPUT_ERROR_DISPLAY_STRATEGY,
-    defaulInputErrorDisplayStartegy,
+    defaulInputErrorDisplayStartegy
 } from './input-error/input-error-display-strategy';
 
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule, ClrIconModule],
     declarations: [InputContainerComponent, InputErrorComponent],
     exports: [InputContainerComponent, InputErrorComponent],
+    entryComponents: [InputContainerComponent]
 })
 export class InputContainerModule {
     static forRoot(strategy?: InputErrorDisplayStartegy): ModuleWithProviders {
@@ -22,9 +23,9 @@ export class InputContainerModule {
             providers: [
                 {
                     provide: INPUT_ERROR_DISPLAY_STRATEGY,
-                    useValue: strategy || defaulInputErrorDisplayStartegy,
-                },
-            ],
+                    useValue: strategy || defaulInputErrorDisplayStartegy
+                }
+            ]
         };
     }
 }
