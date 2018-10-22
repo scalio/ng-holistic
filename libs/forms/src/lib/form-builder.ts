@@ -10,10 +10,10 @@ export const flatItems = (
         return coll.items;
     }
     return R.pipe(
-        R.pluck('content') as any,
-        R.chain(flatItems),
+        R.pluck('content'),
+        R.chain(flatItems as any),
         R.flatten
-    )(coll.items);
+    )(coll.items) as any;
 };
 
 export const flatForm = (form: FormLayout.Form): FormFields.FormField[] => flatItems(form.content);

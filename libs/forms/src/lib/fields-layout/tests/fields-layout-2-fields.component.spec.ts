@@ -155,7 +155,7 @@ describe('fields-layout with 2 fields', () => {
                 fixture.detectChanges();
             }));
 
-            it('must set property to scalar value with same name on component', () => {
+            xit('must set property to scalar value with same name on component', () => {
                 const inputs = fixture.nativeElement.querySelectorAll('input[disabled]');
                 expect(inputs.length).toEqual(1);
             });
