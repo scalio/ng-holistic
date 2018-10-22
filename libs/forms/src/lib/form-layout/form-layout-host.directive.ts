@@ -44,12 +44,11 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // Create a portalHost from a DOM element
 
-        // Attach portal to host
         if (!this.group) {
             return;
         }
+        // init components from roout group
         this.componentRefs = this.init(this.vcr, this.group);
     }
 

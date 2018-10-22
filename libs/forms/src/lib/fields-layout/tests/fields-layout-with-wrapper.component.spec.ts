@@ -253,6 +253,7 @@ describe('fields-layout with wrapper', () => {
                 fixture.detectChanges();
             }));
 
+            // WTF ?
             it('must set property to scalar value with same name on component', () => {
                 const input = fixture.nativeElement.querySelector('input[disabled]');
                 expect(input).not.toBeNull();
