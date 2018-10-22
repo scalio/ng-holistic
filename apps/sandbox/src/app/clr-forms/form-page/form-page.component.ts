@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { InputContainerComponent } from '@ng-holistic/clr-forms';
-import { HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
 
 const fields = [
     {
@@ -30,13 +28,12 @@ const fields = [
 ];
 
 @Component({
-    selector: 'hlc-form-layout-page',
-    templateUrl: './form-layout-page.component.html',
-    styleUrls: ['./form-layout-page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [{ provide: HLC_FORM_FIELD_WRAPPER, useValue: InputContainerComponent }]
+    selector: 'hlc-form-page',
+    templateUrl: './form-page.component.html',
+    styleUrls: ['./form-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WrappedFiedlsLayoutComponent implements OnInit {
+export class FormPageComponent implements OnInit {
     fields = fields;
 
     constructor() {}

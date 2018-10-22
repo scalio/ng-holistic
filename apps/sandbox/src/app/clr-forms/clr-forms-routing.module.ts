@@ -3,25 +3,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { PRELOAD_ITEM_CONFIG, resolvePreloadItem } from '@ng-holistic/ngrx-forms';
 import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { BaseFormPageComponent } from './base-form-page/base-form-page.component';
-import { BaseFormPageModule } from './base-form-page/base-form-page.module';
+import { FormPageComponent } from './form-page/form-page.component';
+import { FormPageModule } from './form-page/form-page.module';
 import { pair } from './ngrx-form-page/store';
-import { WrappedFiedlsLayoutComponent } from './wrapped-fields-layout-page/wrapped-fields-layout-page.component';
 import { WrappedFiedlsLayoutModule } from './wrapped-fields-layout-page/warpped-fields-layout-page.module';
+import { WrappedFiedlsLayoutComponent } from './wrapped-fields-layout-page/wrapped-fields-layout-page.component';
 
 export const routes: Routes = [
     {
-        path: 'base',
-        component: BaseFormPageComponent
-    },
-    {
         path: 'wrapped-fields-layout',
         component: WrappedFiedlsLayoutComponent
+    },
+    {
+        path: 'form',
+        component: FormPageComponent
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), BaseFormPageModule, WrappedFiedlsLayoutModule],
+    imports: [RouterModule.forChild(routes), WrappedFiedlsLayoutModule, FormPageModule],
     exports: [RouterModule],
     providers: [
         {

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ClrFormsModule, InputContainerModule } from '@ng-holistic/clr-forms';
-import { FieldsLayoutModule } from '@ng-holistic/forms';
+import { ClrFormsModule } from '@ng-holistic/clr-forms';
+import { FormPageComponent } from './form-page.component';
 
 ///
 @NgModule({
-    declarations: [],
-    imports: [CommonModule, ClrFormsModule, FieldsLayoutModule, InputContainerModule],
+    declarations: [FormPageComponent],
+    imports: [CommonModule, ClrFormsModule],
     exports: []
 })
-export class WrappedFiedlsLayoutModule {}
+export class FormPageModule {}

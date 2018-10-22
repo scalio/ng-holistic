@@ -17,6 +17,9 @@ import { Subject } from 'rxjs';
 import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 
+/**
+ * Map of key - group  pairs which could be possible generated on form layout
+ */
 export interface GroupsLayoutMap {
     [key: string]: Type<any>;
 }

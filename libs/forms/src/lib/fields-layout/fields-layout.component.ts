@@ -3,6 +3,9 @@ import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
 import { FormField } from '../models';
 
+/**
+ * Map of key - type fields which could be possible generated on form layout
+ */
 export interface FieldsLayoutMap {
     [key: string]: Type<any>;
 }

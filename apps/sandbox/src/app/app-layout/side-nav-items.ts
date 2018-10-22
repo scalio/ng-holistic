@@ -53,16 +53,15 @@ export default [
     },
     {
         title: 'Clr-Forms',
-        path: ['/clr-forms'],
         icon: 'list',
         children: [
             {
-                title: 'field layout',
-                path: ['/clr-forms', 'base']
+                title: 'fields layout',
+                path: ['/clr-forms', 'fields-layout']
             },
             {
-                title: 'warpped fields layout',
-                path: ['/clr-forms', 'wrapped-fields-layout']
+                title: 'form',
+                path: ['/clr-forms', 'form']
             }
         ]
     }
