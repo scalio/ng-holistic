@@ -1,6 +1,8 @@
 <clr-tabs>
-    <button clrTabLink>{{title}}</button>
-    <clr-tab-content *clrIfActive>
-        <ng-container #vc></ng-container>
-    </clr-tab-content>
+    <clr-tab>
+        <button clrTabLink>{{title}}</button>
+        <clr-tab-content *clrIfActive>
+            <ng-container #vc></ng-container>
+        </clr-tab-content>
+    </clr-tab>
 </clr-tabs>

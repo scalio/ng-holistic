@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
     selector: 'hlc-tabs-layout',
     templateUrl: './tabs-layout.component.html',
     styleUrls: ['./tabs-layout.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsLayoutComponent {
     @Input() form: FormGroup;

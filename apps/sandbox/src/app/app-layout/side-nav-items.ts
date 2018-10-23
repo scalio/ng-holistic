@@ -56,12 +56,12 @@ export default [
         icon: 'list',
         children: [
             {
-                title: 'fields layout',
-                path: ['/clr-forms', 'fields-layout']
+                title: 'base form',
+                path: ['/clr-forms', 'form']
             },
             {
-                title: 'form',
-                path: ['/clr-forms', 'form']
+                title: 'form with groups',
+                path: ['/clr-forms', 'form-groups']
             }
         ]
     }

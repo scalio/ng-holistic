@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TabsLayoutComponent } from './tabs-layout.component';
-import { ClrTabsModule } from '@clr/angular';
+import { ClrTabsModule, ClarityModule } from '@clr/angular';
 
 @NgModule({
-    imports: [CommonModule, ClrTabsModule],
+    imports: [CommonModule, ClrTabsModule, ClarityModule],
     declarations: [TabsLayoutComponent],
     exports: [TabsLayoutComponent],
     entryComponents: [TabsLayoutComponent]
 })
-export class TabsLayoutModule {
-}
+export class TabsLayoutModule {}

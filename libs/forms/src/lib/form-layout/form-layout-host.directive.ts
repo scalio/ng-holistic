@@ -35,7 +35,8 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     private groupsLayoutMap: GroupsLayoutMap;
 
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormLayoutHost') group: IFormGroup<any>;
+    @Input('hlcFormLayoutHost')
+    group: IFormGroup<any>;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -47,15 +48,15 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         if (!this.group) {
             return;
         }
         // init components from roout group
-        this.componentRefs = this.init(this.vcr, this.group);
+        this.componentRefs = this.init(this.vcr, this.group, 0);
     }
 
-    init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
+    init(container: ViewContainerRef, group: IFormGroup<any>, index: number): ComponentRef<any>[] {
+        console.log('+++', group, index);
         const groupLayoutType = this.groupsLayoutMap[group.kind];
         if (!groupLayoutType) {
             throw new Error(`Group layout type ${group.kind} is not found`);
@@ -63,7 +64,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.groupsLayoutMap[group.kind]);
         const componentRef = factory.create(this.injector);
         const view = componentRef.hostView;
-        container.insert(view);
+        container.insert(view, index);
         view.detach();
 
         setComponentProperties(
@@ -72,12 +73,15 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
             componentRef.changeDetectorRef,
             this.destroy$,
             componentRef.instance,
-            this.group
+            group
         );
 
         view.detectChanges();
 
-        const crfs = R.chain(child => this.init(componentRef.instance['vc'], child), group.$content || []);
+        const crfs = R.addIndex(R.chain)(
+            (child: IFormGroup<any>, i) => this.init(componentRef.instance['vc'], child, i),
+            group.$content || []
+        ) as any as ComponentRef<any>[];
 
         return [...crfs, componentRef];
     }

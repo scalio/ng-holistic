@@ -18,8 +18,7 @@ const group = {
         {
             id: 'date',
             kind: 'DateField',
-            label: 'Date',
-            readonly: true
+            label: 'Date'
         },
         {
             id: 'select',
