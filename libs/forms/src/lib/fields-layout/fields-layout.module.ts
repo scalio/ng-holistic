@@ -8,7 +8,8 @@ import { FormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-hos
     declarations: [FieldsLayoutComponent, FormFieldHostDirective],
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
     providers: [],
-    exports: [FieldsLayoutComponent]
+    exports: [FieldsLayoutComponent],
+    entryComponents: [FieldsLayoutComponent]
 })
 export class FieldsLayoutModule {
     static forRoot(fieldsLayoutMap: FieldsLayoutMap, fieldWrapper?: Type<any>): ModuleWithProviders {

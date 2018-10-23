@@ -12,6 +12,12 @@ export interface FieldsLayoutMap {
 
 export const HLC_FIELDS_LAYOUT_MAP = new InjectionToken<FieldsLayoutMap>('HLC_FIELDS_LAYOUT_MAP');
 
+export interface FormGroupProvider {
+    form: FormGroup;
+}
+
+export const HLC_FORM_GROUP_PROVIDER = new InjectionToken<FormGroupProvider>('HLC_FORM_GROUP_PROVIDER');
+
 @Component({
     selector: 'hlc-fields-layout',
     templateUrl: './fields-layout.component.html',
@@ -20,14 +26,22 @@ export const HLC_FIELDS_LAYOUT_MAP = new InjectionToken<FieldsLayoutMap>('HLC_FI
 })
 export class FieldsLayoutComponent implements OnInit {
     private readonly fieldLayoutMap: FieldsLayoutMap;
-    @Input() formGroup: FormGroup;
-    @Input() fields: FormField.Field[];
 
-    constructor(@Inject(HLC_FIELDS_LAYOUT_MAP) fieldLayoutMaps: FieldsLayoutMap[]) {
+    @Input()
+    fields: FormField.Field[];
+
+    constructor(
+        @Inject(HLC_FIELDS_LAYOUT_MAP) fieldLayoutMaps: FieldsLayoutMap[],
+        @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider
+    ) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
     }
 
     ngOnInit() {}
+
+    get formGroup() {
+        return this.formGroupProvider && this.formGroupProvider.form;
+    }
 
     getComponentType(field: FormField.Field) {
         return this.fieldLayoutMap[field.kind];

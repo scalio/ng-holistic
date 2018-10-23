@@ -1,36 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DateModule, SelectModule, TextAreaModule, TextModule } from '@ng-holistic/clr-controls';
 import {
     FieldsLayoutMap,
-    FieldsLayoutModule,
     HLC_FIELDS_LAYOUT_MAP,
     GroupsLayoutMap,
     HLC_GROUPS_LAYOUT,
-    HLC_FORM_FIELD_WRAPPER
+    HLC_FORM_FIELD_WRAPPER,
+    FormModule,
+    FieldsLayoutModule
 } from '@ng-holistic/forms';
-import { clrFieldsLayoutMap } from './fields-layout';
-import { clrGroupLayoutsMap } from './group-layouts-map';
-import { InputContainerModule } from './input-container';
+import { clrFieldsLayoutMap } from '../fields-layout';
+import { clrGroupLayoutsMap } from '../group-layouts-map';
+import { InputContainerModule, InputContainerComponent } from '../input-container';
+import { ClrFormComponent } from './form.component';
+import { TextModule, TextAreaModule, DateModule, SelectModule } from '@ng-holistic/clr-controls';
+import { TabsLayoutModule } from '../tabs-layout';
+import { GroupsLayoutModule } from '../groups-layout';
 
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule,
-        FieldsLayoutModule,
+        FormModule,
         TextModule,
         TextAreaModule,
         DateModule,
-        SelectModule
+        SelectModule,
+        FieldsLayoutModule,
+        TabsLayoutModule,
+        GroupsLayoutModule,
+        InputContainerModule
     ],
-    declarations: [],
-    exports: []
+    declarations: [ClrFormComponent],
+    exports: [ClrFormComponent]
 })
-export class ClrFormsModule {
+export class ClrFormModule {
     static forRoot(fieldsLayoutMap?: FieldsLayoutMap, groupsLayoutMap?: GroupsLayoutMap): ModuleWithProviders {
         return {
-            ngModule: ClrFormsModule,
+            ngModule: ClrFormModule,
             providers: [
                 {
                     provide: HLC_FIELDS_LAYOUT_MAP,
@@ -54,7 +60,7 @@ export class ClrFormsModule {
                 },
                 {
                     provide: HLC_FORM_FIELD_WRAPPER,
-                    useValue: InputContainerModule
+                    useValue: InputContainerComponent
                 }
             ]
         };

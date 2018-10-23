@@ -4,10 +4,10 @@ import { FormLayoutModule, GroupsLayoutMap, HLC_GROUPS_LAYOUT } from '../form-la
 import { FormComponent } from './form.component';
 
 @NgModule({
-    declarations: [FormComponent, FormLayoutModule],
-    imports: [CommonModule],
+    declarations: [FormComponent],
+    imports: [CommonModule, FormLayoutModule],
     providers: [],
-    exports: [FormComponent]
+    exports: [FormComponent, FormLayoutModule]
 })
 export class FormModule {
     static forRoot(groupsLayoutMap: GroupsLayoutMap): ModuleWithProviders {

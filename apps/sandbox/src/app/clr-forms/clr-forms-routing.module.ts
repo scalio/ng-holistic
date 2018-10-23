@@ -11,7 +11,7 @@ import { WrappedFiedlsLayoutComponent } from './wrapped-fields-layout-page/wrapp
 
 export const routes: Routes = [
     {
-        path: 'wrapped-fields-layout',
+        path: 'fields-layout',
         component: WrappedFiedlsLayoutComponent
     },
     {

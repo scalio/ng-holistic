@@ -1,31 +1,34 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-const fields = [
-    {
-        id: 'text',
-        kind: 'TextField',
-        label: 'Text',
-        placeholder: 'Type something'
-    },
-    {
-        id: 'textarea',
-        kind: 'TextAreaField',
-        label: 'Text Area',
-        placeholder: 'Type something'
-    },
-    {
-        id: 'date',
-        kind: 'DateField',
-        label: 'Date',
-        readonly: true
-    },
-    {
-        id: 'select',
-        kind: 'SelectField',
-        label: 'Select',
-        items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
-    }
-];
+const group = {
+    kind: 'fields',
+    fields: [
+        {
+            id: 'text',
+            kind: 'TextField',
+            label: 'Text',
+            placeholder: 'Type something'
+        },
+        {
+            id: 'textarea',
+            kind: 'TextAreaField',
+            label: 'Text Area',
+            placeholder: 'Type something'
+        },
+        {
+            id: 'date',
+            kind: 'DateField',
+            label: 'Date',
+            readonly: true
+        },
+        {
+            id: 'select',
+            kind: 'SelectField',
+            label: 'Select',
+            items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+        }
+    ]
+};
 
 @Component({
     selector: 'hlc-form-page',
@@ -34,7 +37,7 @@ const fields = [
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormPageComponent implements OnInit {
-    fields = fields;
+    group = group;
 
     constructor() {}
 

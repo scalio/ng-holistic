@@ -27,7 +27,7 @@ export interface GroupsLayoutMap {
 export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS_LAYOUT');
 
 @Directive({
-    selector: '[hlcGroupLayoutHost]'
+    selector: '[hlcFormLayoutHost]'
 })
 export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     private componentRefs: ComponentRef<any>[];
@@ -35,7 +35,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     private groupsLayoutMap: GroupsLayoutMap;
 
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcGroupLayoutHost') group: IFormGroup<any>;
+    @Input('hlcFormLayoutHost') group: IFormGroup<any>;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -56,6 +56,10 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     }
 
     init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
+        const groupLayoutType = this.groupsLayoutMap[group.kind];
+        if (!groupLayoutType) {
+            throw new Error(`Group layout type ${group.kind} is not found`);
+        }
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.groupsLayoutMap[group.kind]);
         const componentRef = factory.create(this.injector);
         const view = componentRef.hostView;
@@ -73,7 +77,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
         view.detectChanges();
 
-        const crfs = R.chain(child => this.init(componentRef.instance['vc'], child), group.$content);
+        const crfs = R.chain(child => this.init(componentRef.instance['vc'], child), group.$content || []);
 
         return [...crfs, componentRef];
     }
