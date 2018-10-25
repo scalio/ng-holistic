@@ -62,6 +62,10 @@ export default [
             {
                 title: 'form with groups',
                 path: ['/clr-forms', 'form-groups']
+            },
+            {
+                title: 'form recalc',
+                path: ['/clr-forms', 'form-recalc']
             }
         ]
     }

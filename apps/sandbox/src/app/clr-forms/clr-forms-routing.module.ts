@@ -8,6 +8,8 @@ import { FormGroupsPageModule } from './form-groups-page/form-groups-page.module
 import { FormPageComponent } from './form-page/form-page.component';
 import { FormPageModule } from './form-page/form-page.module';
 import { pair } from './ngrx-form-page/store';
+import { FormRecalcPageComponent } from './form-recalc-page/form-recalc-page.component';
+import { FormReclcPageModule } from './form-recalc-page/form-recalc-page.module';
 
 export const routes: Routes = [
     {
@@ -17,11 +19,15 @@ export const routes: Routes = [
     {
         path: 'form-groups',
         component: FormGroupsPageComponent
+    },
+    {
+        path: 'form-recalc',
+        component: FormRecalcPageComponent
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), FormPageModule, FormGroupsPageModule],
+    imports: [RouterModule.forChild(routes), FormPageModule, FormGroupsPageModule, FormReclcPageModule],
     exports: [RouterModule],
     providers: [
         {

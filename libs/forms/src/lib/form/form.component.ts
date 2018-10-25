@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 import { initFormGroup } from './form-builder';
 
 import { IFormGroup, FormField } from '@ng-holistic/forms';
+import { equals } from 'ramda';
 
 export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);
 export type ExtractFieldsFun = (group: IFormGroup<any>) => FormField.FormField2[];
@@ -38,7 +39,14 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
     set value(val: any) {
         if (this.formGroup) {
+
+            if (equals(this.formGroup.value, val)) {
+                return;
+            }
+
             this.formGroup.patchValue(val);
+            this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+            this.cdr.detectChanges();
         } else {
             this._tempVal = val;
         }
@@ -57,14 +65,24 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
     private initForm(form: FormLayoutConfig | undefined) {
         if (!form) {
             this.group = undefined;
+            this.destroy$.next();
+            return;
+        }
+
+
+        const newFormGroup = this.fb.group({});
+
+        const newForm = typeof form === 'function' ? form(newFormGroup) : form;
+
+        if (this.group === newForm) {
+            // Same form as before
             return;
         }
 
         this.destroy$.next();
 
-        this.formGroup = this.fb.group({});
-
-        this.group = typeof form === 'function' ? form(this.formGroup) : form;
+        this.formGroup = newFormGroup;
+        this.group = newForm;
 
         const fields = this.extractFieldsFun(this.group);
 
