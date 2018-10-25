@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { GroupsLayoutComponent } from './groups-layout.component';
+import { GroupsLayoutComponent, GroupLayoutComponent } from './groups-layout.component';
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [GroupsLayoutComponent],
-    exports: [GroupsLayoutComponent],
-    entryComponents: [GroupsLayoutComponent]
+    declarations: [GroupsLayoutComponent, GroupLayoutComponent],
+    exports: [GroupsLayoutComponent, GroupLayoutComponent],
+    entryComponents: [GroupsLayoutComponent, GroupLayoutComponent]
 })
 export class GroupsLayoutModule {
 }

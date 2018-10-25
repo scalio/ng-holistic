@@ -1,18 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
-    selector: 'hlc-group-layout',
-    template: '<ng-container #vc></ng-container>',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class GroupLayoutComponent {
-    @ViewChild('vc', { read: ViewContainerRef })
-    vc: ViewContainerRef;
-
-    constructor() {}
-}
-
-@Component({
     selector: 'hlc-groups-layout',
     templateUrl: './groups-layout.component.html',
     styleUrls: ['./groups-layout.component.scss'],
