@@ -1,10 +1,9 @@
-
-import { GroupsLayoutComponent } from './groups-layout/groups-layout.component';
-import { TabsLayoutComponent } from './tabs-layout/tabs-layout.component';
 import { FieldsLayoutComponent } from '@ng-holistic/forms';
+import { GroupsLayoutComponent } from './groups-layout';
+import { TabsLayoutComponent } from './tabs-layout';
 
 export const clrGroupLayoutsMap = {
     fields: FieldsLayoutComponent,
-    groups: GroupsLayoutComponent,
+    group: GroupsLayoutComponent,
     tabs: TabsLayoutComponent
 };

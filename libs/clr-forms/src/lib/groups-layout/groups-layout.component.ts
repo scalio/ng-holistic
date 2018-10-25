@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
     selector: 'hlc-groups-layout',
@@ -8,8 +7,8 @@ import { FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupsLayoutComponent implements OnInit {
-    @Input() form: FormGroup;
-    @Input() title: string;
+    @Input()
+    title: string;
     @ViewChild('vc', { read: ViewContainerRef })
     vc: ViewContainerRef;
 

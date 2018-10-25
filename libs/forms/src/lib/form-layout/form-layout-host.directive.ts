@@ -1,5 +1,6 @@
 import {
     ComponentFactoryResolver,
+    ComponentRef,
     Directive,
     Inject,
     InjectionToken,
@@ -7,9 +8,9 @@ import {
     Input,
     OnDestroy,
     OnInit,
+    QueryList,
     Type,
-    ViewContainerRef,
-    ComponentRef
+    ViewContainerRef
 } from '@angular/core';
 import * as R from 'ramda';
 import 'reflect-metadata';
@@ -51,24 +52,26 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         if (!this.group) {
             return;
         }
-        // init components from roout group
-        this.componentRefs = this.init(this.vcr, this.group, 0);
+
+        this.componentRefs = this.init(this.vcr, this.group);
     }
 
-    init(container: ViewContainerRef, group: IFormGroup<any>, index: number): ComponentRef<any>[] {
-        console.log('+++', group, index);
+    init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
+
+        if (!container) {
+            console.log('Group exists but container not found !', group);
+            return [];
+        }
         const groupLayoutType = this.groupsLayoutMap[group.kind];
         if (!groupLayoutType) {
             throw new Error(`Group layout type ${group.kind} is not found`);
         }
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.groupsLayoutMap[group.kind]);
-        const componentRef = factory.create(this.injector);
-        const view = componentRef.hostView;
-        container.insert(view, index);
-        view.detach();
+
+        const componentRef = container.createComponent(factory, undefined, this.injector);
 
         setComponentProperties(
-            ['kind', '$content'],
+            [],
             factory,
             componentRef.changeDetectorRef,
             this.destroy$,
@@ -76,14 +79,21 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
             group
         );
 
-        view.detectChanges();
+        componentRef.changeDetectorRef.detectChanges();
 
-        const crfs = R.addIndex(R.chain)(
-            (child: IFormGroup<any>, i) => this.init(componentRef.instance['vc'], child, i),
-            group.$content || []
-        ) as any as ComponentRef<any>[];
+        const $content = group.$content || [];
 
-        return [...crfs, componentRef];
+        /**
+         * View Container could be QueryList or just item, convert single item to array for usage convenience bellow
+         */
+        const _vc = componentRef.instance['vc'];
+        const vc = _vc instanceof QueryList ? _vc.toArray() : R.repeat(_vc, $content.length);
+
+        const crfs = R.addIndex(R.chain)((child: IFormGroup<any>, index) => {
+            return this.init(vc[index], child);
+        }, $content || []);
+
+        return [...crfs, componentRef] as any;
     }
 
     ngOnDestroy() {

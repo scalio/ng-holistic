@@ -6,6 +6,12 @@ export const flatItems = (group: FormGroup.FormGroup): FormField.FormField2[] =>
     if (group.kind === 'fields') {
         return group.fields;
     }
+    /*
+    if (group.kind === 'tabs') {
+        return (group as any)['tabs'].map(flatItems);
+    }
+    */
+
     return R.pipe(
         R.prop('$content'),
         R.chain(flatItems),

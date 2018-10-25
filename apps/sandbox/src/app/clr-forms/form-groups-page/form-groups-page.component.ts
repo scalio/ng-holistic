@@ -1,37 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 const group = {
-    kind: 'groups',
+    kind: 'tabs',
     $content: [
         {
-            title: 'Group A',
-            kind: 'tabs',
-            $content: [
-                {
-                    kind: 'fields',
-                    fields: [
-                        {
-                            id: 'text1',
-                            kind: 'TextField',
-                            label: 'Text1'
-                        }
-                    ]
-                }
-            ]
+            tabTitle: 'Tab A',
+            kind: 'fields',
+            fields: []
         },
         {
-            title: 'Group B',
-            kind: 'tabs',
-            $content: [
+            tabTitle: 'Tab B',
+            kind: 'fields',
+            fields: [
                 {
-                    kind: 'fields',
-                    fields: [
-                        {
-                            id: 'text2',
-                            kind: 'TextField',
-                            label: 'Text2'
-                        }
-                    ]
+                    kind: 'TextField',
+                    id: 'text2',
+                    label: 'Text 2',
+                    placeholder: 'Type something'
                 }
             ]
         }

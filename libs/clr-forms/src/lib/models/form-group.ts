@@ -5,6 +5,7 @@ export namespace FormGroup {
         fields: FormField.FormField2[];
     }
 
+
     // tslint:disable-next-line:no-shadowed-variable
     export type FormGroup = FieldsGroup;
 }
