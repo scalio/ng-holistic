@@ -39,7 +39,6 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
     set value(val: any) {
         if (this.formGroup) {
-
             if (equals(this.formGroup.value, val)) {
                 return;
             }
@@ -69,7 +68,6 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
             return;
         }
 
-
         const newFormGroup = this.fb.group({});
 
         const newForm = typeof form === 'function' ? form(newFormGroup) : form;
@@ -86,17 +84,15 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const fields = this.extractFieldsFun(this.group);
 
-        const computeFieldsSniffer = initFormGroup(this.formGroup, this.fb, fields);
+        const sniffer$ = initFormGroup(this.formGroup, this.fb, fields);
 
         if (this._tempVal) {
             this.formGroup.patchValue(this._tempVal);
             this._tempVal = undefined;
         }
 
-        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.cdr.detectChanges());
-
-        if (computeFieldsSniffer) {
-            computeFieldsSniffer.pipe(takeUntil(this.destroy$)).subscribe(() => {});
+        if (sniffer$) {
+            sniffer$.pipe(takeUntil(this.destroy$)).subscribe(() => {});
         }
     }
 

@@ -10,10 +10,36 @@ export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: Fo
             field.id,
             R.propOr<any, any, any[]>([], '$validators', field)
         ]),
-        R.forEach(([k, v]: [string, any]) => formGroup.addControl(k, fb.control(null, v))),
+        R.forEach(([k, v]: [string, any]) => {
+            // when $validators are observable not use them for initialziation
+            v = v instanceof Observable ? [] : v;
+            return formGroup.addControl(k, fb.control(null, v));
+        }),
         _ => formGroup
     )(inputs);
 
+export const sniffAndUpdateValidators = (form: FormGroup, fields: FormField.FormField2[]): Observable<any> | null =>
+    fields.reduce((aggr: Observable<any> | null, field: FormField.FormField2) => {
+        if (field.$validators && field.$validators instanceof Observable) {
+            const stream$ = field.$validators.pipe(
+                distinctUntilChanged(),
+                tap(val => {
+                    form.controls[field.id].setValidators(val || []);
+                    form.controls[field.id].updateValueAndValidity({emitEvent: false});
+                })
+            );
+            if (!aggr) {
+                return stream$;
+            } else {
+                return merge(aggr, stream$);
+            }
+        } else {
+            return aggr;
+        }
+    }, null);
+
+
+// Does we need this indeed ?
 export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormField.FormField2[]): Observable<any> | null =>
     fields.reduce((aggr: Observable<any> | null, field: FormField.FormField2) => {
         if (field.$compute) {
@@ -35,5 +61,6 @@ export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormField.
 
 export const initFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormField.FormField2[]) => {
     buildFormGroup(formGroup, fb, inputs);
-    return sniffAndUpdateComputedFields(formGroup, inputs);
+    return sniffAndUpdateValidators(formGroup, inputs);
+    //return sniffAndUpdateComputedFields(formGroup, inputs);
 };

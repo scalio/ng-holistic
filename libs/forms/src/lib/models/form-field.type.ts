@@ -1,4 +1,4 @@
-import { Validator } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // import { FormFieldCompnent } from './form-field-component.types';
@@ -14,7 +14,7 @@ export namespace FormField {
     }
 
     export interface FormField2<T extends string = any> extends Field<T> {
-        $validators?: Validator[];
+        $validators?: ValidatorFn[] | Observable<ValidatorFn[]>;
         $compute?: Observable<any>;
     }
 
