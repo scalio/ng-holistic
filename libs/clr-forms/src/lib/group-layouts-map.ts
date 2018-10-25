@@ -5,5 +5,6 @@ import { TabsLayoutComponent } from './tabs-layout';
 export const clrGroupLayoutsMap = {
     fields: FieldsLayoutComponent,
     group: GroupsLayoutComponent,
+    tab: GroupsLayoutComponent,
     tabs: TabsLayoutComponent
 };
