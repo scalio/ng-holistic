@@ -7,7 +7,6 @@ import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
 import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.module';
 import { ClrFormsModule } from './clr-forms/clr-forms.module';
-import { routes as clrListsModuleRoutes } from './clr-lists/clr-lists-routing.module';
 import { ClrListsModule } from './clr-lists/clr-lists.module';
 
 export const routes: Routes = [
@@ -24,10 +23,6 @@ export const routes: Routes = [
                 path: 'clr-controls',
                 component: ClrControlsComponent,
                 children: clrControlsRoutes
-            },
-            {
-                path: 'clr-lists',
-                children: clrListsModuleRoutes
             },
             {
                 path: 'clr-forms',

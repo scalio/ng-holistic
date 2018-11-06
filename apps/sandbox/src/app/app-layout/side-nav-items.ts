@@ -2,68 +2,42 @@ import { SideNavItem } from '@ng-holistic/clr-layout';
 
 export default [
     {
+        title: 'Clr-Forms',
+        icon: 'align-left-text',
+        children: [
+            {
+                title: 'Base Form',
+                path: ['/clr-forms', 'form']
+            },
+            {
+                title: 'Form With Groups',
+                path: ['/clr-forms', 'form-groups']
+            },
+            {
+                title: 'Form Recalc',
+                path: ['/clr-forms', 'form-recalc']
+            }
+        ]
+    },
+    {
         title: 'Clr-Controls',
         icon: 'blocks-group',
         children: [
             {
-                title: 'date-range',
-                path: ['/clr-controls', 'date-range']
+                title: 'Text',
+                path: ['/clr-controls', 'text']
             },
             {
-                title: 'date-time',
-                path: ['/clr-controls', 'date-time']
+                title: 'Text Area',
+                path: ['/clr-controls', 'text-area']
             },
             {
-                title: 'file-upload',
-                path: ['/clr-controls', 'file-upload']
+                title: 'Date',
+                path: ['/clr-controls', 'date']
             },
             {
-                title: 'file-uploader',
-                path: ['/clr-controls', 'file-uploader']
-            },
-            {
-                title: 'image-upload',
-                path: ['/clr-controls', 'image-upload']
-            },
-            {
-                title: 'select',
+                title: 'Select',
                 path: ['/clr-controls', 'select']
-            },
-            {
-                title: 'ordered-list',
-                path: ['/clr-controls', 'ordered-list']
-            }
-        ]
-    },
-    {
-        title: 'Clr-Lists',
-        icon: 'list',
-        children: [
-            {
-                title: 'base',
-                path: ['/clr-lists', 'base']
-            },
-            {
-                title: 'ngrx',
-                path: ['/clr-lists', 'ngrx']
-            }
-        ]
-    },
-    {
-        title: 'Clr-Forms',
-        icon: 'list',
-        children: [
-            {
-                title: 'base form',
-                path: ['/clr-forms', 'form']
-            },
-            {
-                title: 'form with groups',
-                path: ['/clr-forms', 'form-groups']
-            },
-            {
-                title: 'form recalc',
-                path: ['/clr-forms', 'form-recalc']
             }
         ]
     }
