@@ -1,5 +1,4 @@
 import { AbstractControl } from '@angular/forms';
-import { assertNever } from '@ng-holistic/core';
 import * as compareAsc from 'date-fns/compareAsc';
 
 export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
@@ -19,7 +18,7 @@ export const compareNumber = (oper: CompareOperator): CompareFun<number> => (val
         case 'eq':
             return val1 === val2;
         default:
-            return assertNever(oper);
+            return false; // assertNever(oper);
     }
 };
 
@@ -41,7 +40,7 @@ export const compareDateUnit = (unit: 'second' | 'day') => (oper: CompareOperato
         case 'eq':
             return diff === 0;
         default:
-            return assertNever(oper);
+            return false; // assertNever(oper);
     }
 };
 

@@ -11,9 +11,6 @@
     "sandbox": {
       "tags": []
     },
-    "core": {
-      "tags": []
-    },
     "forms": {
       "tags": []
     },
@@ -23,19 +20,7 @@
     "clr-layout": {
       "tags": []
     },
-    "ngrx-lists": {
-      "tags": []
-    },
-    "lists": {
-      "tags": []
-    },
-    "clr-lists": {
-      "tags": []
-    },
     "clr-forms": {
-      "tags": []
-    },
-    "ngrx-forms": {
       "tags": []
     }
   }

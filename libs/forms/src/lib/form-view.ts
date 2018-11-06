@@ -1,4 +1,3 @@
-import { Dicts } from '@ng-holistic/ngrx-forms';
 import * as R from 'ramda';
 import { Observable, of } from 'rxjs';
 import { FormFields } from './models';
@@ -16,7 +15,7 @@ import { FormFields } from './models';
  */
 //
 
-const mapFieldToView = (dicts: Dicts | undefined) => (field: FormFields.FormField) => {
+const mapFieldToView = (dicts: any | undefined) => (field: FormFields.FormField) => {
     if (!R.isNil(field.readonly) && !(field.readonly instanceof Observable)) {
         field = { ...field, readonly: of(field.readonly) };
     }
@@ -31,5 +30,5 @@ const mapFieldToView = (dicts: Dicts | undefined) => (field: FormFields.FormFiel
     return field;
 };
 
-export const mapFieldsToView = (dicts: Dicts | undefined, fields: FormFields.FormField[]): FormFields.FormField[] =>
+export const mapFieldsToView = (dicts: any | undefined, fields: FormFields.FormField[]): FormFields.FormField[] =>
     R.map(mapFieldToView(dicts), fields);

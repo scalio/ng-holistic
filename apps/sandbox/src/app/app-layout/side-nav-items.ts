@@ -2,7 +2,7 @@ import { SideNavItem } from '@ng-holistic/clr-layout';
 
 export default [
     {
-        title: 'Clr-Forms',
+        title: 'Clr Forms',
         icon: 'align-left-text',
         children: [
             {
@@ -20,7 +20,7 @@ export default [
         ]
     },
     {
-        title: 'Clr-Controls',
+        title: 'Clr Controls',
         icon: 'blocks-group',
         children: [
             {
