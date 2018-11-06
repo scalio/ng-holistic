@@ -1,58 +1,40 @@
 <clr-vertical-nav
-    [clr-nav-level]="1"
     [clrVerticalNavCollapsible]="true"
     [(clrVerticalNavCollapsed)]="collapsed">
 
     <ng-container *ngFor="let item of items">
-
         <clr-vertical-nav-group
-            *ngIf="item.children"
             routerLinkActive="active"
             [clrVerticalNavGroupExpanded]="true">
 
-            <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: item}"></ng-container>
-
+            <clr-icon
+                clrVerticalNavIcon
+                *ngIf="item.icon"
+                [attr.shape]="item.icon"></clr-icon>
+            {{item.title}}
             <clr-vertical-nav-group-children *clrIfExpanded>
+
                 <ng-container *ngFor="let child of item.children">
-                    <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: child}"></ng-container>
+
+                    <clr-icon
+                        clrVerticalNavIcon
+                        *ngIf="child.icon"
+                        [attr.shape]="child.icon"></clr-icon>
+
+                    <a
+                        aria-hidden="true"
+                        clrVerticalNavLink
+                        routerLinkActive="active"
+                        [routerLink]="child.path">
+                        {{child.title}}
+                    </a>
+
                 </ng-container>
+
             </clr-vertical-nav-group-children>
 
         </clr-vertical-nav-group>
 
-        <clr-vertical-nav
-            *ngIf="!item.children"
-            routerLinkActive="active">
-            <ng-container *ngTemplateOutlet="wrapItem; context: {$implicit: item}"></ng-container>
-
-        </clr-vertical-nav>
-
-
     </ng-container>
 
 </clr-vertical-nav>
-
-<ng-template
-    #wrapItem
-    let-item>
-    <a
-        *ngIf="item.path"
-        aria-hidden="true"
-        clrVerticalNavLink
-        [routerLink]="item.path">
-        <ng-container *ngTemplateOutlet="citem; context: {$implicit: item}"></ng-container>
-    </a>
-    <ng-container *ngIf="!item.path">
-        <ng-container *ngTemplateOutlet="citem; context: {$implicit: item}"></ng-container>
-    </ng-container>
-
-</ng-template>
-
-<ng-template
-    #citem
-    let-item>
-    <clr-icon
-        *ngIf="item.icon"
-        [attr.shape]="item.icon"></clr-icon>
-    {{item.title}}
-</ng-template>
