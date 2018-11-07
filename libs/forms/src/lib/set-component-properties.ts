@@ -3,14 +3,41 @@ import * as R from 'ramda';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-const isPropInput = (factory: ComponentFactory<any>, propName: string) => {
+/**
+ * Given name of the `template` input property name returns real property name if one exists
+ * @param factory Factory of the component with property
+ * @param propName Temaplate name of the property
+ */
+const inputPropName = (factory: ComponentFactory<any>, propName: string) => {
     //const meta = getPropMeta(comp, propName);
     //return meta && R.find(R.propEq(NG_METADATA_NAME, NG_METADATA_NAME_INPUT), meta);
-    return !!factory.inputs.find(R.propEq('propName', propName));
+    const prop = factory.inputs.find(R.propEq('templateName', propName));
+    return prop && prop.propName;
 };
 
-const isPropOutput = (factory: ComponentFactory<any>, propName: string) => {
-    return !!factory.outputs.find(R.propEq('propName', propName));
+/**
+ * Given name of the `template` output property name returns real property name if one exists
+ * @param factory Factory of the component with property
+ * @param propName Temaplate name of the property
+ */
+const outputPropName = (factory: ComponentFactory<any>, propName: string) => {
+    const prop = factory.outputs.find(R.propEq('templateName', propName));
+    return prop && prop.propName;
+};
+
+/**
+ * Set property value, event if property is as `set` method
+ * @param propName property name
+ * @param obj object with property
+ * @param val value to set
+ */
+const setPropValue = (propName: string, obj: any, val: any) => {
+    if (typeof obj[propName] === 'function') {
+        // property is `set` method
+        obj[propName](val);
+    } else {
+        obj[propName] = val;
+    }
 };
 
 const setComponentProperty = (
@@ -19,8 +46,9 @@ const setComponentProperty = (
     destroy$: Observable<any>,
     comp: any
 ) => (val: any, key: string) => {
-    if (isPropOutput(factory, key)) {
-        if (!(comp[key] instanceof EventEmitter)) {
+    const outPropName = outputPropName(factory, key);
+    if (outPropName) {
+        if (!(comp[outPropName] instanceof EventEmitter)) {
             throw new Error('Output property must have EventEmitter type');
         }
         if (!(val instanceof Subject)) {
@@ -36,16 +64,17 @@ const setComponentProperty = (
         return;
     }
 
-    if (isPropInput(factory, key)) {
+    const inPropName = inputPropName(factory, key);
+    if (inPropName) {
+        // Input property could be bound to observable, this case update property every time observable emit new value
         if (val instanceof Observable) {
             val.pipe(takeUntil(destroy$)).subscribe(x => {
-                comp[key] = x;
+                comp[inPropName] = x;
                 cdr.markForCheck();
             });
             return;
         }
-
-        comp[key] = val;
+        setPropValue(inPropName, comp, val);
         return;
     }
 };

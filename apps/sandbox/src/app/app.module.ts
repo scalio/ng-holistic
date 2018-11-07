@@ -26,7 +26,6 @@ import { AppRoutingModule, routes } from './app.routing.module';
         DndModule.forRoot(),
         ClrFormModule.forRoot()
     ],
-    providers: [],
     bootstrap: [AppComponent],
     entryComponents: []
 })

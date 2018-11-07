@@ -21,13 +21,24 @@ export interface DateValues {
     ]
 })
 export class DateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
-    @Input() value: string | undefined;
-    @Input() format: string | undefined;
-    @Input() readonly: boolean;
+    private value: string | undefined;
 
-    @ViewChild('input') input: ElementRef<any>;
+    @Input()
+    format: string | undefined;
+    @Input()
+    readonly: boolean;
 
-    @Output() valueChange = new EventEmitter<string | undefined>();
+    @ViewChild('input')
+    input: ElementRef<any>;
+
+    @Output()
+    valueChange = new EventEmitter<string | undefined>();
+
+    @Input('value')
+    setValue(val: string | undefined) {
+        this.value = val;
+        console.log('+++', val);
+    }
 
     propagateChange = (_: any) => {};
 
@@ -74,7 +85,8 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     //
 
     writeValue(obj: any) {
-        this.value = obj;
+        console.log('333', this.value);
+        this.setValue(obj);
     }
 
     registerOnChange(fn: any) {

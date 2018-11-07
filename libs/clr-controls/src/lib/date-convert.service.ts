@@ -10,7 +10,7 @@ export interface DateTimeConfig {
     domainFormat?: string;
 }
 
-export const DATE_TIME_CONFIG = new InjectionToken('DATE_TIME_CONFIG');
+export const DATE_CONVERT_CONFIG = new InjectionToken('DATE_CONVERT_CONFIG');
 
 const parse = (format: string) => (str: string | null | undefined) => {
     if (!str) {
@@ -33,11 +33,11 @@ const translateDateStr = (parseStr: string, formatStr: string, str: string | nul
  * Convert dates from controls formatted values to domain formatted strings
  * Input events value -> format to Date -> parse Date to domain formatted string
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DateConvertService {
     constructor(
         @Optional()
-        @Inject(DATE_TIME_CONFIG)
+        @Inject(DATE_CONVERT_CONFIG)
         private readonly config: DateTimeConfig | undefined
     ) {}
 

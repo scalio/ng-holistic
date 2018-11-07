@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 const group = {
     kind: 'fields',
     fields: [
+        /*
         {
             id: 'text',
             kind: 'TextField',
@@ -15,17 +16,19 @@ const group = {
             label: 'Text Area',
             placeholder: 'Type something'
         },
+        */
         {
             id: 'date',
             kind: 'DateField',
-            label: 'Date'
-        },
+            label: 'Date',
+            value: '10/10/2018'
+        }/*,
         {
             id: 'select',
             kind: 'SelectField',
             label: 'Select',
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
-        }
+        }*/
     ]
 };
 
