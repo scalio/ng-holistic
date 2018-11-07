@@ -1,6 +1,7 @@
 import { FormFields } from './form-fields.types';
 
 export namespace FormLayout {
+
     export interface FormFieldsCollection {
         kind: 'FormFieldsCollection';
         items: FormFields.FormField[];

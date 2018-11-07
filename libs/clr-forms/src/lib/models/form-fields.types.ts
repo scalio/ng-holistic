@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 export namespace FormFields {
+
     export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
 
     //
@@ -126,17 +127,6 @@ export namespace FormFields {
         | TagsField
         | TyepaheadField;
 
-    export type FieldValidation = BaseFieldValidation | TextFieldValidation;
 
-    //
 
-    export type FormGroupKind = 'FormGroupTab';
-
-    export interface FormGroup {
-        title: string;
-        kind: FormGroupKind;
-        fields: FormField[];
-    }
-
-    export type FormContent = FormField[] | FormGroup[];
 }
