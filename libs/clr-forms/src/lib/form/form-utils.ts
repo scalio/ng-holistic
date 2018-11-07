@@ -1,16 +1,11 @@
 import { FormFields } from '@ng-holistic/forms';
 import * as R from 'ramda';
-import { FormGroup } from '../models';
+import { ClrFormLayouts } from '../models/form-layout.types';
 
-export const flatItems = (group: FormGroup.FormGroup): FormFields.FormField[] => {
+export const flatItems = (group: ClrFormLayouts.ClrFormLayout): FormFields.FormField[] => {
     if (group.kind === 'fields') {
-        return group.fields;
+        return group['fields'];
     }
-    /*
-    if (group.kind === 'tabs') {
-        return (group as any)['tabs'].map(flatItems);
-    }
-    */
 
     return R.pipe(
         R.prop('$content'),
@@ -19,4 +14,4 @@ export const flatItems = (group: FormGroup.FormGroup): FormFields.FormField[] =>
     )(group);
 };
 
-export const flatGroup = (group: FormGroup.FormGroup): FormFields.FormField[] => flatItems(group);
+export const flatGroup = (group: ClrFormLayouts.ClrFormLayout): FormFields.FormField[] => flatItems(group);

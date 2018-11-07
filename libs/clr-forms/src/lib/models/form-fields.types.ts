@@ -1,132 +1,26 @@
-import { Observable } from 'rxjs';
+import { FormFields } from '@ng-holistic/forms';
 
 export namespace ClrFormFields {
 
-    export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
-
-    //
-    export type BaseFieldValidation = 'required';
-
-    export interface BaseField {
-        id: string;
-        label: string;
-        readonly?: boolean | Observable<boolean>;
+    export interface BaseField<TKind extends string, TVal = any> extends FormFields.FormField<TKind> {
+        label?: FormFields.FormFieldProp<string>;
+        value?: FormFields.FormFieldProp<TVal>;
+        readonly?: FormFields.FormFieldProp<boolean>;
     }
 
-    export type TextFieldValidation = BaseFieldValidation | 'email';
-
-    export interface TextField extends BaseField {
-        kind: 'TextField';
-        validators?: TextFieldValidation[];
+    export interface BaseFieldP<TKind extends string, TVal = any> extends BaseField<TKind, TVal> {
+        placeholder?: FormFields.FormFieldProp<string>;
     }
 
-    export interface SelectField extends BaseField {
-        kind: 'SelectField';
-        items?: any[] | Observable<any[]>;
-        validators?: BaseFieldValidation[];
+    export interface TextField extends BaseFieldP<'TextField', string> {}
+
+    export interface SelectField extends BaseFieldP<'SelectField'> {
+        items: FormFields.FormFieldProp<any[]>;
     }
 
-    export interface TextareaField extends BaseField {
-        kind: 'TextareaField';
-        validators?: BaseFieldValidation[];
-    }
+    export interface DateField extends BaseField<'DateField', string> {}
 
-    export interface RichTextField extends BaseField {
-        kind: 'RichTextField';
-        validators?: BaseFieldValidation[];
-    }
+    export interface TextAreaField extends BaseField<'TextAreaField', string> {}
 
-    export interface CompareDateValidation {
-        kind: 'CompareDateValidation';
-        compareField: string;
-        oper: CompareOperator;
-        error: string;
-    }
-
-    export type DateFieldValidation = BaseFieldValidation | CompareDateValidation;
-
-    export interface DateField extends BaseField {
-        kind: 'DateField';
-        validators?: DateFieldValidation[];
-    }
-
-    export interface DateTimeField extends BaseField {
-        kind: 'DateTimeField';
-        validators?: DateFieldValidation[];
-    }
-
-    export interface TagsField extends BaseField {
-        kind: 'TagsField';
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface FileField extends BaseField {
-        kind: 'FileField';
-        accept: string;
-        mullti?: boolean;
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface ImageField extends BaseField {
-        kind: 'ImageField';
-        mullti?: boolean;
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface UrlField extends BaseField {
-        kind: 'UrlField';
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface CategoryField extends BaseField {
-        kind: 'CategoryField';
-        validators?: BaseFieldValidation[];
-        // TODO
-        categories: any[];
-    }
-
-    export interface TextReadonlyField extends BaseField {
-        kind: 'TextReadonlyField';
-        unmask?: 'date' | 'dateTime';
-        showWhenDefined?: boolean;
-    }
-
-    export interface MaskField extends BaseField {
-        kind: 'MaskField';
-        mask: (string | RegExp)[];
-        unmask?: (val: string) => any;
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface TagsField extends BaseField {
-        kind: 'TagsField';
-        config: any;
-        validators?: BaseFieldValidation[];
-    }
-
-    export interface TyepaheadField extends BaseField {
-        kind: 'TypeaheadField';
-        config: any;
-        validators?: BaseFieldValidation[];
-    }
-
-    export type FormField =
-        | TextField
-        | SelectField
-        | TextareaField
-        | RichTextField
-        | DateField
-        | DateTimeField
-        | TagsField
-        | FileField
-        | ImageField
-        | UrlField
-        | CategoryField
-        | TextReadonlyField
-        | MaskField
-        | TagsField
-        | TyepaheadField;
-
-
-
+    export type FormField = TextField | SelectField | DateField | TextAreaField;
 }

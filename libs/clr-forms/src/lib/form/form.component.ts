@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS } from '@ng-holistic/forms';
-import { FormGroup } from '../models';
+import { FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS, IFormGroup } from '@ng-holistic/forms';
 import { flatGroup } from './form-utils';
 
 @Component({
@@ -10,7 +9,7 @@ import { flatGroup } from './form-utils';
     providers: [
         {
             provide: HLC_FORM_EXTRACT_FIELDS,
-            useValue: (group: FormGroup.FormGroup) => flatGroup(group)
+            useValue: (group: IFormGroup<any>) => flatGroup(group)
         }
     ]
 })

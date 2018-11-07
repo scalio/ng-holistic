@@ -1,4 +1,4 @@
-export interface IFormGroup<T extends string> {
+export interface IFormGroup<T extends string, TContent extends IFormGroup<string, any> = any> {
     kind: T;
-    $content: IFormGroup<T>[];
+    $content?: TContent[];
 }
