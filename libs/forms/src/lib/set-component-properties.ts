@@ -40,12 +40,10 @@ const setPropValue = (propName: string, obj: any, val: any) => {
     }
 };
 
-const setComponentProperty = (
-    factory: ComponentFactory<any>,
-    cdr: ChangeDetectorRef,
-    destroy$: Observable<any>,
-    comp: any
-) => (val: any, key: string) => {
+const setComponentOutputProperty = (factory: ComponentFactory<any>, destroy$: Observable<any>, comp: any) => (
+    val: any,
+    key: string
+) => {
     const outPropName = outputPropName(factory, key);
     if (outPropName) {
         if (!(comp[outPropName] instanceof EventEmitter)) {
@@ -63,7 +61,14 @@ const setComponentProperty = (
             });
         return;
     }
+};
 
+const setComponentInputProperty = (
+    factory: ComponentFactory<any>,
+    cdr: ChangeDetectorRef,
+    destroy$: Observable<any>,
+    comp: any
+) => (val: any, key: string) => {
     const inPropName = inputPropName(factory, key);
     if (inPropName) {
         // Input property could be bound to observable, this case update property every time observable emit new value
@@ -77,6 +82,16 @@ const setComponentProperty = (
         setPropValue(inPropName, comp, val);
         return;
     }
+};
+
+const setComponentProperty = (
+    factory: ComponentFactory<any>,
+    cdr: ChangeDetectorRef,
+    destroy$: Observable<any>,
+    comp: any
+) => (val: any, key: string) => {
+    setComponentOutputProperty(factory, destroy$, comp)(val, key);
+    setComponentInputProperty(factory, cdr, destroy$, comp)(val, key);
 };
 
 export const setComponentProperties = (
