@@ -1,12 +1,12 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as R from 'ramda';
-import { FormField } from '../models';
+import { FormFields } from '../models';
 import { Observable, merge } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 
-export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormField.FormField2[]) =>
+export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormFields.FormField[]) =>
     R.pipe(
-        R.map<FormField.FormField2, [string, any]>(field => [
+        R.map<FormFields.FormField, [string, any]>(field => [
             field.id,
             R.propOr<any, any, any[]>([], '$validators', field)
         ]),
@@ -18,8 +18,8 @@ export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: Fo
         _ => formGroup
     )(inputs);
 
-export const sniffAndUpdateValidators = (form: FormGroup, fields: FormField.FormField2[]): Observable<any> | null =>
-    fields.reduce((aggr: Observable<any> | null, field: FormField.FormField2) => {
+export const sniffAndUpdateValidators = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
+    fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
         if (field.$validators && field.$validators instanceof Observable) {
             const stream$ = field.$validators.pipe(
                 distinctUntilChanged(),
@@ -40,8 +40,8 @@ export const sniffAndUpdateValidators = (form: FormGroup, fields: FormField.Form
 
 
 // Does we need this indeed ?
-export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormField.FormField2[]): Observable<any> | null =>
-    fields.reduce((aggr: Observable<any> | null, field: FormField.FormField2) => {
+export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
+    fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
         if (field.$compute) {
             const stream$ = field.$compute.pipe(
                 distinctUntilChanged(),
@@ -59,7 +59,7 @@ export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormField.
         }
     }, null);
 
-export const initFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormField.FormField2[]) => {
+export const initFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormFields.FormField[]) => {
     buildFormGroup(formGroup, fb, inputs);
     return sniffAndUpdateValidators(formGroup, inputs);
     //return sniffAndUpdateComputedFields(formGroup, inputs);

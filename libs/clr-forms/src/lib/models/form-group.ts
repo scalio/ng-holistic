@@ -1,8 +1,8 @@
-import { IFormGroup, FormField } from '@ng-holistic/forms';
+import { IFormGroup, FormFields } from '@ng-holistic/forms';
 
 export namespace FormGroup {
     export interface FieldsGroup extends IFormGroup<'fields'> {
-        fields: FormField.FormField2[];
+        fields: FormFields.FormField[];
     }
 
 

@@ -17,7 +17,7 @@ import {
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormField } from '../models';
+import { FormFields } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
@@ -31,7 +31,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     private destroy$ = new Subject();
 
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHost') field: FormField.BaseField<any>;
+    @Input('hlcFormFieldHost') field: FormFields.BaseField<any>;
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostComponentType') componentType: Type<any>;
     // tslint:disable-next-line:no-input-rename

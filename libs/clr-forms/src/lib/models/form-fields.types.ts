@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-export namespace FormFields {
+export namespace ClrFormFields {
 
     export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
 

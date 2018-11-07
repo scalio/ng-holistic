@@ -1,8 +1,8 @@
-import { FormField } from '@ng-holistic/forms';
+import { FormFields } from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { FormGroup } from '../models';
 
-export const flatItems = (group: FormGroup.FormGroup): FormField.FormField2[] => {
+export const flatItems = (group: FormGroup.FormGroup): FormFields.FormField[] => {
     if (group.kind === 'fields') {
         return group.fields;
     }
@@ -19,4 +19,4 @@ export const flatItems = (group: FormGroup.FormGroup): FormField.FormField2[] =>
     )(group);
 };
 
-export const flatGroup = (group: FormGroup.FormGroup): FormField.FormField2[] => flatItems(group);
+export const flatGroup = (group: FormGroup.FormGroup): FormFields.FormField[] => flatItems(group);

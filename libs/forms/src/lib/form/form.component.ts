@@ -14,11 +14,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { initFormGroup } from './form-builder';
 
-import { IFormGroup, FormField } from '@ng-holistic/forms';
+import { IFormGroup, FormFields } from '@ng-holistic/forms';
 import { equals } from 'ramda';
 
 export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);
-export type ExtractFieldsFun = (group: IFormGroup<any>) => FormField.FormField2[];
+export type ExtractFieldsFun = (group: IFormGroup<any>) => FormFields.FormField[];
 
 export const HLC_FORM_EXTRACT_FIELDS = new InjectionToken<ExtractFieldsFun>('HLC_FORM_EXTRACT_FIELDS');
 

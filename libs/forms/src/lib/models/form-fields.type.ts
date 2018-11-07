@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 // import { FormFieldCompnent } from './form-field-component.types';
 
-export namespace FormField {
+export namespace FormFields {
     export interface BaseField<T extends string> {
         id: string;
         kind: T;
@@ -13,10 +13,7 @@ export namespace FormField {
         [key: string]: any;
     }
 
-    export interface FormField2<T extends string = any> extends Field<T> {
+    export interface FormField<T extends string = any> extends Field<T> {
         $validators?: ValidatorFn[] | Observable<ValidatorFn[]>;
-        $compute?: Observable<any>;
     }
-
-    // export interface TextField extends FormFieldCompnent.ITextFieldComponent, BaseField {}
 }

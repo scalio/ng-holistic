@@ -1,10 +1,10 @@
-import { FormFields } from './form-fields.types';
+import { ClrFormFields } from './form-fields.types';
 
-export namespace FormLayout {
+export namespace ClrFormLayout {
 
     export interface FormFieldsCollection {
         kind: 'FormFieldsCollection';
-        items: FormFields.FormField[];
+        items: ClrFormFields.FormField[];
     }
 
     export interface FormTab {

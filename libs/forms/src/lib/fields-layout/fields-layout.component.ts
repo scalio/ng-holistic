@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, InjectionToken, Input, OnInit, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
-import { FormField } from '../models';
+import { FormFields } from '../models';
 
 /**
  * Map of key - type fields which could be possible generated on form layout
@@ -28,7 +28,7 @@ export class FieldsLayoutComponent implements OnInit {
     private readonly fieldLayoutMap: FieldsLayoutMap;
 
     @Input()
-    fields: FormField.Field[];
+    fields: FormFields.Field[];
 
     constructor(
         @Inject(HLC_FIELDS_LAYOUT_MAP) fieldLayoutMaps: FieldsLayoutMap[],
@@ -43,7 +43,7 @@ export class FieldsLayoutComponent implements OnInit {
         return this.formGroupProvider && this.formGroupProvider.form;
     }
 
-    getComponentType(field: FormField.Field) {
+    getComponentType(field: FormFields.Field) {
         return this.fieldLayoutMap[field.kind];
     }
 
