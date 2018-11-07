@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { format } from 'date-fns/esm/fp';
 
 const group = {
     kind: 'fields',
@@ -21,14 +22,15 @@ const group = {
             id: 'date',
             kind: 'DateField',
             label: 'Date',
-            value: '10/10/2018'
+            value: format('yyyy-MM-dd\'T\'HH:mm:ss', new Date())
         }/*,
         {
             id: 'select',
             kind: 'SelectField',
             label: 'Select',
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
-        }*/
+        }
+        */
     ]
 };
 

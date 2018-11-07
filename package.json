@@ -69,7 +69,7 @@
         "@webcomponents/custom-elements": "^1.2.1",
         "angular2-text-mask": "^9.0.0",
         "core-js": "^2.5.7",
-        "date-fns": "^2.0.0-alpha.16",
+        "date-fns": "^2.0.0-alpha.25",
         "lib": "^3.0.2",
         "ng2-dnd": "^5.0.2",
         "ngx-file-drop": "^5.0.0",

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { format } from 'date-fns/esm/fp';
 
 const group = (form: FormGroup) => ({
     kind: 'fields',
@@ -27,7 +28,12 @@ const group = (form: FormGroup) => ({
             id: 'date',
             kind: 'DateField',
             label: 'Date',
-            value: form.valueChanges.pipe(map(({ select, date }) => (select === '1' ? '01/02/2015' : date)))
+            value: form.valueChanges.pipe(
+                map(
+                    ({ select, date }) =>
+                        select === '1' ? format('yyyy-MM-dd\'T\'HH:mm:ss', new Date()) : date
+                )
+            )
         },
         {
             id: 'textarea',

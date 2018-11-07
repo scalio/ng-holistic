@@ -16,6 +16,7 @@ const parse = (format: string) => (str: string | null | undefined) => {
     if (!str) {
         return undefined;
     }
+
     return parseDate(new Date(), format, str);
 };
 
@@ -62,7 +63,7 @@ export class DateConvertService {
      * Convert domain's way formatted date string to date
      */
     parseDomainDate(domainValue: string | null | undefined): Date | undefined {
-        return parse(this.controlsFormatStr)(domainValue);
+        return parse(this.domainFormatStr)(domainValue);
     }
 
     /**
@@ -93,7 +94,7 @@ export class DateConvertService {
         if (this.config && this.config.domainFormat) {
             return this.config.domainFormat;
         }
-        return 'yyyy-MM-dd\'T\'HH:mm:ss.SSSZ';
+        return 'yyyy-MM-dd\'T\'HH:mm:ss';
     }
 
     private get controlsFormatStr(): string {
@@ -101,6 +102,6 @@ export class DateConvertService {
             return this.config.controlsFormat;
         }
         // TODO: retrieve from ng locale
-        return 'MM/dd/yyyy';
+        return 'MM\/dd\/yyyy';
     }
 }
