@@ -19,7 +19,7 @@ import { AppRoutingModule, routes } from './app.routing.module';
         ClrMainContainerModule,
         ClrLayoutModule,
         NxModule.forRoot(),
-        RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+        RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument(),

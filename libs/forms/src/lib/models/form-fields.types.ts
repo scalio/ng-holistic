@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { TypeaheadConfig } from '@ng-holistic/clr-controls';
 
 export namespace FormFields {
     export type CompareOperator = 'lt' | 'lte' | 'gt' | 'gte' | 'eq';
@@ -100,13 +99,13 @@ export namespace FormFields {
 
     export interface TagsField extends BaseField {
         kind: 'TagsField';
-        config: TypeaheadConfig;
+        config: any;
         validators?: BaseFieldValidation[];
     }
 
     export interface TyepaheadField extends BaseField {
         kind: 'TypeaheadField';
-        config: TypeaheadConfig;
+        config: any;
         validators?: BaseFieldValidation[];
     }
 
