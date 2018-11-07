@@ -1,36 +1,6 @@
-import {
-    Component,
-    OnInit,
-    Optional,
-    InjectionToken,
-    Inject,
-    Input,
-    Output,
-    EventEmitter,
-    forwardRef
-} from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-
-export interface SelectObjectMapper {
-    mapKey: (obj: any) => string;
-    mapLabel: (obj: any) => string;
-}
-
-const selectDefaultObjectMapper: SelectObjectMapper = {
-    mapKey(obj) {
-        return obj['key'];
-    },
-
-    mapLabel(obj) {
-        return obj['label'];
-    }
-};
-
-export interface SelectConfig {
-    objectMapper?: SelectObjectMapper;
-}
-
-export const SELECT_CONFIG = new InjectionToken('SELECT_CONFIG');
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DictMapperService } from '../list-items.config';
 
 export interface SelectValues {
     items: any[];
@@ -51,21 +21,23 @@ export interface SelectValues {
     ]
 })
 export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, SelectValues {
-    @Input() items: any[];
-    @Input() value: any | undefined;
+    @Input()
+    items: any[];
+    @Input()
+    value: any | undefined;
     // true - Don't wrap to 'select' class container, use original browser look
-    @Input() naked: boolean | undefined;
+    @Input()
+    naked: boolean | undefined;
     // true - Don't generate empty list item
-    @Input() disallowEmpty: boolean | undefined;
-    @Input() readonly: boolean;
-    @Output() valueChange = new EventEmitter<string | undefined>();
+    @Input()
+    disallowEmpty: boolean | undefined;
+    @Input()
+    readonly: boolean;
+    @Output()
+    valueChange = new EventEmitter<string | undefined>();
     propagateChange = (_: any) => {};
 
-    constructor(
-        @Optional()
-        @Inject(SELECT_CONFIG)
-        private readonly config: SelectConfig | undefined
-    ) {}
+    constructor(private readonly dictMapper: DictMapperService) {}
 
     ngOnInit() {}
 
@@ -75,16 +47,12 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, Se
         this.propagateChange(this.value);
     }
 
-    private get mapper(): SelectObjectMapper {
-        return (this.config && this.config.objectMapper) || selectDefaultObjectMapper;
-    }
-
     mapKey(obj: any) {
-        return this.mapper.mapKey(obj);
+        return this.dictMapper.getKey(obj);
     }
 
     mapLabel(obj: any) {
-        return this.mapper.mapLabel(obj);
+        return this.dictMapper.getLabel(obj);
     }
 
     trackBy = (_: number, obj: any) => {
