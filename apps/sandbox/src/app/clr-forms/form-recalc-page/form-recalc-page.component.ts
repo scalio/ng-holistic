@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { format } from 'date-fns/esm/fp';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
-const group = (form: FormGroup) => ({
+const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'fields',
     fields: [
         {
@@ -29,10 +30,8 @@ const group = (form: FormGroup) => ({
             kind: 'DateField',
             label: 'Date',
             value: form.valueChanges.pipe(
-                map(
-                    ({ select, date }) =>
-                        select === '1' ? format('yyyy-MM-dd\'T\'HH:mm:ss', new Date()) : date
-                )
+                // tslint:disable-next-line:quotemark
+                map(({ select, date }) => (select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date))
             )
         },
         {

@@ -39,26 +39,6 @@ export const sniffAndUpdateValidators = (form: FormGroup, fields: FormFields.For
     }, null);
 
 
-// Does we need this indeed ?
-export const sniffAndUpdateComputedFields = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
-    fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
-        if (field.$compute) {
-            const stream$ = field.$compute.pipe(
-                distinctUntilChanged(),
-                tap(val => {
-                    form.controls[field.id].setValue(val);
-                })
-            );
-            if (!aggr) {
-                return stream$;
-            } else {
-                return merge(aggr, stream$);
-            }
-        } else {
-            return aggr;
-        }
-    }, null);
-
 export const initFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormFields.FormField[]) => {
     buildFormGroup(formGroup, fb, inputs);
     return sniffAndUpdateValidators(formGroup, inputs);

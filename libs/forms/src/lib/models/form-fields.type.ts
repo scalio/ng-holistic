@@ -16,7 +16,7 @@ export namespace FormFields {
         [key: string]: any;
     }
 
-    export interface FormField<T extends string = any> extends Field<T> {
+    export interface FormField<T extends string = any> extends BaseField<T> {
         $validators?: FormFieldProp<ValidatorFn[]>;
     }
 }

@@ -12,7 +12,9 @@ export namespace ClrFormFields {
         placeholder?: FormFields.FormFieldProp<string>;
     }
 
-    export interface TextField extends BaseFieldP<'TextField', string> {}
+    export interface TextField extends BaseFieldP<'TextField', string> {
+        kind: 'TextField';
+    }
 
     export interface SelectField extends BaseFieldP<'SelectField'> {
         items: FormFields.FormFieldProp<any[]>;
@@ -20,7 +22,7 @@ export namespace ClrFormFields {
 
     export interface DateField extends BaseField<'DateField', string> {}
 
-    export interface TextAreaField extends BaseField<'TextAreaField', string> {}
+    export interface TextAreaField extends BaseFieldP<'TextAreaField', string> {}
 
     export type FormField = TextField | SelectField | DateField | TextAreaField;
 }

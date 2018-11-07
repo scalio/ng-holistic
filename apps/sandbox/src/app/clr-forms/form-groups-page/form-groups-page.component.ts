@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
-const group = {
+const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'tabs',
     $content: [
         {

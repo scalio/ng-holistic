@@ -11,7 +11,7 @@ export namespace ClrFormLayouts {
         title: FormFields.FormFieldProp<string>;
     }
 
-    export interface TabLayout extends IFormGroup<'tab', FieldsLayout> {
+    export interface TabLayout extends IFormGroup<'tab', FieldsLayout | GroupLayout> {
         title: FormFields.FormFieldProp<string>;
     }
 
