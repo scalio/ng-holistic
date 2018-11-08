@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Host, Input, OnDestroy, OnInit, Optional,
 import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
+import { ClrFormFields } from '../models';
+import * as R from 'ramda';
 
 @Component({
     selector: 'hlc-input-container',
@@ -15,6 +17,8 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     label: string;
     @Input()
     id: string;
+    @Input()
+    validatorsErrorsMap: ClrFormFields.FieldValidatorsErrorsMap | undefined;
 
     //@ts-ignore
     constructor(
@@ -70,5 +74,19 @@ export class InputContainerComponent implements OnInit, OnDestroy {
 
     get isInvalid() {
         return this.control && this.control.invalid;
+    }
+
+    get validationErrors(): string[] {
+        const errors = this.control && this.control.errors;
+
+        if (!errors) {
+            return [];
+        }
+        return R.pipe(
+            R.toPairs,
+            R.map(([k]) =>
+                R.propOr(k, k, this.validatorsErrorsMap)
+            )
+        )(errors) as any;
     }
 }

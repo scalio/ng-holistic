@@ -23,7 +23,8 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             label: 'Text',
             placeholder: 'Type something',
             readonly: form.valueChanges.pipe(map(({ select }) => select === '0')),
-            $validators: [Validators.required]
+            $validators: [Validators.required],
+            validatorsErrorsMap: { required : 'This field is required '}
         },
         {
             id: 'date',

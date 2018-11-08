@@ -1,4 +1,6 @@
-<div class="clr-form-control" [class.invalid]="isInvalid">
+<div
+    class="clr-form-control"
+    [class.invalid]="isInvalid">
     <label class="clr-control-label">
         {{label}}
         <span *ngIf="isOptional">- Optional</span>
@@ -8,6 +10,12 @@
         <ng-content></ng-content>
     </ng-container>
 
-    <!--<ng-content select="scalio-input-error"></ng-content>-->
+    <div
+        *ngFor="let err of validationErrors"
+        class="error-subtext clr-subtext">
+        {{ err }}
+    </div>
+
+    <!-- <ng-content select="scalio-input-error"></ng-content> -->
 
 </div>
