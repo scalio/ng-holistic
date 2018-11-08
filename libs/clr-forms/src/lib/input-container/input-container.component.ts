@@ -40,7 +40,6 @@ export class InputContainerComponent implements OnInit, OnDestroy {
                     })
                 )
                 .subscribe();
-            this.control.statusChanges.pipe(tap(x => console.log('+++', x)));
         }
     }
 
@@ -64,8 +63,6 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         if (!errors) {
             return true;
         }
-
-        console.log(this.control.dirty, this.control.pristine);
 
         return !errors['required'];
     }
