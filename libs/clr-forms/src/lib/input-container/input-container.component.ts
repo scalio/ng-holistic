@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ClrFormFields } from '../models';
-import * as R from 'ramda';
 
 @Component({
     selector: 'hlc-input-container',
@@ -41,6 +40,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
                     })
                 )
                 .subscribe();
+            this.control.statusChanges.pipe(tap(x => console.log('+++', x)));
         }
     }
 
@@ -65,6 +65,8 @@ export class InputContainerComponent implements OnInit, OnDestroy {
             return true;
         }
 
+        console.log(this.control.dirty, this.control.pristine);
+
         return !errors['required'];
     }
 
@@ -76,17 +78,4 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         return this.control && this.control.invalid;
     }
 
-    get validationErrors(): string[] {
-        const errors = this.control && this.control.errors;
-
-        if (!errors) {
-            return [];
-        }
-        return R.pipe(
-            R.toPairs,
-            R.map(([k]) =>
-                R.propOr(k, k, this.validatorsErrorsMap)
-            )
-        )(errors) as any;
-    }
 }

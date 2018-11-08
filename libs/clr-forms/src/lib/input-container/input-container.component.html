@@ -10,12 +10,10 @@
         <ng-content></ng-content>
     </ng-container>
 
-    <div
-        *ngFor="let err of validationErrors"
-        class="error-subtext clr-subtext">
-        {{ err }}
-    </div>
+    <hlc-validation-errors></hlc-validation-errors>
 
-    <!-- <ng-content select="scalio-input-error"></ng-content> -->
+    <!--
+    <ng-content select="scalio-input-error"></ng-content>
+    -->
 
 </div>

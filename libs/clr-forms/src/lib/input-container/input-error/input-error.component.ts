@@ -1,11 +1,11 @@
-import { Component, Input, Optional, Inject } from '@angular/core';
+import { Component, Input, Optional } from '@angular/core';
 import { InputContainerComponent } from '../input-container.component';
-import { INPUT_ERROR_DISPLAY_STRATEGY, InputErrorDisplayStartegy } from './input-error-display-strategy';
+import { InputErrorDisplayStartegy } from '../input-error-display-strategy';
 
 @Component({
     selector: 'hlc-input-error',
     templateUrl: './input-error.component.html',
-    styleUrls: ['./input-error.component.scss'],
+    styleUrls: ['./input-error.component.scss']
 })
 export class InputErrorComponent {
     @Input()
@@ -13,9 +13,7 @@ export class InputErrorComponent {
 
     constructor(
         private readonly container: InputContainerComponent,
-        @Optional()
-        @Inject(INPUT_ERROR_DISPLAY_STRATEGY)
-        private readonly strategy: InputErrorDisplayStartegy,
+        @Optional() private readonly strategy?: InputErrorDisplayStartegy
     ) {}
 
     get error() {
