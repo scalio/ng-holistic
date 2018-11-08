@@ -1,4 +1,5 @@
 import {
+    ApplicationRef,
     ComponentFactoryResolver,
     ComponentRef,
     Directive,
@@ -11,8 +12,7 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef,
-    ApplicationRef
+    ViewContainerRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -31,11 +31,14 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     private destroy$ = new Subject();
 
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHost') field: FormFields.BaseField<any>;
+    @Input('hlcFormFieldHost')
+    field: FormFields.BaseField<any>;
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHostComponentType') componentType: Type<any>;
+    @Input('hlcFormFieldHostComponentType')
+    componentType: Type<any>;
     // tslint:disable-next-line:no-input-rename
-    @Input('hlcFormFieldHostControl') control: FormControl;
+    @Input('hlcFormFieldHostControl')
+    control: FormControl;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -72,7 +75,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 this.field
             );
 
-            // control view is not attached dirctly to viewcontainerref, we need to attach it to CD manually
+            // control view is not attached directly to viewcontainerref, we need to attach it to CD manually
             this.appRef.attachView(view);
 
             this.wrapperRef.changeDetectorRef.detectChanges();
@@ -80,20 +83,10 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.vcr.insert(view);
         }
 
-        // If component implements ValueAccessor interface use one to update it value
-
         if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
-            const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
-            // when component value changed reflect one to the form control
-            valueAccessor.registerOnChange((val: any) => {
-                this.control.setValue(val);
-                this.control.markAsDirty({onlySelf: false});
-            });
-            // when form control value changed reflect one to the component
-            this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
-                valueAccessor.writeValue(val);
-                view.markForCheck();
-            });
+            // If component implements ValueAccessor interface use one to sync values
+            // between form control and the component
+            this.syncValueChanges(view);
         }
 
         setComponentProperties(
@@ -114,5 +107,25 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         if (this.wrapperRef) {
             this.wrapperRef.destroy();
         }
+    }
+
+    private syncValueChanges(view: EmbeddedViewRef<any>) {
+        // TODO: reactive
+        let valueAccessorVal: any = null;
+        const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
+        // when component value changed reflect one to the form control
+        valueAccessor.registerOnChange((val: any) => {
+            valueAccessorVal = val;
+            this.control.setValue(val);
+            this.control.markAsDirty({ onlySelf: false });
+        });
+        // when form control value changed reflect one to the component
+        this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
+            // update component value only if it wasn't sourced from itself (component -> control -> component)
+            if (val !== valueAccessorVal) {
+                valueAccessor.writeValue(val);
+                view.markForCheck();
+            }
+        });
     }
 }
