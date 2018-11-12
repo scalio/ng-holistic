@@ -51,8 +51,6 @@ export class ValidationErrorsComponent {
             return [];
         }
 
-        // console.log(control);
-
         if (this.strategy && !this.strategy.shouldDisplayError(control)) {
             return [];
         }

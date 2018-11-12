@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ClrFormFields } from '../models';
+import { InputErrorDisplayStartegy } from './input-error-display-strategy';
 
 @Component({
     selector: 'hlc-input-container',
@@ -26,7 +27,8 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         @Host()
         @SkipSelf()
         private formGroupDirective: FormGroupDirective,
-        private readonly cdr: ChangeDetectorRef
+        private readonly cdr: ChangeDetectorRef,
+        @Optional() private readonly strategy?: InputErrorDisplayStartegy,
     ) {}
 
     ngOnInit() {
@@ -72,7 +74,16 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     }
 
     get isInvalid() {
-        return this.control && this.control.invalid;
+
+        if (!this.control) {
+            return false;
+        }
+
+        if (this.strategy && this.strategy.shouldDisplayError(this.control)) {
+            return this.control.invalid;
+        }
+
+        return false;
     }
 
 }
