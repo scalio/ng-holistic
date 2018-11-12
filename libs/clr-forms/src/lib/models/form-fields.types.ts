@@ -2,8 +2,7 @@ import { FormFields } from '@ng-holistic/forms';
 
 export namespace ClrFormFields {
 
-    //export type ValidatorsErrorsMapFun = (fieldId: string) => string;
-    export interface FieldValidatorsErrorsMap { [key: string] : string; }
+    export interface FieldValidatorsErrorsMap<T = string> { [key: string] : T; }
 
     export interface BaseField<TKind extends string, TVal = any> extends FormFields.FormField<TKind> {
         label?: FormFields.FormFieldProp<string>;
