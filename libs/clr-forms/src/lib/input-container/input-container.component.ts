@@ -20,6 +20,9 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     @Input()
     validatorsErrorsMap: ClrFormFields.FieldValidatorsErrorsMap | undefined;
 
+    @Input()
+    _control: FormControl;
+
     //@ts-ignore
     constructor(
         private readonly fb: FormBuilder,
@@ -28,7 +31,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         @SkipSelf()
         private formGroupDirective: FormGroupDirective,
         private readonly cdr: ChangeDetectorRef,
-        @Optional() private readonly strategy?: InputErrorDisplayStartegy,
+        @Optional() private readonly strategy?: InputErrorDisplayStartegy
     ) {}
 
     ngOnInit() {
@@ -54,6 +57,8 @@ export class InputContainerComponent implements OnInit, OnDestroy {
             return false;
         }
 
+        console.log('222', this.control.validator);
+
         if (!this.control.validator) {
             return true;
         }
@@ -70,11 +75,23 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     }
 
     get control(): FormControl | undefined {
-        return this.formGroupDirective && this.id && (this.formGroupDirective.control.controls[this.id] as any);
+        // https://github.com/angular/angular/issues/14935
+        // TemplateInjectorHackService :: setComponentInjector(component, injector) get(component, type)
+        /*
+        console.log('+++', (this as any)['__injector__']);
+        if ((this as any)['__injector__']) {
+            console.log('!!!', (this as any)['__injector__'].get(FormGroupDirective));
+        }
+        */
+        console.log('***', this._control);
+
+        return (
+            this._control ||
+            (this.formGroupDirective && this.id && (this.formGroupDirective.control.controls[this.id] as any))
+        );
     }
 
     get isInvalid() {
-
         if (!this.control) {
             return false;
         }
@@ -85,5 +102,4 @@ export class InputContainerComponent implements OnInit, OnDestroy {
 
         return false;
     }
-
 }

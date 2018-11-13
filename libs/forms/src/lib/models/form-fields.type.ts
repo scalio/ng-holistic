@@ -1,8 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-// import { FormFieldCompnent } from './form-field-component.types';
-
 export namespace FormFields {
 
     export type FormFieldProp<T = any> = T | Observable<T>;
@@ -20,6 +18,9 @@ export namespace FormFields {
         $validators?: FormFieldProp<ValidatorFn[]>;
     }
 
-    export interface CustomFormField extends BaseField<'CustomField'> {
+    export type ViewNodeSelector = 'self' | 'first-child' | string;
+
+    export interface CustomFormField extends FormField<'CustomField'> {
+        valueAccessor?: ViewNodeSelector;
     }
 }

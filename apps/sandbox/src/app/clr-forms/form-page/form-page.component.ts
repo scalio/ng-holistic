@@ -32,7 +32,8 @@ const group: ClrFormLayouts.ClrFormLayout = {
         },
         {
             id: 'customControl',
-            kind: 'CustomField'
+            kind: 'CustomField',
+            valueAccessor: 'first-child'
         }
     ]
 };
@@ -46,7 +47,9 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormPageComponent implements OnInit {
     group = group;
 
-    constructor() {}
+    constructor() {
+
+    }
 
     ngOnInit() {}
 }

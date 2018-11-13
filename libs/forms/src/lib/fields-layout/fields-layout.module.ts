@@ -3,13 +3,13 @@ import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldsLayoutComponent, FieldsLayoutMap, HLC_FIELDS_LAYOUT_MAP } from './fields-layout.component';
 import { FormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-host.directive';
-import { CustomFieldDirective } from './custom-field.directive';
+import { CustomFieldDirective, CustomFieldInputDirective } from './custom-field.directive';
 
 @NgModule({
-    declarations: [FieldsLayoutComponent, FormFieldHostDirective, CustomFieldDirective],
+    declarations: [FieldsLayoutComponent, FormFieldHostDirective, CustomFieldDirective, CustomFieldInputDirective],
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
     providers: [],
-    exports: [FieldsLayoutComponent, CustomFieldDirective],
+    exports: [FieldsLayoutComponent, CustomFieldDirective, CustomFieldInputDirective],
     entryComponents: [FieldsLayoutComponent]
 })
 export class FieldsLayoutModule {

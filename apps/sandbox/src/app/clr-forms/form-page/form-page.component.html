@@ -1,10 +1,12 @@
-<hlc-clr-form [group]="group">
+<hlc-clr-form [group]="group" #form>
     <!--
     <ng-template hlcCustomField="custom">
         custom field
     </ng-template>
     -->
-    <hlc-input-container *hlcCustomField="'customControl'" label="Custom input">
-        <hlc-text></hlc-text>
-    </hlc-input-container>
+    <ng-template hlcCustomField="customControl" let-control="control">
+        <hlc-input-container label="Custom input" [_control]="control">
+            <hlc-text></hlc-text>
+        </hlc-input-container>
+    </ng-template>
 </hlc-clr-form>

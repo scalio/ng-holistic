@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout';
 import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
-import { IFormGroup } from '../models';
+import { IFormGroup, FormFields } from '../models';
 import { initFormGroup } from './form-builder';
 
 export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);

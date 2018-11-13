@@ -12,7 +12,8 @@ import {
     OnInit,
     Optional,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    ViewRef
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -22,6 +23,29 @@ import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
+
+const getViewComponentNodes = (view: ViewRef) => {
+    return (view as any)['_view']['nodes'].filter((x: any) => {
+        return x && x['renderElement'] && x['componentView'];
+    });
+};
+
+const getViewComponentNode = (viewNodeSelector: FormFields.ViewNodeSelector, view: ViewRef) => {
+    const componentNodes = getViewComponentNodes(view);
+
+    if (viewNodeSelector === 'self') {
+        return componentNodes[0];
+    } else if (viewNodeSelector === 'first-child') {
+        return componentNodes[1];
+    } else {
+        return componentNodes.find((node: any) => node['renderElement'].id === viewNodeSelector);
+    }
+};
+
+const getViewComponent = (viewNodeSelector: FormFields.ViewNodeSelector, view: ViewRef) => {
+    const node = getViewComponentNode(viewNodeSelector, view);
+    return node && node.componentView.component;
+};
 
 @Directive({
     selector: '[hlcFormFieldHost]'
@@ -94,7 +118,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
             // If component implements ValueAccessor interface use one to sync values
             // between form control and the component
-            this.syncValueChanges(view);
+            this.syncValueChanges(view, this.componentRef.instance as any);
         }
 
         setComponentProperties(
@@ -119,13 +143,12 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         }
     }
 
-    private syncValueChanges(view: EmbeddedViewRef<any>) {
+    private syncValueChanges(view: ViewRef, valueAccessor: ControlValueAccessor) {
         if (!this.componentRef) {
             return;
         }
         // TODO: reactive
         let valueAccessorVal: any = null;
-        const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
         // when component value changed reflect one to the form control
         valueAccessor.registerOnChange((val: any) => {
             valueAccessorVal = val;
@@ -146,7 +169,22 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         if (!this.customField) {
             return;
         }
-        const view = this.vcr.createEmbeddedView(this.customField.templateRef);
-        this.vcr.insert(view);
+
+        console.log('111', this.control);
+
+        const view = this.vcr.createEmbeddedView(this.customField.templateRef, { control : this.control });
+
+        // const self = getViewComponent('self', view);
+
+        // self['__injector__'] = this.injector;
+
+        if (this.field && this.field.kind === 'CustomField') {
+            const field = this.field as FormFields.CustomFormField;
+            if (field.valueAccessor) {
+                const valueAccessorComponent = getViewComponent(field.valueAccessor, view);
+                // valueAccessorComponent['injector'] = this.injector;
+                this.syncValueChanges(view, valueAccessorComponent);
+            }
+        }
     }
 }
