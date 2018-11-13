@@ -31,7 +31,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
         },
         {
-            id: 'custom',
+            id: 'customControl',
             kind: 'CustomField'
         }
     ]
