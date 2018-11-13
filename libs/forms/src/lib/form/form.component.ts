@@ -1,21 +1,24 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    forwardRef,
+    Inject,
+    InjectionToken,
     Input,
     OnDestroy,
-    OnInit,
-    AfterViewInit,
-    InjectionToken,
-    Inject
+    OnInit
 } from '@angular/core';
+import { QueryList } from '@angular/core/src/render3';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout';
+import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
+import { IFormGroup } from '../models';
 import { initFormGroup } from './form-builder';
-
-import { IFormGroup, FormFields } from '@ng-holistic/forms';
-import { equals } from 'ramda';
 
 export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);
 export type ExtractFieldsFun = (group: IFormGroup<any>) => FormFields.FormField[];
@@ -26,9 +29,15 @@ export const HLC_FORM_EXTRACT_FIELDS = new InjectionToken<ExtractFieldsFun>('HLC
     selector: 'hlc-form',
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: HLC_FORM_CUSTOM_FIELDS_PROVIDER,
+            useExisting: forwardRef(() => FormComponent)
+        }
+    ]
 })
-export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
     group: IFormGroup<any> | undefined;
@@ -50,6 +59,8 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
             this._tempVal = val;
         }
     }
+    @Input()
+    customFields: QueryList<CustomFieldDirective> | undefined;
 
     formGroup: FormGroup;
 

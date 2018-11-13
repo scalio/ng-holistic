@@ -31,7 +31,8 @@ import { GroupsLayoutModule } from '../groups-layout';
         InputContainerModule
     ],
     declarations: [ClrFormComponent],
-    exports: [ClrFormComponent]
+    // export FieldsLayoutModule to reexport CustomField directive
+    exports: [ClrFormComponent, FieldsLayoutModule]
 })
 export class ClrFormModule {
     static forRoot(fieldsLayoutMap?: FieldsLayoutMap, groupsLayoutMap?: GroupsLayoutMap): ModuleWithProviders {

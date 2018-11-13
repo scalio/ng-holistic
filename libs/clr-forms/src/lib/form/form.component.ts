@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS, IFormGroup } from '@ng-holistic/forms';
+import { ChangeDetectionStrategy, Component, ContentChildren, Input, QueryList } from '@angular/core';
+import { CustomFieldDirective, FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS, IFormGroup } from '@ng-holistic/forms';
 import { flatGroup } from './form-utils';
 
 @Component({
@@ -14,5 +14,9 @@ import { flatGroup } from './form-utils';
     ]
 })
 export class ClrFormComponent {
-    @Input() group: FormLayoutConfig | undefined;
+    @Input()
+    group: FormLayoutConfig | undefined;
+
+    @ContentChildren(CustomFieldDirective)
+    customFields: QueryList<CustomFieldDirective>;
 }

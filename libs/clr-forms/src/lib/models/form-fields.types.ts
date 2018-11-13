@@ -31,5 +31,5 @@ export namespace ClrFormFields {
 
     export interface TextAreaField extends BaseFieldP<'TextAreaField', string> {}
 
-    export type FormField = TextField | SelectField | DateField | TextAreaField;
+    export type FormField = TextField | SelectField | DateField | TextAreaField | FormFields.CustomFormField;
 }

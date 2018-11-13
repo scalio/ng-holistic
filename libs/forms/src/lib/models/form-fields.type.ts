@@ -19,4 +19,7 @@ export namespace FormFields {
     export interface FormField<T extends string = any> extends BaseField<T> {
         $validators?: FormFieldProp<ValidatorFn[]>;
     }
+
+    export interface CustomFormField extends BaseField<'CustomField'> {
+    }
 }

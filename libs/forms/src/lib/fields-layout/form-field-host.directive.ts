@@ -19,6 +19,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormFields } from '../models';
 import { setComponentProperties } from '../set-component-properties';
+import { CustomFieldDirective } from './custom-field.directive';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
 
@@ -26,7 +27,7 @@ export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FI
     selector: '[hlcFormFieldHost]'
 })
 export class FormFieldHostDirective implements OnInit, OnDestroy {
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any> | undefined;
     private wrapperRef: ComponentRef<any> | undefined;
     private destroy$ = new Subject();
 
@@ -39,6 +40,9 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostControl')
     control: FormControl;
+    // tslint:disable-next-line:no-input-rename
+    @Input('hlcFormFieldHostCustomField')
+    customField: CustomFieldDirective | undefined;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -54,7 +58,11 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         this.init();
     }
 
-    init() {
+    private init() {
+        if (this.customField) {
+            this.initCustomField();
+            return;
+        }
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
         this.componentRef = factory.create(this.injector);
         const view = this.componentRef.hostView as EmbeddedViewRef<any>;
@@ -103,13 +111,18 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next();
-        this.componentRef.destroy();
+        if (this.componentRef) {
+            this.componentRef.destroy();
+        }
         if (this.wrapperRef) {
             this.wrapperRef.destroy();
         }
     }
 
     private syncValueChanges(view: EmbeddedViewRef<any>) {
+        if (!this.componentRef) {
+            return;
+        }
         // TODO: reactive
         let valueAccessorVal: any = null;
         const valueAccessor = (this.componentRef.instance as any) as ControlValueAccessor;
@@ -127,5 +140,13 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 view.markForCheck();
             }
         });
+    }
+
+    private initCustomField() {
+        if (!this.customField) {
+            return;
+        }
+        const view = this.vcr.createEmbeddedView(this.customField.templateRef);
+        this.vcr.insert(view);
     }
 }

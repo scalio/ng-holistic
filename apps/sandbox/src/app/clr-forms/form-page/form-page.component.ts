@@ -29,6 +29,10 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'SelectField',
             label: 'Select',
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+        },
+        {
+            id: 'custom',
+            kind: 'CustomField'
         }
     ]
 };
