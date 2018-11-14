@@ -20,7 +20,8 @@ export class ValidationErrorsComponent {
         @Optional()
         @Inject(VALIDATION_ERRORS_MAP_CONFIG)
         private readonly validationErrorsMapConfig?: ValidationErrorsMapConfig
-    ) {}
+    ) {
+    }
 
     /**
      * Get error text from `container.validatorsErrorsMap` or global config `ValidationErrorsMapConfig`

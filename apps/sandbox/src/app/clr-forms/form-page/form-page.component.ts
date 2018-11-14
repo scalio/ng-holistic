@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { format } from 'date-fns/esm/fp';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
@@ -20,9 +19,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
         {
             id: 'date',
             kind: 'DateField',
-            label: 'Date',
-            // tslint:disable-next-line:quotemark
-            value: format("yyyy-MM-dd'T'HH:mm:ss", new Date())
+            label: 'Date'
         },
         {
             id: 'select',

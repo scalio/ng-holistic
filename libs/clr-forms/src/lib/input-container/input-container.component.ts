@@ -87,10 +87,14 @@ export class InputContainerComponent implements OnInit, OnDestroy {
             return false;
         }
 
-        if (this.strategy && this.strategy.shouldDisplayError(this.control)) {
-            return this.control.invalid;
+        if (this.strategy){
+            if (this.strategy.shouldDisplayError(this.control)) {
+                return this.control.invalid;
+            } else {
+                return false;
+            }
         }
 
-        return false;
+        return this.control.invalid;
     }
 }

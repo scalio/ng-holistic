@@ -144,9 +144,6 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     }
 
     private syncValueChanges(view: ViewRef, valueAccessor: ControlValueAccessor) {
-        if (!this.componentRef) {
-            return;
-        }
         // TODO: reactive
         let valueAccessorVal: any = null;
         // when component value changed reflect one to the form control

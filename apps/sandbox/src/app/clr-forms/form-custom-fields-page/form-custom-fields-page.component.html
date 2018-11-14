@@ -1,9 +1,20 @@
-<hlc-clr-form [group]="group" #form>
+<hlc-clr-form [group]="group">
+    <!-- Custom field as simple text -->
     <ng-template hlcCustomField="custom">
         any content of template could be custom field
     </ng-template>
-    <ng-template hlcCustomField="customControl" let-control="control">
-        <hlc-input-container label="Custom field in wrapper" [formControl]="control">
+    <!-- Custom field could be any template associated with `hlcCustomField` directve -->
+    <!-- This case input component without wrapper which will break form layout -->
+    <hlc-text *hlcCustomField="'customControl'"></hlc-text>
+    <!-- Custom field could be any tree of components inside template associated with `hlcCustomField` directive,
+        which component's value changes should be sync with form value defined by the `valueAccessor`
+        property of the field, in this example this is `hlc-text` input, which defined by `valueAccessor: 'first-child'` -->
+    <ng-template
+        hlcCustomField="customWrappedControl"
+        let-control="control">
+        <hlc-input-container
+            label="Custom field in wrapper"
+            [formControl]="control">
             <hlc-text></hlc-text>
         </hlc-input-container>
     </ng-template>
