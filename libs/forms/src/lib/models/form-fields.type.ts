@@ -18,6 +18,11 @@ export namespace FormFields {
         $validators?: FormFieldProp<ValidatorFn[]>;
     }
 
+    /**
+     * self - first element in the View
+     * first-child - first child of the first element in the view
+     * `string` - id of the component in the view
+     */
     export type ViewNodeSelector = 'self' | 'first-child' | string;
 
     export interface CustomFormField extends FormField<'CustomField'> {

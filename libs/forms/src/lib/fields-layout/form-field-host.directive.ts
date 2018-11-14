@@ -21,31 +21,9 @@ import { takeUntil } from 'rxjs/operators';
 import { FormFields } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
+import { getViewComponent } from './get-view-component';
 
 export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FIELD_WRAPPER');
-
-const getViewComponentNodes = (view: ViewRef) => {
-    return (view as any)['_view']['nodes'].filter((x: any) => {
-        return x && x['renderElement'] && x['componentView'];
-    });
-};
-
-const getViewComponentNode = (viewNodeSelector: FormFields.ViewNodeSelector, view: ViewRef) => {
-    const componentNodes = getViewComponentNodes(view);
-
-    if (viewNodeSelector === 'self') {
-        return componentNodes[0];
-    } else if (viewNodeSelector === 'first-child') {
-        return componentNodes[1];
-    } else {
-        return componentNodes.find((node: any) => node['renderElement'].id === viewNodeSelector);
-    }
-};
-
-const getViewComponent = (viewNodeSelector: FormFields.ViewNodeSelector, view: ViewRef) => {
-    const node = getViewComponentNode(viewNodeSelector, view);
-    return node && node.componentView.component;
-};
 
 @Directive({
     selector: '[hlcFormFieldHost]'
@@ -167,7 +145,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             return;
         }
 
-        const view = this.vcr.createEmbeddedView(this.customField.templateRef, { control : this.control });
+        const view = this.vcr.createEmbeddedView(this.customField.templateRef, { control: this.control });
 
         if (this.field && this.field.kind === 'CustomField') {
             const field = this.field as FormFields.CustomFormField;
