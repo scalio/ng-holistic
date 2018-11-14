@@ -16,6 +16,10 @@ export default [
             {
                 title: 'Form Recalc',
                 path: ['/clr-forms', 'form-recalc']
+            },
+            {
+                title: 'Form Custom Fields',
+                path: ['/clr-forms', 'form-custom-fields']
             }
         ]
     },

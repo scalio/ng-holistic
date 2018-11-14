@@ -1,0 +1,10 @@
+<hlc-clr-form [group]="group" #form>
+    <ng-template hlcCustomField="custom">
+        any content of template could be custom field
+    </ng-template>
+    <ng-template hlcCustomField="customControl" let-control="control">
+        <hlc-input-container label="Custom field in wrapper" [formControl]="control">
+            <hlc-text></hlc-text>
+        </hlc-input-container>
+    </ng-template>
+</hlc-clr-form>

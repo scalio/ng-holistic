@@ -29,11 +29,6 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'SelectField',
             label: 'Select',
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
-        },
-        {
-            id: 'customControl',
-            kind: 'CustomField',
-            valueAccessor: 'first-child'
         }
     ]
 };
@@ -47,9 +42,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormPageComponent implements OnInit {
     group = group;
 
-    constructor() {
-
-    }
+    constructor() {}
 
     ngOnInit() {}
 }

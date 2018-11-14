@@ -170,19 +170,12 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             return;
         }
 
-        console.log('111', this.control);
-
         const view = this.vcr.createEmbeddedView(this.customField.templateRef, { control : this.control });
-
-        // const self = getViewComponent('self', view);
-
-        // self['__injector__'] = this.injector;
 
         if (this.field && this.field.kind === 'CustomField') {
             const field = this.field as FormFields.CustomFormField;
             if (field.valueAccessor) {
                 const valueAccessorComponent = getViewComponent(field.valueAccessor, view);
-                // valueAccessorComponent['injector'] = this.injector;
                 this.syncValueChanges(view, valueAccessorComponent);
             }
         }
