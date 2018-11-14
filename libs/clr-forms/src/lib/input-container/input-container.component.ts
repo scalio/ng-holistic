@@ -21,7 +21,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     validatorsErrorsMap: ClrFormFields.FieldValidatorsErrorsMap | undefined;
 
     @Input()
-    _control: FormControl;
+    formControl: FormControl;
 
     //@ts-ignore
     constructor(
@@ -57,8 +57,6 @@ export class InputContainerComponent implements OnInit, OnDestroy {
             return false;
         }
 
-        console.log('222', this.control.validator);
-
         if (!this.control.validator) {
             return true;
         }
@@ -76,17 +74,10 @@ export class InputContainerComponent implements OnInit, OnDestroy {
 
     get control(): FormControl | undefined {
         // https://github.com/angular/angular/issues/14935
-        // TemplateInjectorHackService :: setComponentInjector(component, injector) get(component, type)
-        /*
-        console.log('+++', (this as any)['__injector__']);
-        if ((this as any)['__injector__']) {
-            console.log('!!!', (this as any)['__injector__'].get(FormGroupDirective));
-        }
-        */
-        console.log('***', this._control);
-
+        // If component was created via createEmbeddedView it loose injector context,
+        // so formGroupDirective won't be available, this case formControl should be passed directly via input property
         return (
-            this._control ||
+            this.formControl ||
             (this.formGroupDirective && this.id && (this.formGroupDirective.control.controls[this.id] as any))
         );
     }
