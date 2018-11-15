@@ -77,4 +77,8 @@ export class FieldsLayoutComponent implements OnInit {
             this.customFieldsProvider.customFields.find(x => x.hlcCustomField === id)
         );
     }
+
+    trackByFields(_: number, field: FormFields.Field) {
+        return field.id;
+    }
 }

@@ -16,6 +16,10 @@ export namespace FormFields {
 
     export interface FormField<T extends string = any> extends BaseField<T> {
         $validators?: FormFieldProp<ValidatorFn[]>;
+        /**
+         * Hide field and disable asscoited form control
+         */
+        $hidden?: Observable<boolean>;
     }
 
     /**

@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FormFields } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
@@ -35,7 +35,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHost')
-    field: FormFields.BaseField<any>;
+    field: FormFields.FormField<any>;
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormFieldHostComponentType')
     componentType: Type<any>;
@@ -99,6 +99,10 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.syncValueChanges(view, this.componentRef.instance as any);
         }
 
+        // Sync component viisibility
+        // Show / hide container component
+        this.syncVisibility(this.wrapperRef ? this.wrapperRef.hostView : view);
+
         setComponentProperties(
             ['kind'],
             factory,
@@ -118,6 +122,25 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         }
         if (this.wrapperRef) {
             this.wrapperRef.destroy();
+        }
+    }
+
+    private syncVisibility(view: ViewRef) {
+        if (this.field && this.field.$hidden) {
+            this.field.$hidden
+                .pipe(
+                    takeUntil(this.destroy$),
+                    distinctUntilChanged()
+                )
+                .subscribe(hidden => {
+                    const i = this.vcr.indexOf(view);
+
+                    if (hidden && i !== -1) {
+                        this.vcr.detach(i);
+                    } else if (!hidden && i === -1) {
+                        this.vcr.insert(view, 0);
+                    }
+                });
         }
     }
 

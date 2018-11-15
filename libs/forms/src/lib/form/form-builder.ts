@@ -38,9 +38,37 @@ export const sniffAndUpdateValidators = (form: FormGroup, fields: FormFields.For
         }
     }, null);
 
+export const sniffAndUpdateVisibility = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
+    fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
+        if (field.$hidden && field.$hidden instanceof Observable) {
+            const stream$ = field.$hidden.pipe(
+                distinctUntilChanged(),
+                tap(hide => {
+                    if (hide) {
+                        form.controls[field.id].disable();
+                    } else {
+                        form.controls[field.id].enable();
+                    }
+                })
+            );
+            if (!aggr) {
+                return stream$;
+            } else {
+                return merge(aggr, stream$);
+            }
+        } else {
+            return aggr;
+        }
+    }, null);
+
 
 export const initFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormFields.FormField[]) => {
     buildFormGroup(formGroup, fb, inputs);
-    return sniffAndUpdateValidators(formGroup, inputs);
-    //return sniffAndUpdateComputedFields(formGroup, inputs);
+
+    const sniff = [
+        sniffAndUpdateValidators(formGroup, inputs),
+        sniffAndUpdateVisibility(formGroup, inputs)
+    ].filter(x => !!x) as Observable<any>[];
+
+    return sniff.length ? merge(...sniff) : null;
 };

@@ -14,7 +14,8 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             items: [
                 { key: '0', label: 'disable text' },
                 { key: '1', label: 'set date control value to current date' },
-                { key: '2', label: 'make textarea required' }
+                { key: '2', label: 'make textarea required' },
+                { key: '3', label: 'hide text' },
             ]
         },
         {
@@ -24,7 +25,8 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             placeholder: 'Type something',
             readonly: form.valueChanges.pipe(map(({ select }) => select === '0')),
             $validators: [Validators.required],
-            validatorsErrorsMap: { required: 'This field is required ' }
+            validatorsErrorsMap: { required: 'This field is required ' },
+            $hidden: form.valueChanges.pipe(map(({ select }) => select === '3')),
         },
         {
             id: 'date',

@@ -2,7 +2,7 @@
     novalidate
     [formGroup]="formGroup"
     #formContainer>
-    <ng-container *ngFor="let field of fields">
+    <ng-container *ngFor="let field of fields; trackBy: trackByFields">
         <ng-container *hlcFormFieldHost="field; componentType: getComponentType(field); control: getControl(field.id); customField: getCustomField(field.id)"></ng-container>
     </ng-container>
 </form>
