@@ -24,7 +24,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             label: 'Text',
             placeholder: 'Type something',
             readonly: form.valueChanges.pipe(map(({ select }) => select === '0')),
-            // it makes sance to remove validators for readOnly state
+            // it makes sence to remove validators for readOnly state
             $validators: form.valueChanges.pipe(map(({ select }) => select !== '0' ? [Validators.required] : [])),
             validatorsErrorsMap: { required: 'This field is required ' },
             $hidden: form.valueChanges.pipe(map(({ select }) => select === '3')),
