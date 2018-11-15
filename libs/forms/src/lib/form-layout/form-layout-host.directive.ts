@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import * as R from 'ramda';
 import 'reflect-metadata';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
@@ -28,6 +28,26 @@ export interface GroupsLayoutMap {
 }
 
 export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS_LAYOUT');
+
+const syncVisibility = (destroy$: Observable<any>, vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) => {
+    // Group is always visible on init
+    if (group && group.$hidden) {
+        const index = vcr.indexOf(view);
+        group.$hidden
+            .pipe(
+                takeUntil(destroy$),
+                distinctUntilChanged()
+            )
+            .subscribe(hidden => {
+                const i = vcr.indexOf(view);
+                if (hidden && i !== -1) {
+                    vcr.detach(i);
+                } else if (!hidden && i === -1) {
+                    vcr.insert(view, index);
+                }
+            });
+    }
+};
 
 @Directive({
     selector: '[hlcFormLayoutHost]'
@@ -82,7 +102,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
         componentRef.changeDetectorRef.detectChanges();
 
-        this.syncVisibility(componentRef.hostView);
+        syncVisibility(this.destroy$, container, componentRef.hostView, group);
 
         const $content = group.$content || [];
 
@@ -102,24 +122,5 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.componentRefs.forEach(crf => crf.destroy());
-    }
-
-    private syncVisibility(view: ViewRef) {
-        if (this.group && this.group.$hidden) {
-            this.group.$hidden
-                .pipe(
-                    takeUntil(this.destroy$),
-                    distinctUntilChanged()
-                )
-                .subscribe(hidden => {
-                    const i = this.vcr.indexOf(view);
-
-                    if (hidden && i !== -1) {
-                        this.vcr.detach(i);
-                    } else if (!hidden && i === -1) {
-                        this.vcr.insert(view, 0);
-                    }
-                });
-        }
     }
 }

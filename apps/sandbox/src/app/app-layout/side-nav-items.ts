@@ -20,6 +20,10 @@ export default [
             {
                 title: 'Form Custom Fields',
                 path: ['/clr-forms', 'form-custom-fields']
+            },
+            {
+                title: 'Form Full',
+                path: ['/clr-forms', 'form-full']
             }
         ]
     },

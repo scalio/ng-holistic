@@ -8,6 +8,8 @@ import { FormRecalcPageComponent } from './form-recalc-page/form-recalc-page.com
 import { FormReclcPageModule } from './form-recalc-page/form-recalc-page.module';
 import { FormCustomFieldsPageComponent } from './form-custom-fields-page/form-custom-fields-page.component';
 import { FormCustomFieldsPageModule } from './form-custom-fields-page/form-custom-fields-page.module';
+import { FormFullPageModule } from './form-full-page/form-full-page.module';
+import { FormFullPageComponent } from './form-full-page/form-full-page.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +27,10 @@ export const routes: Routes = [
     {
         path: 'form-custom-fields',
         component: FormCustomFieldsPageComponent
+    },
+    {
+        path: 'form-full',
+        component: FormFullPageComponent
     }
 ];
 
@@ -34,7 +40,8 @@ export const routes: Routes = [
         FormPageModule,
         FormGroupsPageModule,
         FormReclcPageModule,
-        FormCustomFieldsPageModule
+        FormCustomFieldsPageModule,
+        FormFullPageModule
     ],
     exports: [RouterModule],
     providers: []
