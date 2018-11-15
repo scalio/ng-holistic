@@ -13,13 +13,23 @@ import {
     ViewContainerRef,
     ViewRef
 } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import * as R from 'ramda';
 import 'reflect-metadata';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
+
+const disableControls = (controls: AbstractControl[]) => {
+    controls.forEach(control => control.disable());
+};
+
+const enableControls = (controls: AbstractControl[]) => {
+    controls.forEach(control => control.disable());
+};
 
 /**
  * Map of key - group  pairs which could be possible generated on form layout
@@ -47,7 +57,8 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         private readonly injector: Injector,
         @Inject(HLC_GROUPS_LAYOUT) groupsLayoutMaps: GroupsLayoutMap[],
         private readonly vcr: ViewContainerRef,
-        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun
+        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
+        @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider
     ) {
         this.groupsLayoutMap = R.mergeAll(groupsLayoutMaps);
     }
@@ -106,12 +117,11 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         this.componentRefs.forEach(crf => crf.destroy());
     }
 
-    syncVisibility(vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) {
+    private syncVisibility(vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) {
         // Group is always visible on init
         if (group && group.$hidden) {
             const index = vcr.indexOf(view);
-            //@ts-ignore
-            const fields = this.extractFieldsFun(group);
+            const controls = this.getGroupControls(group);
             group.$hidden
                 .pipe(
                     takeUntil(this.destroy$),
@@ -121,10 +131,17 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
                     const i = vcr.indexOf(view);
                     if (hidden && i !== -1) {
                         vcr.detach(i);
+                        disableControls(controls);
                     } else if (!hidden && i === -1) {
                         vcr.insert(view, index);
+                        enableControls(controls);
                     }
                 });
         }
+    }
+
+    private getGroupControls(group: IFormGroup<any>) {
+        const fields = this.extractFieldsFun(group);
+        return fields.map(field => this.formGroupProvider.form.controls[field.id]);
     }
 }
