@@ -10,13 +10,15 @@ import {
     OnInit,
     QueryList,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    ViewRef
 } from '@angular/core';
 import * as R from 'ramda';
 import 'reflect-metadata';
 import { Subject } from 'rxjs';
 import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
+import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Map of key - group  pairs which could be possible generated on form layout
@@ -57,7 +59,6 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     }
 
     init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
-
         if (!container) {
             console.log('Group exists but container not found !', group);
             return [];
@@ -81,6 +82,8 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
         componentRef.changeDetectorRef.detectChanges();
 
+        this.syncVisibility(componentRef.hostView);
+
         const $content = group.$content || [];
 
         /**
@@ -99,5 +102,24 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.componentRefs.forEach(crf => crf.destroy());
+    }
+
+    private syncVisibility(view: ViewRef) {
+        if (this.group && this.group.$hidden) {
+            this.group.$hidden
+                .pipe(
+                    takeUntil(this.destroy$),
+                    distinctUntilChanged()
+                )
+                .subscribe(hidden => {
+                    const i = this.vcr.indexOf(view);
+
+                    if (hidden && i !== -1) {
+                        this.vcr.detach(i);
+                    } else if (!hidden && i === -1) {
+                        this.vcr.insert(view, 0);
+                    }
+                });
+        }
     }
 }
