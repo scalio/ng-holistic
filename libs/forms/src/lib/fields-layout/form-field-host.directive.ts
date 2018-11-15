@@ -99,7 +99,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.syncValueChanges(view, this.componentRef.instance as any);
         }
 
-        // Sync component viisibility
+        // Sync component visibility
         // Show / hide container component
         this.syncVisibility(this.wrapperRef ? this.wrapperRef.hostView : view);
 
