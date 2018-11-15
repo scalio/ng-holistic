@@ -48,7 +48,6 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                     title: 'Family',
                     $hidden: form.valueChanges.pipe(map(({ select }) => select === '0')),
                     $content: [
-                        /*
                         {
                             kind: 'fields',
                             fields: [
@@ -70,7 +69,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                                     ]
                                 }
                             ]
-                        }*/
+                        }
                     ]
                 }
             ]

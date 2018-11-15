@@ -15,10 +15,11 @@ import {
 } from '@angular/core';
 import * as R from 'ramda';
 import 'reflect-metadata';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
-import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Map of key - group  pairs which could be possible generated on form layout
@@ -28,26 +29,6 @@ export interface GroupsLayoutMap {
 }
 
 export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS_LAYOUT');
-
-const syncVisibility = (destroy$: Observable<any>, vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) => {
-    // Group is always visible on init
-    if (group && group.$hidden) {
-        const index = vcr.indexOf(view);
-        group.$hidden
-            .pipe(
-                takeUntil(destroy$),
-                distinctUntilChanged()
-            )
-            .subscribe(hidden => {
-                const i = vcr.indexOf(view);
-                if (hidden && i !== -1) {
-                    vcr.detach(i);
-                } else if (!hidden && i === -1) {
-                    vcr.insert(view, index);
-                }
-            });
-    }
-};
 
 @Directive({
     selector: '[hlcFormLayoutHost]'
@@ -65,7 +46,8 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
         @Inject(HLC_GROUPS_LAYOUT) groupsLayoutMaps: GroupsLayoutMap[],
-        private readonly vcr: ViewContainerRef
+        private readonly vcr: ViewContainerRef,
+        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun
     ) {
         this.groupsLayoutMap = R.mergeAll(groupsLayoutMaps);
     }
@@ -102,7 +84,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
 
         componentRef.changeDetectorRef.detectChanges();
 
-        syncVisibility(this.destroy$, container, componentRef.hostView, group);
+        this.syncVisibility(container, componentRef.hostView, group);
 
         const $content = group.$content || [];
 
@@ -122,5 +104,27 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.componentRefs.forEach(crf => crf.destroy());
+    }
+
+    syncVisibility(vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) {
+        // Group is always visible on init
+        if (group && group.$hidden) {
+            const index = vcr.indexOf(view);
+            //@ts-ignore
+            const fields = this.extractFieldsFun(group);
+            group.$hidden
+                .pipe(
+                    takeUntil(this.destroy$),
+                    distinctUntilChanged()
+                )
+                .subscribe(hidden => {
+                    const i = vcr.indexOf(view);
+                    if (hidden && i !== -1) {
+                        vcr.detach(i);
+                    } else if (!hidden && i === -1) {
+                        vcr.insert(view, index);
+                    }
+                });
+        }
     }
 }
