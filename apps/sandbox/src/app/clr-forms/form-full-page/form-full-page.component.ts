@@ -1,9 +1,36 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
-const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
+/*
+const group1 = (hide$: Observable<boolean>): ClrFormLayouts.ClrFormLayout => ({
+    kind: 'tabs',
+    $content: [
+        {
+            $hidden: hide$,
+            kind: 'tab',
+            title: 'Personal Info',
+            $content: [
+                {
+                    kind: 'fields',
+                    fields: [
+                        {
+                            id: 'select',
+                            kind: 'SelectField',
+                            label: 'Select',
+                            items: [{ key: '0', label: 'hide family group' }, { key: '1', label: 'hide address group' }]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+});
+*/
+
+const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'tabs',
     $content: [
         {
@@ -20,7 +47,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                             items: [{ key: '0', label: 'hide family group' }, { key: '1', label: 'hide address group' }]
                         }
                     ]
-                } /*
+                },
                 {
                     kind: 'group',
                     title: 'Person Name',
@@ -42,7 +69,6 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                         }
                     ]
                 },
-                */,
                 {
                     kind: 'group',
                     title: 'Family',
@@ -73,10 +99,19 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                     ]
                 }
             ]
-        } /*,
+        },
         {
             kind: 'tab',
             title: 'Address',
+            $hidden: merge(
+                hide$,
+                form.valueChanges.pipe(
+                    // TODO : distinctPropChanged
+                    map(({ select }) => select),
+                    distinctUntilChanged(),
+                    map(select => select === '1')
+                )
+            ),
             $content: [
                 {
                     kind: 'fields',
@@ -99,7 +134,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                     ]
                 }
             ]
-        }*/
+        }
     ]
 });
 
@@ -110,9 +145,16 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormFullPageComponent implements OnInit {
-    group = group;
+    hide$ = new BehaviorSubject(false);
+
+    // group = group1(this.hide$);
+    group = group(this.hide$);
 
     constructor() {}
 
     ngOnInit() {}
+
+    onHide() {
+        this.hide$.next(true);
+    }
 }

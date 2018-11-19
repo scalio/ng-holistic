@@ -13,6 +13,7 @@
         role="presentation"
         class="nav-item">
         <button
+            *ngIf="!tab.$hidden || isTabVisible(tab.$hidden | async)"
             (click)="onSetTabActive(i)"
             class="btn btn-link nav-link"
             [class.active]="isTabActive(i)"
