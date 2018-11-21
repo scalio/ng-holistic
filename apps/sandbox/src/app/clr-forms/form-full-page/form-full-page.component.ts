@@ -46,6 +46,7 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
                             label: 'Select',
                             items: [
                                 { key: '0', label: 'hide family group' },
+                                { key: '3', label: 'hide job group' },
                                 { key: '1', label: 'hide address group' },
                                 { key: '2', label: 'hide custom' }
                             ]
@@ -102,6 +103,23 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
                                         { key: '3', label: '3' },
                                         { key: '3+', label: '3+' }
                                     ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    kind: 'group',
+                    title: 'Job',
+                    $hidden: form.valueChanges.pipe(map(({ select }) => select === '3')),
+                    $content: [
+                        {
+                            kind: 'fields',
+                            fields: [
+                                {
+                                    kind: 'TextField',
+                                    id: 'occupation',
+                                    label: 'Occupation'
                                 }
                             ]
                         }
