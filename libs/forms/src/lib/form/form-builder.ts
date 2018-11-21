@@ -45,8 +45,10 @@ export const sniffAndUpdateVisibility = (form: FormGroup, fields: FormFields.For
                 distinctUntilChanged(),
                 tap(hide => {
                     if (hide) {
+                        console.log(`disable field ${field.id}`);
                         form.controls[field.id].disable();
                     } else {
+                        console.log(`enable field ${field.id}`);
                         form.controls[field.id].enable();
                     }
                 })

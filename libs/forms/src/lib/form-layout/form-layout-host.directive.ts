@@ -24,10 +24,12 @@ import { IFormGroup } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 
 const disableControls = (controls: AbstractControl[]) => {
+    console.log('disbale controls', controls);
     controls.forEach(control => control.disable());
 };
 
 const enableControls = (controls: AbstractControl[]) => {
+    console.log('enable controls', controls);
     controls.forEach(control => control.disable());
 };
 
