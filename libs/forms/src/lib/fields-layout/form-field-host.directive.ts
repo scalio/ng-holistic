@@ -176,6 +176,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 const valueAccessorComponent = getViewComponent(field.valueAccessor, view);
                 this.syncValueChanges(view, valueAccessorComponent);
             }
+            this.syncVisibility(view);
         }
     }
 }

@@ -44,7 +44,16 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
                             id: 'select',
                             kind: 'SelectField',
                             label: 'Select',
-                            items: [{ key: '0', label: 'hide family group' }, { key: '1', label: 'hide address group' }]
+                            items: [
+                                { key: '0', label: 'hide family group' },
+                                { key: '1', label: 'hide address group' },
+                                { key: '2', label: 'hide custom' }
+                            ]
+                        },
+                        {
+                            id: 'custom',
+                            kind: 'CustomField',
+                            $hidden: form.valueChanges.pipe(map(({ select }) => select === '2'))
                         }
                     ]
                 },

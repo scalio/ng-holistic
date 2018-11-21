@@ -31,5 +31,6 @@ export namespace FormFields {
 
     export interface CustomFormField extends FormField<'CustomField'> {
         valueAccessor?: ViewNodeSelector;
+        $hidden?: Observable<boolean>;
     }
 }
