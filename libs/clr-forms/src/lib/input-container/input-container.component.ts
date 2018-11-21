@@ -19,6 +19,8 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     id: string;
     @Input()
     validatorsErrorsMap: ClrFormFields.FieldValidatorsErrorsMap | undefined;
+    @Input()
+    readonly: boolean;
 
     @Input()
     formControl: FormControl;
@@ -53,7 +55,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     }
 
     get isOptional() {
-        if (!this.control) {
+        if (!this.control || this.readonly) {
             return false;
         }
 
