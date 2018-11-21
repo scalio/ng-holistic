@@ -24,6 +24,10 @@ export default [
             {
                 title: 'Form Full',
                 path: ['/clr-forms', 'form-full']
+            },
+            {
+                title: 'Form Dyna',
+                path: ['/clr-forms', 'form-dyna']
             }
         ]
     },

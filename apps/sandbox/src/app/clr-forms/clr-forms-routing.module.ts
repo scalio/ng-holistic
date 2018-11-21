@@ -10,6 +10,8 @@ import { FormCustomFieldsPageComponent } from './form-custom-fields-page/form-cu
 import { FormCustomFieldsPageModule } from './form-custom-fields-page/form-custom-fields-page.module';
 import { FormFullPageModule } from './form-full-page/form-full-page.module';
 import { FormFullPageComponent } from './form-full-page/form-full-page.component';
+import { FormDynaPageComponent } from './form-dyna-page/form-dyna-page.component';
+import { FormDynaPageModule } from './form-dyna-page/form-dyna-page.module';
 
 export const routes: Routes = [
     {
@@ -31,6 +33,10 @@ export const routes: Routes = [
     {
         path: 'form-full',
         component: FormFullPageComponent
+    },
+    {
+        path: 'form-dyna',
+        component: FormDynaPageComponent
     }
 ];
 
@@ -41,7 +47,8 @@ export const routes: Routes = [
         FormGroupsPageModule,
         FormReclcPageModule,
         FormCustomFieldsPageModule,
-        FormFullPageModule
+        FormFullPageModule,
+        FormDynaPageModule
     ],
     exports: [RouterModule],
     providers: []
