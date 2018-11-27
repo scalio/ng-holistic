@@ -49,10 +49,19 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     private componentRefs: ComponentRef<any>[];
     private destroy$ = new Subject();
     private groupsLayoutMap: GroupsLayoutMap;
+    private group: IFormGroup<any>;
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcFormLayoutHost')
-    group: IFormGroup<any>;
+    set setGroup(val: IFormGroup<any>) {
+        if (val !== this.group) {
+            this.cleanUp();
+            this.group = val;
+            if (this.group) {
+                this.componentRefs = this.init(this.vcr, this.group);
+            }
+        }
+    }
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -65,13 +74,7 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
         this.groupsLayoutMap = R.mergeAll(groupsLayoutMaps);
     }
 
-    ngOnInit() {
-        if (!this.group) {
-            return;
-        }
-
-        this.componentRefs = this.init(this.vcr, this.group);
-    }
+    ngOnInit() {}
 
     init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
         if (!container) {
@@ -115,8 +118,14 @@ export class GroupLayoutHostDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.cleanUp();
+    }
+
+    private cleanUp() {
         this.destroy$.next();
-        this.componentRefs.forEach(crf => crf.destroy());
+        if (this.componentRefs) {
+            this.componentRefs.forEach(crf => crf.destroy());
+        }
     }
 
     private syncVisibility(vcr: ViewContainerRef, view: ViewRef, group: IFormGroup<any>) {

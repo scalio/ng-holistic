@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { IFormGroup } from '../models';
 import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout';
+import { IFormGroup } from '../models';
 
 @Component({
     selector: 'hlc-form-layout',
@@ -17,17 +16,12 @@ import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout';
     ]
 })
 export class FormLayoutComponent implements OnInit, OnDestroy, FormGroupProvider {
-    private destroy$ = new Subject();
-    @Input() form: FormGroup;
-    @Input() group: IFormGroup<any> | undefined;
+    @Input()
+    form: FormGroup;
+    @Input()
+    group: IFormGroup<any> | undefined;
 
-    ngOnInit() {
-        if (!this.group) {
-            return;
-        }
-    }
+    ngOnInit() {}
 
-    ngOnDestroy() {
-        this.destroy$.next();
-    }
+    ngOnDestroy() {}
 }

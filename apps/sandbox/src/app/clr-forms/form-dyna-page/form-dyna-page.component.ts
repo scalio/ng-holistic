@@ -1,161 +1,68 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '@ng-holistic/forms';
+import * as R from 'ramda';
+import { Subject } from 'rxjs';
 
-const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
-    kind: 'tabs',
-    $content: [
-        {
-            kind: 'tab',
-            title: 'Personal Info',
-            $content: [
-                {
-                    kind: 'fields',
-                    fields: [
-                        {
-                            id: 'select',
-                            kind: 'SelectField',
-                            label: 'Select',
-                            items: [
-                                { key: '0', label: 'hide family group' },
-                                { key: '3', label: 'hide job group' },
-                                { key: '1', label: 'hide address group' },
-                                { key: '2', label: 'hide custom' }
-                            ]
-                        },
-                        {
-                            id: 'custom',
-                            kind: 'CustomField',
-                            $hidden: form.valueChanges.pipe(map(({ select }) => select === '2'))
-                        }
-                    ]
-                },
-                {
-                    kind: 'group',
-                    title: 'Person Name',
-                    $content: [
-                        {
-                            kind: 'fields',
-                            fields: [
-                                {
-                                    kind: 'TextField',
-                                    id: 'firstName',
-                                    label: 'First Name'
-                                },
-                                {
-                                    kind: 'TextField',
-                                    id: 'lastName',
-                                    label: 'Last Name'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    kind: 'group',
-                    title: 'Family',
-                    $hidden: form.valueChanges.pipe(map(({ select }) => select === '0')),
-                    $content: [
-                        {
-                            kind: 'fields',
-                            fields: [
-                                {
-                                    kind: 'SelectField',
-                                    id: 'maritalStatus',
-                                    label: 'Marital Status',
-                                    items: [{ key: 'single', label: 'Single' }, { key: 'married', label: 'Married' }]
-                                },
-                                {
-                                    kind: 'SelectField',
-                                    id: 'childrenNumber',
-                                    label: 'Children Number',
-                                    items: [
-                                        { key: '1', label: '1' },
-                                        { key: '2', label: '2' },
-                                        { key: '3', label: '3' },
-                                        { key: '3+', label: '3+' }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    kind: 'group',
-                    title: 'Job',
-                    $hidden: form.valueChanges.pipe(map(({ select }) => select === '3')),
-                    $content: [
-                        {
-                            kind: 'fields',
-                            fields: [
-                                {
-                                    kind: 'TextField',
-                                    id: 'occupation',
-                                    label: 'Occupation'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            kind: 'tab',
-            title: 'Address',
-            $hidden: merge(
-                hide$,
-                form.valueChanges.pipe(
-                    // TODO : distinctPropChanged
-                    map(({ select }) => select),
-                    distinctUntilChanged(),
-                    map(select => select === '1')
-                )
-            ),
-            $content: [
-                {
-                    kind: 'fields',
-                    fields: [
-                        {
-                            kind: 'TextField',
-                            id: 'country',
-                            label: 'Country'
-                        },
-                        {
-                            kind: 'TextField',
-                            id: 'city',
-                            label: 'City'
-                        },
-                        {
-                            kind: 'TextField',
-                            id: 'street',
-                            label: 'Street'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-});
+const rebuildGroup = (rebuildData: string | undefined, formVal: any) => (
+    _: FormGroup
+): ClrFormLayouts.ClrFormLayout => {
+    const controlsLength = R.keys(formVal).length;
+    const genFieldsLength = rebuildData === 'addField' ? controlsLength + 1 : controlsLength;
+    const x = {
+        kind: 'group',
+        title: 'Group',
+        $content: [
+            {
+                kind: 'fields',
+                fields:
+                    genFieldsLength === 0
+                        ? []
+                        : R.range(0, genFieldsLength).map(i => ({
+                              id: `$text.${i}`,
+                              kind: 'TextField' as 'TextField',
+                              label: `Field ${i}`
+                          }))
+            }
+        ]
+    };
+
+    console.log('===', x, rebuildData);
+    return x as any;
+};
+
+const group = (formGroup: FormGroup): ClrFormLayouts.ClrFormLayout => {
+    return rebuildGroup(undefined, null)(formGroup);
+};
 
 @Component({
     selector: 'hlc-form-dyna-page',
     templateUrl: './form-dyna-page.component.html',
     styleUrls: ['./form-dyna-page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: HLC_FORM_REBUILD_PROVIDER,
+            useExisting: forwardRef(() => FormDynaPageComponent)
+        }
+    ]
 })
-export class FormDynaPageComponent implements OnInit {
-    hide$ = new BehaviorSubject(false);
+export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
+    rebuildForm$ = new Subject<any>();
 
-    // group = group1(this.hide$);
-    group = group(this.hide$);
+    group = group;
 
     constructor() {}
 
+    rebuildFormLayoutConfig(data: any, val: any) {
+        console.log('+++', val);
+        return rebuildGroup(data, val);
+    }
+
     ngOnInit() {}
 
-    onHide() {
-        this.hide$.next(true);
+    onAddField() {
+        this.rebuildForm$.next('addField');
     }
 }
