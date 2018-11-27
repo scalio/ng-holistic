@@ -1,39 +1,38 @@
 import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
-import { FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '@ng-holistic/forms';
+import { FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER, FormFields } from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 
-const rebuildGroup = (rebuildData: string | undefined, formVal: any) => (
-    _: FormGroup
+const rebuildGroup = ({ groupsCount, fieldsCount }: { fieldsCount: number; groupsCount: number }, _: any) => (
+    __: FormGroup
 ): ClrFormLayouts.ClrFormLayout => {
-    const controlsLength = R.keys(formVal).length;
-    const genFieldsLength = rebuildData === 'addField' ? controlsLength + 1 : controlsLength;
+    console.log('+++', groupsCount, fieldsCount);
     const x = {
         kind: 'group',
-        title: 'Group',
-        $content: [
-            {
-                kind: 'fields',
-                fields:
-                    genFieldsLength === 0
-                        ? []
-                        : R.range(0, genFieldsLength).map(i => ({
-                              id: `$text.${i}`,
-                              kind: 'TextField' as 'TextField',
-                              label: `Field ${i}`
-                          }))
-            }
-        ]
+        title: 'Root',
+        $content: R.range(0, groupsCount).map(i => ({
+            kind: 'group',
+            title: `Group ${i}`,
+            $content: [
+                {
+                    kind: 'fields',
+                    fields: R.range(0, fieldsCount).map(
+                        k =>
+                            ({
+                                id: `${i}.$text.${k}`,
+                                kind: 'TextField' as 'TextField',
+                                label: `Field ${i} ${k}`,
+                                $validators: [Validators.required]
+                            } as FormFields.Field)
+                    )
+                }
+            ]
+        }))
     };
 
-    console.log('===', x, rebuildData);
     return x as any;
-};
-
-const group = (formGroup: FormGroup): ClrFormLayouts.ClrFormLayout => {
-    return rebuildGroup(undefined, null)(formGroup);
 };
 
 @Component({
@@ -51,7 +50,10 @@ const group = (formGroup: FormGroup): ClrFormLayouts.ClrFormLayout => {
 export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
     rebuildForm$ = new Subject<any>();
 
-    group = group;
+    filedsCount = 1;
+    groupsCount = 1;
+
+    group = rebuildGroup({ fieldsCount: this.filedsCount, groupsCount: this.groupsCount }, null);
 
     constructor() {}
 
@@ -62,6 +64,10 @@ export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
     ngOnInit() {}
 
     onAddField() {
-        this.rebuildForm$.next('addField');
+        this.rebuildForm$.next({ fieldsCount: ++this.filedsCount, groupsCount: this.groupsCount });
+    }
+
+    onAddGroup() {
+        this.rebuildForm$.next({ fieldsCount: this.filedsCount, groupsCount: ++this.groupsCount });
     }
 }
