@@ -79,7 +79,8 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
             return;
         }
 
-        const newFormGroup = this.fb.group({});
+        // Reuse old form when rebuild
+        const newFormGroup = this.formGroup || this.fb.group({});
 
         const newForm = typeof form === 'function' ? form(newFormGroup) : form;
 

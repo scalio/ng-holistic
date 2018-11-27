@@ -56,7 +56,6 @@ export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
     constructor() {}
 
     rebuildFormLayoutConfig(data: any, val: any) {
-        console.log('+++', val);
         return rebuildGroup(data, val);
     }
 
