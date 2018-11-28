@@ -5,34 +5,35 @@ import { FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER, FormFields } from '@ng-h
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 
-const rebuildGroup = ({ groupsCount, fieldsCount }: { fieldsCount: number; groupsCount: number }, _: any) => (
-    __: FormGroup
-): ClrFormLayouts.ClrFormLayout => {
-    console.log('+++', groupsCount, fieldsCount);
-    const x = {
-        kind: 'group',
-        title: 'Root',
-        $content: R.range(0, groupsCount).map(i => ({
-            kind: 'group',
-            title: `Group ${i}`,
-            $content: [
-                {
-                    kind: 'fields',
-                    fields: R.range(0, fieldsCount).map(
-                        k =>
-                            ({
-                                id: `${i}.$text.${k}`,
-                                kind: 'TextField' as 'TextField',
-                                label: `Field ${i} ${k}`,
-                                $validators: [Validators.required]
-                            } as FormFields.Field)
-                    )
-                }
-            ]
+const rebuildGroup = (
+    { tabsCount, groupsCount, fieldsCount }: { tabsCount: number; fieldsCount: number; groupsCount: number },
+    _: any
+) => (__: FormGroup): ClrFormLayouts.ClrFormLayout => {
+    return {
+        kind: 'tabs',
+        $content: R.range(0, tabsCount).map(t => ({
+            kind: 'tab',
+            title: `Tab ${t}`,
+            $content: R.range(0, groupsCount).map(i => ({
+                kind: 'group',
+                title: `Group ${i}`,
+                $content: [
+                    {
+                        kind: 'fields',
+                        fields: R.range(0, fieldsCount).map(
+                            k =>
+                                ({
+                                    id: `${i}.$text.${k}`,
+                                    kind: 'TextField' as 'TextField',
+                                    label: `Field ${t} ${i} ${k}`,
+                                    $validators: [Validators.required]
+                                } as FormFields.Field)
+                        )
+                    }
+                ]
+            }))
         }))
-    };
-
-    return x as any;
+    } as any;
 };
 
 @Component({
@@ -50,10 +51,14 @@ const rebuildGroup = ({ groupsCount, fieldsCount }: { fieldsCount: number; group
 export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
     rebuildForm$ = new Subject<any>();
 
-    filedsCount = 1;
+    tabsCount = 1;
     groupsCount = 1;
+    filedsCount = 1;
 
-    group = rebuildGroup({ fieldsCount: this.filedsCount, groupsCount: this.groupsCount }, null);
+    group = rebuildGroup(
+        { tabsCount: this.tabsCount, groupsCount: this.groupsCount, fieldsCount: this.filedsCount },
+        null
+    );
 
     constructor() {}
 
@@ -63,11 +68,27 @@ export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
 
     ngOnInit() {}
 
-    onAddField() {
-        this.rebuildForm$.next({ fieldsCount: ++this.filedsCount, groupsCount: this.groupsCount });
+    onAddTab() {
+        this.rebuildForm$.next({
+            tabsCount: ++this.tabsCount,
+            fieldsCount: this.filedsCount,
+            groupsCount: this.groupsCount
+        });
     }
 
     onAddGroup() {
-        this.rebuildForm$.next({ fieldsCount: this.filedsCount, groupsCount: ++this.groupsCount });
+        this.rebuildForm$.next({
+            tabsCount: this.tabsCount,
+            fieldsCount: this.filedsCount,
+            groupsCount: ++this.groupsCount
+        });
+    }
+
+    onAddField() {
+        this.rebuildForm$.next({
+            tabsCount: this.tabsCount,
+            fieldsCount: ++this.filedsCount,
+            groupsCount: this.groupsCount
+        });
     }
 }
