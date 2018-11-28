@@ -23,7 +23,7 @@ const rebuildGroup = (
                         fields: R.range(0, fieldsCount).map(
                             k =>
                                 ({
-                                    id: `${i}.$text.${k}`,
+                                    id: `${t}.${i}.$text.${k}`,
                                     kind: 'TextField' as 'TextField',
                                     label: `Field ${t} ${i} ${k}`,
                                     $validators: [Validators.required]
