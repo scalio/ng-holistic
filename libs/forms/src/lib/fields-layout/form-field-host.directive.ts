@@ -113,6 +113,9 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         );
 
         view.detectChanges();
+
+        // when form rebuilt we need update connrol's value
+        this.control.updateValueAndValidity();
     }
 
     ngOnDestroy() {

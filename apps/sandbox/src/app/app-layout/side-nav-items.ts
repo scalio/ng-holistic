@@ -22,8 +22,12 @@ export default [
                 path: ['/clr-forms', 'form-custom-fields']
             },
             {
-                title: 'Form Full',
+                title: 'Form Hide Elements',
                 path: ['/clr-forms', 'form-full']
+            },
+            {
+                title: 'Form Rebuild',
+                path: ['/clr-forms', 'form-dyna']
             }
         ]
     },

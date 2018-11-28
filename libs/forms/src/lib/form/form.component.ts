@@ -7,7 +7,8 @@ import {
     Inject,
     Input,
     OnDestroy,
-    OnInit
+    OnInit,
+    Optional
 } from '@angular/core';
 import { QueryList } from '@angular/core/src/render3';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -19,8 +20,7 @@ import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { IFormGroup } from '../models';
 import { initFormGroup } from './form-builder';
-
-export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);
+import { HLC_FORM_REBUILD_PROVIDER, FormRebuidProvider, FormLayoutConfig } from '../form-rebuild';
 
 @Component({
     selector: 'hlc-form',
@@ -64,7 +64,10 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
     constructor(
         private readonly fb: FormBuilder,
         private readonly cdr: ChangeDetectorRef,
-        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun
+        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
+        @Optional()
+        @Inject(HLC_FORM_REBUILD_PROVIDER)
+        private readonly formRebuildProvider: FormRebuidProvider | undefined
     ) {}
 
     ngOnInit() {}
@@ -76,7 +79,8 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
             return;
         }
 
-        const newFormGroup = this.fb.group({});
+        // Reuse old form when rebuild
+        const newFormGroup = this.formGroup || this.fb.group({});
 
         const newForm = typeof form === 'function' ? form(newFormGroup) : form;
 
@@ -102,10 +106,28 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
         if (sniffer$) {
             sniffer$.pipe(takeUntil(this.destroy$)).subscribe(() => {});
         }
+
+        // watch rebuildForm event
+        if (this.formRebuildProvider) {
+            this.formRebuildProvider.rebuildForm$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+                this.rebuildForm(data);
+            });
+        }
+    }
+
+    private rebuildForm(data: any) {
+        if (this.formRebuildProvider) {
+            const rebuiltConfig = this.formRebuildProvider.rebuildFormLayoutConfig(
+                data,
+                this.formGroup.value
+            );
+            this.initForm(rebuiltConfig);
+            this.cdr.markForCheck();
+        }
     }
 
     ngAfterViewInit() {
-        // Allow value subscribers of form take initial actions
+        // Allow value subscribers of a form to take initial actions
         this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
         this.cdr.detectChanges();
     }
