@@ -15,13 +15,12 @@ import {
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import * as R from 'ramda';
-import 'reflect-metadata';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
-import { IFormGroup } from '../models';
+import { IFormGroup } from '../models/index';
 import { setComponentProperties } from '../set-component-properties';
+import { HLC_FORM_GROUP_PROVIDER, FormGroupProvider } from '../fields-layout/index';
 
 const disableControls = (controls: AbstractControl[]) => {
     console.log('disbale controls', controls);

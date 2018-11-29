@@ -1,4 +1,3 @@
-import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { GroupLayoutHostDirective, GroupsLayoutMap, HLC_GROUPS_LAYOUT } from './form-layout-host.directive';
@@ -7,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [FormLayoutComponent, GroupLayoutHostDirective],
-    imports: [CommonModule, PortalModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule],
     providers: [],
     exports: [FormLayoutComponent]
 })

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout';
-import { IFormGroup } from '../models';
+import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout/index';
+import { IFormGroup } from '../models/index';
 
 @Component({
     selector: 'hlc-form-layout',

@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "paths": {
+            "@ng-holistic/forms": ["dist/libs/forms"],
+            "@ng-holistic/clr-forms": ["dist/libs/clr-forms"],
+            "@ng-holistic/clr-controls": ["dist/libs/clr-controls"],
+            "@ng-holistic/clr-layout": ["sidt/libs/clr-layout"]
+        }
+    }
+}

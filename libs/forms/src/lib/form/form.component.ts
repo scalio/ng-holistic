@@ -8,17 +8,17 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    Optional
+    Optional,
+    QueryList
 } from '@angular/core';
-import { QueryList } from '@angular/core/src/render3';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout';
+import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout/index';
 import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
-import { IFormGroup } from '../models';
+import { IFormGroup } from '../models/index';
 import { initFormGroup } from './form-builder';
 import { HLC_FORM_REBUILD_PROVIDER, FormRebuidProvider, FormLayoutConfig } from '../form-rebuild';
 
