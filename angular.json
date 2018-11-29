@@ -162,6 +162,13 @@
       "projectType": "library",
       "prefix": "hlc",
       "architect": {
+        "build": {
+            "builder": "@angular-devkit/build-ng-packagr:build",
+            "options": {
+              "tsConfig": "libs/clr-layout/tsconfig.lib.json",
+              "project": "libs/clr-layout/ng-package.json"
+            }
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

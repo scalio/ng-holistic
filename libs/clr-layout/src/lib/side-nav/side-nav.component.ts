@@ -19,6 +19,7 @@ export interface SideNavItem {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SideNavComponent implements OnInit {
+    collapsed: boolean;
     @Input() items: SideNavItem[];
 
     constructor() {}
