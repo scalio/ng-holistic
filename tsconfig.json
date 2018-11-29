@@ -21,9 +21,6 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@ng-holistic/core": [
-        "libs/core/src/lib/index.ts"
-      ],
       "@ng-holistic/forms": [
         "libs/forms/src/index.ts"
       ],
@@ -33,23 +30,8 @@
       "@ng-holistic/clr-controls": [
         "libs/clr-controls/src/index.ts"
       ],
-      "@ng-holistic/clr-misc": [
-        "libs/clr-misc/src/index.ts"
-      ],
       "@ng-holistic/clr-layout": [
         "libs/clr-layout/src/index.ts"
-      ],
-      "@ng-holistic/ngrx-lists": [
-        "libs/ngrx-lists/src/index.ts"
-      ],
-      "@ng-holistic/lists": [
-        "libs/lists/src/index.ts"
-      ],
-      "@ng-holistic/clr-lists": [
-        "libs/clr-lists/src/index.ts"
-      ],
-      "@ng-holistic/ngrx-forms": [
-        "libs/ngrx-forms/src/index.ts"
       ]
     }
   },
