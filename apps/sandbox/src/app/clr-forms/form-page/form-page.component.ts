@@ -43,6 +43,6 @@ export class FormPageComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         // in order to correctly display formGroup.value on init
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
     }
 }
