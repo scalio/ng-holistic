@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { format } from 'date-fns/esm/fp';
@@ -15,7 +15,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
                 { key: '0', label: 'disable text' },
                 { key: '1', label: 'set date control value to current date' },
                 { key: '2', label: 'make textarea required' },
-                { key: '3', label: 'hide text' },
+                { key: '3', label: 'hide text' }
             ]
         },
         {
@@ -25,9 +25,9 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             placeholder: 'Type something',
             readonly: form.valueChanges.pipe(map(({ select }) => select === '0')),
             // it makes sence to remove validators for readOnly state
-            $validators: form.valueChanges.pipe(map(({ select }) => select !== '0' ? [Validators.required] : [])),
+            $validators: form.valueChanges.pipe(map(({ select }) => (select !== '0' ? [Validators.required] : []))),
             validatorsErrorsMap: { required: 'This field is required ' },
-            $hidden: form.valueChanges.pipe(map(({ select }) => select === '3')),
+            $hidden: form.valueChanges.pipe(map(({ select }) => select === '3'))
         },
         {
             id: 'date',
@@ -55,8 +55,13 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [InputErrorDisplayStartegy]
 })
-export class FormRecalcPageComponent {
+export class FormRecalcPageComponent implements AfterViewInit {
     group = group;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
+
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
+    }
 }

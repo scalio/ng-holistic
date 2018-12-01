@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
-import { FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER, FormFields } from '@ng-holistic/forms';
+import { FormFields, FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 
@@ -48,7 +48,7 @@ const rebuildGroup = (
         }
     ]
 })
-export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
+export class FormDynaPageComponent implements FormRebuidProvider, AfterViewInit {
     rebuildForm$ = new Subject<any>();
 
     tabsCount = 1;
@@ -60,13 +60,16 @@ export class FormDynaPageComponent implements OnInit, FormRebuidProvider {
         null
     );
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
+
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
+    }
 
     rebuildFormLayoutConfig(data: any, val: any) {
         return rebuildGroup(data, val);
     }
-
-    ngOnInit() {}
 
     onAddTab() {
         this.rebuildForm$.next({

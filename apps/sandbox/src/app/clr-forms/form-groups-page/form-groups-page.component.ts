@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
@@ -94,10 +94,13 @@ const group: ClrFormLayouts.ClrFormLayout = {
     styleUrls: ['./form-groups-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupsPageComponent implements OnInit {
+export class FormGroupsPageComponent implements AfterViewInit {
     group = group;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
+    }
 }

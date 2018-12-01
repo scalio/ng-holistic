@@ -1,4 +1,13 @@
-<button (click)="onAddTab()">add tab</button>
-<button (click)="onAddGroup()">add group</button>
-<button (click)="onAddField()">add field</button>
-<hlc-clr-form [group]="group"></hlc-clr-form>
+<hlc-sandbox-example-source path="clr-forms/form-dyna-page"></hlc-sandbox-example-source>
+
+<div class="clr-row">
+    <div class="clr-col-6">
+        <button (click)="onAddTab()">add tab</button> <button (click)="onAddGroup()">add group</button>
+        <button (click)="onAddField()">add field</button>
+        <hlc-clr-form [group]="group" #clrForm></hlc-clr-form>
+    </div>
+    <div class="clr-col-6">
+        <h3>Form value</h3>
+        {{ clrForm.form.formGroup?.value | json }}
+    </div>
+</div>
