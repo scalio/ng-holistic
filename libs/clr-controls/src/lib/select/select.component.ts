@@ -42,7 +42,7 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, Se
     ngOnInit() {}
 
     onChange(val: any) {
-        this.value = val.target.value;
+        this.value = val.target.value || null;
         this.valueChange.emit(this.value);
         this.propagateChange(this.value);
     }

@@ -22,7 +22,7 @@ export interface DateValues {
 })
 export class DateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
     @Input()
-    value: string | undefined;
+    value: string | undefined | null;
 
     @Input()
     format: string | undefined;
@@ -44,12 +44,9 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     }
 
     set date(val: Date | undefined) {
-        if (!val) {
-            return;
-        }
 
         // control formatted val -> domain date
-        this.value = R.pipe(
+        this.value = !val ? null : R.pipe(
             // if perviouse value not empty take hours + minutes from there
             R.when(
                 R.always(this.value) as any,

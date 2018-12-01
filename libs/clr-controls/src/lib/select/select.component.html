@@ -6,7 +6,7 @@
         [value]="value">
         <option
             *ngIf="!disallowEmpty"
-            [value]="null"></option>
+            [attr.value]="null"></option>
 
         <option
             *ngFor="let item of items; trackBy: trackBy"

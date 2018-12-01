@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
@@ -36,10 +36,13 @@ const group: ClrFormLayouts.ClrFormLayout = {
     styleUrls: ['./form-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormPageComponent implements OnInit {
+export class FormPageComponent implements AfterViewInit {
     group = group;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.markForCheck();
+    }
 }

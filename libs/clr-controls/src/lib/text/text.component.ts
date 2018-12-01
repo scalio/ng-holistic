@@ -32,6 +32,7 @@ export class TextComponent implements OnInit, ControlValueAccessor, TextValues {
     ngOnInit() {}
 
     onChange($event: any) {
+        this.value = $event.target.value;
         this.propagateChange($event.target.value);
     }
 
