@@ -33,7 +33,7 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     input: ElementRef<any>;
 
     @Output()
-    valueChange = new EventEmitter<string | undefined>();
+    valueChange = new EventEmitter<string | null | undefined>();
 
     propagateChange = (_: any) => {};
 

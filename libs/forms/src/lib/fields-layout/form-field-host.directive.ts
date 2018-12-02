@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, filter } from 'rxjs/operators';
 import { FormFields } from '../models';
 import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
@@ -93,11 +93,17 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             this.vcr.insert(view);
         }
 
-        if (this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)) {
+        const controlValueAccessor = this.componentRef.injector.get<ControlValueAccessor>(NG_VALUE_ACCESSOR)
+            ? (this.componentRef.instance as ControlValueAccessor)
+            : null;
+
+        if (controlValueAccessor) {
             // If component implements ValueAccessor interface use one to sync values
             // between form control and the component
-            this.syncValueChanges(view, this.componentRef.instance as any);
+            this.syncValueChanges(view, controlValueAccessor);
         }
+
+        this.syncControlValue();
 
         // Sync component visibility
         // Show / hide container component
@@ -164,6 +170,25 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                 view.markForCheck();
             }
         });
+    }
+
+    /**
+     * Set form's control value from field $value property.
+     * It updates both form control value and component value, in contrast with just `value` property update
+     * which will update only component value.
+     */
+    private syncControlValue() {
+        if (this.field.$value) {
+            this.field.$value
+                .pipe(
+                    takeUntil(this.destroy$),
+                    distinctUntilChanged(),
+                    filter(val => this.control.value !== val)
+                )
+                .subscribe(val => {
+                    this.control.setValue(val);
+                });
+        }
     }
 
     private initCustomField() {

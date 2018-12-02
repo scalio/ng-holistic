@@ -33,7 +33,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             id: 'date',
             kind: 'DateField',
             label: 'Date',
-            value: form.valueChanges.pipe(
+            $value: form.valueChanges.pipe(
                 // tslint:disable-next-line:quotemark
                 map(({ select, date }) => (select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date))
             )
