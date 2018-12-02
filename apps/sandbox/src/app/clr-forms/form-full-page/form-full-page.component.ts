@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { propChanged } from '@ng-holistic/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'tabs',
@@ -107,9 +108,7 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
             $hidden: merge(
                 hide$,
                 form.valueChanges.pipe(
-                    // TODO : distinctPropChanged
-                    map(({ select }) => select),
-                    distinctUntilChanged(),
+                    propChanged('select'),
                     map(select => select === '1')
                 )
             ),

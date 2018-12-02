@@ -186,7 +186,7 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
                     filter(val => this.control.value !== val)
                 )
                 .subscribe(val => {
-                    this.control.setValue(val);
+                    this.control.setValue(val || '');
                 });
         }
     }

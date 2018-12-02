@@ -3,6 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { format } from 'date-fns/esm/fp';
 import { ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { distinctPropChanged } from '@ng-holistic/forms';
 
 const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'fields',
@@ -34,8 +35,11 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             kind: 'DateField',
             label: 'Date',
             $value: form.valueChanges.pipe(
-                // tslint:disable-next-line:quotemark
-                map(({ select, date }) => (select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date))
+                distinctPropChanged('select'),
+                map(({ select, date }) => {
+                    // tslint:disable-next-line:quotemark
+                    return (select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date);
+                })
             )
         },
         {

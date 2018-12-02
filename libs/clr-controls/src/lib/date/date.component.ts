@@ -44,19 +44,20 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     }
 
     set date(val: Date | undefined) {
-
         // control formatted val -> domain date
-        this.value = !val ? null : R.pipe(
-            // if perviouse value not empty take hours + minutes from there
-            R.when(
-                R.always(this.value) as any,
-                R.pipe(
-                    setHours(getHours(this.value)),
-                    setMinutes(getMinutes(this.value))
-                )
-            ),
-            this.formatToDomainStr
-        )(val);
+        this.value = !val
+            ? null
+            : R.pipe(
+                  // if perviouse value not empty take hours + minutes from there
+                  R.when(
+                      R.always(this.value) as any,
+                      R.pipe(
+                          setHours(getHours(this.value)),
+                          setMinutes(getMinutes(this.value))
+                      )
+                  ),
+                  this.formatToDomainStr
+              )(val);
 
         this.onChange();
     }
