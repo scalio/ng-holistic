@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChildren, Input, QueryList, ViewChild } from '@angular/core';
-import { CustomFieldDirective, FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS, FormComponent } from '@ng-holistic/forms';
+import { CustomFieldDirective, FormComponent, FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS } from '@ng-holistic/forms';
 import { flatGroup } from './form-utils';
 
 @Component({

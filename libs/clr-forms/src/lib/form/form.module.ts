@@ -3,6 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     CheckboxesModule,
     DateModule,
+    DateTimeModule,
     OptionsModule,
     SelectModule,
     TextAreaModule,
@@ -41,7 +42,8 @@ import { ClrFormComponent } from './form.component';
         InputContainerModule,
         ToggleModule,
         OptionsModule,
-        CheckboxesModule
+        CheckboxesModule,
+        DateTimeModule
     ],
     declarations: [ClrFormComponent],
     // export FieldsLayoutModule to reexport CustomField directive

@@ -8,3 +8,4 @@ export * from './lib/date.config';
 export * from './lib/toggle';
 export * from './lib/options';
 export * from './lib/checkboxes';
+export * from './lib/date-time';
