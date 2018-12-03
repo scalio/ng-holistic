@@ -23,13 +23,13 @@ import { setComponentProperties } from '../set-component-properties';
 import { HLC_FORM_GROUP_PROVIDER, FormGroupProvider } from '../fields-layout/index';
 
 const disableControls = (controls: AbstractControl[]) => {
-    console.log('disbale controls', controls);
+    // console.log('disbale controls', controls);
     controls.forEach(control => control.disable());
 };
 
 const enableControls = (controls: AbstractControl[]) => {
-    console.log('enable controls', controls);
-    controls.forEach(control => control.disable());
+    // console.log('enable controls', controls);
+    controls.forEach(control => control.enable());
 };
 
 /**
