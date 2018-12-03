@@ -45,4 +45,8 @@ export class FormPageComponent implements AfterViewInit {
         // in order to correctly display formGroup.value on init
         this.cdr.detectChanges();
     }
+
+    onSave(val: any) {
+        alert(JSON.stringify(val, null, 2));
+    }
 }
