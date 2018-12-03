@@ -39,6 +39,9 @@ export namespace ClrFormFields {
         items: FormFields.FormFieldProp<any[]>;
     }
 
+    export interface CheckboxesField extends BaseField<'CheckboxesField'> {
+        items: FormFields.FormFieldProp<any[]>;
+    }
 
     export type FormField =
         | TextField
@@ -47,5 +50,6 @@ export namespace ClrFormFields {
         | TextAreaField
         | ToggleField
         | OptionsField
+        | CheckboxesField
         | FormFields.CustomFormField;
 }

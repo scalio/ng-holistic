@@ -38,6 +38,12 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'OptionsField',
             label: 'Options',
             items: [{ key: 'opt1', label: 'opt1' }, { key: 'opt2', label: 'opt2' }]
+        },
+        {
+            id: 'checkboxes',
+            kind: 'CheckboxesField',
+            label: 'Checkboxes',
+            items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
         }
     ]
 };

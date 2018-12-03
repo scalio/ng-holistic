@@ -1,0 +1,10 @@
+<clr-checkbox-wrapper *ngFor="let item of items; trackBy: trackBy; let index = index">
+    <input
+        type="checkbox"
+        clrCheckbox
+        [checked]="isChecked(item)"
+        [value]="mapKey(item)"
+        (change)="onChange(item)"
+    />
+    <label>{{ mapLabel(item) }}</label>
+</clr-checkbox-wrapper>

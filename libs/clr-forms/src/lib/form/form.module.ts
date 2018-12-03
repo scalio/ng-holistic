@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
+    CheckboxesModule,
     DateModule,
     OptionsModule,
     SelectModule,
@@ -39,7 +40,8 @@ import { ClrFormComponent } from './form.component';
         GroupsLayoutModule,
         InputContainerModule,
         ToggleModule,
-        OptionsModule
+        OptionsModule,
+        CheckboxesModule
     ],
     declarations: [ClrFormComponent],
     // export FieldsLayoutModule to reexport CustomField directive
