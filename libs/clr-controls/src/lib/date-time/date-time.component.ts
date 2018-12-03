@@ -1,10 +1,10 @@
 import { Component, EventEmitter, forwardRef, Inject, Input, OnInit, Optional, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getHours, getMinutes, setHours, setMinutes } from 'date-fns/esm/fp';
-import { DictMapperService } from 'dist/libs/clr-controls';
 import * as R from 'ramda';
 import { DateConvertService } from '../date-convert.service';
 import { DateConfig, DATE_CONFIG } from '../date.config';
+import { DictMapperService } from '../list-items.config';
 
 export interface DateTimeValues {
     readonly?: boolean;
