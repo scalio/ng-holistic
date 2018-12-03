@@ -1,19 +1,10 @@
-<div
-    class="clr-form-control"
-    [class.invalid]="isInvalid">
+<div class="clr-form-control" [class.invalid]="isInvalid">
     <label class="clr-control-label">
-        {{label}}
-        <span *ngIf="isOptional">- Optional</span>
+        {{ label }} <span *ngIf="isOptional">- {{ optinalLabel }}</span>
     </label>
 
-    <ng-container #ref>
-        <ng-content></ng-content>
-    </ng-container>
+    <ng-container #ref> <ng-content></ng-content> </ng-container>
 
     <hlc-validation-errors></hlc-validation-errors>
-
-    <!--
-    <ng-content select="scalio-input-error"></ng-content>
-    -->
 
 </div>

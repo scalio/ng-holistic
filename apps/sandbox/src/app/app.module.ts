@@ -2,10 +2,16 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
-import { ClrFormModule, InputContainerModule, ValidationErrorsMapConfig } from '@ng-holistic/clr-forms';
+import { DateConfig, DATE_CONFIG } from '@ng-holistic/clr-controls';
+import {
+    ClrFormModule,
+    InputContainerConfig,
+    InputContainerModule,
+    INPUT_CONTAINER_CONFIG,
+    ValidationErrorsMapConfig
+} from '@ng-holistic/clr-forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
-import { DATE_CONFIG } from '@ng-holistic/clr-controls';
 
 const inputContainerValdationErrorsMapConfig: ValidationErrorsMapConfig = {
     required(container) {
@@ -13,7 +19,16 @@ const inputContainerValdationErrorsMapConfig: ValidationErrorsMapConfig = {
     }
 };
 
-export function getDateConfig(localeId: string) {
+export function getInputContainerConfig(localeId: string): InputContainerConfig {
+    /**
+     * When application build with i18n-locale=ru all input optional hints will be in correct format
+     */
+    return {
+        optionalLabel: localeId === 'ru' ? 'Опционально' : undefined
+    };
+}
+
+export function getDateConfig(localeId: string): DateConfig {
     /**
      * When application build with i18n-locale=ru all date components placeholders will have in correct format
      */
@@ -40,6 +55,11 @@ export function getDateConfig(localeId: string) {
         {
             provide: DATE_CONFIG,
             useFactory: getDateConfig,
+            deps: [LOCALE_ID]
+        },
+        {
+            provide: INPUT_CONTAINER_CONFIG,
+            useFactory: getInputContainerConfig,
             deps: [LOCALE_ID]
         }
     ]
