@@ -13,11 +13,13 @@ import { clrFieldsLayoutMap } from '../fields-layout';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
 import { InputContainerModule, InputContainerComponent } from '../input-container';
 import { ClrFormComponent } from './form.component';
-import { TextModule, TextAreaModule, DateModule, SelectModule } from '@ng-holistic/clr-controls';
+import { TextModule, TextAreaModule, DateModule, SelectModule, ToggleModule } from '@ng-holistic/clr-controls';
 import { TabsLayoutModule } from '../tabs-layout';
 import { GroupsLayoutModule } from '../groups-layout';
+import { values } from 'ramda';
 
 @NgModule({
+    // TODO: field components modules in separate const
     imports: [
         CommonModule,
         FormModule,
@@ -28,11 +30,13 @@ import { GroupsLayoutModule } from '../groups-layout';
         FieldsLayoutModule,
         TabsLayoutModule,
         GroupsLayoutModule,
-        InputContainerModule
+        InputContainerModule,
+        ToggleModule
     ],
     declarations: [ClrFormComponent],
     // export FieldsLayoutModule to reexport CustomField directive
-    exports: [ClrFormComponent, FieldsLayoutModule]
+    exports: [ClrFormComponent, FieldsLayoutModule],
+    entryComponents: values(clrFieldsLayoutMap)
 })
 export class ClrFormModule {
     static forRoot(fieldsLayoutMap?: FieldsLayoutMap, groupsLayoutMap?: GroupsLayoutMap): ModuleWithProviders {
