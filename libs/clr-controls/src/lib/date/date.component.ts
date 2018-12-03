@@ -1,8 +1,20 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    Inject,
+    Optional
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getHours, getMinutes, setHours, setMinutes } from 'date-fns/esm/fp';
 import * as R from 'ramda';
 import { DateConvertService } from '../date-convert.service';
+import { DATE_CONFIG, DateConfig } from '../date.config';
 
 export interface DateValues {
     readonly?: boolean;
@@ -37,7 +49,10 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
 
     propagateChange = (_: any) => {};
 
-    constructor(private readonly dateConvertService: DateConvertService) {}
+    constructor(
+        private readonly dateConvertService: DateConvertService,
+        @Optional() @Inject(DATE_CONFIG) private readonly dateConfig?: DateConfig
+    ) {}
 
     get date() {
         return this.dateConvertService.parseDomainDate(this.value);
@@ -60,6 +75,10 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
               )(val);
 
         this.onChange();
+    }
+
+    get placeholder() {
+        return this.dateConfig && this.dateConfig.placeholder;
     }
 
     ngOnInit() {}

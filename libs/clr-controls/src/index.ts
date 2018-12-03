@@ -4,3 +4,4 @@ export * from './lib/select/index';
 export * from './lib/text/index';
 export * from './lib/text-area/index';
 export * from './lib/date-convert.service';
+export * from './lib/date.config';
