@@ -6,3 +6,4 @@ export * from './lib/text-area/index';
 export * from './lib/date-convert.service';
 export * from './lib/date.config';
 export * from './lib/toggle';
+export * from './lib/options';

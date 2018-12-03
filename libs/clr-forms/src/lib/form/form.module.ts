@@ -1,22 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
+    DateModule,
+    OptionsModule,
+    SelectModule,
+    TextAreaModule,
+    TextModule,
+    ToggleModule
+} from '@ng-holistic/clr-controls';
+import {
     FieldsLayoutMap,
-    HLC_FIELDS_LAYOUT_MAP,
-    GroupsLayoutMap,
-    HLC_GROUPS_LAYOUT,
-    HLC_FORM_FIELD_WRAPPER,
+    FieldsLayoutModule,
     FormModule,
-    FieldsLayoutModule
+    GroupsLayoutMap,
+    HLC_FIELDS_LAYOUT_MAP,
+    HLC_FORM_FIELD_WRAPPER,
+    HLC_GROUPS_LAYOUT
 } from '@ng-holistic/forms';
+import { values } from 'ramda';
 import { clrFieldsLayoutMap } from '../fields-layout';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { InputContainerModule, InputContainerComponent } from '../input-container';
-import { ClrFormComponent } from './form.component';
-import { TextModule, TextAreaModule, DateModule, SelectModule, ToggleModule } from '@ng-holistic/clr-controls';
-import { TabsLayoutModule } from '../tabs-layout';
 import { GroupsLayoutModule } from '../groups-layout';
-import { values } from 'ramda';
+import { InputContainerComponent, InputContainerModule } from '../input-container';
+import { TabsLayoutModule } from '../tabs-layout';
+import { ClrFormComponent } from './form.component';
 
 @NgModule({
     // TODO: field components modules in separate const
@@ -31,7 +38,8 @@ import { values } from 'ramda';
         TabsLayoutModule,
         GroupsLayoutModule,
         InputContainerModule,
-        ToggleModule
+        ToggleModule,
+        OptionsModule
     ],
     declarations: [ClrFormComponent],
     // export FieldsLayoutModule to reexport CustomField directive

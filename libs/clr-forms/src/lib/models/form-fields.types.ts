@@ -35,11 +35,17 @@ export namespace ClrFormFields {
         text?: string;
     }
 
+    export interface OptionsField extends BaseField<'OptionsField'> {
+        items: FormFields.FormFieldProp<any[]>;
+    }
+
+
     export type FormField =
         | TextField
         | SelectField
         | DateField
         | TextAreaField
         | ToggleField
+        | OptionsField
         | FormFields.CustomFormField;
 }

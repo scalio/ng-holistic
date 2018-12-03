@@ -32,6 +32,12 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'ToggleField',
             label: 'Toggle',
             text: 'Use feature'
+        },
+        {
+            id: 'options',
+            kind: 'OptionsField',
+            label: 'Options',
+            items: [{ key: 'opt1', label: 'opt1' }, { key: 'opt2', label: 'opt2' }]
         }
     ]
 };
