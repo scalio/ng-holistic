@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DateModule } from '../date';
+import { DateModule } from '../date/index';
 import { DateRangeComponent } from './date-range.component';
 
 @NgModule({

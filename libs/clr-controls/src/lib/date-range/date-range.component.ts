@@ -40,7 +40,7 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRan
 
     ngOnInit() {}
 
-    get dateForm() {
+    get dateFrom() {
         return this.value && this.rangeMapperService.getRange(this.value)[0];
     }
 
@@ -54,7 +54,7 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRan
     }
 
     onDateToChange(val: any) {
-        this.value = this.rangeMapperService.setRange([this.dateForm, val]);
+        this.value = this.rangeMapperService.setRange([this.dateFrom, val]);
         this.onChange();
     }
 
