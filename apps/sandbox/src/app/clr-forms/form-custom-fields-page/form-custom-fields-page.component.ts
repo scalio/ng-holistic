@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -39,12 +39,13 @@ const group: ClrFormLayouts.ClrFormLayout = {
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [InputErrorDisplayStartegy]
 })
-export class FormCustomFieldsPageComponent implements OnInit {
+export class FormCustomFieldsPageComponent implements AfterViewInit {
     group = group;
 
-    constructor() {
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
     }
-
-    ngOnInit() {}
 }

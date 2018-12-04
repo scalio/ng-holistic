@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+}
+
+.remove__icon {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+::ng-deep readonly .datepicker-trigger-icon {
+    display: none;
+}
+
+.hlc-clr-input {
+    width: 120px;
+}

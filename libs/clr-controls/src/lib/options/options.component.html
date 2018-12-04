@@ -1,0 +1,10 @@
+<clr-radio-wrapper *ngFor="let item of items; trackBy: trackBy; let index = index">
+    <input
+        type="radio"
+        clrRadio
+        [checked]="isChecked(item)"
+        [value]="mapKey(item)"
+        (change)="onChange($event.target.value)"
+    />
+    <label>{{ mapLabel(item) }}</label>
+</clr-radio-wrapper>

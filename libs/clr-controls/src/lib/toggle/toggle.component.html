@@ -1,0 +1,4 @@
+<div class="toggle-switch">
+    <input type="checkbox" [value]="value" (change)="onChange($event.target.checked)" [attr.id]="id" />
+    <label [attr.for]="id">{{ text }}</label>
+</div>

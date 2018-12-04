@@ -1,8 +1,20 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    Inject,
+    Optional
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getHours, getMinutes, setHours, setMinutes } from 'date-fns/esm/fp';
 import * as R from 'ramda';
 import { DateConvertService } from '../date-convert.service';
+import { DATE_CONFIG, DateConfig } from '../date.config';
 
 export interface DateValues {
     readonly?: boolean;
@@ -22,7 +34,7 @@ export interface DateValues {
 })
 export class DateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
     @Input()
-    value: string | undefined;
+    value: string | undefined | null;
 
     @Input()
     format: string | undefined;
@@ -33,35 +45,40 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     input: ElementRef<any>;
 
     @Output()
-    valueChange = new EventEmitter<string | undefined>();
+    valueChange = new EventEmitter<string | null | undefined>();
 
     propagateChange = (_: any) => {};
 
-    constructor(private readonly dateConvertService: DateConvertService) {}
+    constructor(
+        private readonly dateConvertService: DateConvertService,
+        @Optional() @Inject(DATE_CONFIG) private readonly dateConfig?: DateConfig
+    ) {}
 
     get date() {
         return this.dateConvertService.parseDomainDate(this.value);
     }
 
     set date(val: Date | undefined) {
-        if (!val) {
-            return;
-        }
-
         // control formatted val -> domain date
-        this.value = R.pipe(
-            // if perviouse value not empty take hours + minutes from there
-            R.when(
-                R.always(this.value) as any,
-                R.pipe(
-                    setHours(getHours(this.value)),
-                    setMinutes(getMinutes(this.value))
-                )
-            ),
-            this.formatToDomainStr
-        )(val);
+        this.value = !val
+            ? null
+            : R.pipe(
+                  // if perviouse value not empty take hours + minutes from there
+                  R.when(
+                      R.always(this.value) as any,
+                      R.pipe(
+                          setHours(getHours(this.value)),
+                          setMinutes(getMinutes(this.value))
+                      )
+                  ),
+                  this.formatToDomainStr
+              )(val);
 
         this.onChange();
+    }
+
+    get placeholder() {
+        return this.dateConfig && this.dateConfig.placeholder;
     }
 
     ngOnInit() {}

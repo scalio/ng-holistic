@@ -1,9 +1,26 @@
-import { ChangeDetectorRef, Component, Host, Input, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    Host,
+    InjectionToken,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    SkipSelf,
+    Inject
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ClrFormFields } from '../models';
 import { InputErrorDisplayStartegy } from './input-error-display-strategy';
+
+export interface InputContainerConfig {
+    optionalLabel?: string;
+}
+
+export const INPUT_CONTAINER_CONFIG = new InjectionToken<InputContainerConfig>('INPUT_CONTAINER_CONFIG');
 
 @Component({
     selector: 'hlc-input-container',
@@ -33,8 +50,13 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         @SkipSelf()
         private formGroupDirective: FormGroupDirective,
         private readonly cdr: ChangeDetectorRef,
-        @Optional() private readonly strategy?: InputErrorDisplayStartegy
+        @Optional() private readonly strategy?: InputErrorDisplayStartegy,
+        @Optional() @Inject(INPUT_CONTAINER_CONFIG) private readonly config?: InputContainerConfig
     ) {}
+
+    get optinalLabel() {
+        return this.config && this.config.optionalLabel || 'Optional';
+    }
 
     ngOnInit() {
         if (this.control) {
@@ -89,7 +111,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
             return false;
         }
 
-        if (this.strategy){
+        if (this.strategy) {
             if (this.strategy.shouldDisplayError(this.control)) {
                 return this.control.invalid;
             } else {

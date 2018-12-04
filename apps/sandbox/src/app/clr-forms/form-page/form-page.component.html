@@ -1,1 +1,17 @@
-<hlc-clr-form [group]="group"></hlc-clr-form>
+<hlc-sandbox-example-source path="clr-forms/form-page"></hlc-sandbox-example-source>
+
+<div class="clr-row">
+    <div class="clr-col-6">
+        <hlc-clr-form [group]="group" #clrForm>
+            <hlc-clr-form-footer
+                form-footer
+                (save)="onSave(clrForm.form.formGroup.value)"
+                [form]="clrForm.form.formGroup"
+            ></hlc-clr-form-footer>
+        </hlc-clr-form>
+    </div>
+    <div class="clr-col-6">
+        <h3>Form value</h3>
+        {{ clrForm.form.formGroup?.value | json }}
+    </div>
+</div>

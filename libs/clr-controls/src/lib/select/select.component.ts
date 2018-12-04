@@ -1,6 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DictMapperService } from '../list-items.config';
+import { DictMapperService, DictMapper } from '../list-items.config';
 
 export interface SelectValues {
     items: any[];
@@ -33,26 +33,28 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, Se
     disallowEmpty: boolean | undefined;
     @Input()
     readonly: boolean;
+    @Input()
+    dictMapper: DictMapper | undefined;
     @Output()
     valueChange = new EventEmitter<string | undefined>();
     propagateChange = (_: any) => {};
 
-    constructor(private readonly dictMapper: DictMapperService) {}
+    constructor(private readonly dictMapperService: DictMapperService) {}
 
     ngOnInit() {}
 
     onChange(val: any) {
-        this.value = val.target.value;
+        this.value = val.target.value || null;
         this.valueChange.emit(this.value);
         this.propagateChange(this.value);
     }
 
     mapKey(obj: any) {
-        return this.dictMapper.getKey(obj);
+        return (this.dictMapper || this.dictMapperService).getKey(obj);
     }
 
     mapLabel(obj: any) {
-        return this.dictMapper.getLabel(obj);
+        return (this.dictMapper || this.dictMapperService).getLabel(obj);
     }
 
     trackBy = (_: number, obj: any) => {

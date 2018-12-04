@@ -20,6 +20,7 @@ export namespace FormFields {
          * Hide field and disable asscoited form control
          */
         $hidden?: Observable<boolean>;
+        $value?: Observable<any>;
     }
 
     /**

@@ -13,14 +13,23 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'hlc-form-footer',
+    selector: 'hlc-clr-form-footer',
     templateUrl: './form-footer.component.html',
     styleUrls: ['./form-footer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormFooterComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
-    @Input() form: FormGroup;
+    form: FormGroup;
+    @Input('form') set setForm(val: FormGroup) {
+        this.destroy$.next();
+        this.form = val;
+        if (this.form) {
+            this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+                this.cdr.markForCheck();
+            });
+        }
+    }
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
@@ -30,13 +39,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
 
     constructor(private readonly cdr: ChangeDetectorRef) {}
 
-    ngOnInit() {
-        if (this.form) {
-            this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-                this.cdr.markForCheck();
-            });
-        }
-    }
+    ngOnInit() {}
 
     ngOnDestroy() {
         this.destroy$.next();

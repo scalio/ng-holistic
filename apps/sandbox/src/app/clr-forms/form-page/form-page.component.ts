@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
@@ -22,10 +22,38 @@ const group: ClrFormLayouts.ClrFormLayout = {
             label: 'Date'
         },
         {
+            id: 'date-time',
+            kind: 'DateTimeField',
+            label: 'Date Time'
+        },
+        {
+            id: 'date-range',
+            kind: 'DateRangeField',
+            label: 'Date Range'
+        },
+        {
             id: 'select',
             kind: 'SelectField',
             label: 'Select',
             items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+        },
+        {
+            id: 'toggle',
+            kind: 'ToggleField',
+            label: 'Toggle',
+            text: 'Use feature'
+        },
+        {
+            id: 'options',
+            kind: 'OptionsField',
+            label: 'Options',
+            items: [{ key: 'opt1', label: 'opt1' }, { key: 'opt2', label: 'opt2' }]
+        },
+        {
+            id: 'checkboxes',
+            kind: 'CheckboxesField',
+            label: 'Checkboxes',
+            items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
         }
     ]
 };
@@ -36,10 +64,17 @@ const group: ClrFormLayouts.ClrFormLayout = {
     styleUrls: ['./form-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormPageComponent implements OnInit {
+export class FormPageComponent implements AfterViewInit {
     group = group;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
+    }
+
+    onSave(val: any) {
+        alert(JSON.stringify(val, null, 2));
+    }
 }

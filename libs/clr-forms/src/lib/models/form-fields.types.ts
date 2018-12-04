@@ -1,8 +1,9 @@
 import { FormFields } from '@ng-holistic/forms';
 
 export namespace ClrFormFields {
-
-    export interface FieldValidatorsErrorsMap<T = string> { [key: string] : T; }
+    export interface FieldValidatorsErrorsMap<T = string> {
+        [key: string]: T;
+    }
 
     export interface BaseField<TKind extends string, TVal = any> extends FormFields.FormField<TKind> {
         label?: FormFields.FormFieldProp<string>;
@@ -20,8 +21,7 @@ export namespace ClrFormFields {
         placeholder?: FormFields.FormFieldProp<string>;
     }
 
-    export interface TextField extends BaseFieldP<'TextField', string> {
-    }
+    export interface TextField extends BaseFieldP<'TextField', string> {}
 
     export interface SelectField extends BaseFieldP<'SelectField'> {
         items: FormFields.FormFieldProp<any[]>;
@@ -31,5 +31,31 @@ export namespace ClrFormFields {
 
     export interface TextAreaField extends BaseFieldP<'TextAreaField', string> {}
 
-    export type FormField = TextField | SelectField | DateField | TextAreaField | FormFields.CustomFormField;
+    export interface ToggleField extends BaseField<'ToggleField', boolean> {
+        text?: string;
+    }
+
+    export interface OptionsField extends BaseField<'OptionsField'> {
+        items: FormFields.FormFieldProp<any[]>;
+    }
+
+    export interface CheckboxesField extends BaseField<'CheckboxesField'> {
+        items: FormFields.FormFieldProp<any[]>;
+    }
+
+    export interface DateTimeField extends BaseField<'DateTimeField', string> {}
+
+    export interface DateRangeField extends BaseField<'DateRangeField'> {}
+
+    export type FormField =
+        | TextField
+        | SelectField
+        | DateField
+        | TextAreaField
+        | ToggleField
+        | OptionsField
+        | CheckboxesField
+        | DateTimeField
+        | DateRangeField
+        | FormFields.CustomFormField;
 }

@@ -1,34 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { propChanged } from '@ng-holistic/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
-
-/*
-const group1 = (hide$: Observable<boolean>): ClrFormLayouts.ClrFormLayout => ({
-    kind: 'tabs',
-    $content: [
-        {
-            $hidden: hide$,
-            kind: 'tab',
-            title: 'Personal Info',
-            $content: [
-                {
-                    kind: 'fields',
-                    fields: [
-                        {
-                            id: 'select',
-                            kind: 'SelectField',
-                            label: 'Select',
-                            items: [{ key: '0', label: 'hide family group' }, { key: '1', label: 'hide address group' }]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-});
-*/
+import { map } from 'rxjs/operators';
 
 const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'tabs',
@@ -133,9 +108,7 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
             $hidden: merge(
                 hide$,
                 form.valueChanges.pipe(
-                    // TODO : distinctPropChanged
-                    map(({ select }) => select),
-                    distinctUntilChanged(),
+                    propChanged('select'),
                     map(select => select === '1')
                 )
             ),
@@ -171,15 +144,17 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
     styleUrls: ['./form-full-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormFullPageComponent implements OnInit {
+export class FormFullPageComponent implements AfterViewInit {
     hide$ = new BehaviorSubject(false);
 
-    // group = group1(this.hide$);
     group = group(this.hide$);
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        // in order to correctly display formGroup.value on init
+        this.cdr.detectChanges();
+    }
 
     onHide() {
         this.hide$.next(true);

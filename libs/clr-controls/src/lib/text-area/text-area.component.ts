@@ -32,10 +32,14 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor, TextArea
     ngOnInit() {}
 
     onChange($event: any) {
+        if (this.value === undefined && !$event.target.value) {
+            // when user set first time focus on empty field don't change null -> ''.
+            // Behaviour consistent with text component.
+            return;
+        }
+        this.value = $event.target.value;
         this.propagateChange($event.target.value);
     }
-
-    //
 
     writeValue(obj: any) {
         this.value = obj;

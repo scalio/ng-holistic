@@ -1,4 +1,11 @@
 <button
+    class="btn btn-outline"
+    type="button"
+    (click)="$event.preventDefault(); cancel.emit();">
+    Cancel
+</button>
+
+<button
     class="btn btn-primary"
     type="submit"
     [disabled]="disabled || !isFormEnabled"
@@ -6,9 +13,3 @@
     {{isNew ? 'Add' : 'Update' }}
 </button>
 
-<button
-    class="btn btn-outline"
-    type="button"
-    (click)="$event.preventDefault(); cancel.emit();">
-    Cancel
-</button>
