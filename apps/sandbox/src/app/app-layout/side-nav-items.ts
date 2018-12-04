@@ -52,5 +52,19 @@ export default [
                 path: ['/clr-controls', 'select']
             }
         ]
+    },
+    {
+        title: 'Clr File Upload',
+        icon: 'upload-cloud',
+        children: [
+            {
+                title: 'File Upload',
+                path: ['/clr-file-upload', 'file-upload']
+            },
+            {
+                title: 'File Uploader',
+                path: ['/clr-file-upload', 'file-uploader']
+            }
+        ]
     }
 ] as SideNavItem[];

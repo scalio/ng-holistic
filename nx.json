@@ -22,6 +22,9 @@
     },
     "clr-forms": {
       "tags": []
+    },
+    "clr-file-upload": {
+      "tags": []
     }
   }
 }

@@ -5,7 +5,9 @@ import { AppLayoutModule } from './app-layout/app-layout.module';
 import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
 import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.module';
+import { routes as clrFileUploadRoutes } from './clr-file-upload/clr-file-upload.routing.module';
 import { ClrFormsModule } from './clr-forms/clr-forms.module';
+import { ClrFileUploadModule } from './clr-file-upload/clr-file-upload.module';
 
 export const routes: Routes = [
     {
@@ -24,13 +26,17 @@ export const routes: Routes = [
             {
                 path: 'clr-forms',
                 children: clrFormsModuleRoutes
+            },
+            {
+                path: 'clr-file-upload',
+                children: clrFileUploadRoutes
             }
         ]
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule, ClrFormsModule],
+    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule, ClrFormsModule, ClrFileUploadModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
