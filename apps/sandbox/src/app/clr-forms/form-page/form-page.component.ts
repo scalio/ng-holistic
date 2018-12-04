@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { TextMask } from '@ng-holistic/clr-controls';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -9,6 +10,22 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'TextField',
             label: 'Text',
             placeholder: 'Type something'
+        },
+        {
+            id: 'num',
+            kind: 'MaskField',
+            label: 'Number',
+            placeholder: '0000000',
+            mask: TextMask.int(7),
+            unmask: TextMask.unmaskNumber
+        },
+        {
+            id: 'phone',
+            kind: 'MaskField',
+            label: 'Phone',
+            placeholder: '+1 (999) 123-45678',
+            mask: TextMask.phone(),
+            unmask: TextMask.unmaskStrNumber
         },
         {
             id: 'textarea',

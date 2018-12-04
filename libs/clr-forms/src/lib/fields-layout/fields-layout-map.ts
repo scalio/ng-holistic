@@ -1,22 +1,24 @@
 import {
     CheckboxesComponent,
-    DateComponent,
-    OptionsComponent,
-    SelectComponent,
-    TextAreaComponent,
-    TextComponent,
-    ToggleComponent,
-    DateTimeComponent,
-    DateRangeComponent,
-    TextModule,
-    TextAreaModule,
-    SelectModule,
-    DateModule,
-    ToggleModule,
-    OptionsModule,
     CheckboxesModule,
+    DateComponent,
+    DateModule,
+    DateRangeComponent,
+    DateRangeModule,
+    DateTimeComponent,
     DateTimeModule,
-    DateRangeModule
+    MaskComponent,
+    MaskModule,
+    OptionsComponent,
+    OptionsModule,
+    SelectComponent,
+    SelectModule,
+    TextAreaComponent,
+    TextAreaModule,
+    TextComponent,
+    TextModule,
+    ToggleComponent,
+    ToggleModule
 } from '@ng-holistic/clr-controls';
 
 /**
@@ -31,7 +33,8 @@ export const clrFieldsLayoutMap = {
     OptionsField: OptionsComponent,
     CheckboxesField: CheckboxesComponent,
     DateTimeField: DateTimeComponent,
-    DateRangeField: DateRangeComponent
+    DateRangeField: DateRangeComponent,
+    MaskField: MaskComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -43,7 +46,8 @@ export const clrFieldsLayoutComponents = [
     OptionsComponent,
     CheckboxesComponent,
     DateTimeComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    MaskComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -55,5 +59,6 @@ export const clrFieldsLayoutModules = [
     OptionsModule,
     CheckboxesModule,
     DateTimeModule,
-    DateRangeModule
+    DateRangeModule,
+    MaskModule
 ];

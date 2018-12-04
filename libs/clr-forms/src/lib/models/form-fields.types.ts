@@ -1,4 +1,5 @@
 import { FormFields } from '@ng-holistic/forms';
+import { Mask } from '@ng-holistic/clr-controls';
 
 export namespace ClrFormFields {
     export interface FieldValidatorsErrorsMap<T = string> {
@@ -47,6 +48,11 @@ export namespace ClrFormFields {
 
     export interface DateRangeField extends BaseField<'DateRangeField'> {}
 
+    export interface MaskField extends BaseFieldP<'MaskField'> {
+        mask: Mask.MaskValue;
+        unmask?: Mask.UnmaskFun;
+    }
+
     export type FormField =
         | TextField
         | SelectField
@@ -57,5 +63,6 @@ export namespace ClrFormFields {
         | CheckboxesField
         | DateTimeField
         | DateRangeField
-        | FormFields.CustomFormField;
+        | FormFields.CustomFormField
+        | MaskField;
 }
