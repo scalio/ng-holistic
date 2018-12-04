@@ -8,7 +8,8 @@ import {
     SelectModule,
     TextAreaModule,
     TextModule,
-    ToggleModule
+    ToggleModule,
+    DateRangeModule
 } from '@ng-holistic/clr-controls';
 import {
     FieldsLayoutMap,
@@ -43,7 +44,8 @@ import { ClrFormComponent } from './form.component';
         ToggleModule,
         OptionsModule,
         CheckboxesModule,
-        DateTimeModule
+        DateTimeModule,
+        DateRangeModule
     ],
     declarations: [ClrFormComponent],
     // export FieldsLayoutModule to reexport CustomField directive

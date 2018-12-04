@@ -27,6 +27,11 @@ const group: ClrFormLayouts.ClrFormLayout = {
             label: 'Date Time'
         },
         {
+            id: 'date-range',
+            kind: 'DateRangeField',
+            label: 'Date Range'
+        },
+        {
             id: 'select',
             kind: 'SelectField',
             label: 'Select',

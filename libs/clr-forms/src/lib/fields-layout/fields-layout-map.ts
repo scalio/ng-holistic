@@ -6,7 +6,8 @@ import {
     TextAreaComponent,
     TextComponent,
     ToggleComponent,
-    DateTimeComponent
+    DateTimeComponent,
+    DateRangeComponent
 } from '@ng-holistic/clr-controls';
 
 /**
@@ -20,5 +21,6 @@ export const clrFieldsLayoutMap = {
     ToggleField: ToggleComponent,
     OptionsField: OptionsComponent,
     CheckboxesField: CheckboxesComponent,
-    DateTimeField: DateTimeComponent
+    DateTimeField: DateTimeComponent,
+    DateRangeField: DateRangeComponent
 };

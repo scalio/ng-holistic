@@ -1,0 +1,17 @@
+<hlc-date
+    class="date-component date-short-component"
+    [value]="dateFrom"
+    (valueChange)="onDateFromChange($event)"
+    [format]="format"
+    [readonly]="readonly"
+>
+</hlc-date>
+-
+<hlc-date
+    class="date-component date-short-component"
+    [value]="dateTo"
+    (valueChange)="onDateToChange($event)"
+    [format]="format"
+    [readonly]="readonly"
+>
+</hlc-date>

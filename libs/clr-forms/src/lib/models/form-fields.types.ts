@@ -45,6 +45,8 @@ export namespace ClrFormFields {
 
     export interface DateTimeField extends BaseField<'DateTimeField', string> {}
 
+    export interface DateRangeField extends BaseField<'DateRangeField'> {}
+
     export type FormField =
         | TextField
         | SelectField
@@ -54,5 +56,6 @@ export namespace ClrFormFields {
         | OptionsField
         | CheckboxesField
         | DateTimeField
+        | DateRangeField
         | FormFields.CustomFormField;
 }

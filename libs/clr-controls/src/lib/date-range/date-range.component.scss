@@ -1,0 +1,7 @@
+.date-component {
+    display: inline-table;
+}
+
+::ng-deep .date-short-component .date-input {
+    width: 120px;
+}

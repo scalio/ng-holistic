@@ -9,3 +9,5 @@ export * from './lib/toggle';
 export * from './lib/options';
 export * from './lib/checkboxes';
 export * from './lib/date-time';
+export * from './lib/range.config';
+export * from './lib/date-range';
