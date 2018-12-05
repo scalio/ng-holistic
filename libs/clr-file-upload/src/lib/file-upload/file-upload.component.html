@@ -1,10 +1,29 @@
 <hlc-file-uploader
     *ngIf="!readonly"
     [accept]="accept"
-    [files]="filesObjects"
     [single]="single"
-    (filesChange)="onFilesChange($event)">
+    (filesAdded)="onAddFiles($event)">
 </hlc-file-uploader>
+
+<ul>
+    <li *ngFor="let file of files; let i = index;">
+        <ng-container *ngIf="isFileUploading(file)">
+            {{file?.name}}
+            <span class="spinner spinner-inline"></span>
+        </ng-container>
+        <ng-container *ngIf="isFileUploaded(file)">
+            {{file?.name}}
+            <button
+                class="btn btn-danger-flat btn-icon btn-link"
+                type="button"
+                (click)="onFileRemove(i)">
+                <clr-icon shape="trash"></clr-icon>
+            </button>
+        </ng-container>
+    </li>
+</ul>
+
+<!--
 <div
     class="files-list"
     *ngIf="files?.length">
@@ -95,3 +114,4 @@
         value="Не загружено ни одного файла"
         class="clr-control-container clr-col-xs-12 clr-col-md-12">
 </div>
+-->

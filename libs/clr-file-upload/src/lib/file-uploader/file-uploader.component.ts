@@ -8,12 +8,11 @@ import { UploadEvent } from 'ngx-file-drop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploaderComponent implements OnInit {
-    @Input() files: File[];
     // allows add only single file
     @Input() single: boolean | undefined;
     @Input() disabled: boolean;
     @Input() accept: string | undefined;
-    @Output() filesChange = new EventEmitter<File[] | null>();
+    @Output() filesAdded = new EventEmitter<File[]>();
 
     private _rand = Math.random();
     get fileUploaderName() {
@@ -33,7 +32,7 @@ export class FileUploaderComponent implements OnInit {
             return;
         }
 
-        files.forEach((file: any) => this.addFile(file));
+        this.addFiles(files);
     }
 
     onFileDrop(event: UploadEvent) {
@@ -41,16 +40,14 @@ export class FileUploaderComponent implements OnInit {
         if (!files || files.length === 0) {
             return;
         }
-        files.filter((file: any) => file.fileEntry.isFile).map((file: any) => this.addFile(file.fileEntry));
+        const fileEntries = files.filter((file: any) => file.fileEntry.isFile).map((file: any) => file.fileEntry);
+
+        this.addFiles(fileEntries);
     }
 
     onFileOver(_: any) {}
 
     onFileLeave(_: any) {}
-
-    get fileNames() {
-        return (this.files || []).map(file => file.name);
-    }
 
     private checkAccept(fileName: string) {
         if (this.accept) {
@@ -64,18 +61,11 @@ export class FileUploaderComponent implements OnInit {
         return true;
     }
 
-    private addFile(file: File | null) {
-        if (!file) {
+    private addFiles(files: File[]) {
+        files = files.filter(file => this.checkAccept(file.name));
+        if (files.length === 0) {
             return;
         }
-        if (!this.checkAccept(file.name)) {
-            return;
-        }
-        if (this.single) {
-            this.files = [file];
-        } else {
-            this.files = [...(this.files || []), file];
-        }
-        this.filesChange.emit(this.files);
+        this.filesAdded.emit(files);
     }
 }

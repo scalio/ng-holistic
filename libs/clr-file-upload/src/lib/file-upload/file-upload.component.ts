@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     forwardRef,
     Inject,
@@ -11,6 +10,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
+import { Observable } from 'rxjs';
 import { AttachmentType } from './model';
 
 export interface FileUploadConfig {
@@ -18,6 +18,8 @@ export interface FileUploadConfig {
 }
 
 export const FILE_UPLOAD_CONFIG = new InjectionToken('FILE_UPLOAD_CONFIG');
+
+export type UploadFileFun = (file: File) => Observable<any>;
 
 @Component({
     selector: 'hlc-file-upload',
@@ -33,30 +35,14 @@ export const FILE_UPLOAD_CONFIG = new InjectionToken('FILE_UPLOAD_CONFIG');
     ]
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
+    @Input() files: any[] | undefined;
 
-    showAllNew = false;
-    showAllOld = false;
-
-    _files: (AttachmentType | File)[] | undefined | null;
-    @Input()
-    set files(val: (AttachmentType | File)[] | undefined | null) {
-        if (val) {
-            this._files = [...val];
-            this.cd.markForCheck();
-        }
-    }
-    get files() {
-        return this._files;
-    }
-    @Input() single: boolean | undefined;
     @Input() accept: string | undefined;
     @Input() readonly: boolean;
-    @Input() url: string | undefined;
+
     propagateChange = (_: any) => {};
 
-
     constructor(
-        private cd: ChangeDetectorRef,
         @Optional()
         @Inject(FILE_UPLOAD_CONFIG)
         private readonly config: FileUploadConfig | undefined
@@ -68,14 +54,6 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
         return (this.files || []).filter(file => file instanceof File);
     }
 
-    get attachmentObjects() {
-        return (this.files || []).filter(this.isAttachment);
-    }
-
-    isAttachment(file: File | AttachmentType) {
-        return !(file instanceof File);
-    }
-
     onFileRemove(index: number) {
         if (!this.files) {
             return;
@@ -84,15 +62,23 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
         this.onChange();
     }
 
-    onFilesChange(files: File[]) {
-        this.files = [...this.attachmentObjects, ...files];
-        this.onChange();
+    onAddFiles(files: File[]) {
+        this.files = [...files, ...(this.files || [])];
+        console.log('+++', files);
+    }
+
+    isFileUploading(file: any) {
+        return file instanceof File;
+    }
+
+    isFileUploaded(file: any) {
+        return !this.isFileUploading(file);
     }
 
     //
 
     writeValue(obj: any) {
-        this.files = this.single ? (obj ? [obj] : []) : obj;
+        this.files = obj;
     }
 
     registerOnChange(fn: any) {
@@ -102,27 +88,12 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     registerOnTouched(_: any) {}
 
     private onChange() {
-        this.propagateChange(this.single ? (this.files || []).pop() : this.files);
+        this.propagateChange(this.files || []);
     }
 
     onClick(file: AttachmentType) {
         if (this.config) {
             this.config.downloadFunction(file);
-        }
-    }
-
-    isUrl(file: AttachmentType) {
-        return file && file.url && file.url.startsWith('http');
-    }
-
-    toggleRows(prop: string) {
-        switch (prop) {
-            case 'new':
-                this.showAllNew = !this.showAllNew;
-                break;
-            case 'old':
-                this.showAllOld = !this.showAllOld;
-                break;
         }
     }
 }
