@@ -8,11 +8,11 @@ import { FileUploaderPageModule } from './file-uploader/file-uploader-page.modul
 export const routes: Routes = [
     {
         path: 'file-upload',
-        component: FileUploaderPageComponent
+        component: FileUploadPageComponent
     },
     {
         path: 'file-uploader',
-        component: FileUploadPageComponent
+        component: FileUploaderPageComponent
     }
 ];
 

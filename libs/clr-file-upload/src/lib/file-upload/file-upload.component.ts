@@ -1,16 +1,19 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     forwardRef,
     Inject,
     InjectionToken,
     Input,
+    OnDestroy,
     OnInit,
     Optional
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
-import { Observable } from 'rxjs';
+import { empty, merge, Observable, Subject } from 'rxjs';
+import { catchError, debounceTime, take, takeUntil } from 'rxjs/operators';
 import { AttachmentType } from './model';
 
 export interface FileUploadConfig {
@@ -20,6 +23,8 @@ export interface FileUploadConfig {
 export const FILE_UPLOAD_CONFIG = new InjectionToken('FILE_UPLOAD_CONFIG');
 
 export type UploadFileFun = (file: File) => Observable<any>;
+
+const UPLOAD_DEBOUNCE_TIME = 1000;
 
 @Component({
     selector: 'hlc-file-upload',
@@ -34,21 +39,32 @@ export type UploadFileFun = (file: File) => Observable<any>;
         }
     ]
 })
-export class FileUploadComponent implements OnInit, ControlValueAccessor {
+export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAccessor {
+    private readonly destroy$ = new Subject();
+
+    value: any[];
+
     @Input() files: any[] | undefined;
 
     @Input() accept: string | undefined;
     @Input() readonly: boolean;
 
+    @Input() uploadFileFun: UploadFileFun | undefined;
+
     propagateChange = (_: any) => {};
 
     constructor(
+        private readonly cdr: ChangeDetectorRef,
         @Optional()
         @Inject(FILE_UPLOAD_CONFIG)
         private readonly config: FileUploadConfig | undefined
     ) {}
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
 
     get filesObjects() {
         return (this.files || []).filter(file => file instanceof File);
@@ -64,7 +80,33 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
     onAddFiles(files: File[]) {
         this.files = [...files, ...(this.files || [])];
-        console.log('+++', files);
+        this.uploadFiles(files);
+    }
+
+    private uploadFiles(files: File[]) {
+        if (this.uploadFileFun) {
+            const res$ = files.map(file => this.uploadFile(file).pipe(catchError(() => empty())));
+            merge(...res$)
+                .pipe(debounceTime(UPLOAD_DEBOUNCE_TIME))
+                .subscribe(() => {
+                    this.cdr.detectChanges();
+                    this.onChange();
+                });
+        }
+    }
+
+    private uploadFile(file: File) {
+        const res$ = (this.uploadFileFun as UploadFileFun)(file).pipe(
+            take(1),
+            takeUntil(this.destroy$)
+        );
+        res$.subscribe(res => {
+            const files = this.files as any[];
+            const index = files.indexOf(file);
+            this.files = R.update(index, res, files);
+        });
+        return res$;
+        // TODO: handle error
     }
 
     isFileUploading(file: any) {
@@ -88,7 +130,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     registerOnTouched(_: any) {}
 
     private onChange() {
-        this.propagateChange(this.files || []);
+        const files = (this.files || []).filter(file => this.isFileUploaded(file));
+        this.propagateChange(files);
     }
 
     onClick(file: AttachmentType) {

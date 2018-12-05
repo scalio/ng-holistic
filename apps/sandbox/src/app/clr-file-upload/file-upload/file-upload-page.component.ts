@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { timer } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 @Component({
     selector: 'hlc-file-upload-page',
@@ -7,6 +9,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploadPageComponent implements OnInit {
+    uploadFileFun = (file: any) => timer(1000).pipe(mapTo({name: file.name}));
+
     constructor() {}
 
     ngOnInit() {}
