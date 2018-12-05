@@ -1,11 +1,12 @@
 <div class="form-footer">
-    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); cancel.emit()">Cancel</button>
+    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">Cancel</button>
 
     <button
+        [clrLoading]="updateButtonState$ | async"
         class="btn btn-primary"
         type="submit"
         [disabled]="disabled || !isFormEnabled"
-        (click)="$event.preventDefault(); save.emit()"
+        (click)="$event.preventDefault(); onSave()"
     >
         {{ isNew ? 'Add' : 'Update' }}
     </button>
