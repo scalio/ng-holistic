@@ -45,10 +45,9 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
     @Input()
     set value(val: any) {
         if (this.formGroup) {
-            if (equals(this.formGroup.value, val)) {
+            if (!val || equals(this.formGroup.value, val)) {
                 return;
             }
-
             this.formGroup.patchValue(val);
             this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
             this.cdr.detectChanges();

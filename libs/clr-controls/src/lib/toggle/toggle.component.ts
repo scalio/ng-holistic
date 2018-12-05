@@ -14,9 +14,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     ]
 })
 export class ToggleComponent implements OnInit, ControlValueAccessor {
-
     private static togglesCount = 0;
 
+    id: string;
     @Input() text: string;
     @Input() value: boolean;
     @Input() readonly: boolean | undefined;
@@ -24,11 +24,8 @@ export class ToggleComponent implements OnInit, ControlValueAccessor {
     propagateChange = (_: any) => {};
 
     constructor() {
+        this.id = `toggle_${ToggleComponent.togglesCount}`;
         ToggleComponent.togglesCount++;
-    }
-
-    get id() {
-        return `toggle_${ToggleComponent.togglesCount}`;
     }
 
     ngOnInit() {}

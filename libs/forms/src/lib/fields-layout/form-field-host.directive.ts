@@ -101,6 +101,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             // If component implements ValueAccessor interface use one to sync values
             // between form control and the component
             this.syncValueChanges(view, controlValueAccessor);
+            // Set initial component value from `form value`
+            controlValueAccessor.writeValue(this.control.value);
         }
 
         this.syncControlValue();
@@ -120,8 +122,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
 
         view.detectChanges();
 
-        // when form rebuilt we need update connrol's value
-        this.control.updateValueAndValidity();
+        // when form rebuilt we need update control's value
+        // this.control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
 
     ngOnDestroy() {

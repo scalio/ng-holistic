@@ -12,6 +12,7 @@ export function getInputContainerConfig(localeId: string): InputContainerConfig 
      * When application build with i18n-locale=ru all input optional hints will be in correct format
      */
     return {
+        showRequiredHint: 'optional',
         optionalLabel: localeId === 'ru' ? 'Опционально' : undefined
     };
 }
