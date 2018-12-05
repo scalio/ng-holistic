@@ -117,10 +117,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
 
     private rebuildForm(data: any) {
         if (this.formRebuildProvider) {
-            const rebuiltConfig = this.formRebuildProvider.rebuildFormLayoutConfig(
-                data,
-                this.formGroup.value
-            );
+            const rebuiltConfig = this.formRebuildProvider.rebuildFormLayoutConfig(data, this.formGroup.value);
             this.initForm(rebuiltConfig);
             this.cdr.markForCheck();
         }
