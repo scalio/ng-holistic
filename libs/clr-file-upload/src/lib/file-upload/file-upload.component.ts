@@ -141,7 +141,6 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
                     this.cdr.detectChanges();
                 },
                 (err: any) => {
-                    console.log('err', err);
                     this.setFileError(file, undefined, err, 'remove');
                     this.resetFileAsRemoving(file);
                     this.cdr.detectChanges();
