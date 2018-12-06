@@ -43,7 +43,6 @@
   },
   "exclude": [
     "node_modules",
-    "tmp",
-    "text-mask-core"
+    "tmp"
   ]
 }
