@@ -49,7 +49,7 @@
     },
     "lint-staged": {
         "*.ts": [
-            "tslint --project tsconfig.json"
+            "tslint --project tsconfig.json --exclude **/*.d.ts"
         ]
     },
     "private": true,

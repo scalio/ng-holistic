@@ -9,7 +9,6 @@
         "@clr/ui": "^1.0.0",
         "@webcomponents/custom-elements": "^1.2.1",
         "date-fns": "^2.0.0-alpha.25",
-        "ramda": "^0.26.1",
-        "angular2-text-mask": "^9.0.0"
+        "ramda": "^0.26.1"
     }
 }

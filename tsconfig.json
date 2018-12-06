@@ -21,6 +21,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+       "@text-mask-core": [
+          "text-mask-core/text-mask-core"
+       ],
       "@ng-holistic/forms": [
         "libs/forms/src/index.ts"
       ],
@@ -40,6 +43,7 @@
   },
   "exclude": [
     "node_modules",
-    "tmp"
+    "tmp",
+    "text-mask-core"
   ]
 }
