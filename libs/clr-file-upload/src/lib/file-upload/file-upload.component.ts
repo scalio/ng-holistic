@@ -4,20 +4,28 @@ import {
     Component,
     forwardRef,
     Inject,
-    InjectionToken,
     Input,
-    OnInit,
-    Optional
+    OnDestroy,
+    OnInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
+import { empty, merge, Observable, Subject, throwError } from 'rxjs';
+import { catchError, debounceTime, finalize, take, takeUntil, tap } from 'rxjs/operators';
+import { FileUploadConfig, HLC_FILE_UPLOAD_CONFIG } from '../file-upload.config';
 import { AttachmentType } from './model';
 
-export interface FileUploadConfig {
-    downloadFunction: (file: AttachmentType) => void;
+export type UploadFileFun = (file: File) => Observable<any>;
+export type RemoveFileFun = (file: any) => Observable<any>;
+
+interface FileError {
+    file?: any;
+    rawFile?: File;
+    error: string;
+    kind: 'remove' | 'upload';
 }
 
-export const FILE_UPLOAD_CONFIG = new InjectionToken('FILE_UPLOAD_CONFIG');
+const UPLOAD_DEBOUNCE_TIME = 1000;
 
 @Component({
     selector: 'hlc-file-upload',
@@ -32,67 +40,128 @@ export const FILE_UPLOAD_CONFIG = new InjectionToken('FILE_UPLOAD_CONFIG');
         }
     ]
 })
-export class FileUploadComponent implements OnInit, ControlValueAccessor {
+export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAccessor {
+    private readonly destroy$ = new Subject();
 
-    showAllNew = false;
-    showAllOld = false;
+    removingFiles: any[] = [];
+    fileErrors: FileError[] = [];
 
-    _files: (AttachmentType | File)[] | undefined | null;
-    @Input()
-    set files(val: (AttachmentType | File)[] | undefined | null) {
-        if (val) {
-            this._files = [...val];
-            this.cd.markForCheck();
-        }
-    }
-    get files() {
-        return this._files;
-    }
-    @Input() single: boolean | undefined;
+    @Input() files: any[] | undefined;
+
     @Input() accept: string | undefined;
     @Input() readonly: boolean;
-    @Input() url: string | undefined;
+
+    /**
+     * If this function is not provided, control value will be changed immmediately after new file is added,
+     * so in value could be both `domain` files and `raw` just uploaded files.
+     * In case of `domain` files control value will be changed only if file was successfully uploaded, this case value
+     * will always contains only `domain` file objects.
+     * In case of raw uploaded files user should upload them along with other data when request is send to server.
+     */
+    @Input() uploadFileFun: UploadFileFun | undefined;
+    /**
+     * The same as for uploadFileFun
+     */
+    @Input() removeFileFun: RemoveFileFun | undefined;
+
     propagateChange = (_: any) => {};
 
-
     constructor(
-        private cd: ChangeDetectorRef,
-        @Optional()
-        @Inject(FILE_UPLOAD_CONFIG)
-        private readonly config: FileUploadConfig | undefined
+        private readonly cdr: ChangeDetectorRef,
+        @Inject(HLC_FILE_UPLOAD_CONFIG)
+        readonly config: FileUploadConfig
     ) {}
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
+
+    trackByFile(index: number) {
+        return index;
+    }
 
     get filesObjects() {
         return (this.files || []).filter(file => file instanceof File);
     }
 
-    get attachmentObjects() {
-        return (this.files || []).filter(this.isAttachment);
+    get uploadedFiles() {
+        return (this.files || []).filter(file => this.isFileUploaded(file));
     }
 
-    isAttachment(file: File | AttachmentType) {
-        return !(file instanceof File);
+    getFileName(file: any) {
+        return file instanceof File ? file.name : this.config.getName(file);
     }
 
-    onFileRemove(index: number) {
-        if (!this.files) {
-            return;
+    //
+    getFileError(file: any) {
+        const index = this.getFileErrorIndex(file);
+        return index !== -1 ? this.fileErrors[index].error : null;
+    }
+
+    isFileUploading(file: any) {
+        return file instanceof File;
+    }
+
+    isFileRemoving(file: any) {
+        return this.getFileIndex(file, this.removingFiles) !== -1;
+    }
+
+    isFileUploaded(file: any) {
+        return !this.isFileUploading(file);
+    }
+
+    //
+
+    onAddFiles(files: File[]) {
+        this.files = [...files, ...(this.files || [])];
+        if (this.uploadFileFun) {
+            this.uploadFiles(files);
+        } else {
+            this.onChange();
         }
-        this.files = R.remove(index, 1, this.files);
-        this.onChange();
     }
 
-    onFilesChange(files: File[]) {
-        this.files = [...this.attachmentObjects, ...files];
-        this.onChange();
+    onRemoveFile(file: any) {
+        // use specific component function or form config by default
+        const removeFileFun = this.removeFileFun || (this.config.remove && this.config.remove.bind(this.config));
+        if (removeFileFun) {
+            this.setFileAsRemoving(file);
+            const res$ = removeFileFun(file).pipe(
+                take(1),
+                takeUntil(this.destroy$)
+            );
+            res$.subscribe(
+                () => {
+                    this.resetFileError(file);
+                    this.resetFileAsRemoving(file);
+                    this.removeFile(file);
+                    this.onChange();
+                    this.cdr.detectChanges();
+                },
+                (err: any) => {
+                    this.setFileError(file, undefined, err, 'remove');
+                    this.resetFileAsRemoving(file);
+                    this.cdr.detectChanges();
+                }
+            );
+            // TODO: Error handle
+        } else {
+            this.removeFile(file);
+            this.onChange();
+        }
+    }
+
+    onRemoveCachedFile(file: File) {
+        this.removeFile(file);
+        this.resetFileError(file);
     }
 
     //
 
     writeValue(obj: any) {
-        this.files = this.single ? (obj ? [obj] : []) : obj;
+        this.files = obj;
     }
 
     registerOnChange(fn: any) {
@@ -101,28 +170,106 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
     registerOnTouched(_: any) {}
 
-    private onChange() {
-        this.propagateChange(this.single ? (this.files || []).pop() : this.files);
-    }
-
-    onClick(file: AttachmentType) {
-        if (this.config) {
-            this.config.downloadFunction(file);
+    onDownload(file: AttachmentType) {
+        if (this.config && this.config.download) {
+            this.config.download(file);
         }
     }
 
-    isUrl(file: AttachmentType) {
-        return file && file.url && file.url.startsWith('http');
+    private onChange() {
+        // TODO : !!! Handle uploadFileFun & removeFileFun (see description)
+        this.propagateChange(this.uploadedFiles);
     }
 
-    toggleRows(prop: string) {
-        switch (prop) {
-            case 'new':
-                this.showAllNew = !this.showAllNew;
-                break;
-            case 'old':
-                this.showAllOld = !this.showAllOld;
-                break;
+    private uploadFiles(files: File[]) {
+        if (this.uploadFileFun) {
+            const res$ = files.map(file => this.uploadFile(file).pipe(catchError(() => empty())));
+
+            merge(...res$)
+                .pipe(debounceTime(UPLOAD_DEBOUNCE_TIME))
+                .subscribe(_ => {
+                    this.onChange();
+                });
+        }
+    }
+
+    private uploadFile(file: File) {
+        return (this.uploadFileFun as UploadFileFun)(file).pipe(
+            take(1),
+            takeUntil(this.destroy$),
+            tap(res => {
+                const files = this.files as any[];
+                const index = files.indexOf(file);
+                this.files = R.update(index, res, files);
+                this.resetFileError(file);
+            }),
+            catchError(err => {
+                this.setFileError(null, file, err, 'upload');
+                return throwError(err);
+            }),
+            finalize(() => {
+                this.cdr.detectChanges();
+            })
+        );
+    }
+
+    onRetryUpload(file: File) {
+        this.resetFileError(file);
+        this.uploadFile(file)
+            .pipe(
+                take(1),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(_ => {});
+    }
+
+    private getFileIndex(file: any, files: any[]) {
+        return files.findIndex(f =>
+            file instanceof File ? file === f : this.config.getId(file) === this.config.getId(f)
+        );
+    }
+
+    //
+
+    private setFileAsRemoving(file: any) {
+        const files = this.removingFiles;
+        const index = this.getFileIndex(file, files);
+        if (index === -1) {
+            this.removingFiles = [file, ...files];
+        }
+    }
+
+    private resetFileAsRemoving(file: any) {
+        const files = this.removingFiles;
+        const index = this.getFileIndex(file, files);
+        if (index !== -1) {
+            this.removingFiles = R.remove(index, 1, files);
+        }
+    }
+
+    private removeFile(file: any) {
+        const files = this.files || [];
+        const index = this.getFileIndex(file, files);
+        this.files = R.remove(index, 1, files);
+    }
+
+    //
+    private getFileErrorIndex(file: any) {
+        return this.fileErrors.findIndex(f =>
+            f.rawFile ? f.rawFile === file : this.config.getId(file) === this.config.getId(f.file)
+        );
+    }
+
+    private setFileError(file: any | undefined, rawFile: File | undefined, error: string, kind: 'upload' | 'remove') {
+        // reset pervious error
+        this.resetFileError(file || rawFile);
+        this.fileErrors = [{ file, rawFile, error, kind }, ...this.fileErrors];
+    }
+
+    private resetFileError(file: any) {
+        const index = this.getFileErrorIndex(file);
+        if (index !== -1) {
+            this.fileErrors = R.remove(index, 1, this.fileErrors);
         }
     }
 }

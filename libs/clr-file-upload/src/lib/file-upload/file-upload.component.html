@@ -1,97 +1,43 @@
-<hlc-file-uploader
-    *ngIf="!readonly"
-    [accept]="accept"
-    [files]="filesObjects"
-    [single]="single"
-    (filesChange)="onFilesChange($event)">
+<hlc-file-uploader *ngIf="!readonly" [accept]="accept" [single]="single" (filesAdded)="onAddFiles($event)">
 </hlc-file-uploader>
-<div
-    class="files-list"
-    *ngIf="files?.length">
-    <p *ngIf="!readonly">Список файлов</p>
-    <clr-datagrid
-        class="datagrid-compact"
-        [ngClass]="{'datagrid-hide-more': !showAllNew}"
-        *ngIf="filesObjects.length">
-        <clr-dg-column>Новые</clr-dg-column>
-        <ng-container *ngFor="let file of files; let i = index;">
-            <clr-dg-row *ngIf="!isAttachment(file)">
-                <clr-dg-cell>{{file?.name}}</clr-dg-cell>
-                <clr-dg-cell class="btn-cell">
-                    <button
-                        class="btn btn-danger-flat btn-icon btn-link"
-                        type="button"
-                        (click)="onFileRemove(i)">
-                        <clr-icon shape="trash"></clr-icon>
-                    </button>
-                </clr-dg-cell>
-            </clr-dg-row>
-        </ng-container>
-        <clr-dg-row *ngIf="filesObjects.length > 3">
-            <clr-dg-cell class="toggle-cell">
-                <button
-                    class="btn btn-link btn-sm"
-                    (click)="toggleRows('new')">
-                    <clr-icon
-                        shape="caret"
-                        [dir]="showAllNew ? 'up' : 'down'"></clr-icon>
-                    {{showAllNew ? "Показать первые 3" : "Показать все"}}
+
+<ul class="list-unstyled list-compact">
+    <li *ngFor="let file of files; trackBy: trackByFile; let i = index">
+        <!-- file with error -->
+        <ng-container *ngIf="getFileError(file) as error; else noError">
+            <ng-container *ngIf="!isFileUploaded(file)">
+                <button class="btn btn-link btn-sm">{{ getFileName(file) }}</button>
+                <button class="btn btn-icon btn-link btn-sm" type="button" (click)="onRetryUpload(file)">
+                    <clr-icon shape="upload"></clr-icon>
                 </button>
-            </clr-dg-cell>
-        </clr-dg-row>
-    </clr-datagrid>
-    <clr-datagrid
-        class="datagrid-compact"
-        [ngClass]="{'datagrid-hide-more': !showAllOld}"
-        *ngIf="files && files?.length > filesObjects.length">
-        <clr-dg-column>Загруженные ранее</clr-dg-column>
-        <ng-container *ngFor="let file of files; let i = index;">
-            <clr-dg-row *ngIf="isAttachment(file)">
-                <clr-dg-cell>{{file?.fileName}}</clr-dg-cell>
-                <clr-dg-cell class="btn-cell">
-                    <button
-                        *ngIf="!isUrl(file)"
-                        class="btn btn-danger-flat btn-icon btn-link"
-                        type="button"
-                        (click)="onClick(file)">
-                        <clr-icon shape="arrow"></clr-icon>
-                    </button>
-                    <a
-                        *ngIf="isUrl(file)"
-                        target="_blank"
-                        [href]="file.url">
-                        <clr-icon shape="arrow"></clr-icon>
-                    </a>
-                </clr-dg-cell>
-                <clr-dg-cell class="btn-cell">
-                    <button
-                        class="btn btn-danger-flat btn-icon btn-link"
-                        [disabled]="readonly || file.readonly"
-                        type="button"
-                        (click)="onFileRemove(i)">
-                        <clr-icon shape="trash"></clr-icon>
-                    </button>
-                </clr-dg-cell>
-            </clr-dg-row>
-        </ng-container>
-        <clr-dg-row *ngIf="files?.length - filesObjects.length > 3">
-            <clr-dg-cell class="toggle-cell">
-                <button
-                    class="btn btn-link btn-sm"
-                    (click)="toggleRows('old')">
-                    <clr-icon
-                        shape="caret"
-                        [dir]="showAllOld ? 'up' : 'down'"></clr-icon>
-                    {{showAllOld ? "Показать первые 3" : "Показать все"}}
+                <button class="btn btn-icon btn-link btn-sm" type="button" (click)="onRemoveCachedFile(file)">
+                    <clr-icon shape="trash"></clr-icon>
                 </button>
-            </clr-dg-cell>
-        </clr-dg-row>
-    </clr-datagrid>
-</div>
-<div *ngIf="!files?.length && readonly">
-    <input
-        type="text"
-        disabled
-        value="Не загружено ни одного файла"
-        class="clr-control-container clr-col-xs-12 clr-col-md-12">
-</div>
+            </ng-container>
+            <ng-container *ngIf="isFileUploaded(file)">
+                <button class="btn btn-link btn-sm" (click)="onDownload(file)">{{ getFileName(file) }}</button>
+                <button class="btn btn-icon btn-link btn-sm" type="button" (click)="onRemoveFile(file)">
+                    <clr-icon shape="trash"></clr-icon>
+                </button>
+            </ng-container>
+            <a *ngIf="error" href="javascript://" role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
+                <clr-icon shape="exclamation-circle" style="color: red" size="24"></clr-icon>
+                <span class="tooltip-content">{{ error }}</span>
+            </a>
+        </ng-container>
+
+        <!-- file with no errors -->
+        <ng-template #noError>
+            <ng-container *ngIf="isFileUploading(file) || isFileRemoving(file)">
+                <button class="btn btn-link btn-sm">{{ getFileName(file) }}</button>
+                <button class="btn btn-icon btn-link btn-sm"><span class="spinner spinner-inline"></span></button>
+            </ng-container>
+            <ng-container *ngIf="isFileUploaded(file) && !isFileRemoving(file)">
+                <button class="btn btn-link btn-sm" (click)="onDownload(file)">{{ getFileName(file) }}</button>
+                <button class="btn btn-icon btn-link btn-sm" type="button" (click)="onRemoveFile(file)">
+                    <clr-icon shape="trash"></clr-icon>
+                </button>
+            </ng-container>
+        </ng-template>
+    </li>
+</ul>

@@ -14,8 +14,8 @@ import { flatGroup } from './form-utils';
     ]
 })
 export class ClrFormComponent {
-    @Input()
-    group: FormLayoutConfig | undefined;
+    @Input() group: FormLayoutConfig | undefined;
+    @Input() value: any | undefined;
 
     @ViewChild(FormComponent) form: FormComponent;
 
