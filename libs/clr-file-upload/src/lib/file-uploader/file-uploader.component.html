@@ -1,0 +1,42 @@
+<file-drop
+    customstyle="file-drop"
+    (onFileDrop)="onFileDrop($event)"
+    (onFileLeave)="onFileLeave($event)"
+    (onFileOver)="onFileOver($event)">
+    <div class="clr-break-row">
+        <div class="clr-col">
+            <h5 class="file-drop__title">Перетащите сюда файл</h5>
+        </div>
+        <div class="clr-break-row"></div>
+        <div class="clr-col">
+            <div class="file-drop__separator">
+                <span>или</span>
+            </div>
+        </div>
+        <div class="clr-break-row"></div>
+        <div class="clr-col">
+            <label
+                class="btn btn-outline"
+                [ngClass]="{'disabled':disabled}"
+                [for]="fileUploaderName">
+                <clr-icon shape="upload"></clr-icon>
+                Нажмите для загрузки
+            </label>
+
+            <input
+                class="file"
+                [id]="fileUploaderName"
+                type="file"
+                [accept]="accept"
+                [multiple]="!single"
+                [disabled]="disabled"
+                (change)="onFileChange($event)">
+        </div>
+    </div>
+</file-drop>
+
+<span
+    class="clr-subtext"
+    *ngIf="accept">
+    Only {{accept}} files
+</span>

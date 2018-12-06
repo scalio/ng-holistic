@@ -11,3 +11,4 @@ export * from './lib/checkboxes/index';
 export * from './lib/date-time/index';
 export * from './lib/range.config';
 export * from './lib/date-range/index';
+export * from './lib/mask/index';

@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -49,7 +49,7 @@
     },
     "lint-staged": {
         "*.ts": [
-            "tslint --project tsconfig.json"
+            "tslint --project tsconfig.json --exclude **/*.d.ts"
         ]
     },
     "private": true,
@@ -68,12 +68,13 @@
         "@clr/ui": "^1.0.0",
         "@nrwl/nx": "7.1.1",
         "@webcomponents/custom-elements": "^1.2.1",
+        "angular2-text-mask": "^9.0.0",
         "core-js": "^2.5.7",
         "date-fns": "^2.0.0-alpha.25",
         "lib": "^3.0.2",
+        "ngx-file-drop": "^5.0.0",
         "ramda": "^0.26.1",
         "rxjs": "^6.3.3",
-        "source-map-explorer": "^1.6.0",
         "zone.js": "^0.8.26"
     },
     "devDependencies": {
@@ -116,6 +117,7 @@
         "tslint": "~5.11.0",
         "typescript": "3.1.6",
         "wallaby-webpack": "^3.9.13",
-        "webpack-bundle-analyzer": "^3.0.3"
+        "webpack-bundle-analyzer": "^3.0.3",
+        "source-map-explorer": "^1.6.0"
     }
 }

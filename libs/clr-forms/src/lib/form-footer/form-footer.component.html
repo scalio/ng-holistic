@@ -1,15 +1,13 @@
-<button
-    class="btn btn-outline"
-    type="button"
-    (click)="$event.preventDefault(); cancel.emit();">
-    Cancel
-</button>
+<div class="form-footer">
+    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">Cancel</button>
 
-<button
-    class="btn btn-primary"
-    type="submit"
-    [disabled]="disabled || !isFormEnabled"
-    (click)="$event.preventDefault(); save.emit();">
-    {{isNew ? 'Add' : 'Update' }}
-</button>
-
+    <button
+        [clrLoading]="updateButtonState$ | async"
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="disabled || !isFormEnabled"
+        (click)="$event.preventDefault(); onSave()"
+    >
+        {{ isNew ? 'Add' : 'Update' }}
+    </button>
+</div>

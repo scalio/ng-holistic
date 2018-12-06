@@ -18,6 +18,8 @@ import { InputErrorDisplayStartegy } from './input-error-display-strategy';
 
 export interface InputContainerConfig {
     optionalLabel?: string;
+    requiredLabel?: string;
+    showRequiredHint?: 'optional' | 'required';
 }
 
 export const INPUT_CONTAINER_CONFIG = new InjectionToken<InputContainerConfig>('INPUT_CONTAINER_CONFIG');
@@ -42,7 +44,7 @@ export class InputContainerComponent implements OnInit, OnDestroy {
     @Input()
     formControl: FormControl;
 
-    //@ts-ignore
+    // @ts-ignore
     constructor(
         private readonly fb: FormBuilder,
         @Optional()
@@ -54,9 +56,19 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         @Optional() @Inject(INPUT_CONTAINER_CONFIG) private readonly config?: InputContainerConfig
     ) {}
 
-    get optinalLabel() {
-        return this.config && this.config.optionalLabel || 'Optional';
+    get requiredLabel() {
+        return (this.config && this.config.requiredLabel) || '*';
     }
+
+    get optinalLabel() {
+        return (this.config && this.config.optionalLabel) || 'Optional';
+    }
+
+    get showRequiredHint() {
+        return this.config && this.config.showRequiredHint;
+    }
+
+    //
 
     ngOnInit() {
         if (this.control) {
@@ -94,6 +106,14 @@ export class InputContainerComponent implements OnInit, OnDestroy {
         }
 
         return !errors['required'];
+    }
+
+    get isRequired() {
+        if (!this.control || this.readonly) {
+            return false;
+        }
+
+        return !this.isOptional;
     }
 
     get control(): FormControl | undefined {
