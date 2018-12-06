@@ -9,7 +9,8 @@ import { mapTo } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploadPageComponent implements OnInit {
-    uploadFileFun = (file: any) => timer(1000).pipe(mapTo({name: file.name}));
+    uploadFileFun = (file: any) => timer(1000).pipe(mapTo({id: file.name, name: file.name}));
+    removeFileFun = (file: any) => timer(1000).pipe(mapTo({id: file.name, name: file.name}));
 
     constructor() {}
 

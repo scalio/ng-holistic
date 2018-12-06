@@ -1,22 +1,14 @@
-<hlc-file-uploader
-    *ngIf="!readonly"
-    [accept]="accept"
-    [single]="single"
-    (filesAdded)="onAddFiles($event)">
+<hlc-file-uploader *ngIf="!readonly" [accept]="accept" [single]="single" (filesAdded)="onAddFiles($event)">
 </hlc-file-uploader>
 
 <ul>
-    <li *ngFor="let file of files; let i = index;">
-        <ng-container *ngIf="isFileUploading(file)">
-            {{file?.name}}
-            <span class="spinner spinner-inline"></span>
+    <li *ngFor="let file of files; let i = index">
+        <ng-container *ngIf="isFileUploading(file) || isFileRemoving(file)">
+            {{ file.name }} <span class="spinner spinner-inline"></span>
         </ng-container>
-        <ng-container *ngIf="isFileUploaded(file)">
-            {{file?.name}}
-            <button
-                class="btn btn-danger-flat btn-icon btn-link"
-                type="button"
-                (click)="onFileRemove(i)">
+        <ng-container *ngIf="isFileUploaded(file) && !isFileRemoving(file)">
+            <button class="btn btn-link btn-sm">{{ getFileName(file) }}</button>
+            <button class="btn btn-danger-flat btn-icon btn-link" type="button" (click)="onRemoveFile(file)">
                 <clr-icon shape="trash"></clr-icon>
             </button>
         </ng-container>

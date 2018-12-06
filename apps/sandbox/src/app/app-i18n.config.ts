@@ -6,6 +6,7 @@ import {
     ValidationErrorsMapConfig,
     VALIDATION_ERRORS_MAP_CONFIG
 } from '@ng-holistic/clr-forms';
+import { FileUploadConfig, HLC_FILE_UPLOAD_CONFIG } from '@ng-holistic/clr-file-upload';
 
 export function getInputContainerConfig(localeId: string): InputContainerConfig {
     /**
@@ -43,6 +44,19 @@ export function getValidationErrorsMap(localeId: string): ValidationErrorsMapCon
     }
 }
 
+export class AppFileUploadConfig implements FileUploadConfig {
+    download(_: any) {
+        console.log('not implemented');
+    }
+
+    getId(item: any) {
+        return item['id'];
+    }
+    getName(item: any) {
+        return item['name'];
+    }
+}
+
 export const i18nConfigProviders = [
     {
         provide: DATE_CONFIG,
@@ -58,5 +72,9 @@ export const i18nConfigProviders = [
         provide: VALIDATION_ERRORS_MAP_CONFIG,
         useFactory: getValidationErrorsMap,
         deps: [LOCALE_ID]
+    },
+    {
+        provide: HLC_FILE_UPLOAD_CONFIG,
+        useClass: AppFileUploadConfig
     }
 ];
