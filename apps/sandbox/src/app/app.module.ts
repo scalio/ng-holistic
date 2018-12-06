@@ -3,9 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
 import { ClrFormModule } from '@ng-holistic/clr-forms';
-import { hlcConfigProviders } from './hlc.config';
+import { NgxMaskModule } from 'ngx-mask';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
+import { hlcConfigProviders } from './hlc.config';
 
 @NgModule({
     declarations: [AppComponent],
@@ -15,7 +16,8 @@ import { AppRoutingModule, routes } from './app.routing.module';
         ClrMainContainerModule,
         ClrLayoutModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
-        ClrFormModule.forRoot()
+        ClrFormModule.forRoot(),
+        NgxMaskModule.forRoot()
     ],
     bootstrap: [AppComponent],
     entryComponents: [],

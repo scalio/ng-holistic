@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -69,11 +69,11 @@
         "@clr/ui": "^1.0.0",
         "@nrwl/nx": "7.1.1",
         "@webcomponents/custom-elements": "^1.2.1",
-        "angular2-text-mask": "^9.0.0",
         "core-js": "^2.5.7",
         "date-fns": "^2.0.0-alpha.25",
         "lib": "^3.0.2",
         "ngx-file-drop": "^5.0.0",
+        "ngx-mask": "^7.0.1",
         "ramda": "^0.26.1",
         "rxjs": "^6.3.3",
         "zone.js": "^0.8.26"

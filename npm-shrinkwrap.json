@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "lockfileVersion": 1,
     "requires": true,
     "dependencies": {
@@ -9190,6 +9190,14 @@
             "version": "5.0.0",
             "resolved": "https://registry.npmjs.org/ngx-file-drop/-/ngx-file-drop-5.0.0.tgz",
             "integrity": "sha512-mgEcRf3x0vt39jy8y8FQ8bAy9d0bd9xgH89X4onAKFSmEVW55n+tTh31KMagYH/3XUn6wtrdiYZhxljW5/Necg==",
+            "requires": {
+                "tslib": "^1.9.0"
+            }
+        },
+        "ngx-mask": {
+            "version": "7.0.1",
+            "resolved": "https://registry.npmjs.org/ngx-mask/-/ngx-mask-7.0.1.tgz",
+            "integrity": "sha512-kOt1zU16lgJvd0yBYGUco67aNtn2tqCAHSQKq3D/i9pW+E14RhIV1Txe10fVZqG51Plw6G4zbpqXjrqgFWSUpQ==",
             "requires": {
                 "tslib": "^1.9.0"
             }
