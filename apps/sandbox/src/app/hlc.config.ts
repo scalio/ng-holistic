@@ -57,7 +57,7 @@ export class AppFileUploadConfig implements FileUploadConfig {
     }
 }
 
-export const i18nConfigProviders = [
+export const hlcConfigProviders = [
     {
         provide: DATE_CONFIG,
         useFactory: getDateConfig,

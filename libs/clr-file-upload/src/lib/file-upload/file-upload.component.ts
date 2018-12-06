@@ -6,8 +6,7 @@ import {
     Inject,
     Input,
     OnDestroy,
-    OnInit,
-    Optional
+    OnInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
@@ -61,7 +60,6 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Optional()
         @Inject(HLC_FILE_UPLOAD_CONFIG)
         readonly config: FileUploadConfig
     ) {}
@@ -81,7 +79,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
     }
 
     getFileName(file: any) {
-        return this.config.getName(file);
+        return file instanceof File ? file.name : this.config.getName(file);
     }
 
     //
@@ -96,9 +94,11 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
     }
 
     onRemoveFile(file: any) {
-        if (this.removeFileFun) {
+        // use specific component function or form config by default
+        const removeFileFun = this.removeFileFun || this.config.remove.bind(this.config);
+        if (removeFileFun) {
             this.setFileAsRemoving(file);
-            const res$ = (this.removeFileFun as RemoveFileFun)(file).pipe(
+            const res$ = removeFileFun(file).pipe(
                 take(1),
                 takeUntil(this.destroy$)
             );
@@ -144,7 +144,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
 
     registerOnTouched(_: any) {}
 
-    onClickDownload(file: AttachmentType) {
+    onDownload(file: AttachmentType) {
         if (this.config) {
             this.config.download(file);
         }

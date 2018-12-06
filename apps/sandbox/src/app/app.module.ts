@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
 import { ClrFormModule } from '@ng-holistic/clr-forms';
-import { i18nConfigProviders } from './app-i18n.config';
+import { hlcConfigProviders } from './hlc.config';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 
@@ -19,7 +19,7 @@ import { AppRoutingModule, routes } from './app.routing.module';
     ],
     bootstrap: [AppComponent],
     entryComponents: [],
-    providers: [...i18nConfigProviders]
+    providers: [...hlcConfigProviders]
 })
 export class AppModule {
     constructor() {}
