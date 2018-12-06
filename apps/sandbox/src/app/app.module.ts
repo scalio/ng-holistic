@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
 import { ClrFormModule } from '@ng-holistic/clr-forms';
-import { hlcConfigProviders } from './hlc.config';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
+import { hlcConfigProviders } from './hlc.config';
 
 @NgModule({
     declarations: [AppComponent],

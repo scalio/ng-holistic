@@ -1,6 +1,6 @@
 export namespace Mask {
 
-    export type MaskTemplate = (string | RegExp)[];
+    export type MaskTemplate = string | (string | RegExp)[];
 
     export interface MaskOpts {
         mask: MaskTemplate;

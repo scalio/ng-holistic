@@ -12,30 +12,23 @@ export class TextMask {
     }
 
     static int(n: number) {
-        const regex = /\d/;
-        return R.repeat(regex, n);
+        return R.repeat('9', n).join('');
     }
 
-    static float(n: number) {
-        const regex = /\d|\./;
-        R.repeat(regex, n);
+    static float(n: number, i: number) {
+        return R.repeat('9', n).join('') + '.' + R.repeat('9', i).join('');
     }
+
+    /*
     static hexColor() {
         const regex = /\d|a|b|c|d|e|f|A|B|C|D|E|F/;
         return ['#', ...R.repeat(regex, 6)];
     }
+    */
 
 
     static phone() {
-        // PIZDEC NAHOY BLYAT
-        // https://github.com/angular/angular/issues/18867
-        const d = /\d/;
-        const d19 = /[1-9]/;
-        return {
-            mask: ['+', d, ' ', '(', d19, d, d, ')', ' ', d, d, d, '-', d, d, d, d],
-            keepCharPositions: true,
-            placeholderChar: '\u2000'
-        };
+        return '+0 (000) 000-0000';
     }
 
 }

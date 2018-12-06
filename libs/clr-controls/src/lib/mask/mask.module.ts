@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 // import { TextMaskModule } from 'angular2-text-mask';
 import { MaskComponent } from './mask.component';
-import { FormsModule } from '@angular/forms';
-import { MaskedInputDirective } from './angular2TextMask';
+import { NgxMaskModule } from '../ngx-mask/index';
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
-    declarations: [MaskComponent, MaskedInputDirective],
-    exports: [MaskComponent, MaskedInputDirective]
+    imports: [CommonModule, FormsModule, NgxMaskModule],
+    declarations: [MaskComponent],
+    exports: [MaskComponent]
 })
 export class MaskModule {}
