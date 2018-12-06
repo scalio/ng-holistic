@@ -8,6 +8,7 @@
         "build": "ng build",
         "build:clr-layout": "ng build clr-layout",
         "build:clr-controls": "ng build clr-controls",
+        "build:clr-file-upload": "ng build clr-file-upload",
         "build:clr-forms": "npm run build:forms && npm run build:clr-controls && ng build clr-forms --ts-config=tsconfig.build.json",
         "build:forms": "ng build forms",
         "test:forms": "ng test forms",
