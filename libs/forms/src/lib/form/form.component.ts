@@ -15,12 +15,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout/index';
 import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
-import { IFormGroup } from '../models/index';
+import { IFormGroup } from '../models/form-layouts.types';
 import { initFormGroup } from './form-builder';
 import { HLC_FORM_REBUILD_PROVIDER, FormRebuidProvider, FormLayoutConfig } from '../form-rebuild';
+import { HLC_FORM_CUSTOM_FIELDS_PROVIDER, CustomFieldsProvider } from '../fields-layout/fields-layout.component';
 
 @Component({
     selector: 'hlc-form',

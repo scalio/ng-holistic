@@ -18,9 +18,9 @@ import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
-import { IFormGroup } from '../models/index';
+import { IFormGroup } from '../models/form-layouts.types';
 import { setComponentProperties } from '../set-component-properties';
-import { HLC_FORM_GROUP_PROVIDER, FormGroupProvider } from '../fields-layout/index';
+import { HLC_FORM_GROUP_PROVIDER, FormGroupProvider } from '../fields-layout/fields-layout.component';
 
 const disableControls = (controls: AbstractControl[]) => {
     // console.log('disbale controls', controls);

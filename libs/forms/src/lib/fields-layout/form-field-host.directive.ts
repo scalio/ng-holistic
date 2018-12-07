@@ -18,7 +18,7 @@ import {
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil, filter } from 'rxjs/operators';
-import { FormFields } from '../models';
+import { FormFields } from '../models/form-fields.type';
 import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
 import { getViewComponent } from './get-view-component';

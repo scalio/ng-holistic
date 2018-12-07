@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
-import { FormFields } from '../models';
+import { FormFields } from '../models/form-fields.type';
 import { CustomFieldDirective } from './custom-field.directive';
 
 /**

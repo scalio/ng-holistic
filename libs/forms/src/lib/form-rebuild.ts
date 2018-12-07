@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { InjectionToken } from '@angular/core';
-import { IFormGroup } from './models';
+import { IFormGroup } from './models/form-layouts.types';
 import { FormGroup } from '@angular/forms';
 
 export type FormLayoutConfig = IFormGroup<any> | ((formGroup: FormGroup) => IFormGroup<any>);

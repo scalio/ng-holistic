@@ -9,11 +9,15 @@ import {
     HLC_FORM_FIELD_WRAPPER,
     HLC_GROUPS_LAYOUT
 } from '@ng-holistic/forms';
-import { clrFieldsLayoutComponents, clrFieldsLayoutMap, clrFieldsLayoutModules } from '../fields-layout/index';
+import {
+    clrFieldsLayoutComponents,
+    clrFieldsLayoutMap,
+    clrFieldsLayoutModules
+} from '../fields-layout/fields-layout-map';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { GroupsLayoutModule } from '../groups-layout/index';
-import { InputContainerComponent, InputContainerModule } from '../input-container/index';
-import { TabsLayoutModule } from '../tabs-layout/index';
+import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
+import { InputContainerModule } from '../input-container/input-container.module';
+import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as R from 'ramda';
-import { FormFields } from '../models';
+import { FormFields } from '../models/form-fields.type';
 import { Observable, merge } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { ViewRef } from '@angular/core';
-import { FormFields } from '../models';
+import { FormFields } from '../models/form-fields.type';
 
 /**
  * Hackish way to retrieve components from View created by template projection.
