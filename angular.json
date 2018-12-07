@@ -49,6 +49,27 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
+            "production-local-libs": {
+                "fileReplacements": [
+                  {
+                    "replace": "apps/sandbox/src/environments/environment.ts",
+                    "with": "apps/sandbox/src/environments/environment.prod.ts"
+                  }
+                ],
+                "optimization": true,
+                "outputHashing": "all",
+                "sourceMap": false,
+                "extractCss": true,
+                "namedChunks": false,
+                "aot": true,
+                "extractLicenses": true,
+                "vendorChunk": false,
+                "buildOptimizer": true,
+                "tsConfig": "tsconfig.build.json"
+            },
+            "dev-local-libs": {
+                "tsConfig": "tsconfig.build.json"
+            },
             "ru": {
               "aot": true,
               "i18nLocale": "ru"
@@ -63,6 +84,12 @@
           "configurations": {
             "production": {
               "browserTarget": "sandbox:build:production"
+            },
+            "dev-local-libs": {
+                "browserTarget": "sandbox:build:dev-local-libs"
+            },
+            "production-local-libs": {
+                "browserTarget": "sandbox:build:production-local-libs"
             },
             "ru": {
               "browserTarget": "sandbox:build:ru"

@@ -9,12 +9,78 @@ import {
     HLC_FORM_FIELD_WRAPPER,
     HLC_GROUPS_LAYOUT
 } from '@ng-holistic/forms';
-import { clrFieldsLayoutComponents, clrFieldsLayoutMap, clrFieldsLayoutModules } from '../fields-layout';
+// import { clrFieldsLayoutComponents, clrFieldsLayoutMap, clrFieldsLayoutModules } from '../fields-layout/index';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { GroupsLayoutModule } from '../groups-layout';
-import { InputContainerComponent, InputContainerModule } from '../input-container';
-import { TabsLayoutModule } from '../tabs-layout';
+import { GroupsLayoutModule } from '../groups-layout/index';
+import { InputContainerComponent, InputContainerModule } from '../input-container/index';
+import { TabsLayoutModule } from '../tabs-layout/index';
 import { ClrFormComponent } from './form.component';
+
+
+import {
+    CheckboxesComponent,
+    CheckboxesModule,
+    DateComponent,
+    DateModule,
+    DateRangeComponent,
+    DateRangeModule,
+    DateTimeComponent,
+    DateTimeModule,
+    MaskComponent,
+    MaskModule,
+    OptionsComponent,
+    OptionsModule,
+    SelectComponent,
+    SelectModule,
+    TextAreaComponent,
+    TextAreaModule,
+    TextComponent,
+    TextModule,
+    ToggleComponent,
+    ToggleModule
+} from '@ng-holistic/clr-controls';
+
+/**
+ * Predefined set of controls based on clarity design system which could be possible generated on form layout.
+ */
+const clrFieldsLayoutMap = {
+    TextField: TextComponent,
+    TextAreaField: TextAreaComponent,
+    SelectField: SelectComponent,
+    DateField: DateComponent,
+    ToggleField: ToggleComponent,
+    OptionsField: OptionsComponent,
+    CheckboxesField: CheckboxesComponent,
+    DateTimeField: DateTimeComponent,
+    DateRangeField: DateRangeComponent,
+    MaskField: MaskComponent
+};
+
+const clrFieldsLayoutComponents = [
+    TextComponent,
+    TextAreaComponent,
+    SelectComponent,
+    DateComponent,
+    ToggleComponent,
+    OptionsComponent,
+    CheckboxesComponent,
+    DateTimeComponent,
+    DateRangeComponent,
+    MaskComponent
+];
+
+const clrFieldsLayoutModules = [
+    TextModule,
+    TextAreaModule,
+    SelectModule,
+    DateModule,
+    ToggleModule,
+    OptionsModule,
+    CheckboxesModule,
+    DateTimeModule,
+    DateRangeModule,
+    MaskModule
+];
 
 @NgModule({
     imports: [
@@ -27,7 +93,6 @@ import { ClrFormComponent } from './form.component';
         ...clrFieldsLayoutModules
     ],
     declarations: [ClrFormComponent],
-    // export FieldsLayoutModule to reexport CustomField directive
     exports: [ClrFormComponent, FieldsLayoutModule],
     entryComponents: clrFieldsLayoutComponents
 })

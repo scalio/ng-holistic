@@ -13,7 +13,7 @@ import {
 import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { ClrFormFields } from '../models';
+import { ClrFormFields } from '../models/index';
 import { InputErrorDisplayStartegy } from './input-error-display-strategy';
 
 export interface InputContainerConfig {
