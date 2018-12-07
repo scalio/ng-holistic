@@ -25,6 +25,9 @@
     },
     "clr-file-upload": {
       "tags": []
+    },
+    "clr-common": {
+      "tags": []
     }
   }
 }
