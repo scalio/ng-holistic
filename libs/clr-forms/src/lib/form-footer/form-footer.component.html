@@ -1,5 +1,7 @@
 <div class="form-footer">
-    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">Cancel</button>
+    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
+        {{ labels.cancelLabel }}
+    </button>
 
     <button
         [clrLoading]="updateButtonState$ | async"
@@ -8,6 +10,6 @@
         [disabled]="disabled || !isFormEnabled"
         (click)="$event.preventDefault(); onSave()"
     >
-        {{ isNew ? 'Add' : 'Update' }}
+        {{ labels.okLabel }}
     </button>
 </div>

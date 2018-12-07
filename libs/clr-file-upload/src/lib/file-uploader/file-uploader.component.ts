@@ -1,5 +1,35 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    Input,
+    InjectionToken,
+    Inject,
+    Optional
+} from '@angular/core';
 import { UploadEvent } from 'ngx-file-drop';
+
+export interface FileUploaderLabels {
+    dragLabel: string;
+    orLabel: string;
+    clickForUploadLabel: string;
+    acceptFilesLabel: string;
+}
+
+export interface FileUploaderConfig {
+    labels?: FileUploaderLabels;
+}
+
+const defaultLabels: FileUploaderLabels = {
+    dragLabel: 'Drag files here',
+    orLabel: 'or',
+    clickForUploadLabel: 'Click for upload',
+    acceptFilesLabel: 'Accept files'
+};
+
+export const HLC_FILE_UPLOADER_CONFIG = new InjectionToken<FileUploaderConfig>('HLC_FILE_UPLOADER_CONFIG');
 
 @Component({
     selector: 'hlc-file-uploader',
@@ -18,9 +48,14 @@ export class FileUploaderComponent implements OnInit {
     get fileUploaderName() {
         return `file-upload-${this._rand}`;
     }
-    constructor() {}
+
+    constructor(@Optional() @Inject(HLC_FILE_UPLOADER_CONFIG) private readonly config: FileUploaderConfig) {}
 
     ngOnInit() {}
+
+    get labels() {
+        return (this.config && this.config.labels) || defaultLabels;
+    }
 
     onFileChange(event: any) {
         if (!event) {
