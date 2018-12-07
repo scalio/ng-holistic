@@ -1,15 +1,17 @@
 <div class="form-footer">
-    <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
-        {{ labels.cancelLabel }}
-    </button>
+    <div class="buttons-panel">
+        <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
+            {{ labels.cancelLabel }}
+        </button>
 
-    <button
-        [clrLoading]="updateButtonState$ | async"
-        class="btn btn-primary"
-        type="submit"
-        [disabled]="disabled || !isFormEnabled"
-        (click)="$event.preventDefault(); onSave()"
-    >
-        {{ labels.okLabel }}
-    </button>
+        <button
+            [clrLoading]="updateButtonState$ | async"
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="disabled || !isFormEnabled"
+            (click)="$event.preventDefault(); onSave()"
+        >
+            {{ labels.okLabel }}
+        </button>
+    </div>
 </div>

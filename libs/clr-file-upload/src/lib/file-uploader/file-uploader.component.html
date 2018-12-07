@@ -1,3 +1,4 @@
+<span class="clr-subtext" *ngIf="accept"> {{ labels.acceptFilesLabel }} {{ accept }} </span>
 <file-drop
     customstyle="file-drop"
     (onFileDrop)="onFileDrop($event)"
@@ -33,5 +34,3 @@
         </div>
     </div>
 </file-drop>
-
-<span class="clr-subtext" *ngIf="accept"> {{ labels.acceptFilesLabel }} {{ accept }} </span>

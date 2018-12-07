@@ -6,7 +6,7 @@ import {
     ValidationErrorsMapConfig,
     VALIDATION_ERRORS_MAP_CONFIG
 } from '@ng-holistic/clr-forms';
-import { FileUploadConfig, HLC_FILE_UPLOAD_CONFIG } from '@ng-holistic/clr-file-upload';
+import { FileUploadConfig, HLC_CLR_FILE_UPLOADER_CONFIG } from '@ng-holistic/clr-file-upload';
 
 export function getInputContainerConfig(localeId: string): InputContainerConfig {
     /**
@@ -74,7 +74,7 @@ export const hlcConfigProviders = [
         deps: [LOCALE_ID]
     },
     {
-        provide: HLC_FILE_UPLOAD_CONFIG,
+        provide: HLC_CLR_FILE_UPLOADER_CONFIG,
         useClass: AppFileUploadConfig
     }
 ];

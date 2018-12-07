@@ -2,9 +2,6 @@
     padding: 0;
 }
 
-// @import '~@clr/ui/src/utils/dependencies.clarity';
-// @import '~@clr/ui/src/utils/components.clarity';
-
 ::ng-deep .btn-block {
     display: block;
 }
@@ -30,17 +27,18 @@ $border: #ccc;
 
 // file-drop
 ::ng-deep.file-drop {
-
     input[type='file'] {
         display: none;
     }
-    height:125px;
+    height: 125px;
 }
 
 // file-drop-over
 ::ng-deep.file-drop.over {
     background: $gray-lighter !important;
     border-color: $gray-dark-midtone;
+    border-width: 1px;
+    border-style: dotted;
 }
 
 // file-drop selected

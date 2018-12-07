@@ -2,25 +2,14 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
-    OnInit,
-    Output,
-    Input,
-    InjectionToken,
     Inject,
-    Optional
+    Input,
+    OnInit,
+    Optional,
+    Output
 } from '@angular/core';
 import { UploadEvent } from 'ngx-file-drop';
-
-export interface FileUploaderLabels {
-    dragLabel: string;
-    orLabel: string;
-    clickForUploadLabel: string;
-    acceptFilesLabel: string;
-}
-
-export interface FileUploaderConfig {
-    labels?: FileUploaderLabels;
-}
+import { FileUploaderConfig, FileUploaderLabels, HLC_CLR_FILE_UPLOADER_CONFIG } from './file-uploader.config';
 
 const defaultLabels: FileUploaderLabels = {
     dragLabel: 'Drag files here',
@@ -28,8 +17,6 @@ const defaultLabels: FileUploaderLabels = {
     clickForUploadLabel: 'Click for upload',
     acceptFilesLabel: 'Accept files'
 };
-
-export const HLC_FILE_UPLOADER_CONFIG = new InjectionToken<FileUploaderConfig>('HLC_FILE_UPLOADER_CONFIG');
 
 @Component({
     selector: 'hlc-file-uploader',
@@ -49,7 +36,7 @@ export class FileUploaderComponent implements OnInit {
         return `file-upload-${this._rand}`;
     }
 
-    constructor(@Optional() @Inject(HLC_FILE_UPLOADER_CONFIG) private readonly config: FileUploaderConfig) {}
+    constructor(@Optional() @Inject(HLC_CLR_FILE_UPLOADER_CONFIG) private readonly config: FileUploaderConfig) {}
 
     ngOnInit() {}
 
@@ -70,14 +57,24 @@ export class FileUploaderComponent implements OnInit {
         this.addFiles(files);
     }
 
-    onFileDrop(event: UploadEvent) {
-        const files = Array.prototype.slice.call(event.files, 0);
-        if (!files || files.length === 0) {
+    async onFileDrop(event: UploadEvent) {
+        const res = Array.prototype.slice.call(event.files, 0);
+        if (!res || res.length === 0) {
             return;
         }
-        const fileEntries = files.filter((file: any) => file.fileEntry.isFile).map((file: any) => file.fileEntry);
+        const fileEntries = res.map(file => file.fileEntry).filter(entry => entry.isFile);
 
-        this.addFiles(fileEntries);
+        const files = [];
+        for (const fileEntry of fileEntries) {
+            const file = await this.getFile(fileEntry);
+            files.push(file);
+        }
+
+        this.addFiles(files);
+    }
+
+    private getFile(fileEntry: any) {
+        return new Promise(resolve => fileEntry.file(file => resolve(file)));
     }
 
     onFileOver(_: any) {}
