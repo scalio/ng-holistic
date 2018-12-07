@@ -12,3 +12,6 @@ export * from './lib/fields-layout/custom-field.directive';
 export * from './lib/form-layout/form-layout.module';
 export * from './lib/form-layout/form-layout-host.directive';
 export * from './lib/form-layout/form-layout.component';
+
+export * from './lib/form/form.module';
+export * from './lib/form/form.component';

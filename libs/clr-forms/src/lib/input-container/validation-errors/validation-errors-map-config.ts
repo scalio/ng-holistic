@@ -1,4 +1,4 @@
-import { ClrFormFields } from '../../models';
+import { ClrFormFields } from '../../models/form-fields.types';
 import { InjectionToken } from '@angular/core';
 import { InputContainerComponent } from '../input-container.component';
 

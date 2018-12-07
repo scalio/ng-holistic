@@ -19,6 +19,7 @@ import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
 import { InputContainerModule } from '../input-container/input-container.module';
 import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
+import { InputContainerComponent } from '../input-container/input-container.component';
 
 @NgModule({
     imports: [
