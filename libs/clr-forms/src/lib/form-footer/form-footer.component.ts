@@ -3,15 +3,35 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    Inject,
+    InjectionToken,
     Input,
     OnDestroy,
     OnInit,
-    Output
+    Output,
+    Optional
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrLoadingState } from '@clr/angular';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import * as R from 'ramda';
+
+export interface FormFooterLabels {
+    okLabel: string;
+    cancelLabel: string;
+}
+
+export interface FormFooterConfig {
+    labels: FormFooterLabels;
+}
+
+export const HLC_CLR_FORM_FOOTER_CONFIG = new InjectionToken<FormFooterConfig>('HLC_CLR_FORM_FOOTER_CONFIG');
+
+const defaultLabels: FormFooterLabels = {
+    okLabel: 'Update',
+    cancelLabel: 'Cancel'
+};
 
 export interface DataAccess {
     update(data: any): Observable<any>;
@@ -39,19 +59,30 @@ export class FormFooterComponent implements OnInit, OnDestroy {
         }
     }
 
+    @Input() okLabel: string | undefined;
+    @Input() cancelLabel: string | undefined;
+    @Input() dataAccess: DataAccess | undefined;
+    @Input() disabled: boolean | undefined;
+
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
 
-    @Input() dataAccess: DataAccess | undefined;
-    @Input() isNew: boolean | undefined;
-    @Input() disabled: boolean | undefined;
-
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    constructor(
+        private readonly cdr: ChangeDetectorRef,
+        @Optional() @Inject(HLC_CLR_FORM_FOOTER_CONFIG) private readonly config: FormFooterConfig
+    ) {}
 
     ngOnInit() {}
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    get labels() {
+        return R.mergeDeepLeft((this.config && this.config.labels) || defaultLabels, {
+            okLabel: this.okLabel,
+            cancelLabel: this.cancelLabel
+        });
     }
 
     get isFormEnabled() {

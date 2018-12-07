@@ -1,12 +1,12 @@
 import { LOCALE_ID } from '@angular/core';
 import { DateConfig, DATE_CONFIG } from '@ng-holistic/clr-controls';
+import { FileUploadConfig, HLC_CLR_FILE_UPLOAD_CONFIG } from '@ng-holistic/clr-file-upload';
 import {
     InputContainerConfig,
     INPUT_CONTAINER_CONFIG,
     ValidationErrorsMapConfig,
     VALIDATION_ERRORS_MAP_CONFIG
 } from '@ng-holistic/clr-forms';
-import { FileUploadConfig, HLC_FILE_UPLOAD_CONFIG } from '@ng-holistic/clr-file-upload';
 
 export function getInputContainerConfig(localeId: string): InputContainerConfig {
     /**
@@ -74,7 +74,7 @@ export const hlcConfigProviders = [
         deps: [LOCALE_ID]
     },
     {
-        provide: HLC_FILE_UPLOAD_CONFIG,
+        provide: HLC_CLR_FILE_UPLOAD_CONFIG,
         useClass: AppFileUploadConfig
     }
 ];

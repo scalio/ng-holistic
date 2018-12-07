@@ -12,7 +12,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
 import { empty, merge, Observable, Subject, throwError } from 'rxjs';
 import { catchError, debounceTime, finalize, take, takeUntil, tap } from 'rxjs/operators';
-import { FileUploadConfig, HLC_FILE_UPLOAD_CONFIG } from '../file-upload.config';
+import { FileUploadConfig, HLC_CLR_FILE_UPLOAD_CONFIG } from './file-upload.config';
 import { AttachmentType } from './model';
 
 export type UploadFileFun = (file: File) => Observable<any>;
@@ -68,7 +68,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAcces
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Inject(HLC_FILE_UPLOAD_CONFIG)
+        @Inject(HLC_CLR_FILE_UPLOAD_CONFIG)
         readonly config: FileUploadConfig
     ) {}
 

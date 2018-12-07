@@ -1,5 +1,22 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnInit,
+    Optional,
+    Output
+} from '@angular/core';
 import { UploadEvent } from 'ngx-file-drop';
+import { FileUploaderConfig, FileUploaderLabels, HLC_CLR_FILE_UPLOADER_CONFIG } from './file-uploader.config';
+
+const defaultLabels: FileUploaderLabels = {
+    dragLabel: 'Drag files here',
+    orLabel: 'or',
+    clickForUploadLabel: 'Click for upload',
+    acceptFilesLabel: 'Accept files'
+};
 
 @Component({
     selector: 'hlc-file-uploader',
@@ -18,9 +35,14 @@ export class FileUploaderComponent implements OnInit {
     get fileUploaderName() {
         return `file-upload-${this._rand}`;
     }
-    constructor() {}
+
+    constructor(@Optional() @Inject(HLC_CLR_FILE_UPLOADER_CONFIG) private readonly config: FileUploaderConfig) {}
 
     ngOnInit() {}
+
+    get labels() {
+        return (this.config && this.config.labels) || defaultLabels;
+    }
 
     onFileChange(event: any) {
         if (!event) {
@@ -35,14 +57,24 @@ export class FileUploaderComponent implements OnInit {
         this.addFiles(files);
     }
 
-    onFileDrop(event: UploadEvent) {
-        const files = Array.prototype.slice.call(event.files, 0);
-        if (!files || files.length === 0) {
+    async onFileDrop(event: UploadEvent) {
+        const res = Array.prototype.slice.call(event.files, 0);
+        if (!res || res.length === 0) {
             return;
         }
-        const fileEntries = files.filter((file: any) => file.fileEntry.isFile).map((file: any) => file.fileEntry);
+        const fileEntries = res.map((file: any) => file.fileEntry).filter((entry: any) => entry.isFile);
 
-        this.addFiles(fileEntries);
+        const files: any[] = [];
+        for (const fileEntry of fileEntries) {
+            const file = await this.getFile(fileEntry);
+            files.push(file);
+        }
+
+        this.addFiles(files);
+    }
+
+    private getFile(fileEntry: any) {
+        return new Promise(resolve => fileEntry.file((file: any) => resolve(file)));
     }
 
     onFileOver(_: any) {}
