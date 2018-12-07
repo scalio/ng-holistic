@@ -12,8 +12,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
 import { empty, merge, Observable, Subject, throwError } from 'rxjs';
 import { catchError, debounceTime, finalize, take, takeUntil, tap } from 'rxjs/operators';
+import { FileUploadConfig, HLC_CLR_FILE_UPLOAD_CONFIG } from './file-upload.config';
 import { AttachmentType } from './model';
-import { HLC_CLR_FILE_UPLOAD_CONFIG, FileUploadConfig } from './file-upload.config';
 
 export type UploadFileFun = (file: File) => Observable<any>;
 export type RemoveFileFun = (file: any) => Observable<any>;

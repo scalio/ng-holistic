@@ -62,9 +62,9 @@ export class FileUploaderComponent implements OnInit {
         if (!res || res.length === 0) {
             return;
         }
-        const fileEntries = res.map(file => file.fileEntry).filter(entry => entry.isFile);
+        const fileEntries = res.map((file: any) => file.fileEntry).filter((entry: any) => entry.isFile);
 
-        const files = [];
+        const files: any[] = [];
         for (const fileEntry of fileEntries) {
             const file = await this.getFile(fileEntry);
             files.push(file);
@@ -74,7 +74,7 @@ export class FileUploaderComponent implements OnInit {
     }
 
     private getFile(fileEntry: any) {
-        return new Promise(resolve => fileEntry.file(file => resolve(file)));
+        return new Promise(resolve => fileEntry.file((file: any) => resolve(file)));
     }
 
     onFileOver(_: any) {}
