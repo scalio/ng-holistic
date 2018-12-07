@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+
 import { AppLayoutModule } from './app-layout/app-layout.module';
 import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
@@ -36,7 +37,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), ClrControlsModule, AppLayoutModule, ClrFormsModule, ClrFileUploadModule],
+    imports: [RouterModule.forChild(routes), AppLayoutModule, ClrControlsModule, ClrFormsModule, ClrFileUploadModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

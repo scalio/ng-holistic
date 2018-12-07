@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MainLayoutComponent } from './main-layout.component';
 import { ClrMainContainerModule } from '@clr/angular';
-import { SideNavModule } from '../side-nav';
+import { SideNavModule } from '../side-nav/side-nav.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

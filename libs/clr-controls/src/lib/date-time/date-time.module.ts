@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ClrDatepickerModule, ClrIconModule } from '@clr/angular';
 import { DateConvertService } from '../date-convert.service';
 import { DateTimeComponent } from './date-time.component';
-import { SelectModule } from '../select/index';
+import { SelectModule } from '../select/select.module';
 
 @NgModule({
     imports: [CommonModule, ClrDatepickerModule, ClrIconModule, SelectModule],

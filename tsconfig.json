@@ -10,6 +10,7 @@
     "noUnusedParameters": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "module": "es2015",
     "target": "es5",
     "skipLibCheck": true,
     "typeRoots": [
@@ -43,6 +44,9 @@
   },
   "exclude": [
     "node_modules",
-    "tmp"
+    "dist",
+    "tmp",
+    "src/test.ts",
+    "**/*.spec.ts",
   ]
 }

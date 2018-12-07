@@ -9,12 +9,17 @@ import {
     HLC_FORM_FIELD_WRAPPER,
     HLC_GROUPS_LAYOUT
 } from '@ng-holistic/forms';
-import { clrFieldsLayoutComponents, clrFieldsLayoutMap, clrFieldsLayoutModules } from '../fields-layout';
+import {
+    clrFieldsLayoutComponents,
+    clrFieldsLayoutMap,
+    clrFieldsLayoutModules
+} from '../fields-layout/fields-layout-map';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { GroupsLayoutModule } from '../groups-layout';
-import { InputContainerComponent, InputContainerModule } from '../input-container';
-import { TabsLayoutModule } from '../tabs-layout';
+import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
+import { InputContainerModule } from '../input-container/input-container.module';
+import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
+import { InputContainerComponent } from '../input-container/input-container.component';
 
 @NgModule({
     imports: [
@@ -27,7 +32,6 @@ import { ClrFormComponent } from './form.component';
         ...clrFieldsLayoutModules
     ],
     declarations: [ClrFormComponent],
-    // export FieldsLayoutModule to reexport CustomField directive
     exports: [ClrFormComponent, FieldsLayoutModule],
     entryComponents: clrFieldsLayoutComponents
 })
