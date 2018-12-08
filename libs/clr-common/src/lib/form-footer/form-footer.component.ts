@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrLoadingState } from '@clr/angular';
-import * as R from 'ramda';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -87,10 +86,11 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     get labels() {
-        return R.mergeDeepRight((this.config && this.config.labels) || defaultLabels, {
-            okLabel: this.okLabel,
-            cancelLabel: this.cancelLabel
-        });
+        const labels = (this.config && this.config.labels) || defaultLabels;
+        return {
+            okLabel: this.okLabel || labels.okLabel,
+            cancelLabel: this.cancelLabel || labels.cancelLabel
+        };
     }
 
     get isFormEnabled() {
