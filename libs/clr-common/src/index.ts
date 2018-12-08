@@ -9,3 +9,4 @@ export * from './lib/main-header/main-header.module';
 // modal
 export * from './lib/modal/modal.module';
 export * from './lib/modal/modal.service';
+export * from './lib/modal/alert-modal/alert-modal.component';
