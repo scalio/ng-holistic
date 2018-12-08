@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HlcClrModalModule } from '@ng-holistic/clr-common';
-import { FormReclcPageModule } from '../form-recalc-page/form-recalc-page.module';
-import { FormInModalPageComponent } from './form-in-modal-page.component';
-import { FormRecalcPageComponent } from '../form-recalc-page/form-recalc-page.component';
+import { ClrFormModule } from '@ng-holistic/clr-forms';
+import { FormInModalComponent, FormInModalPageComponent } from './form-in-modal-page.component';
 
 ///
 @NgModule({
-    declarations: [FormInModalPageComponent],
-    imports: [CommonModule, FormReclcPageModule, HlcClrModalModule],
+    declarations: [FormInModalPageComponent, FormInModalComponent],
+    imports: [CommonModule, HlcClrModalModule, ClrFormModule],
     exports: [FormInModalPageComponent],
-    entryComponents: [FormRecalcPageComponent]
+    entryComponents: [FormInModalComponent]
 })
 export class FormInModalPageModule {}

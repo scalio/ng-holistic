@@ -5,7 +5,7 @@ import { format } from 'date-fns/esm/fp';
 import { ClrFormLayouts, InputErrorDisplayStartegy, ClrFormComponent } from '@ng-holistic/clr-forms';
 import { distinctPropChanged } from '@ng-holistic/forms';
 
-const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
+export const recalcFormGroup = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'fields',
     fields: [
         {
@@ -60,7 +60,7 @@ const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     providers: [InputErrorDisplayStartegy]
 })
 export class FormRecalcPageComponent implements AfterViewInit {
-    group = group;
+    group = recalcFormGroup;
 
     @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
 

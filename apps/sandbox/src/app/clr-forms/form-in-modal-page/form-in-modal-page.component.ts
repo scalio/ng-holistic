@@ -1,8 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { InputErrorDisplayStartegy, ClrFormComponent } from '@ng-holistic/clr-forms';
 import { ModalService } from '@ng-holistic/clr-common';
-import { FormRecalcPageComponent } from '../form-recalc-page/form-recalc-page.component';
 import { timer } from 'rxjs';
+import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component';
+
+@Component({
+    selector: 'hlc-form-in-modal',
+    template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [InputErrorDisplayStartegy]
+})
+export class FormInModalComponent {
+    group = recalcFormGroup;
+
+    @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
+
+    get form() {
+        return this.clrForm.form.formGroup;
+    }
+}
+
 
 @Component({
     selector: 'hlc-form-in-modal-page',
@@ -18,7 +35,7 @@ export class FormInModalPageComponent {
         this.modalService.showForm({
             title: 'Form in modal',
             componentFormField: 'form',
-            contentComponentType: FormRecalcPageComponent,
+            contentComponentType: FormInModalComponent,
             dataAccess: {
                 update(_) {
                     return timer(1000);
