@@ -10,7 +10,10 @@ import { OverlayService } from './overlay.service';
 export interface ModalShowParams {
     title: string;
     contentComponentType: any;
-    componentFormField?: string;
+}
+
+export interface ModalShowFormParams extends ModalShowParams {
+    componentFormField: string;
     allowOkWhenFormPristine?: boolean;
     finish?: (ok: Observable<any>) => Observable<any>;
 }
@@ -45,6 +48,24 @@ export class ModalService {
             ok: instance.ok.asObservable()
         };
 
+        result.ok.pipe(take(1)).subscribe(() => this.hide());
+
+        return result;
+    }
+
+    showForm<T>(params: ModalShowFormParams) {
+        const result = this.show<T>(params);
+
+        result.instance$.pipe(take(1)).subscribe((inst: any) => {
+            // change ok button state, if modal conntent has form
+            const form: FormGroup = inst[params.componentFormField as any];
+            result.modalInstance.disableOk = !params.allowOkWhenFormPristine;
+            form.valueChanges.pipe(takeUntil(this.hide$)).subscribe(_ => {
+                result.modalInstance.disableOk = !((params.allowOkWhenFormPristine || form.dirty) && form.valid);
+            });
+            return form;
+        });
+
         if (params.finish) {
             result.ok = params
                 .finish(
@@ -57,20 +78,6 @@ export class ModalService {
                     take(1),
                     shareReplay(1)
                 );
-        }
-
-        result.ok.pipe(take(1)).subscribe(() => this.hide());
-
-        if (params.componentFormField) {
-            result.instance$.pipe(take(1)).subscribe((inst: any) => {
-                // change ok button state, if modal conntent has form
-                const form: FormGroup = inst[params.componentFormField as any];
-                result.modalInstance.disableOk = !params.allowOkWhenFormPristine;
-                form.valueChanges.pipe(takeUntil(this.hide$)).subscribe(_ => {
-                    result.modalInstance.disableOk = !((params.allowOkWhenFormPristine || form.dirty) && form.valid);
-                });
-                return form;
-            });
         }
 
         return result;

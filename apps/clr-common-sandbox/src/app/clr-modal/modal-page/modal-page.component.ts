@@ -35,7 +35,7 @@ export class ModalPageComponent implements OnInit {
     ngOnInit() {}
 
     onForm() {
-        this.modalService.show({
+        this.modalService.showForm({
             title: 'form',
             componentFormField: 'form',
             contentComponentType: ModalPageFormComponent
