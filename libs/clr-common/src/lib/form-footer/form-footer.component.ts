@@ -34,6 +34,10 @@ const defaultLabels: FormFooterLabels = {
 };
 
 export interface DataAccess {
+    /**
+     * Emits after each update success
+     */
+    updateSuccess$?: Subject<any>;
     update(data: any): Observable<any>;
 }
 
@@ -107,6 +111,9 @@ export class FormFooterComponent implements OnInit, OnDestroy {
                         this.updateButtonState$.next(ClrLoadingState.SUCCESS);
                         this.form.reset(this.form.value);
                         this.originalValue = this.form.value;
+                        if (this.dataAccess && this.dataAccess.updateSuccess$) {
+                            this.dataAccess.updateSuccess$.next(this.form.value);
+                        }
                     },
                     err => {
                         this.updateButtonState$.next(ClrLoadingState.ERROR);

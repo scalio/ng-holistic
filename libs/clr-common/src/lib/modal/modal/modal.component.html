@@ -11,18 +11,27 @@
                 <ng-template *ngxComponentOutlet="contentComponentType; create$: contentInstance$"></ng-template>
             </div>
             <div class="modal-footer">
-                <button *ngIf="!hideCancel" class="btn btn-outline" type="button" (click)="onCancel()">
-                    {{ cancelLabel }}
-                </button>
-                <button
-                    [disabled]="disableOk"
-                    class="btn btn-primary"
-                    [ngClass]="okClass"
-                    type="button"
-                    (click)="onOk()"
+                <hlc-clr-form-footer *ngIf="formProvider else simpleFooter"
+                    [okLabel] = okLabel;
+                    [cancelLabel] = cancelLabel;
+                    [form]="formProvider.form"
+                    [dataAccess]="formProvider.dataAccess"
                 >
-                    {{ okLabel }}
-                </button>
+                </hlc-clr-form-footer>
+                <ng-template #simpleFooter>
+                    <button *ngIf="!hideCancel" class="btn btn-outline" type="button" (click)="onCancel()">
+                        {{ cancelLabel }}
+                    </button>
+                    <button
+                        [disabled]="disableOk"
+                        class="btn btn-primary"
+                        [ngClass]="okClass"
+                        type="button"
+                        (click)="onOk()"
+                    >
+                        {{ okLabel }}
+                    </button>
+                </ng-template>
             </div>
         </div>
     </div>

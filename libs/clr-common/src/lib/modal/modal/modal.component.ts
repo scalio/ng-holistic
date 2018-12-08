@@ -1,6 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Optional, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalConfig, HLC_CLR_MODAL_CONFIG, defaultModalConfig } from './modal.config';
+import { DataAccess } from '../../form-footer/form-footer.component';
+import { FormGroup } from '@angular/forms';
+
+export interface FormProvider {
+    form: FormGroup;
+    dataAccess?: DataAccess;
+    // TODO !
+    allowOkWhenFormPristine?: boolean;
+}
 
 @Component({
     selector: 'hlc-clr-modal',
@@ -15,6 +24,10 @@ export class ModalComponent implements OnInit {
     @Input() okClass: 'btn-primary' | 'btn-success' | 'btn-warning' | 'btn-danger' | 'btn-danger';
     @Input() okText: string;
     @Input() cancelText: string;
+    /**
+     * Expect content has form, in this case will be used form-footer component
+     */
+    @Input() formProvider: FormProvider | undefined;
 
     @Input() disableOk: boolean;
     @Input() hideCancel: boolean;
@@ -39,7 +52,11 @@ export class ModalComponent implements OnInit {
         this.cancel.emit();
     }
 
-    get okLabel() { return this.okText || this.config.labels.okText; }
+    get okLabel() {
+        return this.okText || this.config.labels.okText;
+    }
 
-    get cancelLabel() { return this.cancelText || this.config.labels.cancelText; }
+    get cancelLabel() {
+        return this.cancelText || this.config.labels.cancelText;
+    }
 }

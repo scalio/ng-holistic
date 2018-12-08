@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, shareReplay, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
+import { DataAccess } from '../form-footer/form-footer.component';
 import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
-import { ModalComponent } from './modal/modal.component';
+import { FormProvider, ModalComponent } from './modal/modal.component';
 import { OverlayService } from './overlay.service';
 
 export interface ModalShowParams {
@@ -14,8 +15,8 @@ export interface ModalShowParams {
 
 export interface ModalShowFormParams extends ModalShowParams {
     componentFormField: string;
+    dataAccess: DataAccess;
     allowOkWhenFormPristine?: boolean;
-    finish?: (ok: Observable<any>) => Observable<any>;
 }
 
 /**
@@ -59,26 +60,28 @@ export class ModalService {
         result.instance$.pipe(take(1)).subscribe((inst: any) => {
             // change ok button state, if modal conntent has form
             const form: FormGroup = inst[params.componentFormField as any];
-            result.modalInstance.disableOk = !params.allowOkWhenFormPristine;
-            form.valueChanges.pipe(takeUntil(this.hide$)).subscribe(_ => {
-                result.modalInstance.disableOk = !((params.allowOkWhenFormPristine || form.dirty) && form.valid);
-            });
-            return form;
-        });
 
-        if (params.finish) {
-            result.ok = params
-                .finish(
-                    result.ok.pipe(
-                        withLatestFrom(result.instance$, (_, inst) => inst),
-                        map((inst: any) => params.componentFormField && inst[params.componentFormField].value)
-                    )
-                )
-                .pipe(
-                    take(1),
-                    shareReplay(1)
-                );
-        }
+            const updateSuccess$ = new Subject<any>();
+            const dataAccess = params.dataAccess.updateSuccess$
+                ? params.dataAccess
+                : {
+                      update: params.dataAccess.update,
+                      updateSuccess$
+                  };
+
+            const formProvider: FormProvider = {
+                form,
+                dataAccess,
+                allowOkWhenFormPristine: params.allowOkWhenFormPristine
+            };
+
+            result.modalInstance.formProvider = formProvider;
+
+            /**
+             * OK after update success
+             */
+            result.ok = dataAccess.updateSuccess$ as any;
+        });
 
         return result;
     }
