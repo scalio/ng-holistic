@@ -17,4 +17,4 @@ import { NgxComponentOutlet } from '../ngxComponentOutlet';
     providers: [OverlayService, ModalService, NgxComponentOutlet],
     entryComponents: [ModalComponent, AlertModalComponent, ConfirmModalComponent]
 })
-export class HlcModalModule {}
+export class HlcClrModalModule {}

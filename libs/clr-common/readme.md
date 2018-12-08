@@ -25,5 +25,15 @@
     "node_modules/@clr/icons/clr-icons.min.css",
     "node_modules/@angular/cdk/overlay-prebuilt.css",
     "node_modules/@angular/cdk/a11y-prebuilt.css"
-],
+]
+
+## Include additional scripts
+
+```
+    "scripts": [
+        "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+        "node_modules/@clr/icons/clr-icons.min.js"
+    ]
+
+```
 

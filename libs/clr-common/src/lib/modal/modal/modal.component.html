@@ -26,7 +26,7 @@
                     class="btn btn-outline"
                     type="button"
                     (click)="onCancel()">
-                    {{ cancelText || ('OVERLAY_MODAL.CANCEL' | xtranslate) }}
+                    {{ cancelText }}
                 </button>
                 <button
                     [disabled]="disableOk"
@@ -34,7 +34,7 @@
                     [ngClass]="okClass"
                     type="button"
                     (click)="onOk()">
-                    {{ okText || ('OVERLAY_MODAL.OK' | xtranslate) }}
+                    {{ okText }}
                 </button>
             </div>
         </div>

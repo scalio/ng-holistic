@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start:clr-common": "ng serve clr-common-sandbox --port=4300",
+    "start:clr-forms": "ng serve sandbox --port=4301",
     "build": "ng build",
     "build:clr-layout": "ng build clr-layout",
     "build:clr-controls": "ng build clr-controls",
