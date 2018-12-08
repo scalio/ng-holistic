@@ -1,0 +1,9 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/out-tsc/apps/clr-common-sandbox",
+        "types": []
+    },
+    "exclude": ["test.ts", "**/*.spec.ts"],
+    "include": ["**/*.ts"]
+}
