@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ModalService } from '@ng-holistic/clr-common';
+import { ModalService, AlertType } from '@ng-holistic/clr-common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -43,6 +43,6 @@ export class ModalPageComponent implements OnInit {
     }
 
     onAlert() {
-        this.modalService.alert('Title', 'Message', 'success');
+        this.modalService.alert('Title', 'Message', AlertType.Success);
     }
 }

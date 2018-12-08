@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Optional, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ModalConfig, HLC_CLR_MODAL_CONFIG, defaultModalConfig } from './modal.config';
 
 @Component({
     selector: 'hlc-clr-modal',
@@ -11,8 +12,8 @@ export class ModalComponent implements OnInit {
     @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
     @Input() title: string;
     @Input() contentComponentType: any;
-    @Input() okText: string;
     @Input() okClass: 'btn-primary' | 'btn-success' | 'btn-warning' | 'btn-danger' | 'btn-danger';
+    @Input() okText: string;
     @Input() cancelText: string;
 
     @Input() disableOk: boolean;
@@ -21,9 +22,12 @@ export class ModalComponent implements OnInit {
     ok = new EventEmitter<void>();
     cancel = new EventEmitter<void>();
 
+    readonly config: ModalConfig;
     readonly contentInstance$ = new Subject();
 
-    constructor() {}
+    constructor(@Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: ModalConfig) {
+        this.config = modalConfig || defaultModalConfig;
+    }
 
     ngOnInit() {}
 
@@ -34,4 +38,8 @@ export class ModalComponent implements OnInit {
     onCancel() {
         this.cancel.emit();
     }
+
+    get okLabel() { return this.okText || this.config.labels.okText; }
+
+    get cancelLabel() { return this.cancelText || this.config.labels.cancelText; }
 }

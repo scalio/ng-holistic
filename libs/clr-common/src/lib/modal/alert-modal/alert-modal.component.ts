@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-export type AlertType = 'success' | 'info' | 'danger' | 'warning';
+export enum AlertType {
+    Success = 'success',
+    Info = 'info',
+    Danger = 'danger',
+    Warning = 'warning'
+}
 
 @Component({
     selector: 'hlc-clr-alert-modal',
