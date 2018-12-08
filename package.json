@@ -1,6 +1,6 @@
 {
   "name": "ng-holistic",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,6 +8,7 @@
     "start:clr-forms": "ng serve sandbox --port=4301",
     "build": "ng build",
     "build:clr-layout": "ng build clr-layout",
+    "build:clr-common": "ng build clr-common",
     "build:clr-controls": "ng build clr-controls",
     "build:clr-file-upload": "ng build clr-file-upload",
     "build:clr-forms": "npm run build:forms && npm run build:clr-controls && ng build clr-forms --ts-config=tsconfig.build.json",

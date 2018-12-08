@@ -1,5 +1,5 @@
 <div class="form-footer">
-    <hlc-clr-form-error *ngIf="displayError" [message]="error" (reset)="error = undefined"> </hlc-clr-form-error>
+    <hlc-clr-form-error *ngIf="displayError" [message]="error" (reset)="error = null"> </hlc-clr-form-error>
     <div class="buttons-panel">
         <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
             {{ labels.cancelLabel }}
