@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { flatMap, shareReplay, take } from 'rxjs/operators';
 import { DataAccess } from '../form-footer/form-footer.component';
 import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
@@ -57,33 +57,44 @@ export class ModalService {
     showForm<T>(params: ModalShowFormParams) {
         const result = this.show<T>(params);
 
-        result.instance$.pipe(take(1)).subscribe((inst: any) => {
-            // change ok button state, if modal conntent has form
-            const form: FormGroup = inst[params.componentFormField as any];
+        // ok after update success
+        const res$ = result.instance$.pipe(
+            take(1),
+            flatMap((inst: any) => {
+                // form could be observable
+                const form: FormGroup | Observable<FormGroup> = inst[params.componentFormField as any];
+                return form instanceof Observable ? form : of(form);
+            }),
+            flatMap(form => this.initForm(result, form, params)),
+            shareReplay(1)
+        );
 
-            const updateSuccess$ = new Subject<any>();
-            const dataAccess = params.dataAccess.updateSuccess$
-                ? params.dataAccess
-                : {
-                      update: params.dataAccess.update,
-                      updateSuccess$
-                  };
+        res$.subscribe(() => {});
 
-            const formProvider: FormProvider = {
-                form,
-                dataAccess,
-                allowOkWhenFormPristine: params.allowOkWhenFormPristine
-            };
-
-            result.modalInstance.formProvider = formProvider;
-
-            /**
-             * OK after update success
-             */
-            result.ok = dataAccess.updateSuccess$ as any;
-        });
+        // ok after update success
+        result.ok = res$;
 
         return result;
+    }
+
+    private initForm(result: any, form: FormGroup, params: ModalShowFormParams) {
+        const updateSuccess$ = new Subject<any>();
+        const dataAccess = params.dataAccess.updateSuccess$
+            ? params.dataAccess
+            : {
+                  update: params.dataAccess.update,
+                  updateSuccess$
+              };
+
+        const formProvider: FormProvider = {
+            form,
+            dataAccess,
+            allowOkWhenFormPristine: params.allowOkWhenFormPristine
+        };
+
+        result.modalInstance.formProvider = formProvider;
+
+        return dataAccess.updateSuccess$ as Observable<any>;
     }
 
     hide() {

@@ -15,8 +15,8 @@ export class FormInModalComponent {
 
     @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
 
-    get form() {
-        return this.clrForm.form.formGroup;
+    get form$() {
+        return this.clrForm.form.formCreated;
     }
 }
 
@@ -34,7 +34,7 @@ export class FormInModalPageComponent {
     onShowModal() {
         this.modalService.showForm({
             title: 'Form in modal',
-            componentFormField: 'form',
+            componentFormField: 'form$',
             contentComponentType: FormInModalComponent,
             dataAccess: {
                 update(_) {
