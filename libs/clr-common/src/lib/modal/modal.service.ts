@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
-import { DataAccess } from '../form-footer/form-footer.component';
+import { FormFooterDataAccess } from '../form-footer/form-footer.component';
 import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { FormProvider, ModalComponent } from './modal/modal.component';
@@ -15,7 +15,7 @@ export interface ModalShowParams {
 
 export interface ModalShowFormParams extends ModalShowParams {
     componentFormField: string;
-    dataAccess: DataAccess;
+    dataAccess: FormFooterDataAccess;
     allowOkWhenFormPristine?: boolean;
 }
 

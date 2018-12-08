@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { DataAccess } from '../../form-footer/form-footer.component';
+import { FormFooterDataAccess } from '../../form-footer/form-footer.component';
 import { defaultModalConfig, HLC_CLR_MODAL_CONFIG, ModalConfig } from './modal.config';
 
 export interface FormProvider {
     form: FormGroup;
-    dataAccess?: DataAccess;
+    dataAccess?: FormFooterDataAccess;
     // TODO !
     allowOkWhenFormPristine?: boolean;
 }

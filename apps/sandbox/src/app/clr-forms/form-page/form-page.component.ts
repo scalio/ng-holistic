@@ -3,7 +3,7 @@ import { TextMask } from '@ng-holistic/clr-controls';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
-import { DataAccess } from '@ng-holistic/clr-common';
+import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -87,7 +87,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormPageComponent implements AfterViewInit {
     group = group;
 
-    readonly dataAccess: DataAccess = {
+    readonly dataAccess: FormFooterDataAccess = {
         update(_: any) {
             return timer(1000).pipe(flatMap(() => throwError('This is error')));
         }

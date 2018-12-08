@@ -33,7 +33,7 @@ const defaultLabels: FormFooterLabels = {
     cancelLabel: 'Cancel'
 };
 
-export interface DataAccess {
+export interface FormFooterDataAccess {
     /**
      * Emits after each update success
      */
@@ -68,7 +68,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     @Input() displayError = true;
     @Input() okLabel: string | undefined;
     @Input() cancelLabel: string | undefined;
-    @Input() dataAccess: DataAccess | undefined;
+    @Input() dataAccess: FormFooterDataAccess | undefined;
     @Input() disabled: boolean | undefined;
 
     @Output() save = new EventEmitter();
