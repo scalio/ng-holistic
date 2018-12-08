@@ -12,8 +12,8 @@
             </div>
             <div class="modal-footer">
                 <hlc-clr-form-footer *ngIf="formProvider else simpleFooter"
-                    [okLabel] = okLabel;
-                    [cancelLabel] = cancelLabel;
+                    [okLabel] = "okLabel"
+                    [cancelLabel] = "cancelLabel"
                     [form]="formProvider.form"
                     [dataAccess]="formProvider.dataAccess"
                 >

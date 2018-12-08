@@ -12,6 +12,8 @@ import { FormFullPageModule } from './form-full-page/form-full-page.module';
 import { FormFullPageComponent } from './form-full-page/form-full-page.component';
 import { FormDynaPageComponent } from './form-dyna-page/form-dyna-page.component';
 import { FormDynaPageModule } from './form-dyna-page/form-dyna-page.module';
+import { FormInModalPageComponent } from './form-in-modal-page/form-in-modal-page.component';
+import { FormInModalPageModule } from './form-in-modal-page/form-in-modal-page.module';
 
 export const routes: Routes = [
     {
@@ -37,6 +39,10 @@ export const routes: Routes = [
     {
         path: 'form-dyna',
         component: FormDynaPageComponent
+    },
+    {
+        path: 'form-in-modal',
+        component: FormInModalPageComponent
     }
 ];
 
@@ -48,7 +54,8 @@ export const routes: Routes = [
         FormReclcPageModule,
         FormCustomFieldsPageModule,
         FormFullPageModule,
-        FormDynaPageModule
+        FormDynaPageModule,
+        FormInModalPageModule
     ],
     exports: [RouterModule],
     providers: []

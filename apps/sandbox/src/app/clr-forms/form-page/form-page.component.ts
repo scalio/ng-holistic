@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { TextMask } from '@ng-holistic/clr-controls';
-import { ClrFormLayouts, DataAccess } from '@ng-holistic/clr-forms';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { DataAccess } from '@ng-holistic/clr-common';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -87,7 +88,7 @@ export class FormPageComponent implements AfterViewInit {
     group = group;
 
     readonly dataAccess: DataAccess = {
-        update(_) {
+        update(_: any) {
             return timer(1000).pipe(flatMap(() => throwError('This is error')));
         }
     };
