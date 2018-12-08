@@ -1,4 +1,17 @@
 <div class="form-footer">
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+        <div class="alert-items">
+            <div class="alert-item">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                </div>
+                <span class="alert-text">{{ error }}</span>
+            </div>
+        </div>
+        <button type="button" class="close" aria-label="Close">
+            <clr-icon aria-hidden="true" shape="close" (click)="onResetError()"></clr-icon>
+        </button>
+    </div>
     <div class="buttons-panel">
         <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
             {{ labels.cancelLabel }}

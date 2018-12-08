@@ -8,14 +8,14 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    Output,
-    Optional
+    Optional,
+    Output
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrLoadingState } from '@clr/angular';
+import * as R from 'ramda';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import * as R from 'ramda';
 
 export interface FormFooterLabels {
     okLabel: string;
@@ -44,9 +44,11 @@ export interface DataAccess {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormFooterComponent implements OnInit, OnDestroy {
+    error: string | null;
     originalValue: any;
     updateButtonState$ = new BehaviorSubject(ClrLoadingState.DEFAULT);
     private destroy$ = new Subject();
+
     form: FormGroup;
     @Input('form') set setForm(val: FormGroup) {
         this.destroy$.next();
@@ -90,6 +92,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     onSave() {
+        this.error = null;
         this.save.emit();
         if (this.dataAccess) {
             this.updateButtonState$.next(ClrLoadingState.LOADING);
@@ -105,15 +108,21 @@ export class FormFooterComponent implements OnInit, OnDestroy {
                         this.form.reset(this.form.value);
                         this.originalValue = this.form.value;
                     },
-                    _ => {
+                    err => {
                         this.updateButtonState$.next(ClrLoadingState.ERROR);
+                        this.error = err;
                     }
                 );
         }
     }
 
     onCancel() {
+        this.onResetError();
         this.form.reset(this.originalValue);
         this.cancel.emit();
+    }
+
+    onResetError() {
+        this.error = null;
     }
 }
