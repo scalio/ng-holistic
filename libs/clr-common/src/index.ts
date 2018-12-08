@@ -11,3 +11,7 @@ export * from './lib/modal/modal.module';
 export * from './lib/modal/modal.service';
 export * from './lib/modal/modal/modal.config';
 export * from './lib/modal/alert-modal/alert-modal.component';
+
+// form-footer
+export * from './lib/form-footer/form-footer.component';
+export * from './lib/form-footer/form-footer.module';
