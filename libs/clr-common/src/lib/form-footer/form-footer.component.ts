@@ -128,7 +128,9 @@ export class FormFooterComponent implements OnInit, OnDestroy {
 
     onCancel() {
         this.onResetError();
-        this.form.reset(this.originalValue);
+        if (this.form) {
+            this.form.reset(this.originalValue);
+        }
         this.cancel.emit();
     }
 
