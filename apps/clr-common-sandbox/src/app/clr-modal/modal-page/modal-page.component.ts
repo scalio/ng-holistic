@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertType, ModalService } from '@ng-holistic/clr-common';
-import { timer } from 'rxjs';
+import { timer, throwError } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
     selector: 'hlc-clr-sandbox-modal-form',
@@ -42,7 +43,7 @@ export class ModalPageComponent implements OnInit {
             contentComponentType: ModalPageFormComponent,
             dataAccess: {
                 update() {
-                    return timer(1000);
+                    return timer(1000).pipe(flatMap(() => throwError('Error !')));
                 }
             }
         });

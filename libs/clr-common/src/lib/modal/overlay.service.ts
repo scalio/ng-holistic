@@ -36,10 +36,12 @@ export class OverlayService {
     constructor(private readonly overlay: Overlay) {
         this.positionStrategy = this.overlay.position().global();
 
+        // TODO: backdropClass overlay above modal when modal content created with delay
+        // example: when using with hlc-forms
         const overlayConfig = new OverlayConfig({
             hasBackdrop: true,
-            positionStrategy: this.positionStrategy,
-            backdropClass: 'modal-backdrop'
+            positionStrategy: this.positionStrategy
+            // backdropClass: 'modal-backdrop'
         });
 
         this.overlayRef = this.overlay.create(overlayConfig);

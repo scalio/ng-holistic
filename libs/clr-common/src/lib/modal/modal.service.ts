@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
-import { flatMap, shareReplay, take } from 'rxjs/operators';
+import { flatMap, map, shareReplay, take } from 'rxjs/operators';
 import { DataAccess } from '../form-footer/form-footer.component';
 import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
@@ -65,14 +65,11 @@ export class ModalService {
                 const form: FormGroup | Observable<FormGroup> = inst[params.componentFormField as any];
                 return form instanceof Observable ? form : of(form);
             }),
-            flatMap(form => this.initForm(result, form, params)),
+            map(form => this.initForm(result, form, params)),
             shareReplay(1)
         );
 
         res$.subscribe(() => {});
-
-        // ok after update success
-        result.ok = res$;
 
         return result;
     }
