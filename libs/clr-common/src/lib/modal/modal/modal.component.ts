@@ -28,10 +28,10 @@ export class ModalComponent implements OnInit {
     ngOnInit() {}
 
     onOk() {
-        this.ok.emit(null);
+        this.ok.emit();
     }
 
     onCancel() {
-        this.cancel.emit(null);
+        this.cancel.emit();
     }
 }

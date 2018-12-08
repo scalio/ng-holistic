@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, shareReplay, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { ModalComponent } from './modal/modal.component';
 import { OverlayService } from './overlay.service';
-import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 
 export interface ModalShowParams {
     title: string;
@@ -49,7 +49,7 @@ export class ModalService {
                 .finish(
                     result.ok.pipe(
                         withLatestFrom(result.instance$, (_, inst) => inst),
-                        map(inst => params.componentFormField && inst[params.componentFormField].value)
+                        map((inst: any) => params.componentFormField && inst[params.componentFormField].value)
                     )
                 )
                 .pipe(
@@ -61,9 +61,9 @@ export class ModalService {
         result.ok.pipe(take(1)).subscribe(() => this.hide());
 
         if (params.componentFormField) {
-            result.instance$.pipe(take(1)).subscribe(inst => {
+            result.instance$.pipe(take(1)).subscribe((inst: any) => {
                 // change ok button state, if modal conntent has form
-                const form: FormGroup = inst[params.componentFormField];
+                const form: FormGroup = inst[params.componentFormField as any];
                 result.modalInstance.disableOk = !params.allowOkWhenFormPristine;
                 form.valueChanges.pipe(takeUntil(this.hide$)).subscribe(_ => {
                     result.modalInstance.disableOk = !((params.allowOkWhenFormPristine || form.dirty) && form.valid);

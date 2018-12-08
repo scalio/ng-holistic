@@ -6,26 +6,15 @@ import { ModalComponent } from './modal/modal.component';
 import { OverlayService } from './overlay.service';
 import { ModalService } from './modal.service';
 import { ClrModalModule, ClrIconModule } from '@clr/angular';
-import { NgxComponentOutlet } from '../../ng';
-import { AlertModalService } from './alert-modal.service';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
-import { AlertModule } from '../../alert';
-import { FlimeTranslateModule } from '../../translate';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { NgxComponentOutlet } from '../ngxComponentOutlet';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CdkOverlayModule,
-        A11yModule,
-        ClrModalModule,
-        ClrIconModule,
-        AlertModule,
-        FlimeTranslateModule
-    ],
+    imports: [CommonModule, CdkOverlayModule, A11yModule, ClrModalModule, ClrIconModule],
     declarations: [ModalComponent, NgxComponentOutlet, AlertModalComponent, ConfirmModalComponent],
     exports: [ModalComponent, NgxComponentOutlet],
-    providers: [OverlayService, ModalService, NgxComponentOutlet, AlertModalService],
+    providers: [OverlayService, ModalService, NgxComponentOutlet],
     entryComponents: [ModalComponent, AlertModalComponent, ConfirmModalComponent]
 })
-export class FmOverlayModule {}
+export class HlcModalModule {}
