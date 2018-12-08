@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
-import { flatMap, map, shareReplay, take } from 'rxjs/operators';
+import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { DataAccess } from '../form-footer/form-footer.component';
 import { AlertModalComponent, AlertType } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
@@ -37,11 +37,11 @@ export class ModalService {
         instance.title = params.title;
         instance.contentComponentType = params.contentComponentType;
 
-        backdropClick.subscribe(() => {
+        backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
             this.hide();
         });
 
-        instance.cancel.subscribe(() => this.hide());
+        instance.cancel.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
 
         const result = {
             instance$: instance.contentInstance$.asObservable() as Observable<T>,
@@ -49,7 +49,12 @@ export class ModalService {
             ok: instance.ok.asObservable()
         };
 
-        result.ok.pipe(take(1)).subscribe(() => this.hide());
+        result.ok
+            .pipe(
+                take(1),
+                takeUntil(this.hide$)
+            )
+            .subscribe(() => this.hide());
 
         return result;
     }
@@ -59,17 +64,29 @@ export class ModalService {
 
         // ok after update success
         const res$ = result.instance$.pipe(
-            take(1),
             flatMap((inst: any) => {
                 // form could be observable
                 const form: FormGroup | Observable<FormGroup> = inst[params.componentFormField as any];
                 return form instanceof Observable ? form : of(form);
             }),
+            take(1),
             map(form => this.initForm(result, form, params)),
-            shareReplay(1)
+            shareReplay(1),
+            takeUntil(this.hide$)
         );
 
-        res$.subscribe(() => {});
+        res$.subscribe(() => {
+            result.modalInstance.detectChanges();
+        });
+
+        result.ok = res$.pipe(flatMap(x => x));
+
+        result.ok
+            .pipe(
+                take(1),
+                takeUntil(this.hide$)
+            )
+            .subscribe(() => this.hide());
 
         return result;
     }
@@ -105,7 +122,7 @@ export class ModalService {
             contentComponentType: ConfirmModalComponent
         });
 
-        instance$.pipe(take(1)).subscribe(inst => {
+        instance$.pipe(takeUntil(this.hide$), take(1)).subscribe(inst => {
             inst.message = message;
         });
 
@@ -120,7 +137,7 @@ export class ModalService {
 
         modalInstance.hideCancel = true;
 
-        instance$.pipe(take(1)).subscribe(inst => {
+        instance$.pipe(takeUntil(this.hide$), take(1)).subscribe(inst => {
             inst.alertType = alertType;
             inst.message = message;
         });

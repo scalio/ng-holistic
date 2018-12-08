@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Optional, Inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Optional,
+    Inject,
+    ChangeDetectorRef
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalConfig, HLC_CLR_MODAL_CONFIG, defaultModalConfig } from './modal.config';
 import { DataAccess } from '../../form-footer/form-footer.component';
@@ -38,11 +47,16 @@ export class ModalComponent implements OnInit {
     readonly config: ModalConfig;
     readonly contentInstance$ = new Subject();
 
-    constructor(@Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: ModalConfig) {
+    constructor(
+        private readonly cdr: ChangeDetectorRef,
+        @Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: ModalConfig
+    ) {
         this.config = modalConfig || defaultModalConfig;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log(this.formProvider);
+    }
 
     onOk() {
         this.ok.emit();
@@ -58,5 +72,9 @@ export class ModalComponent implements OnInit {
 
     get cancelLabel() {
         return this.cancelText || this.config.labels.cancelText;
+    }
+
+    detectChanges() {
+        this.cdr.detectChanges();
     }
 }

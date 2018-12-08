@@ -3,12 +3,16 @@ import { InputErrorDisplayStartegy, ClrFormComponent } from '@ng-holistic/clr-fo
 import { ModalService } from '@ng-holistic/clr-common';
 import { timer } from 'rxjs';
 import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component';
+import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-form-in-modal',
     template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [InputErrorDisplayStartegy]
+    providers: [
+        InputErrorDisplayStartegy,
+        { provide: HLC_FIELDS_LAYOUT_CONFIG, useValue: { formClass: 'clr-form clr-form-compact' } }
+    ]
 })
 export class FormInModalComponent {
     group = recalcFormGroup;
@@ -19,7 +23,6 @@ export class FormInModalComponent {
         return this.clrForm.form.formCreated;
     }
 }
-
 
 @Component({
     selector: 'hlc-form-in-modal-page',
