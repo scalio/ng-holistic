@@ -15,3 +15,5 @@ export * from './lib/modal/alert-modal/alert-modal.component';
 // form-footer
 export * from './lib/form-footer/form-footer.component';
 export * from './lib/form-footer/form-footer.module';
+export * from './lib/form-error/form-error.component';
+export * from './lib/form-error/form-error.module';

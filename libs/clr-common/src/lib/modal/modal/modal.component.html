@@ -8,15 +8,18 @@
                 <h3 class="modal-title">{{ title }}</h3>
             </div>
             <div class="modal-body">
+                <hlc-clr-form-error [message]="error" (reset)="error = undefined;"></hlc-clr-form-error>
                 <ng-template *ngxComponentOutlet="contentComponentType; create$: contentInstance$"></ng-template>
             </div>
             <div class="modal-footer">
                 <hlc-clr-form-footer *ngIf="formProvider else simpleFooter"
+                    #footer
                     [okLabel] = "okLabel"
                     [cancelLabel] = "cancelLabel"
                     [form]="formProvider.form"
                     [dataAccess]="formProvider.dataAccess"
                     (cancel)="onCancel()"
+                    (dataAccessError)="onDataAccessError($event)"
                 >
                 </hlc-clr-form-footer>
                 <ng-template #simpleFooter>

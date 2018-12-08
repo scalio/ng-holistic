@@ -65,6 +65,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
         }
     }
 
+    @Input() displayError = true;
     @Input() okLabel: string | undefined;
     @Input() cancelLabel: string | undefined;
     @Input() dataAccess: DataAccess | undefined;
@@ -72,6 +73,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
+    @Output() dataAccessError = new EventEmitter<string>();
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -85,7 +87,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     get labels() {
-        return R.mergeDeepLeft((this.config && this.config.labels) || defaultLabels, {
+        return R.mergeDeepRight((this.config && this.config.labels) || defaultLabels, {
             okLabel: this.okLabel,
             cancelLabel: this.cancelLabel
         });
@@ -118,6 +120,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
                     err => {
                         this.updateButtonState$.next(ClrLoadingState.ERROR);
                         this.error = err;
+                        this.dataAccessError.emit(err);
                     }
                 );
         }

@@ -10,9 +10,18 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { NgxComponentOutlet } from '../ngxComponentOutlet';
 import { FormFooterModule } from '../form-footer/form-footer.module';
+import { FormErrorModule } from '../form-error/form-error.module';
 
 @NgModule({
-    imports: [CommonModule, CdkOverlayModule, A11yModule, ClrModalModule, ClrIconModule, FormFooterModule],
+    imports: [
+        CommonModule,
+        CdkOverlayModule,
+        A11yModule,
+        ClrModalModule,
+        ClrIconModule,
+        FormFooterModule,
+        FormErrorModule
+    ],
     declarations: [ModalComponent, NgxComponentOutlet, AlertModalComponent, ConfirmModalComponent],
     exports: [ModalComponent, NgxComponentOutlet],
     providers: [OverlayService, ModalService, NgxComponentOutlet],

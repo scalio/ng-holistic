@@ -1,17 +1,17 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
+    Inject,
     Input,
     OnInit,
-    Optional,
-    Inject,
-    ChangeDetectorRef
+    Optional
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ModalConfig, HLC_CLR_MODAL_CONFIG, defaultModalConfig } from './modal.config';
-import { DataAccess } from '../../form-footer/form-footer.component';
 import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { DataAccess } from '../../form-footer/form-footer.component';
+import { defaultModalConfig, HLC_CLR_MODAL_CONFIG, ModalConfig } from './modal.config';
 
 export interface FormProvider {
     form: FormGroup;
@@ -27,6 +27,7 @@ export interface FormProvider {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalComponent implements OnInit {
+    error: string | undefined;
     @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
     @Input() title: string;
     @Input() contentComponentType: any;
@@ -54,9 +55,7 @@ export class ModalComponent implements OnInit {
         this.config = modalConfig || defaultModalConfig;
     }
 
-    ngOnInit() {
-        console.log(this.formProvider);
-    }
+    ngOnInit() {}
 
     onOk() {
         this.ok.emit();
@@ -64,6 +63,10 @@ export class ModalComponent implements OnInit {
 
     onCancel() {
         this.cancel.emit();
+    }
+
+    onDataAccessError(err: string) {
+        this.error = err;
     }
 
     get okLabel() {
