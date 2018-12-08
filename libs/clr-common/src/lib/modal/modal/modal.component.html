@@ -16,6 +16,7 @@
                     [cancelLabel] = "cancelLabel"
                     [form]="formProvider.form"
                     [dataAccess]="formProvider.dataAccess"
+                    (cancel)="onCancel()"
                 >
                 </hlc-clr-form-footer>
                 <ng-template #simpleFooter>

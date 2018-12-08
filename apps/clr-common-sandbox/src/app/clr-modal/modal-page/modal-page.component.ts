@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ModalService, AlertType } from '@ng-holistic/clr-common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertType, ModalService } from '@ng-holistic/clr-common';
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'hlc-clr-sandbox-modal-form',
@@ -38,7 +39,12 @@ export class ModalPageComponent implements OnInit {
         this.modalService.showForm({
             title: 'form',
             componentFormField: 'form',
-            contentComponentType: ModalPageFormComponent
+            contentComponentType: ModalPageFormComponent,
+            dataAccess: {
+                update() {
+                    return timer(1000);
+                }
+            }
         });
     }
 
