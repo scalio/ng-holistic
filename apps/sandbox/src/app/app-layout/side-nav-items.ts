@@ -28,6 +28,10 @@ export default [
             {
                 title: 'Form Rebuild',
                 path: ['/clr-forms', 'form-dyna']
+            },
+            {
+                title: 'Form In Modal',
+                path: ['/clr-forms', 'form-in-modal']
             }
         ]
     },

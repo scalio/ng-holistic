@@ -22,9 +22,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-       "@text-mask-core": [
-          "text-mask-core/text-mask-core"
-       ],
+      "@text-mask-core": [
+        "text-mask-core/text-mask-core"
+      ],
       "@ng-holistic/forms": [
         "libs/forms/src/index.ts"
       ],
@@ -39,6 +39,9 @@
       ],
       "@ng-holistic/clr-file-upload": [
         "libs/clr-file-upload/src/index.ts"
+      ],
+      "@ng-holistic/clr-common": [
+        "libs/clr-common/src/index.ts"
       ]
     }
   },
@@ -46,7 +49,6 @@
     "node_modules",
     "dist",
     "tmp",
-    "src/test.ts",
-    "**/*.spec.ts",
+    "src/test.ts"
   ]
 }

@@ -1,6 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { TextMask } from '@ng-holistic/clr-controls';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { throwError, timer } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -84,6 +87,12 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormPageComponent implements AfterViewInit {
     group = group;
 
+    readonly dataAccess: FormFooterDataAccess = {
+        update(_: any) {
+            return timer(1000).pipe(flatMap(() => throwError('This is error')));
+        }
+    };
+
     constructor(private readonly cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
@@ -92,6 +101,7 @@ export class FormPageComponent implements AfterViewInit {
     }
 
     onSave(val: any) {
-        alert(JSON.stringify(val, null, 2));
+        // alert(JSON.stringify(val, null, 2));
+        console.log(val);
     }
 }

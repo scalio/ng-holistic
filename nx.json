@@ -25,6 +25,15 @@
     },
     "clr-file-upload": {
       "tags": []
+    },
+    "clr-common": {
+      "tags": []
+    },
+    "clr-common-sandbox": {
+      "tags": []
+    },
+    "clr-common-sandbox-e2e": {
+      "tags": []
     }
   }
 }

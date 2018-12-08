@@ -8,14 +8,13 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    Output,
-    Optional
+    Optional,
+    Output
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrLoadingState } from '@clr/angular';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import * as R from 'ramda';
 
 export interface FormFooterLabels {
     okLabel: string;
@@ -33,7 +32,11 @@ const defaultLabels: FormFooterLabels = {
     cancelLabel: 'Cancel'
 };
 
-export interface DataAccess {
+export interface FormFooterDataAccess {
+    /**
+     * Emits after each update success
+     */
+    updateSuccess$?: Subject<any>;
     update(data: any): Observable<any>;
 }
 
@@ -44,9 +47,11 @@ export interface DataAccess {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormFooterComponent implements OnInit, OnDestroy {
+    error: string | null;
     originalValue: any;
     updateButtonState$ = new BehaviorSubject(ClrLoadingState.DEFAULT);
     private destroy$ = new Subject();
+
     form: FormGroup;
     @Input('form') set setForm(val: FormGroup) {
         this.destroy$.next();
@@ -59,13 +64,15 @@ export class FormFooterComponent implements OnInit, OnDestroy {
         }
     }
 
+    @Input() displayError = true;
     @Input() okLabel: string | undefined;
     @Input() cancelLabel: string | undefined;
-    @Input() dataAccess: DataAccess | undefined;
+    @Input() dataAccess: FormFooterDataAccess | undefined;
     @Input() disabled: boolean | undefined;
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
+    @Output() dataAccessError = new EventEmitter<string>();
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -79,10 +86,11 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     get labels() {
-        return R.mergeDeepLeft((this.config && this.config.labels) || defaultLabels, {
-            okLabel: this.okLabel,
-            cancelLabel: this.cancelLabel
-        });
+        const labels = (this.config && this.config.labels) || defaultLabels;
+        return {
+            okLabel: this.okLabel || labels.okLabel,
+            cancelLabel: this.cancelLabel || labels.cancelLabel
+        };
     }
 
     get isFormEnabled() {
@@ -90,6 +98,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     onSave() {
+        this.error = null;
         this.save.emit();
         if (this.dataAccess) {
             this.updateButtonState$.next(ClrLoadingState.LOADING);
@@ -104,16 +113,28 @@ export class FormFooterComponent implements OnInit, OnDestroy {
                         this.updateButtonState$.next(ClrLoadingState.SUCCESS);
                         this.form.reset(this.form.value);
                         this.originalValue = this.form.value;
+                        if (this.dataAccess && this.dataAccess.updateSuccess$) {
+                            this.dataAccess.updateSuccess$.next(this.form.value);
+                        }
                     },
-                    _ => {
+                    err => {
                         this.updateButtonState$.next(ClrLoadingState.ERROR);
+                        this.error = err;
+                        this.dataAccessError.emit(err);
                     }
                 );
         }
     }
 
     onCancel() {
-        this.form.reset(this.originalValue);
+        this.onResetError();
+        if (this.form) {
+            this.form.reset(this.originalValue);
+        }
         this.cancel.emit();
+    }
+
+    onResetError() {
+        this.error = null;
     }
 }
