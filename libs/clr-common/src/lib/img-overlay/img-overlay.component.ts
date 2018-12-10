@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
     selector: 'hlc-clr-img-overlay',
@@ -6,4 +6,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./img-overlay.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImgOverlayComponent {}
+export class ImgOverlayComponent {
+
+    @Input() src: string;
+    @Input() width: string;
+    @Input() overlayOpacity = 1;
+}

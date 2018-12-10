@@ -1,0 +1,9 @@
+::ng-deep .overlay {
+    transition: 0.3s ease;
+    background-color: black;
+}
+
+.overlay-content {
+    color: white;
+    font-size: 100px;
+}

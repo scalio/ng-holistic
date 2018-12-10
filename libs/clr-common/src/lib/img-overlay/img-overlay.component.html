@@ -1,3 +1,8 @@
-<div>
-    <img src="https://pbs.twimg.com/media/DuEkvqTW0AIlTSo.jpg">
+<div class="container" [style.max-width]="width" >
+    <img [src]="src" class="image" />
+    <div class="overlay" [ngClass]="overlayClass">
+        <div class="overlay-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
 </div>

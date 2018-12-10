@@ -20,6 +20,7 @@
                     [dataAccess]="formProvider.dataAccess"
                     (cancel)="onCancel()"
                     (dataAccessError)="onDataAccessError($event)"
+                    [displayError]="false"
                 >
                 </hlc-clr-form-footer>
                 <ng-template #simpleFooter>
