@@ -10,5 +10,15 @@ export default [
                 path: ['/clr-modal', 'modal']
             }
         ]
+    },
+    {
+        title: 'Images',
+        icon: 'image',
+        children: [
+            {
+                title: 'Image Overlay',
+                path: ['/images', 'img-overlay']
+            }
+        ]
     }
 ] as SideNavItem[];
