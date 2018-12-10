@@ -8,6 +8,10 @@ export default [
             {
                 title: 'Modal',
                 path: ['/clr-modal', 'modal']
+            },
+            {
+                title: 'Images',
+                path: ['/images', 'img-overlay']
             }
         ]
     }
