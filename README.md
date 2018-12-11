@@ -13,7 +13,7 @@ There is 3 major topics which this solution is intended to help.
 [Demo App](https://ngholistic.z6.web.core.windows.net)
 
 [![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-forms-sandbox-app-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=11)
-[![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/3/3)]
+![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/3/3)
 
 ### Overview
 
@@ -38,4 +38,4 @@ These should support following scenarios:
 [Demo App](https://clr7common7sandbox7app.z6.web.core.windows.net)
 
 [![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-common-sandbox-app-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=20)
-[![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/10/10)]
+![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/10/10)
