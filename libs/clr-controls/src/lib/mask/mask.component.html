@@ -1,6 +1,6 @@
 <input
     [placeholder]="placeholder"
-    [mask]="mask"
+    [mask]="mask || ''"
     [value]="value || ''"
     (keyup)="onChange($event)"
     type="text">

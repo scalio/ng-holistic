@@ -1,4 +1,7 @@
-<span class="clr-subtext" *ngIf="accept"> {{ labels.acceptFilesLabel }} {{ accept }} </span>
+<span class="clr-subtext">
+    <ng-container *ngIf="accept else acceptAll">{{ labels.acceptFilesLabel }} {{ accept }}</ng-container>
+    <ng-template #acceptAll> &nbsp; </ng-template>
+</span>
 <file-drop
     customstyle="file-drop"
     (onFileDrop)="onFileDrop($event)"
