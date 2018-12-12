@@ -17,6 +17,7 @@ export interface ModalShowFormParams extends ModalShowParams {
     componentFormField: string;
     dataAccess: FormFooterDataAccess;
     allowOkWhenFormPristine?: boolean;
+    value?: any;
 }
 
 /**
@@ -108,6 +109,8 @@ export class ModalService {
 
         result.modalInstance.formProvider = formProvider;
 
+        form.patchValue(params.value);
+
         return dataAccess.updateSuccess$ as Observable<any>;
     }
 
@@ -122,9 +125,14 @@ export class ModalService {
             contentComponentType: ConfirmModalComponent
         });
 
-        instance$.pipe(takeUntil(this.hide$), take(1)).subscribe(inst => {
-            inst.message = message;
-        });
+        instance$
+            .pipe(
+                takeUntil(this.hide$),
+                take(1)
+            )
+            .subscribe(inst => {
+                inst.message = message;
+            });
 
         return ok;
     }
@@ -137,10 +145,15 @@ export class ModalService {
 
         modalInstance.hideCancel = true;
 
-        instance$.pipe(takeUntil(this.hide$), take(1)).subscribe(inst => {
-            inst.alertType = alertType;
-            inst.message = message;
-        });
+        instance$
+            .pipe(
+                takeUntil(this.hide$),
+                take(1)
+            )
+            .subscribe(inst => {
+                inst.alertType = alertType;
+                inst.message = message;
+            });
 
         return ok;
     }

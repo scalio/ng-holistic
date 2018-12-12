@@ -52,7 +52,8 @@ export class CheckboxesComponent implements OnInit, ControlValueAccessor, Checkb
     }
 
     isChecked(item: any) {
-        return this.mapKey(item) === this.value;
+        const itemKey = this.mapKey(item);
+        return this.value  && R.contains(itemKey, this.value);
     }
 
     mapKey(obj: any) {
