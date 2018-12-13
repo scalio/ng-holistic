@@ -53,6 +53,8 @@ export namespace ClrFormFields {
         unmask?: Mask.UnmaskFun;
     }
 
+    export interface PhoneField extends BaseField<'PhoneField'> {}
+
     export type FormField =
         | TextField
         | SelectField
@@ -64,5 +66,6 @@ export namespace ClrFormFields {
         | DateTimeField
         | DateRangeField
         | FormFields.CustomFormField
-        | MaskField;
+        | MaskField
+        | PhoneField;
 }

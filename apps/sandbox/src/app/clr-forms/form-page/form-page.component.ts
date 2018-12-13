@@ -24,11 +24,8 @@ const group: ClrFormLayouts.ClrFormLayout = {
         },
         {
             id: 'phone',
-            kind: 'MaskField',
-            label: 'Phone',
-            placeholder: '+1 (999) 123-45678',
-            mask: TextMask.phone(),
-            unmask: TextMask.unmaskStrNumber
+            kind: 'PhoneField',
+            label: 'Phone'
         },
         {
             id: 'textarea',

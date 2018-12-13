@@ -18,7 +18,9 @@ import {
     TextComponent,
     TextModule,
     ToggleComponent,
-    ToggleModule
+    ToggleModule,
+    PhoneComponent,
+    PhoneModule
 } from '@ng-holistic/clr-controls';
 
 /**
@@ -34,7 +36,8 @@ export const clrFieldsLayoutMap = {
     CheckboxesField: CheckboxesComponent,
     DateTimeField: DateTimeComponent,
     DateRangeField: DateRangeComponent,
-    MaskField: MaskComponent
+    MaskField: MaskComponent,
+    PhoneField: PhoneComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -47,7 +50,8 @@ export const clrFieldsLayoutComponents = [
     CheckboxesComponent,
     DateTimeComponent,
     DateRangeComponent,
-    MaskComponent
+    MaskComponent,
+    PhoneComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -60,5 +64,6 @@ export const clrFieldsLayoutModules = [
     CheckboxesModule,
     DateTimeModule,
     DateRangeModule,
-    MaskModule
+    MaskModule,
+    PhoneModule
 ];

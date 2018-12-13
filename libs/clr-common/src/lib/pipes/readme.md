@@ -1,0 +1,1 @@
+TODO: move to separate lib @ng-holistic/common

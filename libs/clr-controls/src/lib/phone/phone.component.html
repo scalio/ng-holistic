@@ -1,0 +1,29 @@
+<div *ngIf="!readonly else readOnly">
+    +<input
+        class="hlc-clr-input"
+        [value]="countryPart"
+        (keyup)="onCountryChange($event.target.value)"
+        type="text"
+        mask="999"
+        style="width: 40px; min-width: 40px;"
+    />(<input
+        class="hlc-clr-input"
+        [value]="codePart"
+        (keyup)="onCodeChange($event.target.value)"
+        type="text"
+        mask="999"
+        (focus)="onCodeFocus()"
+        style="width: 40px; min-width: 40px;"
+    />)<input
+        #numInput
+        class="hlc-clr-input"
+        [value]="numberPart"
+        (keyup)="onNumberChange($event.target.value)"
+        type="text"
+        mask="9999999"
+        style="width: 100px"
+    />
+</div>
+<ng-template>
+    {{ value | phone }}
+</ng-template>

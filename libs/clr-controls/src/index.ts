@@ -25,3 +25,5 @@ export * from './lib/mask/mask.module';
 export * from './lib/mask/mask.types';
 export * from './lib/mask/mask.utils';
 export * from './lib/ngx-mask/index';
+export * from './lib/phone/phone.module';
+export * from './lib/phone/phone.component';
