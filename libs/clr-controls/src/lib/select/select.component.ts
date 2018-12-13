@@ -44,7 +44,14 @@ export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, Se
     ngOnInit() {}
 
     onChange(val: any) {
-        this.value = val.target.value || null;
+        /**
+        * Option change event always give string as an option value, event if value actually was other object type,
+        * this is wrong obviously when key is number.
+        * So use selectedIndex instead of val.target.value
+        */
+        const selectedIndex = val.target.selectedIndex - (this.disallowEmpty ? 0 : 1);
+
+        this.value = selectedIndex === -1 ? null : this.mapKey(this.items[selectedIndex]);
         this.valueChange.emit(this.value);
         this.propagateChange(this.value);
     }

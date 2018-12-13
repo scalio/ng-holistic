@@ -10,7 +10,7 @@
 
         <option
             *ngFor="let item of items; trackBy: trackBy"
-            [value]="mapKey(item)">
+            [value]="mapKey(item)" [attr.data]="item">
             {{mapLabel(item)}}
         </option>
     </select>
