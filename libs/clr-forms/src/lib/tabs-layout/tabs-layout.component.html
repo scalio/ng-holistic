@@ -5,30 +5,27 @@
         </ng-template>
     </clr-tab>
 </clr-tabs> -->
-<ul
-    class="nav"
-    role="tablist">
-    <li
-        *ngFor="let tab of $content; let i = index;"
-        role="presentation"
-        class="nav-item">
-        <button
-            *ngIf="!tab.$hidden || isTabVisible(tab.$hidden | async)"
-            (click)="onSetTabActive(i)"
-            class="btn btn-link nav-link"
-            [class.active]="isTabActive(i)"
-            aria-selected="isTabActive(i)"
-            type="button">
-            {{tab.title}}
-        </button>
-    </li>
+<ul class="nav" role="tablist">
+    <ng-container *ngFor="let tab of $content; let i = index">
+        <li *ngIf="!tab.$hidden || isTabVisible(tab.$hidden | async)" role="presentation" class="nav-item">
+            <button
+                *ngIf="!tab.$hidden || isTabVisible(tab.$hidden | async)"
+                (click)="onSetTabActive(i)"
+                class="btn btn-link nav-link"
+                [class.active]="isTabActive(i)"
+                aria-selected="isTabActive(i)"
+                type="button"
+            >
+                {{ tab.title }}
+            </button>
+        </li>
+    </ng-container>
 </ul>
 <section
-    *ngFor="let tab of $content; let i = index;"
+    *ngFor="let tab of $content; let i = index"
     [attr.aria-hidden]="isTabActive(i) ? undefined : true"
     role="tabpanel"
 >
     <!--- TODO : can't make it work with ngIf [ng-template #vc [ngIf]] is not working here -->
-    <ng-container #vc>
-    </ng-container>
+    <ng-container #vc> </ng-container>
 </section>
