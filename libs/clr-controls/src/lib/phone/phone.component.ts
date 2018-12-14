@@ -1,8 +1,17 @@
-import { Component, forwardRef, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    OnInit,
+    Optional,
+    Output,
+    ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { update } from 'ramda';
-import { splitPhoneParts } from '@ng-holistic/clr-common';
-import { TextMask } from '../mask/mask.utils';
+import { defaultPhoneConfig, HLC_CLR_PHONE_CONFIG, PhoneConfig } from './phone.config';
 
 @Component({
     selector: 'hlc-phone',
@@ -18,19 +27,10 @@ import { TextMask } from '../mask/mask.utils';
 })
 export class PhoneComponent implements OnInit, ControlValueAccessor {
     private codeJustFocused = false;
-    private _value: string;
-    private parts = ['', '', ''];
 
-    @Input() set value(val: string) {
-        this._value = val;
-        const parts = this.value && splitPhoneParts(this.value);
-        this.parts = parts || ['', '', this.value || ''];
-    }
+    private readonly config: PhoneConfig;
 
-    get value() {
-        return this._value;
-    }
-
+    @Input() value: any;
     @Input() placeholder: string | undefined;
     @Input() readonly: boolean | undefined;
 
@@ -39,27 +39,33 @@ export class PhoneComponent implements OnInit, ControlValueAccessor {
 
     propagateChange = (_: any) => {};
 
-    constructor() {}
+    constructor(@Optional() @Inject(HLC_CLR_PHONE_CONFIG) config?: PhoneConfig) {
+        this.config = config || defaultPhoneConfig;
+    }
 
     ngOnInit() {}
 
+    get useCodePart() {
+        return this.config.useParts === 'CountryCodeNumber';
+    }
+
     get countryPart() {
-        return this.parts[0];
+        return this.config.getCountry(this.value);
     }
 
     get codePart() {
-        return this.parts[1];
+        return this.config.getCode && this.config.getCode(this.value);
     }
 
     get numberPart() {
-        return this.parts[2];
+        return this.config.getNumber(this.value);
     }
 
     onCountryChange(val: string) {
         if (val === this.countryPart) {
             return;
         }
-        this.parts = update(0, val || '', this.parts);
+        this.value = this.config.concatValue(val, this.codePart, this.numberPart);
         this.onChange();
     }
 
@@ -67,7 +73,7 @@ export class PhoneComponent implements OnInit, ControlValueAccessor {
         if (val === this.codePart) {
             return;
         }
-        this.parts = update(1, val || '', this.parts);
+        this.value = this.config.concatValue(this.countryPart, val, this.numberPart);
         this.onChange();
 
         if (this.codeJustFocused) {
@@ -83,8 +89,7 @@ export class PhoneComponent implements OnInit, ControlValueAccessor {
         if (val === this.numberPart) {
             return;
         }
-        const val1 = val && TextMask.unmaskStrNumber(val);
-        this.parts = update(2, val1 || '', this.parts);
+        this.value = this.config.concatValue(this.countryPart, this.codePart, val);
         this.onChange();
     }
 
@@ -106,8 +111,7 @@ export class PhoneComponent implements OnInit, ControlValueAccessor {
     registerOnTouched(_: any) {}
 
     private onChange() {
-        this._value = this.parts.join('');
-        this.valueChange.emit(this._value);
-        this.propagateChange(this._value);
+        this.valueChange.emit(this.value);
+        this.propagateChange(this.value);
     }
 }
