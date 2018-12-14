@@ -5,7 +5,7 @@
         (keyup)="onCountryChange($event.target.value)"
         type="text"
         mask="999"
-        style="width: 40px; min-width: 40px;"
+        class="small-input"
     />(<input
         class="hlc-clr-input"
         [value]="codePart"
@@ -13,7 +13,7 @@
         type="text"
         mask="999"
         (focus)="onCodeFocus()"
-        style="width: 40px; min-width: 40px;"
+        class="small-input"
     />)<input
         #numInput
         class="hlc-clr-input"
@@ -21,9 +21,9 @@
         (keyup)="onNumberChange($event.target.value)"
         type="text"
         mask="9999999"
-        style="width: 100px"
+        class="normal-input"
     />
 </div>
-<ng-template>
-    {{ value | phone }}
+<ng-template #readOnly>
+    <span class="label-readonly">{{ value | phone }}</span>
 </ng-template>

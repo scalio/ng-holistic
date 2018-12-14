@@ -84,8 +84,8 @@ export class FileUploaderComponent implements OnInit {
     private checkAccept(fileName: string) {
         if (this.accept) {
             const accept = this.accept.replace(/\s/g, '').replace(/,/g, '|');
-            const regex = new RegExp(`.*(${accept})$`);
-            if (!regex.test(fileName)) {
+            const regex = new RegExp(`.*(${accept.toLowerCase()})$`);
+            if (!regex.test(fileName.toLowerCase())) {
                 return false;
             }
         }

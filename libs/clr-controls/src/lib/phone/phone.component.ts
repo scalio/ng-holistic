@@ -90,7 +90,6 @@ export class PhoneComponent implements OnInit, ControlValueAccessor {
 
     //
     onCodeFocus() {
-        console.log('+++');
         this.codeJustFocused = true;
     }
 
