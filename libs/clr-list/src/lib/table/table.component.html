@@ -1,0 +1,48 @@
+<clr-datagrid
+    #grid
+    (clrDgRefresh)="onRefresh($event)"
+>
+    <clr-dg-column
+        *ngFor="let col of config?.cols; trackBy: trackByCol"
+        [class.sortable]="col.sort"
+        [clrDgField]="col.isSortable ? getColSort(col) : undefined"
+    >
+        {{ col.title }}
+    </clr-dg-column>
+
+    <clr-dg-row
+        *ngFor="let row of rows; trackBy: trackByRow;"
+        [class.active-row]="isRowActive(row)"
+        [clrDgItem]="row.id"
+    >
+        <clr-dg-cell *ngFor="let cell of config?.cols; trackBy: trackByCol">
+            <!-- regular cell -->
+            <ng-template [ngIf]="!cell.kind">
+                <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
+            </ng-template>
+        </clr-dg-cell>
+
+    </clr-dg-row>
+
+    <!--
+    <clr-dg-footer *ngIf="paginator">
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
+        <fm-core-select
+            class="page-size-selector"
+            [naked]="true"
+            [noEmptyItem]="true"
+            [value]="paginator.pageSize"
+            (valueChange)="onPageSizeChanged($event)"
+            [items]="pageSizeItems"
+        ></fm-core-select>
+        <clr-dg-pagination
+            #pagination
+            [clrDgPageSize]="paginator.pageSize"
+            [clrDgPage]="paginator.pageIndex"
+            [clrDgTotalItems]="paginator.length"
+        >
+        </clr-dg-pagination>
+    </clr-dg-footer>
+    -->
+
+</clr-datagrid>
