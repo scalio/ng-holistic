@@ -32,6 +32,10 @@ export class FilterComponent implements OnInit {
     ngOnInit() {
     }
 
+    get hasChanges() {
+        return this.clrForm.form.hasChanges;
+    }
+
     onFilter() {
         this.filter.emit(this.clrForm.form.value);
     }
