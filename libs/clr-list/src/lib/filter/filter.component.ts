@@ -8,12 +8,18 @@ import { ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterComponent implements OnInit {
-    @Input() fields: ClrFormFields.FormField[];
 
-    get group() {
-        return this.fields && {
+    _fields: ClrFormFields.FormField[];
+    group: ClrFormLayouts.FieldsLayout;
+
+    @Input() set fields(val: ClrFormFields.FormField[]) {
+        if (val === this._fields) {
+            return;
+        }
+        this._fields = val;
+        this.group = this._fields && {
             kind: 'fields',
-            fields: this.fields
+            fields: this._fields
         } as ClrFormLayouts.FieldsLayout;
     }
 
