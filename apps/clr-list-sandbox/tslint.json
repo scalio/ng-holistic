@@ -1,0 +1,7 @@
+{
+    "extends": "../../tslint.json",
+    "rules": {
+        "directive-selector": [true, "attribute", "hlc-clr-sandbox", "camelCase"],
+        "component-selector": [true, "element", "hlc-clr-sandbox", "kebab-case"]
+    }
+}
