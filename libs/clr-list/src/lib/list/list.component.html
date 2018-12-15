@@ -1,0 +1,9 @@
+<hlc-clr-table
+    [rows]="rows"
+    [loading]="loading"
+    [dataProvider]="dataProvider"
+    [table]="table"
+    (stateChanged)="onTableStateChanged($event)"
+>
+    <hlc-clr-filter action-bar [fields]="filterFields" (filterChanged)="onFilterChanged($event)"></hlc-clr-filter>
+</hlc-clr-table>

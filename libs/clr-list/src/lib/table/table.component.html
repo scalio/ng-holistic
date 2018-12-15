@@ -2,6 +2,9 @@
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
 >
+    <clr-dg-action-bar>
+        <ng-content select="[action-bar]"></ng-content>
+    </clr-dg-action-bar>
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"

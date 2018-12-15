@@ -35,7 +35,6 @@ export class TableComponent implements OnDestroy {
      * Regualr integration, just load data and keep them locally
      */
     @Input() dataProvider: TableData.DataProvider | undefined;
-
     @Input() table: Table.TableDescription | undefined;
 
     /**
