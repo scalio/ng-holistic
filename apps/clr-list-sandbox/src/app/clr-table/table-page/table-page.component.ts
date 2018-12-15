@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table } from '@ng-holistic/clr-list';
+import { Table, TableData } from '@ng-holistic/clr-list';
+import { timer } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 const table: Table.TableDescription = {
     cols: [
@@ -28,6 +30,12 @@ const rows: Table.Row[] = [
     }
 ];
 
+const dataProvider: TableData.DataProvider = {
+    load() {
+        return timer(1000).pipe(mapTo({ rows }));
+    }
+};
+
 @Component({
     selector: 'hlc-clr-sandbox-table-page',
     templateUrl: './table-page.component.html',
@@ -35,9 +43,8 @@ const rows: Table.Row[] = [
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TablePageComponent implements OnInit {
-
     table = table;
-    rows = rows;
+    dataProvider = dataProvider;
 
     constructor() {}
 

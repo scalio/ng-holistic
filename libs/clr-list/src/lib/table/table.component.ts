@@ -6,12 +6,13 @@ import {
     Optional,
     Output,
     Inject,
-    OnDestroy
+    OnDestroy,
+    ChangeDetectorRef
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { TableConfig, HLC_CLR_TABLE_CONFIG, defaultTableConfig } from './table.config';
 import { Table, TableData } from './table.types';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, finalize, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -28,6 +29,7 @@ export class TableComponent implements OnDestroy {
      * Redux like integration with external store for rows
      */
     @Input() rows: Table.Row[];
+    @Input() loading = false;
 
     /**
      * Regualr integration, just load data and keep them locally
@@ -41,7 +43,10 @@ export class TableComponent implements OnDestroy {
      */
     @Output() stateChanged = new EventEmitter<any>();
 
-    constructor(@Optional() @Inject(HLC_CLR_TABLE_CONFIG) config?: TableConfig) {
+    constructor(
+        private readonly cdr: ChangeDetectorRef,
+        @Optional() @Inject(HLC_CLR_TABLE_CONFIG) config?: TableConfig
+    ) {
         this.config = config || defaultTableConfig;
     }
 
@@ -56,16 +61,23 @@ export class TableComponent implements OnDestroy {
         const mpState = this.config.dataProvider.mapState(state);
         this.stateChanged.emit(mpState);
         if (this.dataProvider) {
+            this.loading = true;
+            this.cdr.detectChanges();
             this.dataProvider
                 .load(mpState)
                 .pipe(
                     takeUntil(this.destroy$),
-                    take(1)
+                    take(1),
+                    tap(res => {
+                        const mpResult = this.config.dataProvider.mapResult(res);
+                        this.rows = mpResult.rows;
+                    }),
+                    finalize(() => {
+                        this.loading = false;
+                        this.cdr.detectChanges();
+                    })
                 )
-                .subscribe(res => {
-                    const mpResult = this.config.dataProvider.mapResult(res);
-                    this.rows = mpResult.rows;
-                });
+                .subscribe(() => {});
         }
     }
 
