@@ -2,6 +2,16 @@ import { SideNavItem } from '@ng-holistic/clr-layout';
 
 export default [
     {
+        title: 'Clr Filter',
+        icon: 'filter',
+        children: [
+            {
+                title: 'Filter',
+                path: ['/clr-filter', 'filter']
+            }
+        ]
+    },
+    {
         title: 'Clr Table',
         icon: 'view-list',
         children: [
