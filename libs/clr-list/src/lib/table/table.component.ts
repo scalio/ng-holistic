@@ -85,6 +85,18 @@ export class TableComponent implements OnDestroy {
         return false;
     }
 
+    getColSort(col: Table.ColumnBase) {
+        if (!col.sort) {
+            return undefined;
+        }
+        if (typeof col.sort === 'string') {
+            return col.sort;
+        }
+        if (typeof col.sort === 'boolean') {
+            return col.id;
+        }
+    }
+
     getCellClass(cell: Table.Column, row: Table.Row) {
         if (cell.format) {
             const fmt = cell.format(row[cell.id], row);

@@ -7,7 +7,8 @@ const table: Table.TableDescription = {
     cols: [
         {
             id: 'title',
-            title: 'Title'
+            title: 'Title',
+            sort: true
         },
         {
             id: 'capTitle',
@@ -31,7 +32,8 @@ const rows: Table.Row[] = [
 ];
 
 const dataProvider: TableData.DataProvider = {
-    load() {
+    load(state) {
+        console.log(state);
         return timer(1000).pipe(mapTo({ rows }));
     }
 };

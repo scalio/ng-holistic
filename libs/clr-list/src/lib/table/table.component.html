@@ -5,7 +5,7 @@
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
-        [clrDgField]="col.isSortable ? getColSort(col) : undefined"
+        [clrDgField]="getColSort(col)"
     >
         {{ col.title }}
     </clr-dg-column>
