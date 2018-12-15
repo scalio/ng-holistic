@@ -1,0 +1,24 @@
+:host {
+    display: inline-table;
+    margin-right: 25px;
+    margin-bottom:  10px;
+}
+
+.input-label {
+    display: block;
+}
+
+.error-icon {
+    margin-top: 5px;
+    color: red;
+}
+
+.component-block {
+    display: flex;
+}
+
+// probably only for filters ????
+::ng-deep .datepicker-trigger {
+    min-width: 25px;
+    height: 25px;
+}
