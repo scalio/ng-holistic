@@ -1,5 +1,6 @@
-export namespace Table {
+import { Observable } from 'rxjs';
 
+export namespace Table {
     export interface ColumnFormat {
         val?: string;
         cls?: string;
@@ -14,7 +15,6 @@ export namespace Table {
         sort?: string | boolean;
     }
 
-
     export interface Column extends ColumnBase {
         /**
          * Format column value
@@ -27,7 +27,7 @@ export namespace Table {
         kind: string;
     }
 
-    export interface TableConfig {
+    export interface TableDescription {
         cols: Column[];
     }
 
@@ -38,4 +38,26 @@ export namespace Table {
     export interface Row extends RowBase {
         [key: string]: any;
     }
+
+}
+
+export namespace TableData {
+
+    /**
+     * We load data in any format, but then they must be converted to the table format via config
+     */
+    export interface DataProvider<TState = any, TResult = any> {
+        load(state: TState): Observable<TResult>;
+    }
+
+    export interface Pagination {
+        pageIndex: number;
+        pageSize: number;
+    }
+
+    export interface Result {
+        rows: Table.Row[];
+        pagination?: Pagination;
+    }
+
 }

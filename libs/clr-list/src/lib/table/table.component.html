@@ -3,7 +3,7 @@
     (clrDgRefresh)="onRefresh($event)"
 >
     <clr-dg-column
-        *ngFor="let col of config?.cols; trackBy: trackByCol"
+        *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
         [clrDgField]="col.isSortable ? getColSort(col) : undefined"
     >
@@ -15,7 +15,7 @@
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
     >
-        <clr-dg-cell *ngFor="let cell of config?.cols; trackBy: trackByCol">
+        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
             <!-- regular cell -->
             <ng-template [ngIf]="!cell.kind">
                 <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>

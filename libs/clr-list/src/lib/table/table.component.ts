@@ -1,6 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    Optional,
+    Output,
+    Inject,
+    OnDestroy
+} from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
-import { Table } from './table.types';
+import { TableConfig, HLC_CLR_TABLE_CONFIG, defaultTableConfig } from './table.config';
+import { Table, TableData } from './table.types';
+import { take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'hlc-clr-table',
@@ -8,18 +20,53 @@ import { Table } from './table.types';
     styleUrls: ['./table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent {
+export class TableComponent implements OnDestroy {
+    private destroy$ = new Subject();
+    readonly config: TableConfig;
+
     /**
      * Redux like integration with external store for rows
      */
     @Input() rows: Table.Row[];
 
-    @Input() config: Table.TableConfig | undefined;
+    /**
+     * Regualr integration, just load data and keep them locally
+     */
+    @Input() dataProvider: TableData.DataProvider | undefined;
 
+    @Input() table: Table.TableDescription | undefined;
+
+    /**
+     * Value will be already mapped by config.dataProvider.mapState
+     */
+    @Output() stateChanged = new EventEmitter<any>();
+
+    constructor(@Optional() @Inject(HLC_CLR_TABLE_CONFIG) config?: TableConfig) {
+        this.config = config || defaultTableConfig;
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
+
+    /**
+     * Inline integration, state inside component
+     */
     onRefresh(state: ClrDatagridStateInterface) {
-        console.log('111', state);
-
-        // TODO : map refresh params via config
+        const mpState = this.config.dataProvider.mapState(state);
+        this.stateChanged.emit(mpState);
+        if (this.dataProvider) {
+            this.dataProvider
+                .load(mpState)
+                .pipe(
+                    takeUntil(this.destroy$),
+                    take(1)
+                )
+                .subscribe(res => {
+                    const mpResult = this.config.dataProvider.mapResult(res);
+                    this.rows = mpResult.rows;
+                });
+        }
     }
 
     isRowActive(_: Table.RowBase) {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Table } from '@ng-holistic/clr-list';
 
-const config: Table.TableConfig = {
+const table: Table.TableDescription = {
     cols: [
         {
             id: 'title',
@@ -36,7 +36,7 @@ const rows: Table.Row[] = [
 })
 export class TablePageComponent implements OnInit {
 
-    config = config;
+    table = table;
     rows = rows;
 
     constructor() {}
