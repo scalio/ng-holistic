@@ -1,1 +1,11 @@
-<hlc-clr-form [group]="group"></hlc-clr-form>
+<div class="clr-row">
+    <div class="clr-col-11">
+        <hlc-clr-form [group]="group"></hlc-clr-form>
+    </div>
+    <div class="clr-col-1">
+        <button class="btn" (click)="onFilter()">Filter</button>
+        <br>
+        <button class="btn btn-sm btn-link" (click)="onReset()">Reset</button>
+    </div>
+</div>
+

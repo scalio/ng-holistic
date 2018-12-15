@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { ClrFormFields, ClrFormLayouts, ClrFormComponent } from '@ng-holistic/clr-forms';
 
 @Component({
     selector: 'hlc-clr-filter',
@@ -11,6 +11,10 @@ export class FilterComponent implements OnInit {
 
     _fields: ClrFormFields.FormField[];
     group: ClrFormLayouts.FieldsLayout;
+
+    @Output() filter = new EventEmitter<any>();
+
+    @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
 
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
@@ -25,5 +29,16 @@ export class FilterComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
+
+    onFilter() {
+        this.filter.emit(this.clrForm.form.value);
+    }
+
+    onReset() {
+        this.clrForm.form.resetValue();
+        this.filter.emit(this.clrForm.form.value);
+    }
+
 }
