@@ -24,5 +24,15 @@ export default [
                 path: ['/clr-table', 'table-redux']
             }
         ]
+    },
+    {
+        title: 'Clr List',
+        icon: 'list',
+        children: [
+            {
+                title: 'List',
+                path: ['/clr-list', 'list']
+            }
+        ]
     }
 ] as SideNavItem[];
