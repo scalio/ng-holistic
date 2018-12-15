@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AppLayoutModule } from './app-layout/app-layout.module';
 import { routes as clrTableRoutes } from './clr-table/clr-table.routing.module';
-import { TablePageModule } from './clr-table/table-page/table-page.module';
+import { ClrTableModule } from './clr-table/clr-table.module';
 
 export const routes: Routes = [
     {
@@ -24,7 +24,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), AppLayoutModule, TablePageModule],
+    imports: [RouterModule.forChild(routes), AppLayoutModule, ClrTableModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

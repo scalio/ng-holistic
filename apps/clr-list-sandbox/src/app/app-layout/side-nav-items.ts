@@ -8,6 +8,10 @@ export default [
             {
                 title: 'Table',
                 path: ['/clr-table', 'table']
+            },
+            {
+                title: 'Table (redux)',
+                path: ['/clr-table', 'table-redux']
             }
         ]
     }
