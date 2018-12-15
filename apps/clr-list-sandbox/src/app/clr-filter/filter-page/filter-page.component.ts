@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
+import { Validators } from '@angular/forms';
 
 const fields: ClrFormFields.FormField[] = [
     {
         id: 'text',
         kind: 'TextField',
         label: 'Text',
-        placeholder: 'Type something'
+        placeholder: 'Type something',
+        $validators: [Validators.required]
     },
     {
         id: 'select',
