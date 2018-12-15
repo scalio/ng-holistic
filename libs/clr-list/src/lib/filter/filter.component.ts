@@ -37,12 +37,12 @@ export class FilterComponent implements OnInit {
     }
 
     onFilter() {
-        this.filter.emit(this.clrForm.form.value);
+        this.filter.emit(this.clrForm.form.formGroup.value);
     }
 
     onReset() {
         this.clrForm.form.resetValue();
-        this.filter.emit(this.clrForm.form.value);
+        this.filter.emit(this.clrForm.form.formGroup.value);
     }
 
 }

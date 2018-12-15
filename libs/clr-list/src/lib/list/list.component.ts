@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {}
 
-    onFilterChanged(filter: any) {
+    onFilter(filter: any) {
         console.log('111', filter);
     }
 
