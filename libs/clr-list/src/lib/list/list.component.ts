@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Table, TableData } from '../table/table.types';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
+import * as R from 'ramda';
+import { TableComponent } from '../table/table.component';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -34,15 +36,22 @@ export class ListComponent implements OnInit {
 
     @Output() filter = new EventEmitter<any>();
 
+    @ViewChild(TableComponent) tableComponent: TableComponent;
+
     constructor() {}
 
     ngOnInit() {}
 
     onFilter(filter: any) {
-        console.log('111', filter);
+        const filters = R.pipe(
+            R.toPairs,
+            R.map(([property, value]) => ({ property, value }))
+        )(filter);
+
+        this.tableComponent.refreshState({ filters });
     }
 
     onTableStateChanged(state: any) {
-        console.log('222', state);
+        this.stateChanged.emit(state);
     }
 }

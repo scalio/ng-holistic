@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnDestroy {
+    private state: ClrDatagridStateInterface;
     private destroy$ = new Subject();
     readonly config: TableConfig;
 
@@ -70,6 +71,7 @@ export class TableComponent implements OnDestroy {
                     tap(res => {
                         const mpResult = this.config.dataProvider.mapResult(res);
                         this.rows = mpResult.rows;
+                        this.state = state;
                     }),
                     finalize(() => {
                         this.loading = false;
@@ -118,6 +120,10 @@ export class TableComponent implements OnDestroy {
         } else {
             return row[cell.id];
         }
+    }
+
+    refreshState(state: Partial<ClrDatagridStateInterface>) {
+        this.onRefresh({...this.state, ...state});
     }
 
     // trackBy
