@@ -144,7 +144,6 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
     }
 
     get hasChanges() {
-        console.log('111', this.formGroup && this.formGroup.value, this.initialValue);
         return this.formGroup && !equals(this.formGroup.value, this.initialValue);
     }
 
