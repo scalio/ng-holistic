@@ -1,0 +1,12 @@
+{
+    "name": "@ng-holistic/clr-list",
+    "version": "0.0.12",
+    "peerDependencies": {
+        "@angular/common": "^7.1.0",
+        "@angular/core": "^7.1.0",
+        "@ng-holistic/clr-controls": "0.0.12",
+        "@ng-holistic/forms": "0.0.12",
+        "@ng-holistic/clr-forms": "0.0.12"
+
+    }
+}

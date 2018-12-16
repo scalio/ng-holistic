@@ -55,7 +55,7 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     ) {}
 
     get date() {
-        return this.dateConvertService.parseDomainDate(this.value);
+        return this.value ? this.dateConvertService.parseDomainDate(this.value) : undefined;
     }
 
     set date(val: Date | undefined) {
@@ -86,7 +86,6 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     onReset() {
         this.value = undefined;
         this.onChange();
-        this.input.nativeElement.value = '';
     }
 
     onChange() {
@@ -98,6 +97,9 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
 
     writeValue(obj: any) {
         this.value = obj;
+        if (!this.value) {
+            this.resetValue();
+        }
     }
 
     registerOnChange(fn: any) {
@@ -107,6 +109,9 @@ export class DateComponent implements OnInit, OnInit, ControlValueAccessor, Date
     registerOnTouched(_: any) {}
 
     //
+    resetValue() {
+        this.input.nativeElement.value = '';
+    }
 
     private formatToDomainStr = (date: Date) => this.dateConvertService.formatToDomainStr(date);
 }

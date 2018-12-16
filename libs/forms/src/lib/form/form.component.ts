@@ -39,6 +39,10 @@ import { initFormGroup } from './form-builder';
 export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
+    /**
+     * Initial value - value on form, right after form initialization
+     */
+    private initialValue: any;
     group: IFormGroup<any> | undefined;
     @Input('group')
     set setGroup(val: FormLayoutConfig | undefined) {
@@ -117,6 +121,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
             });
         }
 
+        this.initialValue = this.formGroup.value;
         this.formCreated.emit(this.formGroup);
     }
 
@@ -136,5 +141,13 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    get hasChanges() {
+        return this.formGroup && !equals(this.formGroup.value, this.initialValue);
+    }
+
+    resetValue() {
+        this.formGroup.reset(this.initialValue);
     }
 }

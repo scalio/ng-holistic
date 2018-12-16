@@ -42,6 +42,9 @@
       ],
       "@ng-holistic/clr-common": [
         "libs/clr-common/src/index.ts"
+      ],
+      "@ng-holistic/clr-list": [
+        "libs/clr-list/src/index.ts"
       ]
     }
   },

@@ -1,0 +1,28 @@
+:host {
+    display: inline-table;
+    margin-right: 15px;
+    margin-bottom:  10px;
+}
+
+.input-label {
+    display: block;
+}
+
+.error-icon {
+    margin-top: 5px;
+    color: red;
+}
+
+.component-block {
+    display: flex;
+}
+
+.error-placeholder {
+    width:16px;
+    height:16px;
+}
+
+::ng-deep .datepicker-trigger {
+    min-width: 25px;
+    height: 25px;
+}

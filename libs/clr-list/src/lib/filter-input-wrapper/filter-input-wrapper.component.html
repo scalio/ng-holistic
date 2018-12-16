@@ -1,0 +1,17 @@
+<label class="input-label"> {{ label }} </label>
+<div class="component-block">
+    <ng-content></ng-content>
+    <a
+        *ngIf="validationErrors.length > 0 else errorPlaceholder"
+        href="javascript://"
+        role="tooltip"
+        aria-haspopup="true"
+        class="tooltip tooltip-md tooltip-top-right"
+    >
+        <clr-icon shape="error-standard" class="error-icon"></clr-icon>
+        <span class="tooltip-content" *ngFor="let error of validationErrors; trackBy: trackByError"> {{ error }} </span>
+    </a>
+    <ng-template #errorPlaceholder>
+        <div class="error-placeholder"></div>
+    </ng-template>
+</div>

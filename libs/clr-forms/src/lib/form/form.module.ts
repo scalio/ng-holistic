@@ -16,10 +16,10 @@ import {
 } from '../fields-layout/fields-layout-map';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
 import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
+import { InputContainerComponent } from '../input-container/input-container.component';
 import { InputContainerModule } from '../input-container/input-container.module';
 import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
-import { InputContainerComponent } from '../input-container/input-container.component';
 
 @NgModule({
     imports: [
@@ -36,7 +36,11 @@ import { InputContainerComponent } from '../input-container/input-container.comp
     entryComponents: clrFieldsLayoutComponents
 })
 export class ClrFormModule {
-    static forRoot(fieldsLayoutMap?: FieldsLayoutMap, groupsLayoutMap?: GroupsLayoutMap): ModuleWithProviders {
+    static forRoot(
+        fieldsLayoutMap?: FieldsLayoutMap,
+        groupsLayoutMap?: GroupsLayoutMap,
+        inputContainer?: any
+    ): ModuleWithProviders {
         return {
             ngModule: ClrFormModule,
             providers: [
@@ -62,7 +66,7 @@ export class ClrFormModule {
                 },
                 {
                     provide: HLC_FORM_FIELD_WRAPPER,
-                    useValue: InputContainerComponent
+                    useValue: inputContainer || InputContainerComponent
                 }
             ]
         };

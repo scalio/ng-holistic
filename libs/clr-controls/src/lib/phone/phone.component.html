@@ -1,0 +1,35 @@
+<div *ngIf="!readonly; else readOnly">
+    +<input
+        class="hlc-clr-input"
+        [value]="countryPart"
+        (keyup)="onCountryChange($event.target.value)"
+        type="text"
+        mask="999"
+        class="small-input"
+    />
+    <ng-container *ngIf="useCodePart">
+        (<input
+            class="hlc-clr-input"
+            [value]="codePart"
+            (keyup)="onCodeChange($event.target.value)"
+            type="text"
+            mask="999"
+            (focus)="onCodeFocus()"
+            class="small-input"
+        />)
+    </ng-container>
+    <input
+        #numInput
+        class="hlc-clr-input"
+        [value]="numberPart"
+        (keyup)="onNumberChange($event.target.value)"
+        type="text"
+        mask="9999999"
+        class="normal-input"
+    />
+</div>
+<ng-template #readOnly>
+    <span class="label-readonly">
+        +{{countryPart}} <ng-container *ngIf="useCodePart">({{codePart}})</ng-container> {{numberPart}}
+    </span>
+</ng-template>

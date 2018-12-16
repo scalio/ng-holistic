@@ -6,14 +6,15 @@ import { distinctUntilChanged, tap } from 'rxjs/operators';
 
 export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: FormFields.FormField[]) =>
     R.pipe(
-        R.map<FormFields.FormField, [string, any]>(field => [
+        R.map<FormFields.FormField, [string, any, any]>(field => [
             field.id,
-            R.propOr<any, any, any[]>([], '$validators', field)
+            R.propOr<any, any, any[]>([], '$validators', field),
+            field.value
         ]),
-        R.forEach(([k, v]: [string, any]) => {
+        R.forEach(([k, v, val]: [string, any, any]) => {
             // when $validators are observable not use them for initialziation
             v = v instanceof Observable ? [] : v;
-            return formGroup.addControl(k, fb.control(null, v));
+            return formGroup.addControl(k, fb.control(val, v));
         }),
         _ => formGroup
     )(inputs);

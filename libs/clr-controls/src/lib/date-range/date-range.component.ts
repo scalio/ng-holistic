@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DateComponent } from '../date/date.component';
 import { RangeMapperService } from '../range.config';
 
 export interface DateRangeValues {
@@ -28,8 +29,9 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRan
     @Input()
     readonly: boolean;
 
-    @ViewChild('input')
-    input: ElementRef<any>;
+    // required for reset
+    @ViewChildren(DateComponent)
+    dateComponents: QueryList<DateComponent>;
 
     @Output()
     valueChange = new EventEmitter<any | null | undefined>();
@@ -67,6 +69,9 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRan
 
     writeValue(obj: any) {
         this.value = obj;
+        if (!this.value && this.dateComponents) {
+            this.dateComponents.forEach(x => x.resetValue());
+        }
     }
 
     registerOnChange(fn: any) {

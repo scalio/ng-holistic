@@ -5,7 +5,7 @@ This solution is umbrella for number of angular libraries which makes developmen
 There is 3 major topics which this solution is intended to help.
 
 1. Data driven forms
-2. Data driven tables (TBD)
+2. Data driven tables
 3. Utils aka Common
 
 ## Data driven forms
@@ -32,6 +32,17 @@ These should support following scenarios:
 
 > Note: there is ready to use library based on [clarity](https://vmware.github.io/clarity/) UI design system with predefined set of components.
 
+## Data driven lists
+
+[Demo App](https://clr7list7sandbox7app.z6.web.core.windows.net/)
+
+[![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-list-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=21)
+![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/11/11)
+
+
+### Overview
+
+The target here is to create angular lists declaratively.
 
 ## Common
 

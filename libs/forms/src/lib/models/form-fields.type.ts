@@ -8,6 +8,7 @@ export namespace FormFields {
     export interface BaseField<T extends string> {
         id: string;
         kind: T;
+        value?: any;
     }
 
     export interface Field<T extends string = any> extends BaseField<T> {

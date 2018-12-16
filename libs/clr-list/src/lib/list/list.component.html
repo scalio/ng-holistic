@@ -1,0 +1,24 @@
+<hlc-clr-table
+    [rows]="rows"
+    [loading]="loading"
+    [dataProvider]="dataProvider"
+    [table]="table"
+    (stateChanged)="onTableStateChanged($event)"
+>
+    <ng-container action-bar>
+        <div class="clr-row">
+            <div class="clr-col-2">
+                <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
+                    <clr-icon shape="angle" dir="down"></clr-icon>Hide Filter
+                </button>
+                <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
+                    <clr-icon shape="angle" dir="up"></clr-icon>Show Filter
+                </button>
+            </div>
+            <div class="clr-col-10">
+                <ng-content select="[toolbox]"></ng-content>
+            </div>
+        </div>
+        <hlc-clr-filter [fields]="filterFields" (filter)="onFilter($event)" [hidden]="!isFilterShown"></hlc-clr-filter>
+    </ng-container>
+</hlc-clr-table>

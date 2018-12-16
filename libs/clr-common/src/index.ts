@@ -21,3 +21,7 @@ export * from './lib/form-error/form-error.module';
 // img-overlay
 export * from './lib/img-overlay/img-overlay.component';
 export * from './lib/img-overlay/img-overlay.module';
+
+// pipes
+export * from './lib/pipes/common-pipes.module';
+export * from './lib/pipes/phone.pipe';
