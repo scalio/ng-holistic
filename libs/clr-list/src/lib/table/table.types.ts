@@ -27,7 +27,6 @@ export namespace Table {
         customCell: true;
     }
 
-
     export interface RowBase {
         id: string;
     }
@@ -57,7 +56,17 @@ export namespace Table.MapColumns {
         kind: 'LinkColumn';
     }
 
-    export type Column = LinkColumn;
+    export interface ImgCellProps {
+        src: CellProp<string>;
+        width?: CellProp<string>;
+        height?: CellProp<string>;
+    }
+
+    export interface ImgColumn extends MapColumn<ImgCellProps> {
+        kind: 'ImgColumn';
+    }
+
+    export type Column = LinkColumn | ImgColumn;
 }
 
 export interface TableDescription {

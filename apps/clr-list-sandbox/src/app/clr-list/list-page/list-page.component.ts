@@ -47,14 +47,23 @@ const table: TableDescription = {
         },
         {
             id: 'link',
-            kind: 'LinkCell',
+            kind: 'LinkColumn',
             title: 'Link',
             props: {
                 title(row) {
                     return row['title'];
                 },
                 link: 'some link',
-                click: new Subject()
+                clicked: new Subject()
+            }
+        },
+        {
+            id: 'img',
+            kind: 'ImgColumn',
+            title: 'Img',
+            props: {
+                src: 'https://pbs.twimg.com/media/DuijXwuWsAAuL7I.jpg',
+                height: '100px'
             }
         },
         {
