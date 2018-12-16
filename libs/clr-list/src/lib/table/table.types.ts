@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export namespace Table {
     export interface ColumnFormat {
@@ -23,14 +23,6 @@ export namespace Table {
         format?: (val: any, row: any) => string | ColumnFormat;
     }
 
-    export interface CustomColumn extends ColumnBase {
-        kind: string;
-    }
-
-    export interface TableDescription {
-        cols: Column[];
-    }
-
     export interface RowBase {
         id: string;
     }
@@ -38,11 +30,36 @@ export namespace Table {
     export interface Row extends RowBase {
         [key: string]: any;
     }
+}
 
+export namespace Table.MapCells {
+    export interface MapCell<P = any> extends ColumnBase {
+        kind: string;
+        props: P;
+    }
+
+    export type CellPropFun<T> = (row: any) => T;
+
+    export type CellProp<T> = CellPropFun<T> | T;
+
+    export interface LinkCellProps {
+        title: CellProp<string>;
+        link: CellProp<any>;
+        clicked: Subject<any>;
+    }
+
+    export interface LinkCell extends MapCell<LinkCellProps> {
+        kind: 'LinkColumn';
+    }
+
+    export type Cell = LinkCell;
+}
+
+export interface TableDescription {
+    cols: (Table.Column | Table.MapCells.Cell)[];
 }
 
 export namespace TableData {
-
     /**
      * We load data in any format, but then they must be converted to the table format via config
      */
@@ -59,5 +76,4 @@ export namespace TableData {
         rows: Table.Row[];
         pagination?: Pagination;
     }
-
 }

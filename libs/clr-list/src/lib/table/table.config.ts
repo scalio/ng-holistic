@@ -1,7 +1,9 @@
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { TableData } from './table.types';
 import { identity } from 'ramda';
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
+
+// DataProvider
 
 export interface TableDataProviderConfig {
     mapState(state: ClrDatagridStateInterface): any;
@@ -16,3 +18,11 @@ export const defaultTableDataProviderConfig: TableDataProviderConfig = {
 export const HLC_CLR_TABLE_DATA_PROVIDER_CONFIG = new InjectionToken<TableDataProviderConfig>(
     'HLC_CLR_TABLE_DATA_PROVIDER_CONFIG'
 );
+
+// Cell
+
+export interface TableCellMap {
+    [key: string]: Type<any>;
+}
+
+export const HLC_CLR_TABLE_CELL_MAP = new InjectionToken<TableCellMap>('HLC_CLR_TABLE_CELL_MAP');

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table, TableData } from '@ng-holistic/clr-list';
-import { timer } from 'rxjs';
+import { Table, TableData, TableDescription } from '@ng-holistic/clr-list';
+import { timer, Subject } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
-const table: Table.TableDescription = {
+const table: TableDescription = {
     cols: [
         {
             id: 'title',
@@ -15,6 +15,18 @@ const table: Table.TableDescription = {
             title: 'Title*',
             format(_, row) {
                 return row['title'].toUpperCase();
+            }
+        },
+        {
+            id: 'link',
+            kind: 'LinkCell',
+            title: 'Link',
+            props: {
+                title(row) {
+                    return row['title'];
+                },
+                link: 'some link',
+                click: new Subject()
             }
         }
     ]
@@ -34,7 +46,7 @@ const rows: Table.Row[] = [
 const dataProvider: TableData.DataProvider = {
     load(state) {
         console.log(state);
-        return timer(1000).pipe(mapTo({ rows }));
+        return timer(0).pipe(mapTo({ rows }));
     }
 };
 

@@ -1,10 +1,5 @@
-<clr-datagrid
-    [clrDgLoading]="loading"
-    (clrDgRefresh)="onRefresh($event)"
->
-    <clr-dg-action-bar>
-        <ng-content select="[action-bar]"></ng-content>
-    </clr-dg-action-bar>
+<clr-datagrid [clrDgLoading]="loading" (clrDgRefresh)="onRefresh($event)">
+    <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
@@ -14,7 +9,7 @@
     </clr-dg-column>
 
     <clr-dg-row
-        *ngFor="let row of rows; trackBy: trackByRow;"
+        *ngFor="let row of rows; trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
     >
@@ -23,8 +18,16 @@
             <ng-template [ngIf]="!cell.kind">
                 <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
             </ng-template>
+            <!-- map cell -->
+            <ng-template [ngIf]="cell.kind">
+                <ng-container
+                    [hlcTableCellHost]="cell"
+                    [hlcTableCellHostComponentType]="getCellComponentType(cell)"
+                    [hlcTableCellHostRow]="row"
+                >
+                </ng-container>
+            </ng-template>
         </clr-dg-cell>
-
     </clr-dg-row>
 
     <!--
@@ -47,5 +50,4 @@
         </clr-dg-pagination>
     </clr-dg-footer>
     -->
-
 </clr-datagrid>

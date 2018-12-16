@@ -15,9 +15,12 @@ import { finalize, take, takeUntil, tap } from 'rxjs/operators';
 import {
     defaultTableDataProviderConfig,
     HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
-    TableDataProviderConfig
+    TableDataProviderConfig,
+    HLC_CLR_TABLE_CELL_MAP,
+    TableCellMap
 } from './table.config';
-import { Table, TableData } from './table.types';
+import { Table, TableData, TableDescription } from './table.types';
+import { mergeAll } from 'ramda';
 
 @Component({
     selector: 'hlc-clr-table',
@@ -26,6 +29,7 @@ import { Table, TableData } from './table.types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnDestroy {
+    private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
@@ -40,7 +44,7 @@ export class TableComponent implements OnDestroy {
      * Regualr integration, just load data and keep them locally
      */
     @Input() dataProvider: TableData.DataProvider | undefined;
-    @Input() table: Table.TableDescription | undefined;
+    @Input() table: TableDescription | undefined;
 
     /**
      * Value will be already mapped by config.dataProvider.mapState
@@ -49,9 +53,11 @@ export class TableComponent implements OnDestroy {
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        @Inject(HLC_CLR_TABLE_CELL_MAP) cellMaps: TableCellMap[],
         @Optional() @Inject(HLC_CLR_TABLE_DATA_PROVIDER_CONFIG) dataProviderConfig?: TableDataProviderConfig
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
+        this.cellMap = mergeAll(cellMaps);
     }
 
     ngOnDestroy() {
@@ -128,6 +134,10 @@ export class TableComponent implements OnDestroy {
 
     refreshState(state: Partial<ClrDatagridStateInterface>) {
         this.onRefresh({ ...this.state, ...state });
+    }
+
+    getCellComponentType(cell: Table.MapCells.MapCell) {
+        return this.cellMap[cell.kind];
     }
 
     // trackBy

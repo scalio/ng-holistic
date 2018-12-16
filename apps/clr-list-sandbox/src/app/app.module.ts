@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing.module';
-import { HlcClrFilterModule } from '@ng-holistic/clr-list';
+import { HlcClrFilterModule, HlcClrTableModule } from '@ng-holistic/clr-list';
 
 @NgModule({
     declarations: [AppComponent],
@@ -12,6 +12,7 @@ import { HlcClrFilterModule } from '@ng-holistic/clr-list';
         BrowserModule,
         RouterModule.forRoot([], { initialNavigation: 'enabled' }),
         AppRoutingModule,
+        HlcClrTableModule.forRoot(),
         HlcClrFilterModule.forRoot()
     ],
     providers: [],

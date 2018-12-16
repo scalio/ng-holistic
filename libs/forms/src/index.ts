@@ -15,3 +15,5 @@ export * from './lib/form-layout/form-layout.component';
 
 export * from './lib/form/form.module';
 export * from './lib/form/form.component';
+
+export * from './lib/set-component-properties';
