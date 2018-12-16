@@ -1,24 +1,28 @@
 import {
+    ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
     Directive,
     EmbeddedViewRef,
     Injector,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
+    SimpleChanges,
     Type,
     ViewContainerRef
 } from '@angular/core';
 import { setComponentProperties } from '@ng-holistic/forms';
+import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { Table } from './table.types';
-import * as R from 'ramda';
 
 @Directive({
     selector: '[hlcTableCellHost]'
 })
-export class TableCellHostDirective implements OnInit, OnDestroy {
+export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
+    private factory: ComponentFactory<any>;
     private componentRef: ComponentRef<any> | undefined;
     private destroy$ = new Subject();
 
@@ -49,15 +53,22 @@ export class TableCellHostDirective implements OnInit, OnDestroy {
         }
     }
 
-    private init() {
-        const factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
-        this.componentRef = factory.create(this.injector);
-        const view = this.componentRef.hostView as EmbeddedViewRef<any>;
+    ngOnChanges(changes: SimpleChanges) {
+        if (
+            changes['row'] &&
+            // component not created on first ptop change
+            !changes['row'].firstChange &&
+            changes['row'].previousValue !== changes['row'].currentValue
+        ) {
+            this.updateComponentProps();
+        }
+    }
 
+    private get props() {
         /**
          * Convert possible (row) => propVal properties definition into scalar ones
          */
-        const props = R.pipe(
+        return R.pipe(
             R.toPairs,
             R.map(([k, v]) => {
                 if (typeof v === 'function') {
@@ -68,16 +79,28 @@ export class TableCellHostDirective implements OnInit, OnDestroy {
             }),
             R.fromPairs
         )(this.cell.props);
+    }
+
+    private updateComponentProps() {
+        if (this.factory && this.componentRef) {
+            setComponentProperties(
+                [],
+                this.factory,
+                this.componentRef.changeDetectorRef,
+                this.destroy$,
+                this.componentRef.instance,
+                this.props
+            );
+        }
+    }
+
+    private init() {
+        this.factory = this.componentFactoryResolver.resolveComponentFactory(this.componentType);
+        this.componentRef = this.factory.create(this.injector);
+        const view = this.componentRef.hostView as EmbeddedViewRef<any>;
 
         this.vcr.insert(view);
 
-        setComponentProperties(
-            [],
-            factory,
-            this.componentRef.changeDetectorRef,
-            this.destroy$,
-            this.componentRef.instance,
-            props
-        );
+        this.updateComponentProps();
     }
 }

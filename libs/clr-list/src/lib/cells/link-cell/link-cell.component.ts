@@ -4,6 +4,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
     selector: 'hlc-link-cell',
     templateUrl: './link-cell.component.html',
     styleUrls: ['./link-cell.component.scss'],
+    // TODO: see table-cell-host directive, with onPush this one doesn't work !!!
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LinkCellComponent implements OnInit {

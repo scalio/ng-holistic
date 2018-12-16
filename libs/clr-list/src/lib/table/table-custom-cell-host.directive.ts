@@ -1,11 +1,13 @@
-import { Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, EmbeddedViewRef, Input, OnChanges, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
 import { CustomCellDirective } from './custom-cell.directive';
 import { Table } from './table.types';
 
 @Directive({
     selector: '[hlcTableCustomCellHost]'
 })
-export class TableCustomCellHostDirective implements OnInit {
+export class TableCustomCellHostDirective implements OnInit, OnChanges {
+    view: EmbeddedViewRef<any>;
+
     // tslint:disable-next-line:no-input-rename
     @Input('hlcTableCustomCellHostDirective')
     directive: CustomCellDirective;
@@ -20,13 +22,21 @@ export class TableCustomCellHostDirective implements OnInit {
 
     constructor(private readonly vcr: ViewContainerRef) {}
 
-    ngOnInit() {
-        const view = this.vcr.createEmbeddedView(this.directive.templateRef, {
-            $implicit: this.row[this.cell.id],
-            row: this.row,
-            cell: this.cell
-        });
+    ngOnInit() {}
 
-        this.vcr.insert(view);
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['row'] && changes['row'].previousValue !== changes['row'].currentValue) {
+            if (this.view) {
+                this.vcr.clear();
+            }
+
+            this.view = this.vcr.createEmbeddedView(this.directive.templateRef, {
+                $implicit: this.row[this.cell.id],
+                row: this.row,
+                cell: this.cell
+            });
+
+            this.vcr.insert(this.view);
+        }
     }
 }
