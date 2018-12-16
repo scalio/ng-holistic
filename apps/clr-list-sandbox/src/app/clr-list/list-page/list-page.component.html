@@ -1,3 +1,4 @@
+<button class="btn btn-sm btn-secondary" (click)="onUpdateRow()">Update row</button>
 <hlc-clr-list [filterFields]="filterFields" [table]="table" [dataProvider]="dataProvider">
-    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
+    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} : {{ row['title'] }} </ng-template>
 </hlc-clr-list>

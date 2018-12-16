@@ -13,7 +13,7 @@ import {
     QueryList
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
-import { mergeAll } from 'ramda';
+import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil, tap } from 'rxjs/operators';
 import { CustomCellDirective } from './custom-cell.directive';
@@ -80,7 +80,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
-        this.cellMap = mergeAll(cellMaps);
+        this.cellMap = R.mergeAll(cellMaps);
     }
 
     ngOnDestroy() {
@@ -157,6 +157,27 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     refreshState(state: Partial<ClrDatagridStateInterface>) {
         this.onRefresh({ ...this.state, ...state });
+    }
+
+    addRow(row: Table.Row) {
+        this.rows = R.insert(0, row, this.rows);
+        this.cdr.markForCheck();
+    }
+
+    upadteRow(row: Table.Row) {
+        const index = R.findIndex(R.eqProps('id', row), this.rows);
+        if (index !== -1) {
+            this.rows = R.update(index, row, this.rows);
+            this.cdr.markForCheck();
+        }
+    }
+
+    removeRow(row: Table.Row) {
+        const index = R.findIndex(R.eqProps('id', row), this.rows);
+        if (index !== -1) {
+            this.rows = R.remove(index, 1, this.rows);
+            this.cdr.markForCheck();
+        }
     }
 
     getCellComponentType(cell: Table.MapColumns.MapColumn) {

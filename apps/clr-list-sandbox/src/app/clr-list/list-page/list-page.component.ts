@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ClrFormFields } from '@ng-holistic/clr-forms';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Table, TableDescription } from '@ng-holistic/clr-list';
-import { timer, Subject } from 'rxjs';
+import { ClrFormFields } from '@ng-holistic/clr-forms';
+import { ListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
 const filterFields: ClrFormFields.FormField[] = [
@@ -102,7 +102,13 @@ export class ListPageComponent implements OnInit {
     dataProvider = dataProvider;
     filterFields = filterFields;
 
+    @ViewChild(ListComponent) private list: ListComponent;
+
     constructor() {}
 
     ngOnInit() {}
+
+    onUpdateRow() {
+        this.list.upadteRow({ id: '1', title: 'updated' });
+    }
 }

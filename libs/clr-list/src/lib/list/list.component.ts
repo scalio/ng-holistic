@@ -69,6 +69,18 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
 
     ngOnInit() {}
 
+    addRow(row: Table.Row) {
+        this.tableComponent.addRow(row);
+    }
+
+    upadteRow(row: Table.Row) {
+        this.tableComponent.upadteRow(row);
+    }
+
+    removeRow(row: Table.Row) {
+        this.tableComponent.removeRow(row);
+    }
+
     onFilter(filter: any) {
         const filters = R.pipe(
             R.toPairs,
