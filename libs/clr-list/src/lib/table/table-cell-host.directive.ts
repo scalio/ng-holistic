@@ -61,6 +61,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
             changes['row'].previousValue !== changes['row'].currentValue
         ) {
             this.updateComponentProps();
+            this.instanceDetectChanges();
         }
     }
 
@@ -79,6 +80,18 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
             }),
             R.fromPairs
         )(this.cell.props);
+    }
+
+    private instanceDetectChanges() {
+        if (this.componentRef && this.componentRef.instance['cdr']) {
+            this.componentRef.instance['cdr'].markForCheck();
+        } else {
+            // TODO !
+            console.warn(
+                // tslint:disable-next-line:max-line-length
+                'In order to correctly handle changes in mapped table-cell components they should provide own ChangeDecetionRef via cdr property !'
+            );
+        }
     }
 
     private updateComponentProps() {

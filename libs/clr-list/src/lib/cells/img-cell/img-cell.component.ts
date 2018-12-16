@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'hlc-img-cell',
@@ -11,7 +11,7 @@ export class ImgCellComponent implements OnInit {
     @Input() width: number;
     @Input() height: number;
 
-    constructor() {}
+    constructor(public readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {}
 }
