@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { Validators } from '@angular/forms';
-import { Table, TableData } from '@ng-holistic/clr-list';
+import { Table, TableData, TableDescription } from '@ng-holistic/clr-list';
 import { timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -31,7 +31,7 @@ const filterFields: ClrFormFields.FormField[] = [
     }
 ];
 
-const table: Table.TableDescription = {
+const table: TableDescription = {
     cols: [
         {
             id: 'title',

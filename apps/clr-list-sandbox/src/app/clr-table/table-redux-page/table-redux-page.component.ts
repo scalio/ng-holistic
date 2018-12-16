@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table } from '@ng-holistic/clr-list';
+import { Table, TableDescription } from '@ng-holistic/clr-list';
 
-const table: Table.TableDescription = {
+const table: TableDescription = {
     cols: [
         {
             id: 'title',
@@ -35,7 +35,6 @@ const rows: Table.Row[] = [
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableReduxPageComponent implements OnInit {
-
     table = table;
     rows = rows;
 

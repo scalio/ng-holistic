@@ -9,4 +9,3 @@ export * from './lib/filter/filter.module';
 //
 export * from './lib/list/list.component';
 export * from './lib/list/list.module';
-
