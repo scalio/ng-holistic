@@ -15,8 +15,17 @@
     >
         <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
             <!-- regular cell -->
-            <ng-template [ngIf]="!cell.kind">
+            <ng-template [ngIf]="!cell.kind && !cell.customCell">
                 <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
+            </ng-template>
+            <!-- custom cell -->
+            <ng-template [ngIf]="cell.customCell">
+                <ng-container
+                    [hlcTableCustomCellHost]="cell"
+                    [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
+                    [hlcTableCustomCellHostRow]="row"
+                >
+                </ng-container>
             </ng-template>
             <!-- map cell -->
             <ng-template [ngIf]="cell.kind">

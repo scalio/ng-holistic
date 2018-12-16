@@ -2,25 +2,37 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ContentChildren,
     EventEmitter,
     Inject,
+    InjectionToken,
     Input,
     OnDestroy,
     Optional,
-    Output
+    Output,
+    QueryList
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
+import { mergeAll } from 'ramda';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil, tap } from 'rxjs/operators';
+import { CustomCellDirective } from './custom-cell.directive';
 import {
     defaultTableDataProviderConfig,
-    HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
-    TableDataProviderConfig,
     HLC_CLR_TABLE_CELL_MAP,
-    TableCellMap
+    HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
+    TableCellMap,
+    TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
-import { mergeAll } from 'ramda';
+
+export interface TableCustomCellsProvider {
+    customCells: QueryList<CustomCellDirective>;
+}
+
+export const HLC_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCustomCellsProvider>(
+    'HLC_TABLE_CUSTOM_CELLS_PROVIDER'
+);
 
 @Component({
     selector: 'hlc-clr-table',
@@ -28,11 +40,16 @@ import { mergeAll } from 'ramda';
     styleUrls: ['./table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent implements OnDestroy {
+export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
+
+    /**
+     * Custom cells
+     */
+    @ContentChildren(CustomCellDirective) customCells: QueryList<CustomCellDirective>;
 
     /**
      * Redux like integration with external store for rows
@@ -138,6 +155,10 @@ export class TableComponent implements OnDestroy {
 
     getCellComponentType(cell: Table.MapColumns.MapColumn) {
         return this.cellMap[cell.kind];
+    }
+
+    getCustomCellDirective(cell: Table.CustomColumn) {
+        return this.customCells.find(f => f.hlcClrCustomCell === cell.id);
     }
 
     // trackBy

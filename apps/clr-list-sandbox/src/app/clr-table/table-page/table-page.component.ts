@@ -28,17 +28,22 @@ const table: TableDescription = {
                 link: 'some link',
                 click: new Subject()
             }
+        },
+        {
+            id: 'custom',
+            customCell: true,
+            title: 'Custom',
         }
     ]
 };
 
 const rows: Table.Row[] = [
     {
-        id: 'title',
+        id: '1',
         title: 'aaaa'
     },
     {
-        id: 'title',
+        id: '2',
         title: 'bbb'
     }
 ];

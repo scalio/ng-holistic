@@ -1,1 +1,5 @@
-<hlc-clr-table [table]="table" [rows]="rows" [dataProvider]="dataProvider"></hlc-clr-table>
+<hlc-clr-table [table]="table" [rows]="rows" [dataProvider]="dataProvider">
+    <ng-template hlcClrCustomCell="custom" let-row=row>
+        {{ row['id'] }}
+    </ng-template>
+</hlc-clr-table>

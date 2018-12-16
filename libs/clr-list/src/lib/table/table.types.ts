@@ -23,6 +23,11 @@ export namespace Table {
         format?: (val: any, row: any) => string | ColumnFormat;
     }
 
+    export interface CustomColumn extends ColumnBase {
+        customCell: true;
+    }
+
+
     export interface RowBase {
         id: string;
     }
@@ -56,7 +61,7 @@ export namespace Table.MapColumns {
 }
 
 export interface TableDescription {
-    cols: (Table.Column | Table.MapColumns.Column)[];
+    cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
 }
 
 export namespace Table.Data {

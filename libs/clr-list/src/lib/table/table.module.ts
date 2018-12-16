@@ -5,11 +5,19 @@ import { ClrDatagridModule, ClrLoadingModule } from '@clr/angular';
 import { TableCellHostDirective } from './table-cell-host.directive';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
+import { CustomCellDirective } from './custom-cell.directive';
+import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 
 @NgModule({
     imports: [CommonModule, ClrDatagridModule, ClrLoadingModule],
-    declarations: [TableComponent, TableCellHostDirective, ...cellComponents],
-    exports: [TableComponent, ...cellComponents],
+    declarations: [
+        TableComponent,
+        TableCellHostDirective,
+        CustomCellDirective,
+        TableCustomCellHostDirective,
+        ...cellComponents
+    ],
+    exports: [TableComponent, CustomCellDirective, ...cellComponents],
     entryComponents: cellComponents
 })
 export class HlcClrTableModule {
