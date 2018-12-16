@@ -34,6 +34,12 @@ These should support following scenarios:
 
 ## Data driven lists
 
+[Demo App](https://clr7list7sandbox7app.z6.web.core.windows.net/)
+
+[![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-list-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=21)
+![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/11/11)
+
+
 ### Overview
 
 The target here is to create angular lists declaratively.
