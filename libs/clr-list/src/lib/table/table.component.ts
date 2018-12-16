@@ -30,8 +30,8 @@ export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
 }
 
-export const HLC_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCustomCellsProvider>(
-    'HLC_TABLE_CUSTOM_CELLS_PROVIDER'
+export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCustomCellsProvider>(
+    'HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER'
 );
 
 @Component({
@@ -70,8 +70,14 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Inject(HLC_CLR_TABLE_CELL_MAP) cellMaps: TableCellMap[],
-        @Optional() @Inject(HLC_CLR_TABLE_DATA_PROVIDER_CONFIG) dataProviderConfig?: TableDataProviderConfig
+        @Inject(HLC_CLR_TABLE_CELL_MAP)
+        cellMaps: TableCellMap[],
+        @Optional()
+        @Inject(HLC_CLR_TABLE_DATA_PROVIDER_CONFIG)
+        dataProviderConfig?: TableDataProviderConfig,
+        @Optional()
+        @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
+        private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = mergeAll(cellMaps);
@@ -158,7 +164,13 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     }
 
     getCustomCellDirective(cell: Table.CustomColumn) {
-        return this.customCells.find(f => f.hlcClrCustomCell === cell.id);
+        const dir = this.customCells.find(f => f.hlcClrCustomCell === cell.id);
+        if (dir) {
+            return dir;
+        }
+        if (this.containerCustomCellsProvider) {
+            return this.containerCustomCellsProvider.customCells.find(f => f.hlcClrCustomCell === cell.id);
+        }
     }
 
     // trackBy

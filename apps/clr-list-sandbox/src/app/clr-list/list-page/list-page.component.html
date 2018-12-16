@@ -1,1 +1,3 @@
-<hlc-clr-list [filterFields]="filterFields" [table]="table" [dataProvider]="dataProvider"></hlc-clr-list>
+<hlc-clr-list [filterFields]="filterFields" [table]="table" [dataProvider]="dataProvider">
+    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
+</hlc-clr-list>

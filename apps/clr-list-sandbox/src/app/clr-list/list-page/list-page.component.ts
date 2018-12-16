@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { Validators } from '@angular/forms';
 import { Table, TableDescription } from '@ng-holistic/clr-list';
-import { timer } from 'rxjs';
+import { timer, Subject } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
 const filterFields: ClrFormFields.FormField[] = [
@@ -44,17 +44,34 @@ const table: TableDescription = {
             format(_, row) {
                 return row['title'].toUpperCase();
             }
+        },
+        {
+            id: 'link',
+            kind: 'LinkCell',
+            title: 'Link',
+            props: {
+                title(row) {
+                    return row['title'];
+                },
+                link: 'some link',
+                click: new Subject()
+            }
+        },
+        {
+            id: 'custom',
+            customCell: true,
+            title: 'Custom'
         }
     ]
 };
 
 const rows: Table.Row[] = [
     {
-        id: 'title',
+        id: '1',
         title: 'aaaa'
     },
     {
-        id: 'title',
+        id: '2',
         title: 'bbb'
     }
 ];
