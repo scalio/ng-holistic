@@ -33,6 +33,9 @@ import { Table, TableDescription } from '../table/table.types';
     ]
 })
 export class ListComponent implements TableCustomCellsProvider, OnInit {
+
+    @Input() isFilterShown = true;
+
     /**
      * Custom cells
      */
@@ -92,5 +95,9 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
 
     onTableStateChanged(state: any) {
         this.stateChanged.emit(state);
+    }
+
+    onToggleFilter() {
+        this.isFilterShown = !this.isFilterShown;
     }
 }

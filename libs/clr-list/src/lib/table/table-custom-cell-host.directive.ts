@@ -1,11 +1,20 @@
-import { Directive, EmbeddedViewRef, Input, OnChanges, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
+import {
+    Directive,
+    EmbeddedViewRef,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+    ViewContainerRef
+} from '@angular/core';
 import { CustomCellDirective } from './custom-cell.directive';
 import { Table } from './table.types';
 
 @Directive({
     selector: '[hlcTableCustomCellHost]'
 })
-export class TableCustomCellHostDirective implements OnInit, OnChanges {
+export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChanges {
     view: EmbeddedViewRef<any>;
 
     // tslint:disable-next-line:no-input-rename
@@ -23,6 +32,10 @@ export class TableCustomCellHostDirective implements OnInit, OnChanges {
     constructor(private readonly vcr: ViewContainerRef) {}
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.view.destroy();
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['row'] && changes['row'].previousValue !== changes['row'].currentValue) {

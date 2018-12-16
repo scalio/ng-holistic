@@ -5,5 +5,13 @@
     [table]="table"
     (stateChanged)="onTableStateChanged($event)"
 >
-    <hlc-clr-filter action-bar [fields]="filterFields" (filter)="onFilter($event)"></hlc-clr-filter>
+    <ng-container action-bar>
+        <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
+            <clr-icon shape="angle" dir="down"></clr-icon>Hide Filter
+        </button>
+        <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
+            <clr-icon shape="angle" dir="up"></clr-icon>Show Filter
+        </button>
+        <hlc-clr-filter [fields]="filterFields" (filter)="onFilter($event)" [hidden]="!isFilterShown"></hlc-clr-filter>
+    </ng-container>
 </hlc-clr-table>
