@@ -19,14 +19,14 @@ const table: TableDescription = {
         },
         {
             id: 'link',
-            kind: 'LinkCell',
+            kind: 'LinkColumn',
             title: 'Link',
             props: {
                 title(row) {
                     return row['title'];
                 },
                 link: 'some link',
-                click: new Subject()
+                clicked: new Subject()
             }
         },
         {
