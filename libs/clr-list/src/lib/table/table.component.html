@@ -39,17 +39,17 @@
         </clr-dg-cell>
     </clr-dg-row>
 
-    <!--
     <clr-dg-footer *ngIf="paginator">
         {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
-        <fm-core-select
+        <hlc-select
+            *ngIf="paginatorItems"
             class="page-size-selector"
             [naked]="true"
-            [noEmptyItem]="true"
+            [disallowEmpty]="true"
             [value]="paginator.pageSize"
             (valueChange)="onPageSizeChanged($event)"
-            [items]="pageSizeItems"
-        ></fm-core-select>
+            [items]="paginatorItems"
+        ></hlc-select>
         <clr-dg-pagination
             #pagination
             [clrDgPageSize]="paginator.pageSize"
@@ -58,5 +58,5 @@
         >
         </clr-dg-pagination>
     </clr-dg-footer>
-    -->
+
 </clr-datagrid>

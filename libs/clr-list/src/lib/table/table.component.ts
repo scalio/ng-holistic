@@ -22,6 +22,7 @@ import {
     defaultTableDataProviderConfig,
     HLC_CLR_TABLE_CELL_MAP,
     HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
+    HLC_CLR_TABLE_PAGINATOR_ITEMS,
     TableCellMap,
     TableDataProviderConfig
 } from './table.config';
@@ -58,6 +59,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Redux like integration with external store for rows
      */
     @Input() rows: Table.Row[];
+    @Input() paginator: Table.Data.Paginator | undefined;
     @Input() loading = false;
 
     /**
@@ -82,7 +84,10 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider,
         @Optional()
-        private readonly filterService?: FilterService
+        private readonly filterService?: FilterService,
+        @Optional()
+        @Inject(HLC_CLR_TABLE_PAGINATOR_ITEMS)
+        readonly paginatorItems?: any[]
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = R.mergeAll(cellMaps);
@@ -96,6 +101,12 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+        if (state.page && !this.state.page) {
+            // first time state.page recieved, usually after first load, just ignore
+            this.state = state;
+            return;
+        }
+
         this.stateChanged.emit(state);
 
         const dataProvider = this.dataProvider;
@@ -135,6 +146,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 const mpResult = this.dataProviderConfig.mapResult(res);
                 this.rows = mpResult.rows;
                 this.state = state;
+                if (mpResult.paginator) {
+                    this.paginator = mpResult.paginator;
+                }
             }),
             finalize(() => {
                 this.loading = false;
@@ -230,5 +244,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     trackByRow(_: any, row: Table.RowBase) {
         return row.id;
+    }
+
+    onPageSizeChanges(val: number) {
+        console.log('+++', val);
     }
 }

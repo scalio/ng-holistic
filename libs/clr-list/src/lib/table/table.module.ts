@@ -7,9 +7,10 @@ import { cellComponents, cellsMap } from '../cells/cells';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
 import { CustomCellDirective } from './custom-cell.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
+import { SelectModule } from '@ng-holistic/clr-controls';
 
 @NgModule({
-    imports: [CommonModule, ClrDatagridModule, ClrLoadingModule],
+    imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, SelectModule],
     declarations: [
         TableComponent,
         TableCellHostDirective,

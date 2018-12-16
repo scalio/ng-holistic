@@ -86,10 +86,16 @@ const rows: Table.Row[] = [
     }
 ];
 
+const paginator: Table.Data.Paginator = {
+    pageSize: 2,
+    pageIndex: 1,
+    length: 3
+};
+
 const dataProvider: Table.Data.DataProvider = {
     load(state) {
         console.log(state);
-        return timer(1000).pipe(mapTo({ rows }));
+        return timer(1000).pipe(mapTo({ rows, paginator }));
     }
 };
 

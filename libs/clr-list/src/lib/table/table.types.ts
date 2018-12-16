@@ -81,13 +81,14 @@ export namespace Table.Data {
         load(state: TState): Observable<TResult>;
     }
 
-    export interface Pagination {
+    export interface Paginator {
         pageIndex: number;
         pageSize: number;
+        length: number;
     }
 
     export interface Result {
         rows: Table.Row[];
-        pagination?: Pagination;
+        paginator?: Paginator;
     }
 }
