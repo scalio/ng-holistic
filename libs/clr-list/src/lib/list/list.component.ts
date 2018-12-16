@@ -3,15 +3,15 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
+    forwardRef,
     Input,
     OnInit,
     Output,
     QueryList,
-    ViewChild,
-    forwardRef
+    ViewChild
 } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
-import * as R from 'ramda';
+import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import {
     HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
@@ -29,11 +29,11 @@ import { Table, TableDescription } from '../table/table.types';
         {
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
             useExisting: forwardRef(() => ListComponent)
-        }
+        },
+        FilterService
     ]
 })
 export class ListComponent implements TableCustomCellsProvider, OnInit {
-
     @Input() isFilterShown = true;
 
     /**
@@ -85,12 +85,8 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
     }
 
     onFilter(filter: any) {
-        const filters = R.pipe(
-            R.toPairs,
-            R.map(([property, value]) => ({ property, value }))
-        )(filter);
-
-        this.tableComponent.refreshState({ filters });
+        this.tableComponent.refreshState();
+        this.filter.emit(filter);
     }
 
     onTableStateChanged(state: any) {

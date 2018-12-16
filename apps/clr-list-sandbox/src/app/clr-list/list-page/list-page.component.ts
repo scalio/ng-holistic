@@ -86,7 +86,8 @@ const rows: Table.Row[] = [
 ];
 
 const dataProvider: Table.Data.DataProvider = {
-    load(_) {
+    load(state) {
+        console.log(state);
         return timer(1000).pipe(mapTo({ rows }));
     }
 };

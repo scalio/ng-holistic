@@ -25,6 +25,7 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
+import { FilterService } from '../filter.service';
 
 export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
@@ -45,6 +46,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private state: ClrDatagridStateInterface;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
+
+    @Input() filter: any;
 
     /**
      * Custom cells
@@ -77,7 +80,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         dataProviderConfig?: TableDataProviderConfig,
         @Optional()
         @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
-        private readonly containerCustomCellsProvider?: TableCustomCellsProvider
+        private readonly containerCustomCellsProvider?: TableCustomCellsProvider,
+        @Optional()
+        private readonly filterService?: FilterService
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = R.mergeAll(cellMaps);
@@ -91,8 +96,16 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+        if (this.filterService) {
+            const filters = R.pipe(
+                R.toPairs,
+                R.map(([property, value]) => ({ property, value }))
+            )(this.filterService.value);
+
+            state = {...state, filters};
+        }
         const mpState = this.dataProviderConfig.mapState(state);
-        this.stateChanged.emit(mpState);
+        this.stateChanged.emit(state);
         if (this.dataProvider) {
             this.loading = true;
             this.cdr.detectChanges();
@@ -155,8 +168,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         }
     }
 
-    refreshState(state: Partial<ClrDatagridStateInterface>) {
-        this.onRefresh({ ...this.state, ...state });
+    refreshState() {
+        this.onRefresh(this.state);
     }
 
     addRow(row: Table.Row) {
