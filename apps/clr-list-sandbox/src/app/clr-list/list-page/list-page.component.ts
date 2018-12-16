@@ -11,6 +11,7 @@ const filterFields: ClrFormFields.FormField[] = [
         kind: 'TextField',
         label: 'Text',
         placeholder: 'Type something',
+        value: 'test',
         $validators: [Validators.required]
     },
     {

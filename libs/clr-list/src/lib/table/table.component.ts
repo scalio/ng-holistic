@@ -14,8 +14,9 @@ import {
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
-import { Subject } from 'rxjs';
-import { finalize, take, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import {
     defaultTableDataProviderConfig,
@@ -25,7 +26,6 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
-import { FilterService } from '../filter.service';
 
 export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
@@ -96,36 +96,51 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-        if (this.filterService) {
-            const filters = R.pipe(
-                R.toPairs,
-                R.map(([property, value]) => ({ property, value }))
-            )(this.filterService.value);
-
-            state = {...state, filters};
-        }
-        const mpState = this.dataProviderConfig.mapState(state);
         this.stateChanged.emit(state);
-        if (this.dataProvider) {
-            this.loading = true;
-            this.cdr.detectChanges();
-            this.dataProvider
-                .load(mpState)
-                .pipe(
-                    takeUntil(this.destroy$),
-                    take(1),
-                    tap(res => {
-                        const mpResult = this.dataProviderConfig.mapResult(res);
-                        this.rows = mpResult.rows;
-                        this.state = state;
-                    }),
-                    finalize(() => {
-                        this.loading = false;
-                        this.cdr.detectChanges();
-                    })
-                )
-                .subscribe(() => {});
+
+        const dataProvider = this.dataProvider;
+        if (!dataProvider) {
+            return;
         }
+
+        let state$ = of(state);
+
+        if (this.filterService) {
+            // Value is observable, handle case when filter created with already initialized value and we
+            // have to use them on initial search
+            // map filter value -> state filter value
+            state$ = this.filterService.value.pipe(
+                map(
+                    R.pipe(
+                        R.toPairs,
+                        R.map(([property, value]) => ({ property, value }))
+                    )
+                ),
+                map(filters => ({ ...state, filters }))
+            );
+        }
+
+        state$.pipe(flatMap(st => this.loadData(dataProvider, st))).subscribe(() => {});
+    }
+
+    loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
+        const mpState = this.dataProviderConfig.mapState(state);
+
+        this.loading = true;
+        this.cdr.detectChanges();
+        return dataProvider.load(mpState).pipe(
+            takeUntil(this.destroy$),
+            take(1),
+            tap(res => {
+                const mpResult = this.dataProviderConfig.mapResult(res);
+                this.rows = mpResult.rows;
+                this.state = state;
+            }),
+            finalize(() => {
+                this.loading = false;
+                this.cdr.detectChanges();
+            })
+        );
     }
 
     isRowActive(_: Table.RowBase) {
