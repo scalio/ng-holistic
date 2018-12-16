@@ -19,7 +19,7 @@ import {
     HLC_CLR_TABLE_CELL_MAP,
     TableCellMap
 } from './table.config';
-import { Table, TableData, TableDescription } from './table.types';
+import { Table, TableDescription } from './table.types';
 import { mergeAll } from 'ramda';
 
 @Component({
@@ -43,7 +43,7 @@ export class TableComponent implements OnDestroy {
     /**
      * Regualr integration, just load data and keep them locally
      */
-    @Input() dataProvider: TableData.DataProvider | undefined;
+    @Input() dataProvider: Table.Data.DataProvider | undefined;
     @Input() table: TableDescription | undefined;
 
     /**
@@ -136,7 +136,7 @@ export class TableComponent implements OnDestroy {
         this.onRefresh({ ...this.state, ...state });
     }
 
-    getCellComponentType(cell: Table.MapCells.MapCell) {
+    getCellComponentType(cell: Table.MapColumns.MapColumn) {
         return this.cellMap[cell.kind];
     }
 

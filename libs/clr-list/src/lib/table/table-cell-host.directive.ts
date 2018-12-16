@@ -24,7 +24,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy {
 
     // tslint:disable-next-line:no-input-rename
     @Input('hlcTableCellHost')
-    cell: Table.MapCells.MapCell;
+    cell: Table.MapColumns.MapColumn;
     // tslint:disable-next-line:no-input-rename
     @Input('hlcTableCellHostComponentType')
     componentType: Type<any>;

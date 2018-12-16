@@ -32,8 +32,8 @@ export namespace Table {
     }
 }
 
-export namespace Table.MapCells {
-    export interface MapCell<P = any> extends ColumnBase {
+export namespace Table.MapColumns {
+    export interface MapColumn<P = any> extends ColumnBase {
         kind: string;
         props: P;
     }
@@ -48,18 +48,18 @@ export namespace Table.MapCells {
         clicked: Subject<any>;
     }
 
-    export interface LinkCell extends MapCell<LinkCellProps> {
+    export interface LinkColumn extends MapColumn<LinkCellProps> {
         kind: 'LinkColumn';
     }
 
-    export type Cell = LinkCell;
+    export type Column = LinkColumn;
 }
 
 export interface TableDescription {
-    cols: (Table.Column | Table.MapCells.Cell)[];
+    cols: (Table.Column | Table.MapColumns.Column)[];
 }
 
-export namespace TableData {
+export namespace Table.Data {
     /**
      * We load data in any format, but then they must be converted to the table format via config
      */

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { Validators } from '@angular/forms';
-import { Table, TableData, TableDescription } from '@ng-holistic/clr-list';
+import { Table, TableDescription } from '@ng-holistic/clr-list';
 import { timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -59,7 +59,7 @@ const rows: Table.Row[] = [
     }
 ];
 
-const dataProvider: TableData.DataProvider = {
+const dataProvider: Table.Data.DataProvider = {
     load(_) {
         return timer(1000).pipe(mapTo({ rows }));
     }

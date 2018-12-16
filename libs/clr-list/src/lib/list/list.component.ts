@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Table, TableData, TableDescription } from '../table/table.types';
+import { Table, TableDescription } from '../table/table.types';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import * as R from 'ramda';
 import { TableComponent } from '../table/table.component';
@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
     /**
      * Regualr integration, just load data and keep them locally
      */
-    @Input() dataProvider: TableData.DataProvider | undefined;
+    @Input() dataProvider: Table.Data.DataProvider | undefined;
     @Input() table: TableDescription | undefined;
 
     /**

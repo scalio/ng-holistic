@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table, TableData, TableDescription } from '@ng-holistic/clr-list';
+import { Table, TableDescription } from '@ng-holistic/clr-list';
 import { timer, Subject } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -43,7 +43,7 @@ const rows: Table.Row[] = [
     }
 ];
 
-const dataProvider: TableData.DataProvider = {
+const dataProvider: Table.Data.DataProvider = {
     load(state) {
         console.log(state);
         return timer(0).pipe(mapTo({ rows }));
