@@ -1,19 +1,23 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
-    Input,
-    Optional,
-    Output,
     Inject,
+    Input,
     OnDestroy,
-    ChangeDetectorRef
+    Optional,
+    Output
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
-import { TableConfig, HLC_CLR_TABLE_CONFIG, defaultTableConfig } from './table.config';
-import { Table, TableData } from './table.types';
-import { take, takeUntil, finalize, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { finalize, take, takeUntil, tap } from 'rxjs/operators';
+import {
+    defaultTableDataProviderConfig,
+    HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
+    TableDataProviderConfig
+} from './table.config';
+import { Table, TableData } from './table.types';
 
 @Component({
     selector: 'hlc-clr-table',
@@ -24,7 +28,7 @@ import { Subject } from 'rxjs';
 export class TableComponent implements OnDestroy {
     private state: ClrDatagridStateInterface;
     private destroy$ = new Subject();
-    readonly config: TableConfig;
+    readonly dataProviderConfig: TableDataProviderConfig;
 
     /**
      * Redux like integration with external store for rows
@@ -45,9 +49,9 @@ export class TableComponent implements OnDestroy {
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Optional() @Inject(HLC_CLR_TABLE_CONFIG) config?: TableConfig
+        @Optional() @Inject(HLC_CLR_TABLE_DATA_PROVIDER_CONFIG) dataProviderConfig?: TableDataProviderConfig
     ) {
-        this.config = config || defaultTableConfig;
+        this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
     }
 
     ngOnDestroy() {
@@ -58,7 +62,7 @@ export class TableComponent implements OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-        const mpState = this.config.dataProvider.mapState(state);
+        const mpState = this.dataProviderConfig.mapState(state);
         this.stateChanged.emit(mpState);
         if (this.dataProvider) {
             this.loading = true;
@@ -69,7 +73,7 @@ export class TableComponent implements OnDestroy {
                     takeUntil(this.destroy$),
                     take(1),
                     tap(res => {
-                        const mpResult = this.config.dataProvider.mapResult(res);
+                        const mpResult = this.dataProviderConfig.mapResult(res);
                         this.rows = mpResult.rows;
                         this.state = state;
                     }),
@@ -123,7 +127,7 @@ export class TableComponent implements OnDestroy {
     }
 
     refreshState(state: Partial<ClrDatagridStateInterface>) {
-        this.onRefresh({...this.state, ...state});
+        this.onRefresh({ ...this.state, ...state });
     }
 
     // trackBy
