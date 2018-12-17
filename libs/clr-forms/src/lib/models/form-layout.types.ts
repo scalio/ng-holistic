@@ -3,19 +3,20 @@ import { IFormGroup, FormFields } from '@ng-holistic/forms';
 
 export namespace ClrFormLayouts {
 
-    export interface FieldsLayout extends IFormGroup<'fields'> {
-        fields: ClrFormFields.FormField[];
+    export interface FieldsLayout<T = never> extends IFormGroup<'fields'> {
+        fields: (ClrFormFields.FormField | T)[];
     }
 
-    export interface GroupLayout extends IFormGroup<'group', FieldsLayout | TabsLayout> {
+    export interface GroupLayout<T = never> extends IFormGroup<'group', FieldsLayout<T> | TabsLayout<T>> {
         title: FormFields.FormFieldProp<string>;
     }
 
-    export interface TabLayout extends IFormGroup<'tab', FieldsLayout | GroupLayout> {
+    export interface TabLayout<T = never> extends IFormGroup<'tab', FieldsLayout<T> | GroupLayout<T>> {
         title: FormFields.FormFieldProp<string>;
     }
 
-    export interface TabsLayout extends IFormGroup<'tabs', TabLayout> {}
+    export interface TabsLayout<T = never> extends IFormGroup<'tabs', TabLayout<T>> {}
 
-    export type ClrFormLayout = FieldsLayout | GroupLayout | TabLayout | TabsLayout;
+
+    export type ClrFormLayout<T = never> = FieldsLayout<T> | GroupLayout<T> | TabLayout<T> | TabsLayout<T>;
 }
