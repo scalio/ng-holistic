@@ -55,6 +55,8 @@ export namespace ClrFormFields {
 
     export interface PhoneField extends BaseField<'PhoneField'> {}
 
+    export interface PasswordField extends BaseFieldP<'PasswordField'> {}
+
     export type FormField =
         | TextField
         | SelectField
@@ -67,5 +69,6 @@ export namespace ClrFormFields {
         | DateRangeField
         | FormFields.CustomFormField
         | MaskField
-        | PhoneField;
+        | PhoneField
+        | PasswordField;
 }
