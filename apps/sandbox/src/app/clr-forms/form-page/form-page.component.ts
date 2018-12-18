@@ -28,6 +28,11 @@ const group: ClrFormLayouts.ClrFormLayout = {
             label: 'Phone'
         },
         {
+            id: 'password',
+            kind: 'PasswordField',
+            label: 'Password'
+        },
+        {
             id: 'textarea',
             kind: 'TextAreaField',
             label: 'Text Area',
