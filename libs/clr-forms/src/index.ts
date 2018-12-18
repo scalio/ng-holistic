@@ -9,4 +9,4 @@ export * from './lib/models/form-layout.types';
 export * from './lib/input-container/input-error-display-strategy';
 export * from './lib/input-container/validation-errors/validation-errors-map-config';
 export * from './lib/input-container/validation-errors/validation-errors.component';
-
+export * from './lib/tabs-layout/tabs-layout.config';

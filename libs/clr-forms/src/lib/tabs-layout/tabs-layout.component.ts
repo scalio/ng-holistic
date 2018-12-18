@@ -7,7 +7,8 @@ import {
     OnInit,
     QueryList,
     ViewChildren,
-    ViewContainerRef
+    ViewContainerRef,
+    Optional
 } from '@angular/core';
 import {
     ExtractFieldsFun,
@@ -19,6 +20,7 @@ import {
 import { merge, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as R from 'ramda';
+import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig, defaultTabsLayoutConfig } from './tabs-layout.config';
 
 @Component({
     selector: 'hlc-tabs-layout',
@@ -28,6 +30,7 @@ import * as R from 'ramda';
 })
 export class TabsLayoutComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
+    readonly config: TabsLayoutConfig;
 
     activeTab = 0;
     @ViewChildren('vc', { read: ViewContainerRef })
@@ -38,8 +41,11 @@ export class TabsLayoutComponent implements OnInit, OnDestroy {
 
     constructor(
         @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider,
-        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun
-    ) {}
+        @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
+        @Optional() @Inject(HLC_CLR_TABS_LAYOUT_CONFIG) config?: TabsLayoutConfig
+    ) {
+        this.config = config || defaultTabsLayoutConfig;
+    }
 
     ngOnInit() {
         // Set first tab as active, then current active is hiding
