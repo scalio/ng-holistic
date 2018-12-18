@@ -31,3 +31,5 @@ export * from './lib/ngx-mask/ngx-mask.module';
 export * from './lib/phone/phone.module';
 export * from './lib/phone/phone.component';
 export * from './lib/phone/phone.config';
+export * from './lib/password/password.module';
+export * from './lib/password/password.component';

@@ -11,6 +11,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { NgxComponentOutlet } from '../ngxComponentOutlet';
 import { FormFooterModule } from '../form-footer/form-footer.module';
 import { FormErrorModule } from '../form-error/form-error.module';
+import { HlcClrAlertModule } from '../alert/alert.module';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { FormErrorModule } from '../form-error/form-error.module';
         ClrModalModule,
         ClrIconModule,
         FormFooterModule,
-        FormErrorModule
+        FormErrorModule,
+        HlcClrAlertModule
     ],
     declarations: [ModalComponent, NgxComponentOutlet, AlertModalComponent, ConfirmModalComponent],
     exports: [ModalComponent, NgxComponentOutlet],
