@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { Validators } from '@angular/forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'tabs',
@@ -69,7 +70,8 @@ const group: ClrFormLayouts.ClrFormLayout = {
                         {
                             kind: 'TextField',
                             id: 'country',
-                            label: 'Country'
+                            label: 'Country',
+                            $validators: [Validators.required]
                         },
                         {
                             kind: 'TextField',
