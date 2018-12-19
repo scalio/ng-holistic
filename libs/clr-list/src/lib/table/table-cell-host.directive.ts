@@ -73,7 +73,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
             R.toPairs,
             R.map(([k, v]) => {
                 if (typeof v === 'function') {
-                    return [k, v(this.row)];
+                    return [k, v(this.row[k], this.row)];
                 } else {
                     return [k, v];
                 }
