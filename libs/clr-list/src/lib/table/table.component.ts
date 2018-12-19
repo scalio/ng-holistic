@@ -101,7 +101,6 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-
         if (this.state && R.isEmpty(state)) {
             // when datagrid is detroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
@@ -159,7 +158,10 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
             }),
             finalize(() => {
                 this.loading = false;
-                this.cdr.detectChanges();
+                try {
+                    // on destroy component, grid invokes clrDgRefresh (
+                    this.cdr.detectChanges();
+                } catch {}
             })
         );
     }
