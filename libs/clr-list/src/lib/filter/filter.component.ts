@@ -10,12 +10,20 @@ import {
 } from '@angular/core';
 import { ClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
+import { HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
+import { FilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
 
 @Component({
     selector: 'hlc-clr-filter',
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: HLC_FORM_FIELD_WRAPPER,
+            useValue: FilterInputWrapperComponent
+        }
+    ]
 })
 export class FilterComponent implements OnInit, AfterViewInit {
     _fields: ClrFormFields.FormField[];

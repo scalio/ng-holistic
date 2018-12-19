@@ -101,6 +101,13 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+
+        if (this.state && R.isEmpty(state)) {
+            // when datagrid is detroyed it invokes clrDgRefresh (sick !) with empty object
+            // just ignore
+            return;
+        }
+
         if (state.page && !this.state.page) {
             // first time state.page recieved, usually after first load, just ignore
             this.state = state;
