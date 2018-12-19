@@ -8,7 +8,9 @@ import {
     OnInit,
     Output,
     QueryList,
-    ViewChild
+    ViewChild,
+    Optional,
+    Inject
 } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
@@ -19,6 +21,7 @@ import {
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
+import { HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig, defaultListLabelsConfig } from './list.config';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -34,6 +37,7 @@ import { Table, TableDescription } from '../table/table.types';
     ]
 })
 export class ListComponent implements TableCustomCellsProvider, OnInit {
+    labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
 
     /**
@@ -68,7 +72,9 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
 
     @ViewChild(TableComponent) tableComponent: TableComponent;
 
-    constructor() {}
+    constructor(@Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig) {
+        this.labelsConfig = labelsConfig || defaultListLabelsConfig;
+    }
 
     ngOnInit() {}
 
