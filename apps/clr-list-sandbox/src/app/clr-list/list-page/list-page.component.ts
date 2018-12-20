@@ -51,7 +51,7 @@ const table: TableDescription = {
             kind: 'LinkColumn',
             title: 'Link',
             props: {
-                title(row) {
+                title(_, row) {
                     return row['title'];
                 },
                 link: 'some link',

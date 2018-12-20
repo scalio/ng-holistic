@@ -6,20 +6,36 @@ import {
     Input,
     OnInit,
     Output,
-    ViewChild
+    ViewChild,
+    Optional,
+    Inject
 } from '@angular/core';
 import { ClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
+import { HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
+import { FilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
+import {
+    HLC_CLR_FILTER_LABELS_CONFIG as HLC_CLR_FILTER_LABELS_CONFIG,
+    FilterLabelsConfig,
+    defaultFilterLabelsConfig
+} from './filter.config';
 
 @Component({
     selector: 'hlc-clr-filter',
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: HLC_FORM_FIELD_WRAPPER,
+            useValue: FilterInputWrapperComponent
+        }
+    ]
 })
 export class FilterComponent implements OnInit, AfterViewInit {
     _fields: ClrFormFields.FormField[];
     group: ClrFormLayouts.FieldsLayout;
+    labelsConfig: FilterLabelsConfig;
 
     @Output() filter = new EventEmitter<any>();
 
@@ -38,7 +54,12 @@ export class FilterComponent implements OnInit, AfterViewInit {
             } as ClrFormLayouts.FieldsLayout);
     }
 
-    constructor(private readonly filterService: FilterService) {}
+    constructor(
+        private readonly filterService: FilterService,
+        @Optional() @Inject(HLC_CLR_FILTER_LABELS_CONFIG) labelsConfig?: FilterLabelsConfig
+    ) {
+        this.labelsConfig = labelsConfig || defaultFilterLabelsConfig;
+    }
 
     ngOnInit() {}
 

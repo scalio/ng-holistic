@@ -9,10 +9,10 @@
         <div class="clr-row">
             <div class="clr-col-2">
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
-                    <clr-icon shape="angle" dir="down"></clr-icon>Hide Filter
+                    <clr-icon shape="angle" dir="down"></clr-icon>{{labelsConfig.hideFilter}}
                 </button>
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
-                    <clr-icon shape="angle" dir="up"></clr-icon>Show Filter
+                    <clr-icon shape="angle" dir="up"></clr-icon>{{labelsConfig.showFilter}}
                 </button>
             </div>
             <div class="clr-col-10">

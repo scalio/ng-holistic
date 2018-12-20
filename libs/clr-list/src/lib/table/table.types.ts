@@ -42,14 +42,14 @@ export namespace Table.MapColumns {
         props: P;
     }
 
-    export type CellPropFun<T> = (row: any) => T;
+    export type CellPropFun<T> = (val: any, row: any) => T;
 
     export type CellProp<T> = CellPropFun<T> | T;
 
     export interface LinkCellProps {
         title: CellProp<string>;
-        link: CellProp<any>;
-        clicked: Subject<any>;
+        link?: CellProp<any>;
+        clicked?: Subject<any>;
     }
 
     export interface LinkColumn extends MapColumn<LinkCellProps> {

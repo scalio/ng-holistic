@@ -110,7 +110,9 @@ export class ModalService {
 
         result.modalInstance.formProvider = formProvider;
 
-        form.patchValue(params.value);
+        if (params.value) {
+            form.patchValue(params.value);
+        }
 
         return dataAccess.updateSuccess$ as Observable<any>;
     }
