@@ -13,10 +13,10 @@ import { HlcClrFilterInputWrapperModule } from '../filter-input-wrapper/filter-i
 })
 export class HlcClrFilterModule {
     static forRoot(): ModuleWithProviders {
-        const { providers } = ClrFormModule.forRoot();
+        // TODO: Export clr-forms providers ?
         return {
             ngModule: HlcClrFilterModule,
-            providers
+            providers: []
         };
     }
 }

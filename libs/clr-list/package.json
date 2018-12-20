@@ -1,6 +1,6 @@
 {
     "name": "@ng-holistic/clr-list",
-    "version": "0.0.14",
+    "version": "0.0.19",
     "peerDependencies": {
         "@angular/common": "^7.1.0",
         "@angular/core": "^7.1.0",

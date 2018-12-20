@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
-import { HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
+import { HLC_FORM_FIELD_WRAPPER, FormComponent } from '@ng-holistic/forms';
 import { FilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
 import {
     HLC_CLR_FILTER_LABELS_CONFIG as HLC_CLR_FILTER_LABELS_CONFIG,
@@ -80,7 +80,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
         this.filter.emit(this.value);
     }
 
-    get form() {
+    get form(): FormComponent {
         return this.clrForm.form;
     }
 

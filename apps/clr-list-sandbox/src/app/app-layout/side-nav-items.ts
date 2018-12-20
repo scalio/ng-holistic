@@ -1,4 +1,4 @@
-import { SideNavItem } from '@ng-holistic/clr-layout';
+import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
