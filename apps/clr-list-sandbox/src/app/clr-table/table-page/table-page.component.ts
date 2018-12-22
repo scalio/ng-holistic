@@ -22,7 +22,7 @@ const table: TableDescription = {
             kind: 'LinkColumn',
             title: 'Link',
             props: {
-                title(row) {
+                title(_, row) {
                     return row['title'];
                 },
                 link: 'some link',
@@ -49,8 +49,8 @@ const rows: Table.Row[] = [
 ];
 
 const dataProvider: Table.Data.DataProvider = {
-    load(state) {
-        console.log(state);
+    load(_) {
+        console.log(rows);
         return timer(0).pipe(mapTo({ rows }));
     }
 };

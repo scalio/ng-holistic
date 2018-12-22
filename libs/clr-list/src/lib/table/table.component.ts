@@ -161,7 +161,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
-                } catch {}
+                } catch (err) {
+                    console.error(err);
+                }
             })
         );
     }
