@@ -4,11 +4,17 @@ import { TablePageComponent } from './table-page/table-page.component';
 import { TablePageModule } from './table-page/table-page.module';
 import { TableReduxPageComponent } from './table-redux-page/table-redux-page.component';
 import { TableReduxPageModule } from './table-redux-page/table-redux-page.module';
+import { TableExpandRowPageComponent } from './table-expand-row-page/table-expand-row-page.component';
+import { TableExpandRowPageModule } from './table-expand-row-page/table-expand-row-page.module';
 
 export const routes: Routes = [
     {
         path: 'table',
         component: TablePageComponent
+    },
+    {
+        path: 'table-expand-row',
+        component: TableExpandRowPageComponent
     },
     {
         path: 'table-redux',
@@ -17,7 +23,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), TablePageModule, TableReduxPageModule],
+    imports: [RouterModule.forChild(routes), TablePageModule, TableReduxPageModule, TableExpandRowPageModule],
     exports: [RouterModule],
     entryComponents: []
 })

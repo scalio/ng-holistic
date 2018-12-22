@@ -20,6 +20,10 @@ export default [
                 path: ['/clr-table', 'table']
             },
             {
+                title: 'Table expand row',
+                path: ['/clr-table', 'table-expand-row']
+            },
+            {
                 title: 'Table (redux)',
                 path: ['/clr-table', 'table-redux']
             }
