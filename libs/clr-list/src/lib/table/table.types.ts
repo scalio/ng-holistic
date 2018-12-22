@@ -75,6 +75,11 @@ export namespace Table.MapColumns {
 
 export interface TableDescription {
     cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+    details?: {
+        cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+        // TODO : observable
+        rows: (parentRow: Table.Row) => Table.Row[];
+    };
 }
 
 export namespace Table.Data {

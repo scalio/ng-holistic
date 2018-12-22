@@ -269,7 +269,13 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         return row.id;
     }
 
+    trackByDetail(i: number) {
+        return i;
+    }
+
+    //
     onPageSizeChanges(val: number) {
         console.log('+++', val);
     }
+
 }

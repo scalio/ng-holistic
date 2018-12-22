@@ -18,30 +18,32 @@
         [clrDgItem]="row.id"
     >
         <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
-            <!-- regular cell -->
-            <ng-template [ngIf]="!cell.kind && !cell.customCell">
-                <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
-            </ng-template>
-            <!-- custom cell -->
-            <ng-template [ngIf]="cell.customCell">
-                <ng-container
-                    [hlcTableCustomCellHost]="cell"
-                    [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
-                    [hlcTableCustomCellHostRow]="row"
-                >
-                </ng-container>
-            </ng-template>
-            <!-- map cell -->
-            <ng-template [ngIf]="cell.kind">
-                <ng-container
-                    [hlcTableCellHost]="cell"
-                    [hlcTableCellHostComponentType]="getCellComponentType(cell)"
-                    [hlcTableCellHostRow]="row"
-                >
-                </ng-container>
-            </ng-template>
+            <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
+
+        <!-- Details -->
+
+        <ng-container *ngIf="row.details">
+            <ng-container ngProjectAs="clr-dg-row-detail" *ngFor="let detail of row.details; trackBy: trackByRow">
+                <clr-dg-row-detail *clrIfExpanded>
+                    <!-- Details in columns -->
+                    <ng-container *ngIf="row.details.cols; else detailsCard">
+                        <clr-dg-cell *ngFor="let cell of row.details.cols; trackBy: trackByCol">
+                            <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
+                        </clr-dg-cell>
+                    </ng-container>
+                    <!-- Details in card -->
+                    <ng-template #detailsCard>
+                        <ng-container
+                            *ngTemplateOutlet="detailTemplate; context: { $implicit: detail, row: row }"
+                        ></ng-container>
+                    </ng-template>
+                </clr-dg-row-detail>
+            </ng-container>
+        </ng-container>
     </clr-dg-row>
+
+    <!-- Paginatore -->
 
     <clr-dg-footer *ngIf="paginator">
         {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
@@ -63,3 +65,28 @@
         </clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
+
+<ng-template #rowCell let-cell="cell" let-row="row">
+    <!-- regular cell -->
+    <ng-template [ngIf]="!cell.kind && !cell.customCell">
+        <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
+    </ng-template>
+    <!-- custom cell -->
+    <ng-template [ngIf]="cell.customCell">
+        <ng-container
+            [hlcTableCustomCellHost]="cell"
+            [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
+            [hlcTableCustomCellHostRow]="row"
+        >
+        </ng-container>
+    </ng-template>
+    <!-- map cell -->
+    <ng-template [ngIf]="cell.kind">
+        <ng-container
+            [hlcTableCellHost]="cell"
+            [hlcTableCellHostComponentType]="getCellComponentType(cell)"
+            [hlcTableCellHostRow]="row"
+        >
+        </ng-container>
+    </ng-template>
+</ng-template>
