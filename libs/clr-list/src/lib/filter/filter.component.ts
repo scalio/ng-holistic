@@ -14,11 +14,7 @@ import { ClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/cl
 import { FilterService } from '../filter.service';
 import { HLC_FORM_FIELD_WRAPPER, FormComponent } from '@ng-holistic/forms';
 import { FilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
-import {
-    HLC_CLR_FILTER_LABELS_CONFIG as HLC_CLR_FILTER_LABELS_CONFIG,
-    FilterLabelsConfig,
-    defaultFilterLabelsConfig
-} from './filter.config';
+import { HLC_CLR_FILTER_LABELS_CONFIG, FilterLabelsConfig, defaultFilterLabelsConfig } from './filter.config';
 
 @Component({
     selector: 'hlc-clr-filter',
@@ -55,7 +51,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
     }
 
     constructor(
-        private readonly filterService: FilterService,
+        @Optional() private readonly filterService?: FilterService,
         @Optional() @Inject(HLC_CLR_FILTER_LABELS_CONFIG) labelsConfig?: FilterLabelsConfig
     ) {
         this.labelsConfig = labelsConfig || defaultFilterLabelsConfig;
@@ -64,7 +60,9 @@ export class FilterComponent implements OnInit, AfterViewInit {
     ngOnInit() {}
 
     ngAfterViewInit() {
-        this.filterService.setForm(this.form.formGroup);
+        if (this.filterService) {
+            this.filterService.setForm(this.form.formGroup);
+        }
     }
 
     get hasChanges() {
