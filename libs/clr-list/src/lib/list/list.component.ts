@@ -39,6 +39,7 @@ import { HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig, defaultListLabelsConfig }
 export class ListComponent implements TableCustomCellsProvider, OnInit {
     labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
+    @Input() aggregateRow: Table.AggregateRow | undefined;
 
     /**
      * Custom cells

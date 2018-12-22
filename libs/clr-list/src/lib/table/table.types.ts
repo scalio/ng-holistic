@@ -34,6 +34,10 @@ export namespace Table {
     export interface Row extends RowBase {
         [key: string]: any;
     }
+
+    export interface AggregateRow {
+        [colId: string]: (vals: any[], rows?: Row[]) => any;
+    }
 }
 
 export namespace Table.MapColumns {

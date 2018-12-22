@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Table, TableDescription } from '@ng-holistic/clr-list';
 import { timer, Subject } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+import * as R from 'ramda';
 
 const table: TableDescription = {
     cols: [
@@ -9,6 +10,11 @@ const table: TableDescription = {
             id: 'title',
             title: 'Title',
             sort: true
+        },
+        {
+            id: 'amount',
+            title: 'Amount',
+            sort: false
         },
         {
             id: 'capTitle',
@@ -40,11 +46,13 @@ const table: TableDescription = {
 const rows: Table.Row[] = [
     {
         id: '1',
-        title: 'aaaa'
+        title: 'aaaa',
+        amount: 2
     },
     {
         id: '2',
-        title: 'bbb'
+        title: 'bbb',
+        amount: 3
     }
 ];
 
@@ -53,6 +61,10 @@ const dataProvider: Table.Data.DataProvider = {
         console.log(rows);
         return timer(0).pipe(mapTo({ rows }));
     }
+};
+
+const aggregateRow: Table.AggregateRow = {
+    amount: R.sum
 };
 
 @Component({
@@ -64,6 +76,7 @@ const dataProvider: Table.Data.DataProvider = {
 export class TablePageComponent implements OnInit {
     table = table;
     dataProvider = dataProvider;
+    aggregateRow = aggregateRow;
 
     constructor() {}
 

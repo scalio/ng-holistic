@@ -48,6 +48,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
 
+    @Input() aggregateRow: Table.AggregateRow | undefined;
+
     @Input() filter: any;
 
     /**
@@ -95,6 +97,16 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    getAggrColValue(col: Table.Column) {
+        if (!this.aggregateRow || !this.rows || !this.aggregateRow[col.id]) {
+            return '';
+        }
+
+        const vals = R.pluck(col.id, this.rows);
+
+        return this.aggregateRow[col.id](vals, this.rows) || '';
     }
 
     /**
