@@ -10,7 +10,8 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList
+    QueryList,
+    ContentChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
@@ -27,6 +28,7 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
+import { RowDetailDirective } from './row-detail.directive';
 
 export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
@@ -51,6 +53,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
     @Input() filter: any;
+
+    /**
+     * Row details template
+     */
+    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
 
     /**
      * Custom cells

@@ -8,6 +8,7 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
 import { CustomCellDirective } from './custom-cell.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 import { SelectModule } from '@ng-holistic/clr-controls';
+import { RowDetailDirective } from './row-detail.directive';
 
 @NgModule({
     imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, SelectModule],
@@ -16,9 +17,10 @@ import { SelectModule } from '@ng-holistic/clr-controls';
         TableCellHostDirective,
         CustomCellDirective,
         TableCustomCellHostDirective,
+        RowDetailDirective,
         ...cellComponents
     ],
-    exports: [TableComponent, CustomCellDirective, ...cellComponents],
+    exports: [TableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],
     entryComponents: cellComponents
 })
 export class HlcClrTableModule {

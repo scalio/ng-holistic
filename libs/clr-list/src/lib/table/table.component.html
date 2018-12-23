@@ -23,7 +23,7 @@
 
         <!-- Details -->
 
-        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details">
+        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details; else detailsCard">
             <ng-container *ngFor="let detail of table.details.rows(row); trackBy: trackByDetailsRow">
                 <clr-dg-row-detail *clrIfExpanded>
                     <!-- Details in columns -->
@@ -39,7 +39,7 @@
                     <!-- Details in card -->
                     <ng-template #detailsCard>
                         <ng-container
-                            *ngTemplateOutlet="detailTemplate; context: { $implicit: detail, row: row }"
+                            *ngTemplateOutlet="rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"
                         ></ng-container>
                     </ng-template>
                 </clr-dg-row-detail>
