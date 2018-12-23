@@ -269,6 +269,10 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         return row.id;
     }
 
+    trackByDetailsRow(i: any) {
+        return i;
+    }
+
     trackByDetail(i: number) {
         return i;
     }
@@ -278,4 +282,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         console.log('+++', val);
     }
 
+    //
+    getDetailsCol(forColId: string) {
+        return R.pipe(
+            R.pathOr([], ['details', 'cols']),
+            R.find(R.propEq('id', forColId))
+        )(this.table);
+    }
 }

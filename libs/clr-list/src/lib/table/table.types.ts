@@ -76,9 +76,11 @@ export namespace Table.MapColumns {
 export interface TableDescription {
     cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
     details?: {
+        /*
+        Subset of root cols (by id), if cols not in the subset they will be ignored
+        */
         cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
-        // TODO : observable
-        rows: (parentRow: Table.Row) => Table.Row[];
+        rows: (parentRow: Table.Row) => any[];
     };
 }
 

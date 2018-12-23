@@ -38,9 +38,28 @@ const table: TableDescription = {
         {
             id: 'custom',
             customCell: true,
-            title: 'Custom',
+            title: 'Custom'
         }
-    ]
+    ],
+    details: {
+        cols: [
+            {
+                id: 'amount',
+                title: ''
+            },
+            {
+                id: 'title',
+                title: ''
+            }
+        ],
+        rows(parent: any) {
+            // return doubled and tribled amount as example
+            return [
+                { amount: parent['amount'] * 2, title: parent['title'] + '+' },
+                { amount: parent['amount'] * 3, title: parent['title'] + '++'}
+            ];
+        }
+    }
 };
 
 const rows: Table.Row[] = [

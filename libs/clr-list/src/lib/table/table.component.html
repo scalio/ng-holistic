@@ -23,13 +23,17 @@
 
         <!-- Details -->
 
-        <ng-container *ngIf="row.details">
-            <ng-container ngProjectAs="clr-dg-row-detail" *ngFor="let detail of row.details; trackBy: trackByRow">
+        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details">
+            <ng-container *ngFor="let detail of table.details.rows(row); trackBy: trackByDetailsRow">
                 <clr-dg-row-detail *clrIfExpanded>
                     <!-- Details in columns -->
-                    <ng-container *ngIf="row.details.cols; else detailsCard">
-                        <clr-dg-cell *ngFor="let cell of row.details.cols; trackBy: trackByCol">
-                            <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
+                    <ng-container *ngIf="table.details.cols; else detailsCard">
+                        <clr-dg-cell *ngFor="let cell of table.cols; trackBy: trackByCol">
+                            <ng-container *ngIf="getDetailsCol(cell.id) as detailsCell">
+                                <ng-container
+                                    *ngTemplateOutlet="rowCell; context: { cell: detailsCell, row: detail }"
+                                ></ng-container>
+                            </ng-container>
                         </clr-dg-cell>
                     </ng-container>
                     <!-- Details in card -->
