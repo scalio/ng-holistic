@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MainLayoutModule, MainHeaderModule } from '@ng-holistic/clr-layout';
 import { AppLayoutComponent } from './app-layout.component';
+import { MainLayoutModule, MainHeaderModule } from '@ng-holistic/clr-common';
 
 @NgModule({
     declarations: [AppLayoutComponent],

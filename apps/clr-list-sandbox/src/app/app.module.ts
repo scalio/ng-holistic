@@ -1,10 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HlcClrTableModule, HlcClrFilterModule } from '@ng-holistic/clr-list';
+import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
-import { HlcClrFilterModule, HlcClrTableModule } from '@ng-holistic/clr-list';
 
 @NgModule({
     declarations: [AppComponent],

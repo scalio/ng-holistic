@@ -1,17 +1,17 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     Host,
     Inject,
     Input,
+    OnDestroy,
     OnInit,
     Optional,
-    SkipSelf,
-    OnDestroy,
-    ChangeDetectorRef
+    SkipSelf
 } from '@angular/core';
 import { FormControl, FormGroupDirective } from '@angular/forms';
-import { ClrFormFields, ValidationErrorsMapConfig, VALIDATION_ERRORS_MAP_CONFIG } from '@ng-holistic/clr-forms';
+import { ClrFormFields, VALIDATION_ERRORS_MAP_CONFIG } from '@ng-holistic/clr-forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class FilterInputWrapperComponent implements OnInit, OnDestroy {
         private formGroupDirective: FormGroupDirective,
         @Optional()
         @Inject(VALIDATION_ERRORS_MAP_CONFIG)
-        private readonly validationErrorsMapConfig?: ValidationErrorsMapConfig
+        private readonly validationErrorsMapConfig?: any // build issue ValidationErrorsMapConfig
     ) {}
 
     ngOnInit() {

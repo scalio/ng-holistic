@@ -1,6 +1,6 @@
 {
   "name": "ng-holistic",
-  "version": "0.0.14",
+  "version": "0.0.20",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -18,8 +18,9 @@
     "build:clr-forms": "npm run build:forms && npm run build:clr-controls && ng build clr-forms --ts-config=tsconfig.build.json",
     "build:clr-list": "npm run build:clr-forms && ng build clr-list --ts-config=tsconfig.build.json",
     "build:forms": "ng build forms",
-    "build:libs": "npm run build:clr-layout && npm run build:clr-file-upload && npm run build:clr-forms && npm run build:clr-list",
+    "build:libs": "npm run build:clr-file-upload && npm run build:clr-forms && npm run build:clr-list",
     "start:prod-local-libs": "ng serve --configuration=production-local-libs",
+    "start:list-prod-local-libs": "ng serve clr-list-sandbox --configuration=production-local-libs",
     "start:dev-local-libs": "ng serve --configuration=dev-local-libs",
     "test:forms": "ng test forms",
     "test:forms:browsers": "ng test forms --watch=false --browsers=Chrome,IE11,Edge",

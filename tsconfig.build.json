@@ -5,8 +5,9 @@
             "@ng-holistic/forms": ["dist/libs/forms"],
             "@ng-holistic/clr-forms": ["dist/libs/clr-forms"],
             "@ng-holistic/clr-controls": ["dist/libs/clr-controls"],
-            "@ng-holistic/clr-layout": ["dist/libs/clr-layout"],
             "@ng-holistic/clr-file-upload": ["dist/libs/clr-file-upload"],
+            "@ng-holistic/clr-common": ["dist/libs/clr-common"],
+            "@ng-holistic/clr-list": ["dist/libs/clr-list"]
         }
     }
 }

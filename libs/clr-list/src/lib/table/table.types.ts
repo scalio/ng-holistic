@@ -34,6 +34,10 @@ export namespace Table {
     export interface Row extends RowBase {
         [key: string]: any;
     }
+
+    export interface AggregateRow {
+        [colId: string]: (vals: any[], rows?: Row[]) => any;
+    }
 }
 
 export namespace Table.MapColumns {
@@ -71,6 +75,13 @@ export namespace Table.MapColumns {
 
 export interface TableDescription {
     cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+    details?: {
+        /*
+        Subset of root cols (by id), if cols not in the subset they will be ignored
+        */
+        cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+        rows: (parentRow: Table.Row) => any[];
+    };
 }
 
 export namespace Table.Data {

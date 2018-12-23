@@ -52,6 +52,7 @@
     "node_modules",
     "dist",
     "tmp",
-    "src/test.ts"
+    "src/test.ts",
+    "**/*.spec.ts"
   ]
 }

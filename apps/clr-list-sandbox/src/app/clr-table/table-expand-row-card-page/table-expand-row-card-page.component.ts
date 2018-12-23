@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Table, TableDescription } from '@ng-holistic/clr-list';
-import { timer, Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import * as R from 'ramda';
 
 const table: TableDescription = {
     cols: [
@@ -34,13 +33,17 @@ const table: TableDescription = {
                 link: 'some link',
                 clicked: new Subject()
             }
-        },
-        {
-            id: 'custom',
-            customCell: true,
-            title: 'Custom',
         }
-    ]
+    ],
+    details: {
+        rows(parent: any) {
+            // return doubled and tribled amount as example
+            return [
+                { amount: parent['amount'] * 2, title: parent['title'] + '+' },
+                { amount: parent['amount'] * 3, title: parent['title'] + '++' }
+            ];
+        }
+    }
 };
 
 const rows: Table.Row[] = [
@@ -58,24 +61,20 @@ const rows: Table.Row[] = [
 
 const dataProvider: Table.Data.DataProvider = {
     load(_) {
+        console.log(rows);
         return timer(0).pipe(mapTo({ rows }));
     }
 };
 
-const aggregateRow: Table.AggregateRow = {
-    amount: R.sum
-};
-
 @Component({
-    selector: 'hlc-clr-sandbox-table-page',
-    templateUrl: './table-page.component.html',
-    styleUrls: ['./table-page.component.scss'],
+    selector: 'hlc-clr-sandbox-table-expand-row-card-page',
+    templateUrl: './table-expand-row-card-page.component.html',
+    styleUrls: ['./table-expand-row-card-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TablePageComponent implements OnInit {
+export class TableExpandRowCardPageComponent implements OnInit {
     table = table;
     dataProvider = dataProvider;
-    aggregateRow = aggregateRow;
 
     constructor() {}
 

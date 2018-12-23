@@ -1,4 +1,4 @@
-import { SideNavItem } from '@ng-holistic/clr-layout';
+import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
@@ -18,6 +18,14 @@ export default [
             {
                 title: 'Table',
                 path: ['/clr-table', 'table']
+            },
+            {
+                title: 'Table expand row',
+                path: ['/clr-table', 'table-expand-row']
+            },
+            {
+                title: 'Table expand row card',
+                path: ['/clr-table', 'table-expand-row-card']
             },
             {
                 title: 'Table (redux)',

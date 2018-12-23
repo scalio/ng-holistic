@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertType, ModalService } from '@ng-holistic/clr-common';
-import { timer, throwError } from 'rxjs';
+import { ModalService } from '@ng-holistic/clr-common';
+import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 @Component({
@@ -50,6 +50,6 @@ export class ModalPageComponent implements OnInit {
     }
 
     onAlert() {
-        this.modalService.alert('Title', 'Message', AlertType.Success);
+        this.modalService.alert('Title', 'Message', 'success');
     }
 }

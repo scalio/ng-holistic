@@ -515,6 +515,24 @@
                                     "maximumError": "5mb"
                                 }
                             ]
+                        },
+                        "production-local-libs": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/sandbox/src/environments/environment.ts",
+                                    "with": "apps/sandbox/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "tsConfig": "tsconfig.build.json"
                         }
                     }
                 },
@@ -526,6 +544,9 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "clr-list-sandbox:build:production"
+                        },
+                        "production-local-libs": {
+                            "browserTarget": "clr-list-sandbox:build:production-local-libs"
                         }
                     }
                 },

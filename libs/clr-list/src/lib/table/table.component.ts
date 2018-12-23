@@ -10,7 +10,8 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList
+    QueryList,
+    ContentChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
@@ -27,6 +28,7 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
+import { RowDetailDirective } from './row-detail.directive';
 
 export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
@@ -48,7 +50,14 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
 
+    @Input() aggregateRow: Table.AggregateRow | undefined;
+
     @Input() filter: any;
+
+    /**
+     * Row details template
+     */
+    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
 
     /**
      * Custom cells
@@ -95,6 +104,16 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    getAggrColValue(col: Table.Column) {
+        if (!this.aggregateRow || !this.rows || !this.aggregateRow[col.id]) {
+            return '';
+        }
+
+        const vals = R.pluck(col.id, this.rows);
+
+        return this.aggregateRow[col.id](vals, this.rows) || '';
     }
 
     /**
@@ -161,7 +180,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
-                } catch {}
+                } catch (err) {
+                    console.error(err);
+                }
             })
         );
     }
@@ -255,7 +276,24 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         return row.id;
     }
 
+    trackByDetailsRow(i: any) {
+        return i;
+    }
+
+    trackByDetail(i: number) {
+        return i;
+    }
+
+    //
     onPageSizeChanges(val: number) {
         console.log('+++', val);
+    }
+
+    //
+    getDetailsCol(forColId: string) {
+        return R.pipe(
+            R.pathOr([], ['details', 'cols']),
+            R.find(R.propEq('id', forColId))
+        )(this.table);
     }
 }

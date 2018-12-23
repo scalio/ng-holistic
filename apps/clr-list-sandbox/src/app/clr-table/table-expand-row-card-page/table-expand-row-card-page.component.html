@@ -1,0 +1,5 @@
+<hlc-clr-table [table]="table" [dataProvider]="dataProvider">
+    <ng-template hlcClrRowDetail let-detail>
+        <h3>{{ detail.title }} : {{ detail.amount }}</h3>
+    </ng-template>
+</hlc-clr-table>
