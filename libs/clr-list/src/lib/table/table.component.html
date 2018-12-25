@@ -1,4 +1,9 @@
-<clr-datagrid [clrDgLoading]="loading" (clrDgRefresh)="onRefresh($event)">
+<clr-datagrid
+    [clrDgLoading]="loading"
+    (clrDgRefresh)="onRefresh($event)"
+    [clrDgSelected]="selectedRows"
+    (clrDgSelectedChange)="onSelectedRowsChanged($event)"
+>
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
@@ -8,7 +13,7 @@
         {{ col.title }}
     </clr-dg-column>
 
-    <clr-dg-row *ngIf="aggregateRow" class="aggregate-row">
+    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row">
         <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol"> {{ getAggrColValue(col) }} </clr-dg-cell>
     </clr-dg-row>
 

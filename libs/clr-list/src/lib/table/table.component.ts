@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ContentChild,
     ContentChildren,
     EventEmitter,
     Inject,
@@ -10,8 +11,7 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList,
-    ContentChild
+    QueryList
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
@@ -19,6 +19,7 @@ import { of, Subject } from 'rxjs';
 import { finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
+import { RowDetailDirective } from './row-detail.directive';
 import {
     defaultTableDataProviderConfig,
     HLC_CLR_TABLE_CELL_MAP,
@@ -28,7 +29,6 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
-import { RowDetailDirective } from './row-detail.directive';
 
 export interface TableCustomCellsProvider {
     customCells: QueryList<CustomCellDirective>;
@@ -53,6 +53,31 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
     @Input() filter: any;
+
+    /// selected
+
+    @Output() selectedRowsChanged = new EventEmitter<Table.Row[]>();
+
+    /** selected is passed to datagrid by ref and manipulated with mutations on array itself 👎
+        we need to distinguish when selected was really changed
+    */
+    private _selected: any[] | undefined;
+    private __selected: any[] | undefined;
+
+    get selectedRows() {
+        return this._selected;
+    }
+
+    /**
+     * Ids of the selected rows
+     * In order to activate select rows pass in this property empty array.
+     */
+    @Input()
+    set selectedRows(val: any[] | undefined) {
+        this._selected = val;
+        // copy in order to compare 'changed' value with it to check if selected really changed
+        this.__selected = val && [...val];
+    }
 
     /**
      * Row details template
@@ -114,6 +139,17 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         const vals = R.pluck(col.id, this.rows);
 
         return this.aggregateRow[col.id](vals, this.rows) || '';
+    }
+
+    // selected
+
+    onSelectedRowsChanged(event: any[]) {
+        if (R.equals(event, this.__selected)) {
+            return;
+        }
+        this.selectedRows = event;
+        const selectedItems = this.rows.filter(f => event.indexOf(f.id) !== -1);
+        this.selectedRowsChanged.emit(selectedItems);
     }
 
     /**

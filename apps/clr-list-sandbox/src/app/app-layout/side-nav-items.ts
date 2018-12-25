@@ -28,6 +28,10 @@ export default [
                 path: ['/clr-table', 'table-expand-row-card']
             },
             {
+                title: 'Table select rows',
+                path: ['/clr-table', 'table-select-rows']
+            },
+            {
                 title: 'Table (redux)',
                 path: ['/clr-table', 'table-redux']
             }
