@@ -22,6 +22,16 @@
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
     >
+        <clr-dg-action-overflow *ngIf="getRowActions(row) as rowActions">
+            <button
+                *ngFor="let action of rowActions; trackBy: trackByAction"
+                class="action-item"
+                (click)="onActionClick(action)"
+            >
+                {{ action.title }}
+            </button>
+        </clr-dg-action-overflow>
+
         <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>

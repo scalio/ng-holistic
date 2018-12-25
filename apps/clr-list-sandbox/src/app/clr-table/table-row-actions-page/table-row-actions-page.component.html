@@ -1,0 +1,8 @@
+<hlc-clr-table
+    [table]="table"
+    [dataProvider]="dataProvider"
+    [aggregateRow]="aggregateRow"
+    (rowAction)="onRowAction($event)"
+>
+    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
+</hlc-clr-table>

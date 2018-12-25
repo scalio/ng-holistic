@@ -4,13 +4,13 @@ import {
     ContentChildren,
     EventEmitter,
     forwardRef,
+    Inject,
     Input,
     OnInit,
+    Optional,
     Output,
     QueryList,
-    ViewChild,
-    Optional,
-    Inject
+    ViewChild
 } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
@@ -21,7 +21,7 @@ import {
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
-import { HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig, defaultListLabelsConfig } from './list.config';
+import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -40,6 +40,7 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
     labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
+    @Input() selectedRow: any;
 
     /**
      * Custom cells
@@ -70,6 +71,9 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
     @Input() filterFields: ClrFormFields.FormField[];
 
     @Output() filter = new EventEmitter<any>();
+
+    @Output() rowAction = new EventEmitter<Table.RowAction>();
+    @Output() selectedRowsChanged = new EventEmitter<Table.Row[]>();
 
     @ViewChild(TableComponent) tableComponent: TableComponent;
 

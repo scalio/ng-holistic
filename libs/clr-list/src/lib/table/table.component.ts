@@ -106,6 +106,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
+    @Output() rowAction = new EventEmitter<Table.RowAction>();
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -332,5 +333,18 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
             R.pathOr([], ['details', 'cols']),
             R.find(R.propEq('id', forColId))
         )(this.table);
+    }
+
+    //
+    getRowActions(row: Table.Row) {
+        return (
+            this.table &&
+            this.table.rowActions &&
+            (typeof this.table.rowActions === 'function' ? this.table.rowActions(row) : this.table.rowActions)
+        );
+    }
+
+    onActionClick(action: Table.RowAction) {
+        this.rowAction.emit(action);
     }
 }
