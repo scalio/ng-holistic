@@ -13,7 +13,7 @@
         {{ col.title }}
     </clr-dg-column>
 
-    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row">
+    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
         <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol"> {{ getAggrColValue(col) }} </clr-dg-cell>
     </clr-dg-row>
 
@@ -52,26 +52,28 @@
         </ng-container>
     </clr-dg-row>
 
-    <!-- Paginatore -->
+    <!-- Paginator -->
 
-    <clr-dg-footer *ngIf="paginator">
-        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
-        <hlc-select
-            *ngIf="paginatorItems"
-            class="page-size-selector"
-            [naked]="true"
-            [disallowEmpty]="true"
-            [value]="paginator.pageSize"
-            (valueChange)="onPageSizeChanged($event)"
-            [items]="paginatorItems"
-        ></hlc-select>
-        <clr-dg-pagination
-            #pagination
-            [clrDgPageSize]="paginator.pageSize"
-            [clrDgPage]="paginator.pageIndex"
-            [clrDgTotalItems]="paginator.length"
-        >
-        </clr-dg-pagination>
+    <clr-dg-footer>
+        <ng-container *ngIf="paginator">
+            {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
+            <hlc-select
+                *ngIf="paginatorItems"
+                class="page-size-selector"
+                [naked]="true"
+                [disallowEmpty]="true"
+                [value]="paginator.pageSize"
+                (valueChange)="onPageSizeChanged($event)"
+                [items]="paginatorItems"
+            ></hlc-select>
+            <clr-dg-pagination
+                #pagination
+                [clrDgPageSize]="paginator.pageSize"
+                [clrDgPage]="paginator.pageIndex"
+                [clrDgTotalItems]="paginator.length"
+            >
+            </clr-dg-pagination>
+        </ng-container>
     </clr-dg-footer>
 </clr-datagrid>
 

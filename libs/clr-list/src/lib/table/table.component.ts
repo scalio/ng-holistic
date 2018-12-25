@@ -144,6 +144,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     // selected
 
     onSelectedRowsChanged(event: any[]) {
+        event = R.reject(R.isNil, event);
         if (R.equals(event, this.__selected)) {
             return;
         }
@@ -304,8 +305,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     // trackBy
 
-    trackByCol(_: any, col: Table.ColumnBase) {
-        return col.id;
+    trackByCol(i: any, col: Table.ColumnBase) {
+        return col ? col.id : i;
     }
 
     trackByRow(_: any, row: Table.RowBase) {

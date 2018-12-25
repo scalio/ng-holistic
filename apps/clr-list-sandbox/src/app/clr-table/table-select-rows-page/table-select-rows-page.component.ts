@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Table, TableDescription } from '@ng-holistic/clr-list';
-import { timer, Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import * as R from 'ramda';
 
 const table: TableDescription = {
     cols: [
@@ -62,10 +61,6 @@ const dataProvider: Table.Data.DataProvider = {
     }
 };
 
-const aggregateRow: Table.AggregateRow = {
-    amount: R.sum
-};
-
 @Component({
     selector: 'hlc-clr-sandbox-table-select-rows-page',
     templateUrl: './table-select-rows-page.component.html',
@@ -75,7 +70,6 @@ const aggregateRow: Table.AggregateRow = {
 export class TableSelectRowsPageComponent implements OnInit {
     table = table;
     dataProvider = dataProvider;
-    aggregateRow = aggregateRow;
 
     selectedRows: string[] = [];
 

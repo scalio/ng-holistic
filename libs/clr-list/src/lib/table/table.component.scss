@@ -1,7 +1,11 @@
-::ng-deep .sortable button.datagrid-filter-toggle {
+:host ::ng-deep .sortable button.datagrid-filter-toggle {
     display: none;
 }
 
-::ng-deep .sortable {
+:host ::ng-deep .sortable {
     text-decoration: underline;
+}
+
+:host ::ng-deep .aggregate-row clr-checkbox-wrapper {
+    display: none;
 }
