@@ -4,21 +4,22 @@
     [dataProvider]="dataProvider"
     [table]="table"
     [aggregateRow]="aggregateRow"
+    [selectedRows]="selectedRows"
     (stateChanged)="onTableStateChanged($event)"
+    (rowAction)="rowAction.emit($event)"
+    (selectedRowsChanged)="selectedRowsChanged.emit($event)"
 >
     <ng-container action-bar>
         <div class="clr-row">
             <div class="clr-col-2">
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
-                    <clr-icon shape="angle" dir="down"></clr-icon>{{labelsConfig.hideFilter}}
+                    <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
                 </button>
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
-                    <clr-icon shape="angle" dir="up"></clr-icon>{{labelsConfig.showFilter}}
+                    <clr-icon shape="angle" dir="up"></clr-icon>{{ labelsConfig.showFilter }}
                 </button>
             </div>
-            <div class="clr-col-10">
-                <ng-content select="[toolbox]"></ng-content>
-            </div>
+            <div class="clr-col-10"><ng-content select="[toolbox]"></ng-content></div>
         </div>
         <hlc-clr-filter [fields]="filterFields" (filter)="onFilter($event)" [hidden]="!isFilterShown"></hlc-clr-filter>
     </ng-container>

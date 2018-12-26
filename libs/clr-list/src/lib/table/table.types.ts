@@ -38,6 +38,11 @@ export namespace Table {
     export interface AggregateRow {
         [colId: string]: (vals: any[], rows?: Row[]) => any;
     }
+
+    export interface RowAction {
+        id: any;
+        title: string;
+    }
 }
 
 export namespace Table.MapColumns {
@@ -75,6 +80,7 @@ export namespace Table.MapColumns {
 
 export interface TableDescription {
     cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+    rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
     details?: {
         /*
         Subset of root cols (by id), if cols not in the subset they will be ignored

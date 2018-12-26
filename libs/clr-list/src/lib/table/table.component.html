@@ -1,4 +1,9 @@
-<clr-datagrid [clrDgLoading]="loading" (clrDgRefresh)="onRefresh($event)">
+<clr-datagrid
+    [clrDgLoading]="loading"
+    (clrDgRefresh)="onRefresh($event)"
+    [clrDgSelected]="selectedRows"
+    (clrDgSelectedChange)="onSelectedRowsChanged($event)"
+>
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
@@ -8,7 +13,7 @@
         {{ col.title }}
     </clr-dg-column>
 
-    <clr-dg-row *ngIf="aggregateRow" class="aggregate-row">
+    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
         <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol"> {{ getAggrColValue(col) }} </clr-dg-cell>
     </clr-dg-row>
 
@@ -17,6 +22,16 @@
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
     >
+        <clr-dg-action-overflow *ngIf="getRowActions(row) as rowActions">
+            <button
+                *ngFor="let action of rowActions; trackBy: trackByAction"
+                class="action-item"
+                (click)="onActionClick(action)"
+            >
+                {{ action.title }}
+            </button>
+        </clr-dg-action-overflow>
+
         <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
@@ -47,12 +62,14 @@
         </ng-container>
     </clr-dg-row>
 
-    <!-- Paginatore -->
+    <!-- Paginator -->
 
-    <clr-dg-footer *ngIf="paginator">
-        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
+    <clr-dg-footer>
+        <span *ngIf="paginator"
+            >{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span
+        >
         <hlc-select
-            *ngIf="paginatorItems"
+            *ngIf="paginator && paginatorItems"
             class="page-size-selector"
             [naked]="true"
             [disallowEmpty]="true"
@@ -62,6 +79,7 @@
         ></hlc-select>
         <clr-dg-pagination
             #pagination
+            *ngIf="paginator"
             [clrDgPageSize]="paginator.pageSize"
             [clrDgPage]="paginator.pageIndex"
             [clrDgTotalItems]="paginator.length"

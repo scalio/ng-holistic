@@ -25,6 +25,7 @@ export * from './lib/img-overlay/img-overlay.module';
 // pipes
 export * from './lib/pipes/common-pipes.module';
 export * from './lib/pipes/phone.pipe';
+export * from './lib/pipes/number.pipe';
 
 // alert
 export * from './lib/alert/alert.component';
