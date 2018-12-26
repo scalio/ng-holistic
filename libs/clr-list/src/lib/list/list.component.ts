@@ -40,7 +40,7 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
     labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
-    @Input() selectedRow: any;
+    @Input() selectedRows: any[];
 
     /**
      * Custom cells
