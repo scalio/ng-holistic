@@ -64,26 +64,24 @@
 
     <!-- Paginator -->
 
-    <clr-dg-footer>
-        <ng-container *ngIf="paginator">
-            {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
-            <hlc-select
-                *ngIf="paginatorItems"
-                class="page-size-selector"
-                [naked]="true"
-                [disallowEmpty]="true"
-                [value]="paginator.pageSize"
-                (valueChange)="onPageSizeChanged($event)"
-                [items]="paginatorItems"
-            ></hlc-select>
-            <clr-dg-pagination
-                #pagination
-                [clrDgPageSize]="paginator.pageSize"
-                [clrDgPage]="paginator.pageIndex"
-                [clrDgTotalItems]="paginator.length"
-            >
-            </clr-dg-pagination>
-        </ng-container>
+    <clr-dg-footer *ngIf="paginator">
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} / {{ paginator.length }}
+        <hlc-select
+            *ngIf="paginatorItems"
+            class="page-size-selector"
+            [naked]="true"
+            [disallowEmpty]="true"
+            [value]="paginator.pageSize"
+            (valueChange)="onPageSizeChanged($event)"
+            [items]="paginatorItems"
+        ></hlc-select>
+        <clr-dg-pagination
+            #pagination
+            [clrDgPageSize]="paginator.pageSize"
+            [clrDgPage]="paginator.pageIndex"
+            [clrDgTotalItems]="paginator.length"
+        >
+        </clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
 
