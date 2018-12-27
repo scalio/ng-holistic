@@ -1,9 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HlcClrTableModule, HlcClrFilterModule } from '@ng-holistic/clr-list';
+import { HlcClrFilterModule, HlcClrTableModule, HLC_CLR_TABLE_PAGINATOR_ITEMS } from '@ng-holistic/clr-list';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
+
+const tablePageSizeItems = [
+    {
+        key: 25,
+        label: '25'
+    },
+    {
+        key: 50,
+        label: '50'
+    },
+    {
+        key: 100,
+        label: '100'
+    }
+];
 
 @NgModule({
     declarations: [AppComponent],
@@ -14,7 +29,12 @@ import { AppRoutingModule } from './app.routing.module';
         HlcClrTableModule.forRoot(),
         HlcClrFilterModule.forRoot()
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HLC_CLR_TABLE_PAGINATOR_ITEMS,
+            useValue: tablePageSizeItems
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

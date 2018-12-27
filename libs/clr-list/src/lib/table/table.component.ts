@@ -16,7 +16,7 @@ import {
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
-import { finalize, flatMap, map, take, takeUntil, tap, catchError } from 'rxjs/operators';
+import { catchError, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -48,6 +48,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private _dataProviderState: any;
+    private _paginator: Table.Data.Paginator | undefined;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
     errorMessage: string | undefined;
@@ -102,7 +103,28 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Redux like integration with external store for rows
      */
     @Input() rows: Table.Row[];
-    @Input() paginator: Table.Data.Paginator | undefined;
+    @Input() set paginator(val: Table.Data.Paginator | undefined) {
+        // upadte state accordingly
+        this._paginator = val;
+        if (!val) {
+            // TODO : update dataProviderState ?
+            if (this.state) {
+                this.state.page = undefined;
+            }
+            return;
+        }
+        const size = val.pageSize;
+        const from = (val.pageIndex - 1) * size;
+        let to = from + size - 1;
+        to = val.length - to >= 0 ? to : val.length - from - 1;
+        // calcaulate correct page in order to skip next onRefresh, when page items size changed
+        this.state.page = { from, to, size };
+    }
+
+    get paginator() {
+        return this._paginator;
+    }
+
     @Input() loading = false;
 
     /**
@@ -168,6 +190,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+        if (R.equals(state, this.state)) {
+            console.log('>>>');
+            return;
+        }
+
         if (this.state && R.isEmpty(state)) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
@@ -221,6 +248,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 this.state = state;
                 this._dataProviderState = dpState;
                 this.errorMessage = undefined;
+                // map paginator
                 if (mpResult.paginator) {
                     this.paginator = mpResult.paginator;
                 }
@@ -339,8 +367,9 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     }
 
     //
-    onPageSizeChanges(val: number) {
-        console.log('+++', val);
+    onPageSizeChanged(size: number) {
+        const state = R.assocPath(['page', 'size'], size, this.state || {});
+        this.onRefresh(state);
     }
 
     //

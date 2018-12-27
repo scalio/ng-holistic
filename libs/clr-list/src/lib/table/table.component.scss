@@ -9,3 +9,13 @@
 :host ::ng-deep .aggregate-row clr-checkbox-wrapper {
     display: none;
 }
+
+.footer-separator-line {
+    content: '';
+    display: inline-block;
+    height: 1rem;
+    width: 0.041667rem;
+    background-color: #ddd;
+    margin: 0 0.5rem;
+    vertical-align: middle;
+}
