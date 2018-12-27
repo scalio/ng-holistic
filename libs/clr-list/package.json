@@ -6,8 +6,6 @@
         "@angular/core": "^7.1.0",
         "@ng-holistic/clr-controls": "0.0.22",
         "@ng-holistic/forms": "0.0.22",
-        "@ng-holistic/clr-forms": "0.0.22",
-        "@ng-holistic/clr-common": "0.0.22"
-
+        "@ng-holistic/clr-forms": "0.0.22"
     }
 }

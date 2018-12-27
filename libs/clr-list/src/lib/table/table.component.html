@@ -1,6 +1,20 @@
+<!-- TODO: cant compile this module with clr-common !!! -->
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    <div class="alert-items">
+        <div class="alert-item static">
+            <div class="alert-icon-wrapper"><clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon></div>
+            {{ errorMessage }}
+        </div>
+    </div>
+    <button type="button" class="close" aria-label="Close">
+        <clr-icon aria-hidden="true" shape="close" (click)="errorMessage = undefined"></clr-icon>
+    </button>
+</div>
+<!--
 <hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
     errorMessage
 }}</hlc-clr-alert>
+-->
 <clr-datagrid
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
