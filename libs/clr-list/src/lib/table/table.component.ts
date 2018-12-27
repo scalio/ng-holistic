@@ -15,8 +15,8 @@ import {
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
-import { of, Subject } from 'rxjs';
-import { finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject, throwError } from 'rxjs';
+import { finalize, flatMap, map, take, takeUntil, tap, catchError } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -47,8 +47,10 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
 export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
+    private _dataProviderState: any;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
+    errorMessage: string | undefined;
 
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
@@ -66,6 +68,13 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     get selectedRows() {
         return this._selected;
+    }
+
+    /**
+     * Latest data providers state, for which data was loaded
+     */
+    get dataProviderState() {
+        return this._dataProviderState;
     }
 
     /**
@@ -106,7 +115,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
-    @Output() rowAction = new EventEmitter<Table.RowAction>();
+    @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
+    @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -159,12 +169,12 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      */
     onRefresh(state: ClrDatagridStateInterface) {
         if (this.state && R.isEmpty(state)) {
-            // when datagrid is detroyed it invokes clrDgRefresh (sick !) with empty object
+            // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
             return;
         }
 
-        if (state.page && !this.state.page) {
+        if (state && state.page && !this.state.page) {
             // first time state.page recieved, usually after first load, just ignore
             this.state = state;
             return;
@@ -198,20 +208,26 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     }
 
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
-        const mpState = this.dataProviderConfig.mapState(state);
+        const dpState = this.dataProviderConfig.mapState(state);
 
         this.loading = true;
         this.cdr.detectChanges();
-        return dataProvider.load(mpState).pipe(
+        return dataProvider.load(dpState).pipe(
             takeUntil(this.destroy$),
             take(1),
             tap(res => {
                 const mpResult = this.dataProviderConfig.mapResult(res);
                 this.rows = mpResult.rows;
                 this.state = state;
+                this._dataProviderState = dpState;
+                this.errorMessage = undefined;
                 if (mpResult.paginator) {
                     this.paginator = mpResult.paginator;
                 }
+            }),
+            catchError(err => {
+                this.errorMessage = err;
+                return throwError(err);
             }),
             finalize(() => {
                 this.loading = false;
@@ -344,7 +360,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         );
     }
 
-    onActionClick(action: Table.RowAction) {
-        this.rowAction.emit(action);
+    onActionClick(action: Table.RowAction, row: Table.Row) {
+        this.rowAction.emit({ action, row });
+    }
+
+    onCellClick(cell: Table.ColumnBase, row: Table.Row) {
+        this.cellClick.emit({ cell, row });
     }
 }

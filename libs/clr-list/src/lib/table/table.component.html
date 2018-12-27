@@ -1,3 +1,20 @@
+<!-- TODO: cant compile this module with clr-common !!! -->
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    <div class="alert-items">
+        <div class="alert-item static">
+            <div class="alert-icon-wrapper"><clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon></div>
+            {{ errorMessage }}
+        </div>
+    </div>
+    <button type="button" class="close" aria-label="Close">
+        <clr-icon aria-hidden="true" shape="close" (click)="errorMessage = undefined"></clr-icon>
+    </button>
+</div>
+<!--
+<hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
+    errorMessage
+}}</hlc-clr-alert>
+-->
 <clr-datagrid
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
@@ -26,13 +43,13 @@
             <button
                 *ngFor="let action of rowActions; trackBy: trackByAction"
                 class="action-item"
-                (click)="onActionClick(action)"
+                (click)="onActionClick(action, row)"
             >
                 {{ action.title }}
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
+        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol" (click)="onCellClick(cell, row)">
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 
@@ -64,12 +81,10 @@
 
     <!-- Paginator -->
 
-    <clr-dg-footer>
-        <span *ngIf="paginator"
-            >{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span
-        >
+    <clr-dg-footer *ngIf="paginator">
+        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
         <hlc-select
-            *ngIf="paginator && paginatorItems"
+            *ngIf="paginatorItems"
             class="page-size-selector"
             [naked]="true"
             [disallowEmpty]="true"
@@ -79,13 +94,13 @@
         ></hlc-select>
         <clr-dg-pagination
             #pagination
-            *ngIf="paginator"
             [clrDgPageSize]="paginator.pageSize"
             [clrDgPage]="paginator.pageIndex"
             [clrDgTotalItems]="paginator.length"
         >
         </clr-dg-pagination>
     </clr-dg-footer>
+    <clr-dg-footer *ngIf="!paginator"></clr-dg-footer>
 </clr-datagrid>
 
 <ng-template #rowCell let-cell="cell" let-row="row">
