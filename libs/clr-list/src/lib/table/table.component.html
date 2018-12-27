@@ -64,12 +64,10 @@
 
     <!-- Paginator -->
 
-    <clr-dg-footer>
-        <span *ngIf="paginator"
-            >{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span
-        >
+    <clr-dg-footer *ngIf="paginator">
+        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
         <hlc-select
-            *ngIf="paginator && paginatorItems"
+            *ngIf="paginatorItems"
             class="page-size-selector"
             [naked]="true"
             [disallowEmpty]="true"
@@ -79,13 +77,13 @@
         ></hlc-select>
         <clr-dg-pagination
             #pagination
-            *ngIf="paginator"
             [clrDgPageSize]="paginator.pageSize"
             [clrDgPage]="paginator.pageIndex"
             [clrDgTotalItems]="paginator.length"
         >
         </clr-dg-pagination>
     </clr-dg-footer>
+    <clr-dg-footer *ngIf="!paginator"></clr-dg-footer>
 </clr-datagrid>
 
 <ng-template #rowCell let-cell="cell" let-row="row">
