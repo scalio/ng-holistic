@@ -1,3 +1,6 @@
+<hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
+    errorMessage
+}}</hlc-clr-alert>
 <clr-datagrid
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"

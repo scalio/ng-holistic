@@ -15,8 +15,8 @@ import {
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
-import { of, Subject } from 'rxjs';
-import { finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject, throwError } from 'rxjs';
+import { finalize, flatMap, map, take, takeUntil, tap, catchError } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -50,6 +50,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private _dataProviderState: any;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
+    errorMessage: string | undefined;
 
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
@@ -173,7 +174,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
             return;
         }
 
-        if (state.page && !this.state.page) {
+        if (state && state.page && !this.state.page) {
             // first time state.page recieved, usually after first load, just ignore
             this.state = state;
             return;
@@ -219,9 +220,14 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 this.rows = mpResult.rows;
                 this.state = state;
                 this._dataProviderState = dpState;
+                this.errorMessage = undefined;
                 if (mpResult.paginator) {
                     this.paginator = mpResult.paginator;
                 }
+            }),
+            catchError(err => {
+                this.errorMessage = err;
+                return throwError(err);
             }),
             finalize(() => {
                 this.loading = false;
