@@ -26,13 +26,13 @@
             <button
                 *ngFor="let action of rowActions; trackBy: trackByAction"
                 class="action-item"
-                (click)="onActionClick(action)"
+                (click)="onActionClick(action, row)"
             >
                 {{ action.title }}
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
+        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol" (click)="onCellClick(cell, row)">
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 

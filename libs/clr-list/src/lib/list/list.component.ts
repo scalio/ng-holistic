@@ -72,8 +72,10 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
 
     @Output() filter = new EventEmitter<any>();
 
-    @Output() rowAction = new EventEmitter<Table.RowAction>();
+    @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
     @Output() selectedRowsChanged = new EventEmitter<Table.Row[]>();
+    @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
+
 
     @ViewChild(TableComponent) tableComponent: TableComponent;
 

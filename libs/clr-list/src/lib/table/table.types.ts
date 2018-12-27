@@ -43,6 +43,17 @@ export namespace Table {
         id: any;
         title: string;
     }
+
+    export interface CellClickEvent {
+        cell: ColumnBase;
+        row: Row;
+    }
+
+    export interface RowActionEvent {
+        action: RowAction;
+        row: Row;
+    }
+
 }
 
 export namespace Table.MapColumns {
