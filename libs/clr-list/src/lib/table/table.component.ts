@@ -25,6 +25,7 @@ import {
     HLC_CLR_TABLE_CELL_MAP,
     HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
     HLC_CLR_TABLE_PAGINATOR_ITEMS,
+    PaginatorItems,
     TableCellMap,
     TableDataProviderConfig
 } from './table.config';
@@ -49,6 +50,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     private state: ClrDatagridStateInterface;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
+    /**
+     * FIX : Control unexpected behaviour
+     * See following comments for this variable
+     */
+    private _freezeInitialStateChange: boolean | undefined;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
     errorMessage: string | undefined;
@@ -141,7 +147,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
         private readonly filterService?: FilterService,
         @Optional()
         @Inject(HLC_CLR_TABLE_PAGINATOR_ITEMS)
-        readonly paginatorItems?: any[]
+        readonly paginatorItems?: PaginatorItems
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = R.mergeAll(cellMaps);
@@ -177,6 +183,14 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+
+        // sometimes we have to ignore onRefresh, see comments bellow
+        if (this._freezeInitialStateChange === true) {
+            this._freezeInitialStateChange = false;
+            return;
+        }
+
+        // console.log('111', state, this.state);
         if (this.state && R.isEmpty(state)) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
@@ -244,6 +258,13 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 if (mpResult.paginator) {
                     // page state will be updated automatically
                     this.paginator = mpResult.paginator;
+                    // for insitial state change onRefresh is invoked by datagrid with incorrect parameters
+                    // for example if on first load `to = 34 and size = 50` data grid will invoke onRefresh with
+                    // `to = 49 and size = 50`
+                    if (this._freezeInitialStateChange === undefined) {
+                        this._freezeInitialStateChange = true;
+                    }
+                    // console.log('222', this.state, this.paginator);
                 }
             }),
             catchError(err => {
@@ -361,8 +382,11 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     //
     onPageSizeChanged(size: number) {
-        const state = R.assocPath(['page', 'size'], size, this.state || {});
+        // everytime just reset to first page
+        const state = R.assocPath(['page'], { size, from: 0, to: size - 1 }, this.state || {});
         this.onRefresh(state);
+        // after page size state changed onRefresh is invoked by datagrid with incorrect (staled) parameters
+        this._freezeInitialStateChange = undefined;
     }
 
     /**

@@ -90,7 +90,7 @@
             [disallowEmpty]="true"
             [value]="paginator.pageSize"
             (valueChange)="onPageSizeChanged($event)"
-            [items]="paginatorItems"
+            [items]="paginatorItems.items"
         ></hlc-select>
         <div *ngIf="paginatorItems" class="footer-separator-line"></div>
         <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
