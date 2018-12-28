@@ -16,7 +16,7 @@ import {
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
-import { catchError, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -104,21 +104,8 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      */
     @Input() rows: Table.Row[];
     @Input() set paginator(val: Table.Data.Paginator | undefined) {
-        // upadte state accordingly
         this._paginator = val;
-        if (!val) {
-            // TODO : update dataProviderState ?
-            if (this.state) {
-                this.state.page = undefined;
-            }
-            return;
-        }
-        const size = val.pageSize;
-        const from = (val.pageIndex - 1) * size;
-        let to = from + size - 1;
-        to = val.length - to >= 0 ? to : val.length - from - 1;
-        // calcaulate correct page in order to skip next onRefresh, when page items size changed
-        this.state.page = { from, to, size };
+        this.updateStatePage(val);
     }
 
     get paginator() {
@@ -190,11 +177,6 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-        if (R.equals(state, this.state)) {
-            console.log('>>>');
-            return;
-        }
-
         if (this.state && R.isEmpty(state)) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
@@ -206,8 +188,6 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
             this.state = state;
             return;
         }
-
-        this.stateChanged.emit(state);
 
         const dataProvider = this.dataProvider;
         if (!dataProvider) {
@@ -231,7 +211,19 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
             );
         }
 
-        state$.pipe(flatMap(st => this.loadData(dataProvider, st))).subscribe(() => {});
+        state$
+            .pipe(
+                // ignore if there is no changes on state
+                filter(
+                    R.pipe(
+                        R.equals(this.state),
+                        R.not
+                    )
+                ),
+                tap(st => this.stateChanged.emit(st)),
+                flatMap(st => this.loadData(dataProvider, st))
+            )
+            .subscribe(() => {});
     }
 
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
@@ -250,6 +242,7 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
                 this.errorMessage = undefined;
                 // map paginator
                 if (mpResult.paginator) {
+                    // page state will be updated automatically
                     this.paginator = mpResult.paginator;
                 }
             }),
@@ -370,6 +363,25 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
     onPageSizeChanged(size: number) {
         const state = R.assocPath(['page', 'size'], size, this.state || {});
         this.onRefresh(state);
+    }
+
+    /**
+     * Sync paginator with page field of state
+     */
+    private updateStatePage(paginator: Table.Data.Paginator | undefined) {
+        if (!paginator) {
+            // TODO : update dataProviderState ?
+            if (this.state) {
+                this.state.page = undefined;
+            }
+            return;
+        }
+        const size = paginator.pageSize;
+        const from = (paginator.pageIndex - 1) * size;
+        let to = from + size - 1;
+        to = paginator.length - to >= 0 ? to : paginator.length - from - 1;
+        // calcaulate correct page in order to skip next onRefresh, when page items size changed
+        this.state.page = { from, to, size };
     }
 
     //
