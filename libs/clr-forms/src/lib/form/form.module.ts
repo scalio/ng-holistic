@@ -20,6 +20,7 @@ import { InputContainerComponent } from '../input-container/input-container.comp
 import { InputContainerModule } from '../input-container/input-container.module';
 import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
+import { WizardLayoutModule } from '../wzard-layout/wizard-layout.module';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { ClrFormComponent } from './form.component';
         TabsLayoutModule,
         GroupsLayoutModule,
         InputContainerModule,
+        WizardLayoutModule,
         ...clrFieldsLayoutModules
     ],
     declarations: [ClrFormComponent],
