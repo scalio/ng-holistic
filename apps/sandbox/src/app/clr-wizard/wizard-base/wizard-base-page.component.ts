@@ -1,25 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { HlcClrWizard } from '@ng-holistic/clr-wizard';
 
-const group: ClrFormLayouts.WizardLayout = {
-    kind: 'wizard',
-    title: 'Wizard Title',
-    open: true,
-    $content: [
-        {
-            kind: 'wizard-step',
-            title: 'Step A',
-            navTitle: 'Step 1',
-            $content: []
-        },
-        {
-            kind: 'wizard-step',
-            title: 'Step B',
-            navTitle: 'Step 2',
-            $content: []
-        }
-    ]
-};
+const pages: HlcClrWizard.WizardStepLayout[] = [
+    {
+        title: 'Step A',
+        navTitle: 'Step 1',
+        fields: []
+    },
+    {
+        title: 'Step B',
+        navTitle: 'Step 2',
+        fields: []
+    }
+];
 
 @Component({
     selector: 'hlc-wizard-base-page',
@@ -28,6 +21,6 @@ const group: ClrFormLayouts.WizardLayout = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WizardBasePageComponent {
-    group = group;
+    pages = pages;
     constructor() {}
 }

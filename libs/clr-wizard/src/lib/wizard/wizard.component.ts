@@ -1,16 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HlcClrWizard } from '../models/wizard.types';
 
 @Component({
-  selector: 'hlc-clr-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'hlc-clr-wizard',
+    templateUrl: './wizard.component.html',
+    styleUrls: ['./wizard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WizardComponent implements OnInit {
+    @Input() open = false;
+    @Input() title: string;
+    @Input() pages: HlcClrWizard.WizardStepLayout[];
 
-  constructor() { }
+    @Output() openChanged = new EventEmitter<boolean>();
 
-  ngOnInit() {
-  }
+    constructor() {}
 
+    ngOnInit() {}
 }

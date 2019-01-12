@@ -1,6 +1,16 @@
-<hlc-clr-wizard>
-    <ul *wizardNav>
-        <li wizardNavItem><h3>Page 1</h3></li>
-        <li wizardNavItem><h3>Page 2</h3></li>
-    </ul>
-</hlc-clr-wizard>
+<clr-wizard #wizard [clrWizardOpen]="open" (clrWizardOpenChange)="open = $event; openChanged.emit(open)">
+    <clr-wizard-title>{{ title }}</clr-wizard-title>
+
+    <clr-wizard-button type="cancel">Cancel</clr-wizard-button>
+    <clr-wizard-button type="previous">Back</clr-wizard-button>
+    <clr-wizard-button type="next">Next</clr-wizard-button>
+    <clr-wizard-button type="finish">Finish</clr-wizard-button>
+
+    <ng-container *ngFor="let page of pages">
+        <clr-wizard-page>
+            <ng-template clrPageTitle> {{ page.title }} </ng-template>
+            <ng-template clrPageNavTitle> {{ page.navTitle }} </ng-template>
+            xxx
+        </clr-wizard-page>
+    </ng-container>
+</clr-wizard>
