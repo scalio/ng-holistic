@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 
 @Component({
@@ -17,4 +19,13 @@ export class WizardComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {}
+
+    @Memoize()
+    getPageGroup(page: HlcClrWizard.WizardStepLayout): ClrFormLayouts.FieldsLayout {
+        return { kind: 'fields', fields: page.fields };
+    }
+
+    trackByPage(i: number) {
+        return i;
+    }
 }

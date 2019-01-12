@@ -86,6 +86,7 @@
     "ngx-file-drop": "^5.0.0",
     "ramda": "^0.26.1",
     "rxjs": "^6.3.3",
+    "typescript-memoize": "^1.0.0-alpha.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

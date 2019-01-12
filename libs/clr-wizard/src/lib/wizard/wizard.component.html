@@ -1,4 +1,13 @@
-<clr-wizard #wizard [clrWizardOpen]="open" (clrWizardOpenChange)="open = $event; openChanged.emit(open)">
+<clr-wizard
+    #wizard
+    [clrWizardOpen]="true"
+    (clrWizardOpenChange)="open = $event; openChanged.emit(open)"
+>
+<!--
+    [clrWizardPreventModalAnimation]="true"
+    class="clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title"
+>
+-->
     <clr-wizard-title>{{ title }}</clr-wizard-title>
 
     <clr-wizard-button type="cancel">Cancel</clr-wizard-button>
@@ -6,11 +15,11 @@
     <clr-wizard-button type="next">Next</clr-wizard-button>
     <clr-wizard-button type="finish">Finish</clr-wizard-button>
 
-    <ng-container *ngFor="let page of pages">
+    <ng-container *ngFor="let page of pages; trackBy: trackByPage">
         <clr-wizard-page>
             <ng-template clrPageTitle> {{ page.title }} </ng-template>
             <ng-template clrPageNavTitle> {{ page.navTitle }} </ng-template>
-            xxx
+            <hlc-clr-form [group]="getPageGroup(page)"> </hlc-clr-form>
         </clr-wizard-page>
     </ng-container>
 </clr-wizard>

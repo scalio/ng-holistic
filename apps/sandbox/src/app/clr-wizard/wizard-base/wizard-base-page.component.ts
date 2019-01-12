@@ -5,12 +5,30 @@ const pages: HlcClrWizard.WizardStepLayout[] = [
     {
         title: 'Step A',
         navTitle: 'Step 1',
-        fields: []
+        fields: [
+            {
+                id: 'firstName',
+                kind: 'TextField',
+                label: 'First Name'
+            },
+            {
+                id: 'select',
+                kind: 'SelectField',
+                label: 'Select',
+                items: [{ key: '1111', label: '222' }]
+            }
+        ]
     },
     {
         title: 'Step B',
         navTitle: 'Step 2',
-        fields: []
+        fields: [
+            {
+                id: 'lastName',
+                kind: 'TextField',
+                label: 'Last Name'
+            }
+        ]
     }
 ];
 
