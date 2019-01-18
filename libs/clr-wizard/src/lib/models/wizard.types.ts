@@ -7,6 +7,7 @@ export namespace HlcClrWizard {
         title: FormFields.FormFieldProp<string>;
         navTitle: FormFields.FormFieldProp<string>;
         fields: (ClrFormFields.FormField | T)[];
-        commit?: (val: any) => Observable<any>;
+        commit?: (vals: any[]) => Observable<any>;
+        skip?: (vals: any[]) => boolean;
     }
 }

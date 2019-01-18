@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { WizardPageService } from './wizard-base-page.service';
 
 const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] => {
+    let adminExists = false;
     return [
         {
             title: 'Admin Email',
@@ -17,8 +18,8 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
                     $validators: [Validators.required, Validators.email]
                 }
             ],
-            commit(val: any) {
-                return dataAccess.checkEmailUserRole(val.adminEmail).pipe(
+            commit(vals: any[]) {
+                return dataAccess.checkEmailUserRole(vals[0].adminEmail).pipe(
                     map(role => {
                         if (role === 'Manager' || role === 'User') {
                             // tslint:disable-next-line:no-string-throw
@@ -26,10 +27,25 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
                                 from manager. We could not register new manager with this email.
                                 Plaese choose another one.`;
                         } else {
+                            adminExists = role === 'Admin';
                             return role;
                         }
                     })
                 );
+            }
+        },
+        {
+            title: 'Admin Info A',
+            navTitle: 'Admin Info A',
+            fields: [
+                {
+                    id: 'adminExistsHint',
+                    kind: 'TextField',
+                    label: 'Lol'
+                }
+            ],
+            skip() {
+                return !adminExists;
             }
         },
         {
@@ -39,14 +55,22 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
                 {
                     id: 'firstName',
                     kind: 'TextField',
-                    label: 'First Name'
+                    label: 'First Name',
+                    $validators: [Validators.required]
                 },
                 {
                     id: 'lastName',
                     kind: 'TextField',
-                    label: 'Last Name'
+                    label: 'Last Name',
+                    $validators: [Validators.required]
                 }
-            ]
+            ],
+            commit(val: any) {
+                return dataAccess.validateAdmin(val.adminEmail);
+            },
+            skip() {
+                return adminExists;
+            }
         }
     ];
 };

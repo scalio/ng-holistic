@@ -14,7 +14,7 @@ import {
 import { ClrWizard } from '@clr/angular';
 import { ClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { Subject } from 'rxjs';
-import { finalize, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 
@@ -57,26 +57,29 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     onCommit(page: HlcClrWizard.WizardStepLayout) {
-        const index = this.pages.indexOf(page);
-        const form: ClrFormComponent = this.forms.toArray()[index];
+        const vals = this.formsValues;
         this.commiting = true;
         this.error = undefined;
         if (page.commit) {
-            page.commit(form.form.formGroup.value)
+            page.commit(vals)
                 .pipe(
                     take(1),
-                    takeUntil(this.destroy$),
-                    finalize(() => {
-                        this.commiting = false;
-                        this.cdr.detectChanges();
-                    })
+                    takeUntil(this.destroy$)
                 )
                 .subscribe(
                     () => {
+                        this.commiting = false;
                         this.wizard.forceNext();
+                        // issue when skipPage is dynamic
+                        this.cdr.markForCheck();
+                        setTimeout(() => {
+                            this.cdr.detectChanges();
+                        }, 0);
                     },
                     err => {
+                        this.commiting = false;
                         this.error = err;
+                        this.cdr.detectChanges();
                     }
                 );
         } else {
@@ -90,5 +93,17 @@ export class WizardComponent implements OnInit, OnDestroy {
 
     onBack() {
         this.wizard.previous();
+    }
+
+    isPageSkip(page: HlcClrWizard.WizardStepLayout) {
+        if (!page.skip || !this.forms) {
+            return false;
+        }
+        const vals = this.formsValues;
+        return page.skip(vals);
+    }
+
+    private get formsValues() {
+        return this.forms.toArray().map(m => m.form.formGroup.value);
     }
 }

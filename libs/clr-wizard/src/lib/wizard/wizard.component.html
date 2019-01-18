@@ -13,6 +13,7 @@
 
     <ng-container *ngFor="let page of pages; trackBy: trackByPage">
         <clr-wizard-page
+            *ngIf="!isPageSkip(page)"
             [clrWizardPagePreventDefault]="true"
             [clrWizardPageNextDisabled]="!form.form.formGroup?.valid"
             (clrWizardPageOnCommit)="onCommit(page)"
