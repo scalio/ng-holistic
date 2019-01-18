@@ -1,12 +1,29 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { HlcClrWizard } from '@ng-holistic/clr-wizard';
-import { map, tap } from 'rxjs/operators';
+import { propChanged } from '@ng-holistic/forms';
+import { Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, flatMap, map, tap } from 'rxjs/operators';
 import { WizardPageService } from './wizard-base-page.service';
 
-const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] => {
+const pages = (
+    dataAccess: WizardPageService,
+    forms$: Observable<{ [name: string]: FormGroup }>
+): HlcClrWizard.WizardStepLayout[] => {
     let adminExists = false;
     let companyId: number | undefined;
+    const adminInfoPageForm$ = forms$.pipe(
+        map(m => m.adminInfoPage),
+        filter(f => !!f),
+        distinctUntilChanged()
+    );
+    // just for test
+    const lastNameHidden$ = adminInfoPageForm$.pipe(
+        flatMap(form => form.valueChanges),
+        propChanged('firstName'),
+        map(firstName => firstName === 'name')
+    );
+
     return [
         {
             id: 'adminEmailPage',
@@ -59,7 +76,8 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
                     id: 'lastName',
                     kind: 'TextField',
                     label: 'Last Name',
-                    $validators: [Validators.required]
+                    $validators: [Validators.required],
+                    $hidden: lastNameHidden$
                 }
             ],
             commit(vals) {
@@ -77,7 +95,7 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
                 {
                     id: 'companyName',
                     kind: 'TextField',
-                    label: 'Name',
+                    label: 'Company Name',
                     $validators: [Validators.required]
                 }
             ],
@@ -106,8 +124,13 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WizardBasePageComponent {
+    private readonly formsChanged = new Subject<any>();
     readonly pages: HlcClrWizard.WizardStepLayout[];
     constructor(dataAccess: WizardPageService) {
-        this.pages = pages(dataAccess);
+        this.pages = pages(dataAccess, this.formsChanged);
+    }
+
+    onFormsChanged(forms: any) {
+        this.formsChanged.next(forms);
     }
 }

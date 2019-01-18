@@ -12,6 +12,7 @@ import {
     ViewChild,
     ViewChildren
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ClrWizard } from '@clr/angular';
 import { ClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import * as R from 'ramda';
@@ -29,6 +30,8 @@ import { WizardCustomPageDirective } from './wizard-custom-page.directive';
 })
 export class WizardComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
+    // formsChanged flow
+    pervFormsKeys: string[] = [];
 
     commiting = false;
     error: string | undefined;
@@ -40,6 +43,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     @Input() isInline = false;
 
     @Output() openChanged = new EventEmitter<boolean>();
+    @Output() formsChanged = new EventEmitter<{ [key: string]: FormGroup }>();
 
     @ViewChild('wizard') wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<ClrFormComponent>;
@@ -126,6 +130,19 @@ export class WizardComponent implements OnInit, OnDestroy {
             return false;
         }
         const vals = this.formsValues;
+
+        // When forms list is changed we need to notify about this container component
+        // It could be neccesary if we want to recalculate field properties on the base of another
+        // TODO : optimize, check this only if isSkip changed !
+        setTimeout(() => {
+            const keys = R.keys(this.formsValues) as string[];
+            if (!R.equals(this.pervFormsKeys, keys)) {
+                // console.log('111', keys, this.pervFormsKeys);
+                this.pervFormsKeys = keys;
+                this.formsChanged.emit(this.formsGroups);
+            }
+        }, 0);
+
         return page.skip(vals);
     }
 
@@ -138,8 +155,16 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     private get formsValues() {
+        return this.getFormsPairs(form => form.form.formGroup.value);
+    }
+
+    private get formsGroups() {
+        return this.getFormsPairs(form => form.form.formGroup);
+    }
+
+    private getFormsPairs<T>(mf: (form: ClrFormComponent) => T): { [key: string]: T } {
         const formsArr = this.formsArr;
-        const valuePairs = formsArr ? formsArr.map(form => [form.id, form.form.formGroup.value]) : [];
+        const valuePairs = formsArr ? formsArr.map(form => [form.id, mf(form)]) : [];
         return R.fromPairs(valuePairs as any);
     }
 
