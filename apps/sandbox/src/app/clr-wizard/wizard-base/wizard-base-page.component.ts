@@ -35,15 +35,9 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
             }
         },
         {
-            title: 'Admin Info A',
-            navTitle: 'Admin Info A',
-            fields: [
-                {
-                    id: 'adminExistsHint',
-                    kind: 'TextField',
-                    label: 'Lol'
-                }
-            ],
+            id: 'adminExistsHintPage',
+            title: 'Admin Info',
+            navTitle: 'Admin Info',
             skip() {
                 return !adminExists;
             }

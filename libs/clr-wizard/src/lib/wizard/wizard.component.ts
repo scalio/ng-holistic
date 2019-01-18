@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ContentChildren,
     EventEmitter,
     Input,
     OnDestroy,
@@ -17,6 +18,7 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
+import { WizardCustomPageDirective } from './wizard-custom-page.directive';
 
 @Component({
     selector: 'hlc-clr-wizard',
@@ -38,6 +40,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 
     @ViewChild('wizard') wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<ClrFormComponent>;
+    @ContentChildren(WizardCustomPageDirective) customPages: QueryList<WizardCustomPageDirective>;
 
     constructor(private readonly cdr: ChangeDetectorRef) {}
 
@@ -48,7 +51,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     @Memoize()
-    getPageGroup(page: HlcClrWizard.WizardStepLayout): ClrFormLayouts.FieldsLayout {
+    getPageGroup(page: HlcClrWizard.WizardStepFormLayout): ClrFormLayouts.FieldsLayout {
         return { kind: 'fields', fields: page.fields };
     }
 
@@ -104,6 +107,16 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     private get formsValues() {
-        return this.forms.toArray().map(m => m.form.formGroup.value);
+        return this.forms ? this.forms.toArray().map(m => m.form.formGroup.value) : [];
+    }
+
+    //
+    isCustomPage(page: HlcClrWizard.WizardStepLayout) {
+        return !('fields' in page);
+    }
+
+    getCustomPageTemplate(page: HlcClrWizard.WizardStepCustomLayout) {
+        const customPage = this.customPages.find(f => f.hlcClrWizardCustomPage === page.id);
+        return customPage && customPage.templateRef;
     }
 }
