@@ -1,4 +1,4 @@
-<hlc-clr-wizard [pages]="pages" title="Create customer" [open]="true" [forceForwardNavigation]="true">
+<hlc-clr-wizard [pages]="pages" title="Create customer" [open]="true" [forceForwardNavigation]="true" [isInline]="true">
     <ng-template hlcClrWizardCustomPage="adminExistsHintPage" let-vals>
         <hlc-clr-alert [canClose]="false">
             Admin with email {{ vals.adminEmailPage?.adminEmail }} already registered in the system it will be used as

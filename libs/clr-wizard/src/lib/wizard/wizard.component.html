@@ -1,17 +1,14 @@
 <clr-wizard
     #wizard
     [clrWizardOpen]="true"
+    [clrWizardPreventModalAnimation]="isInline"
     [clrWizardForceForwardNavigation]="forceForwardNavigation"
     (clrWizardOpenChange)="open = $event; openChanged.emit(open)"
+    [ngClass]="wizardClass"
 >
-    <!--
-    [clrWizardPreventModalAnimation]="true"
-    class="clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title"
->
--->
     <clr-wizard-title>{{ title }}</clr-wizard-title>
 
-    <clr-wizard-button type="cancel">Cancel</clr-wizard-button>
+    <clr-wizard-button *ngIf="!isInline" type="cancel">Cancel</clr-wizard-button>
     <clr-wizard-button type="previous">Back</clr-wizard-button>
     <clr-wizard-button type="next">Next</clr-wizard-button>
     <clr-wizard-button type="finish">Finish</clr-wizard-button>
@@ -33,7 +30,12 @@
                 <div class="alert-item">{{ error }}</div>
             </clr-alert>
 
-            <hlc-clr-form *ngIf="!isCustomPage(page); else customPage" [id]="page.id" [group]="getPageGroup(page)" #form>
+            <hlc-clr-form
+                *ngIf="!isCustomPage(page); else customPage"
+                [id]="page.id"
+                [group]="getPageGroup(page)"
+                #form
+            >
             </hlc-clr-form>
 
             <ng-template #customPage>

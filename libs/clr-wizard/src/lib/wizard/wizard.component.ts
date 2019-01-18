@@ -37,6 +37,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     @Input() title: string;
     @Input() pages: HlcClrWizard.WizardStepLayout[];
     @Input() forceForwardNavigation = false;
+    @Input() isInline = false;
 
     @Output() openChanged = new EventEmitter<boolean>();
 
@@ -59,6 +60,10 @@ export class WizardComponent implements OnInit, OnDestroy {
 
     trackByPage(i: number) {
         return i;
+    }
+
+    get wizardClass() {
+        return this.isInline ? 'clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title' : '';
     }
 
     onCommit(page: HlcClrWizard.WizardStepLayout) {
