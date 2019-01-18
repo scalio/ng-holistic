@@ -115,7 +115,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     onCustomButtonClick(buttonType: string) {
-        if (buttonType === 'reset-finish') {
+        if (buttonType === 'custom-finish') {
             this.forms.forEach(form => form.form.resetValue());
             this.wizard.reset();
         }
