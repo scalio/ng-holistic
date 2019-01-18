@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ClrWizardModule } from '@clr/angular';
+import { ClrAlertModule, ClrWizardModule } from '@clr/angular';
 import { TextModule } from '@ng-holistic/clr-controls';
 import { clrFieldsLayoutMap, ClrFormModule, InputContainerModule } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_MAP } from '@ng-holistic/forms';
 import { WizardComponent } from './wizard.component';
 
 @NgModule({
-    imports: [CommonModule, ClrWizardModule, ClrFormModule, InputContainerModule, TextModule],
+    imports: [CommonModule, ClrWizardModule, ClrFormModule, InputContainerModule, TextModule, ClrAlertModule],
     declarations: [WizardComponent],
     exports: [WizardComponent],
     providers: [

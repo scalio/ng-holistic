@@ -1,5 +1,6 @@
-import { FormFields } from '@ng-holistic/forms';
 import { Mask } from '@ng-holistic/clr-controls';
+import { FormFields } from '@ng-holistic/forms';
+import { Subject } from 'rxjs';
 
 export namespace ClrFormFields {
     export interface FieldValidatorsErrorsMap<T = string> {
@@ -22,7 +23,9 @@ export namespace ClrFormFields {
         placeholder?: FormFields.FormFieldProp<string>;
     }
 
-    export interface TextField extends BaseFieldP<'TextField', string> {}
+    export interface TextField extends BaseFieldP<'TextField', string> {
+        valueChanged?: Subject<string>;
+    }
 
     export interface SelectField extends BaseFieldP<'SelectField'> {
         items: FormFields.FormFieldProp<any[]>;

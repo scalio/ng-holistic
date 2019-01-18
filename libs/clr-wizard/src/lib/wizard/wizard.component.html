@@ -1,9 +1,5 @@
-<clr-wizard
-    #wizard
-    [clrWizardOpen]="true"
-    (clrWizardOpenChange)="open = $event; openChanged.emit(open)"
->
-<!--
+<clr-wizard #wizard [clrWizardOpen]="true" (clrWizardOpenChange)="open = $event; openChanged.emit(open)">
+    <!--
     [clrWizardPreventModalAnimation]="true"
     class="clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title"
 >
@@ -16,10 +12,19 @@
     <clr-wizard-button type="finish">Finish</clr-wizard-button>
 
     <ng-container *ngFor="let page of pages; trackBy: trackByPage">
-        <clr-wizard-page>
+        <clr-wizard-page
+            [clrWizardPagePreventDefault]="true"
+            [clrWizardPageNextDisabled]="!form.form.formGroup?.valid"
+            (clrWizardPageOnCommit)="onCommit(page)"
+            (clrWizardPageOnCancel)="onCancel()"
+            (clrWizardPagePrevious)="onBack()"
+        >
             <ng-template clrPageTitle> {{ page.title }} </ng-template>
             <ng-template clrPageNavTitle> {{ page.navTitle }} </ng-template>
-            <hlc-clr-form [group]="getPageGroup(page)"> </hlc-clr-form>
+            <clr-alert *ngIf="error" clrAlertType="danger">
+                <div class="alert-item">{{ error }}</div>
+            </clr-alert>
+            <hlc-clr-form [group]="getPageGroup(page)" #form> </hlc-clr-form>
         </clr-wizard-page>
     </ng-container>
 </clr-wizard>

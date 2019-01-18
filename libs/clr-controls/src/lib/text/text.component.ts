@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isNil } from 'ramda';
 
@@ -25,6 +25,8 @@ export class TextComponent implements OnInit, ControlValueAccessor, TextValues {
     @Input() placeholder: string | undefined;
     @Input() readonly: boolean | undefined;
 
+    @Output() valueChanged = new EventEmitter<string>();
+
     propagateChange = (_: any) => {};
 
     constructor() {}
@@ -33,6 +35,7 @@ export class TextComponent implements OnInit, ControlValueAccessor, TextValues {
 
     onChange($event: any) {
         this.value = $event.target.value;
+        this.valueChanged.emit(this.value);
         this.propagateChange($event.target.value);
     }
 
