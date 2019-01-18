@@ -102,7 +102,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
 
     onCancel() {
-        this.wizard.cancel();
+        this.wizard.close();
     }
 
     onBack() {
