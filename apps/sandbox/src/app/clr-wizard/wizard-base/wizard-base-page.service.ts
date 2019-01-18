@@ -1,4 +1,5 @@
-import { Observable, of } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 export type EmailUserRole = 'Admin' | 'Manager' | 'User';
 
@@ -13,6 +14,6 @@ export class WizardPageService {
             role = 'User';
         }
 
-        return of(role);
+        return timer(1000).pipe(mapTo(role));
     }
 }

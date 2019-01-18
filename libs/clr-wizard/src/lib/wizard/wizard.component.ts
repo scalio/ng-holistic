@@ -1,5 +1,6 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -13,7 +14,7 @@ import {
 import { ClrWizard } from '@clr/angular';
 import { ClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 
@@ -26,6 +27,7 @@ import { HlcClrWizard } from '../models/wizard.types';
 export class WizardComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
 
+    commiting = false;
     error: string | undefined;
 
     @Input() open = false;
@@ -37,7 +39,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     @ViewChild('wizard') wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<ClrFormComponent>;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {}
 
@@ -57,12 +59,17 @@ export class WizardComponent implements OnInit, OnDestroy {
     onCommit(page: HlcClrWizard.WizardStepLayout) {
         const index = this.pages.indexOf(page);
         const form: ClrFormComponent = this.forms.toArray()[index];
+        this.commiting = true;
         this.error = undefined;
         if (page.commit) {
             page.commit(form.form.formGroup.value)
                 .pipe(
                     take(1),
-                    takeUntil(this.destroy$)
+                    takeUntil(this.destroy$),
+                    finalize(() => {
+                        this.commiting = false;
+                        this.cdr.detectChanges();
+                    })
                 )
                 .subscribe(
                     () => {

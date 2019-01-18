@@ -21,6 +21,7 @@
         >
             <ng-template clrPageTitle> {{ page.title }} </ng-template>
             <ng-template clrPageNavTitle> {{ page.navTitle }} </ng-template>
+            <div class="spinner" *ngIf="commiting">Checking...</div>
             <clr-alert *ngIf="error" clrAlertType="danger">
                 <div class="alert-item">{{ error }}</div>
             </clr-alert>
