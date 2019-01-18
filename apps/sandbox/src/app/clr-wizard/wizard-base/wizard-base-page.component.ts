@@ -89,7 +89,12 @@ const pages = (dataAccess: WizardPageService): HlcClrWizard.WizardStepLayout[] =
             id: 'finishPage',
             title: 'Complete',
             navTitle: 'Complete',
-            context: { companyId }
+            context: { companyId },
+            buttons: {
+                finish: {
+                    text: 'Create next'
+                }
+            }
         }
     ];
 };

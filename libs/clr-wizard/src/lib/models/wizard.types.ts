@@ -3,12 +3,22 @@ import { FormFields } from '@ng-holistic/forms';
 import { Observable } from 'rxjs';
 
 export namespace HlcClrWizard {
+
+    export interface Button {
+        text: string;
+    }
+
+    export interface PageButtons {
+        finish: Button;
+    }
+
     export interface WizardStepBaseLayout {
         id: string;
         title: FormFields.FormFieldProp<string>;
         navTitle: FormFields.FormFieldProp<string>;
         commit?: (vals: { [key: string]: any }) => Observable<any>;
         skip?: (vals: { [key: string]: any }) => boolean;
+        buttons?: PageButtons;
     }
 
     export interface WizardStepFormLayout<T = never> extends WizardStepBaseLayout {

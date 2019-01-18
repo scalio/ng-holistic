@@ -1,4 +1,9 @@
-<clr-wizard #wizard [clrWizardOpen]="true" (clrWizardOpenChange)="open = $event; openChanged.emit(open)">
+<clr-wizard
+    #wizard
+    [clrWizardOpen]="true"
+    [clrWizardForceForwardNavigation]="forceForwardNavigation"
+    (clrWizardOpenChange)="open = $event; openChanged.emit(open)"
+>
     <!--
     [clrWizardPreventModalAnimation]="true"
     class="clr-wizard--inline clr-wizard--no-shadow clr-wizard--no-title"
@@ -27,11 +32,7 @@
                 <div class="alert-item">{{ error }}</div>
             </clr-alert>
 
-            <hlc-clr-form
-                *ngIf="!isCustomPage(page); else customPage"
-                [group]="getPageGroup(page)"
-                #form
-            >
+            <hlc-clr-form *ngIf="!isCustomPage(page); else customPage" [group]="getPageGroup(page)" #form>
             </hlc-clr-form>
 
             <ng-template #customPage>
@@ -42,6 +43,14 @@
                     "
                 ></ng-container>
             </ng-template>
+
+            <ng-container *ngIf="page.buttons">
+                <ng-template clrPageButtons>
+                    <clr-wizard-button *ngIf="page.buttons.finish" [type]="'finish'">{{
+                        page.buttons.finish.text
+                    }}</clr-wizard-button>
+                </ng-template>
+            </ng-container>
         </clr-wizard-page>
     </ng-container>
 </clr-wizard>

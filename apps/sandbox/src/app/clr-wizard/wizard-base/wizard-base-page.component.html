@@ -1,13 +1,13 @@
 <hlc-clr-wizard [pages]="pages" title="Create customer" [open]="true">
     <ng-template let-vals hlcClrWizardCustomPage="adminExistsHintPage">
         <hlc-clr-alert [canClose]="false">
-            Admin with email {{ vals[0]?.adminEmail }} already registered in the system it will be used as admin for new
+            Admin with email {{ vals.adminEmailPage?.adminEmail }} already registered in the system it will be used as admin for new
             company.
         </hlc-clr-alert>
     </ng-template>
     <ng-template hlcClrWizardCustomPage="finishPage" let-vals let-context="context">
         <hlc-clr-alert [canClose]="false" alertType="success">
-            Company <a [href]="context.companyId">{{ vals[2]?.name }}</a> sucessfully created.
+            Company <a [href]="context.companyId">{{ vals.companyInfoPage?.name }}</a> sucessfully created.
         </hlc-clr-alert>
     </ng-template>
 </hlc-clr-wizard>

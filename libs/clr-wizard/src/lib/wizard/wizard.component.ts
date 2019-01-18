@@ -36,6 +36,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     @Input() open = false;
     @Input() title: string;
     @Input() pages: HlcClrWizard.WizardStepLayout[];
+    @Input() forceForwardNavigation = false;
 
     @Output() openChanged = new EventEmitter<boolean>();
 
@@ -48,6 +49,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     ngOnInit() {}
 
     ngOnDestroy() {
+
         this.destroy$.next();
     }
 
