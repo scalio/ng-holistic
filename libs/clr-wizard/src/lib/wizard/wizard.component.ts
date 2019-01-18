@@ -49,7 +49,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     ngOnInit() {}
 
     ngOnDestroy() {
-
         this.destroy$.next();
     }
 
@@ -110,6 +109,13 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.wizard.previous();
     }
 
+    onCustomButtonClick(buttonType: string) {
+        if (buttonType === 'reset-finish') {
+            this.forms.forEach(form => form.form.resetValue());
+            this.wizard.reset();
+        }
+    }
+
     isPageSkip(page: HlcClrWizard.WizardStepLayout) {
         if (!page.skip || !this.forms) {
             return false;
@@ -122,24 +128,18 @@ export class WizardComponent implements OnInit, OnDestroy {
         if (!this.forms) {
             return true;
         }
-        const pageIndex = this.formPages.indexOf(page);
-        const form = this.formsArr[pageIndex];
+        const form = this.forms.find(f => f.id === page.id);
         return form ? form.form.formGroup.valid : true;
     }
 
     private get formsValues() {
         const formsArr = this.formsArr;
-        const formPages = this.formPages;
-        const valuePairs = formsArr ? formsArr.map((form, i) => [formPages[i].id, form.form.formGroup.value]) : [];
+        const valuePairs = formsArr ? formsArr.map(form => [form.id, form.form.formGroup.value]) : [];
         return R.fromPairs(valuePairs as any);
     }
 
     private get formsArr() {
         return this.forms && this.forms.toArray();
-    }
-
-    private get formPages() {
-        return this.pages.filter(page => !this.isCustomPage(page));
     }
 
     //

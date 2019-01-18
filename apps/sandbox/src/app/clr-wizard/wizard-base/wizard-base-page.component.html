@@ -1,48 +1,14 @@
-<hlc-clr-wizard [pages]="pages" title="Create customer" [open]="true">
-    <ng-template let-vals hlcClrWizardCustomPage="adminExistsHintPage">
+<hlc-clr-wizard [pages]="pages" title="Create customer" [open]="true" [forceForwardNavigation]="true">
+    <ng-template hlcClrWizardCustomPage="adminExistsHintPage" let-vals>
         <hlc-clr-alert [canClose]="false">
-            Admin with email {{ vals.adminEmailPage?.adminEmail }} already registered in the system it will be used as admin for new
-            company.
+            Admin with email {{ vals.adminEmailPage?.adminEmail }} already registered in the system it will be used as
+            admin for new company.
         </hlc-clr-alert>
     </ng-template>
     <ng-template hlcClrWizardCustomPage="finishPage" let-vals let-context="context">
         <hlc-clr-alert [canClose]="false" alertType="success">
-            Company <a [href]="context.companyId">{{ vals.companyInfoPage?.name }}</a> sucessfully created.
+            Company &nbsp; <a [href]="context.companyId">{{ vals.companyInfoPage?.companyName }}</a> &nbsp; sucessfully
+            created.
         </hlc-clr-alert>
     </ng-template>
 </hlc-clr-wizard>
-<!--
-<hlc-clr-form [group]="group"> </hlc-clr-form>
--->
-<!--
-<button class="btn" (click)="open = true">Open wizard</button>
--->
-
-<!-- Just user standard clarity wizard -->
-
-<!--
-<clr-wizard #wizard [(clrWizardOpen)]="open">
-    <clr-wizard-title>Wizard Title</clr-wizard-title>
-
-    <clr-wizard-button type="cancel">Cancel</clr-wizard-button>
-    <clr-wizard-button type="previous">Back</clr-wizard-button>
-    <clr-wizard-button type="next">Next</clr-wizard-button>
-    <clr-wizard-button type="finish">Finish</clr-wizard-button>
-
-    <clr-wizard-page>
-        <ng-template clrPageTitle> This title will appear in the content area and the sidebar </ng-template>
-        Content for page 1
-    </clr-wizard-page>
-
-    <clr-wizard-page>
-        <ng-template clrPageTitle> This title will appear in the content area </ng-template>
-        <ng-template clrPageNavTitle> This title in the sidebar </ng-template>
-        Content for page 2
-    </clr-wizard-page>
-
-    <clr-wizard-page>
-        <ng-template clrPageTitle> Lol </ng-template>
-        Content for page 3
-    </clr-wizard-page>
-</clr-wizard>
--->

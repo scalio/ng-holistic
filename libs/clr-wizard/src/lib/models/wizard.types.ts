@@ -9,7 +9,8 @@ export namespace HlcClrWizard {
     }
 
     export interface PageButtons {
-        finish: Button;
+        finish?: Button;
+        reset?: Button;
     }
 
     export interface WizardStepBaseLayout {

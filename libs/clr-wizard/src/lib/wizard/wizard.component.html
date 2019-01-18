@@ -24,6 +24,7 @@
             (clrWizardPageOnCommit)="onCommit(page)"
             (clrWizardPageOnCancel)="onCancel()"
             (clrWizardPagePrevious)="onBack()"
+            (clrWizardPageCustomButton)="onCustomButtonClick($event)"
         >
             <ng-template clrPageTitle> {{ page.title }} </ng-template>
             <ng-template clrPageNavTitle> {{ page.navTitle }} </ng-template>
@@ -32,7 +33,7 @@
                 <div class="alert-item">{{ error }}</div>
             </clr-alert>
 
-            <hlc-clr-form *ngIf="!isCustomPage(page); else customPage" [group]="getPageGroup(page)" #form>
+            <hlc-clr-form *ngIf="!isCustomPage(page); else customPage" [id]="page.id" [group]="getPageGroup(page)" #form>
             </hlc-clr-form>
 
             <ng-template #customPage>
@@ -46,8 +47,11 @@
 
             <ng-container *ngIf="page.buttons">
                 <ng-template clrPageButtons>
-                    <clr-wizard-button *ngIf="page.buttons.finish" [type]="'finish'">{{
+                    <clr-wizard-button *ngIf="page.buttons.finish" type="finish">{{
                         page.buttons.finish.text
+                    }}</clr-wizard-button>
+                    <clr-wizard-button *ngIf="page.buttons.reset" type="reset-finish">{{
+                        page.buttons.reset.text
                     }}</clr-wizard-button>
                 </ng-template>
             </ng-container>
