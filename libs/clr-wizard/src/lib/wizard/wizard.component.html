@@ -15,7 +15,7 @@
         <clr-wizard-page
             *ngIf="!isPageSkip(page)"
             [clrWizardPagePreventDefault]="true"
-            [clrWizardPageNextDisabled]="form && !form.form.formGroup?.valid"
+            [clrWizardPageNextDisabled]="!isPageValid(page)"
             (clrWizardPageOnCommit)="onCommit(page)"
             (clrWizardPageOnCancel)="onCancel()"
             (clrWizardPagePrevious)="onBack()"
@@ -27,12 +27,19 @@
                 <div class="alert-item">{{ error }}</div>
             </clr-alert>
 
-            <hlc-clr-form *ngIf="!isCustomPage(page) else customPage" [group]="getPageGroup(page)" #form>
+            <hlc-clr-form
+                *ngIf="!isCustomPage(page); else customPage"
+                [group]="getPageGroup(page)"
+                #form
+            >
             </hlc-clr-form>
 
             <ng-template #customPage>
                 <ng-container
-                    *ngTemplateOutlet="getCustomPageTemplate(page); context: { $implicit: formsValues }"
+                    *ngTemplateOutlet="
+                        getCustomPageTemplate(page);
+                        context: { $implicit: formsValues, context: page.context }
+                    "
                 ></ng-container>
             </ng-template>
         </clr-wizard-page>

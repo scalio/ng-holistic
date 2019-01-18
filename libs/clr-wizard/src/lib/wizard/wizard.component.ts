@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { ClrWizard } from '@clr/angular';
 import { ClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
+import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
@@ -61,9 +62,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 
     onCommit(page: HlcClrWizard.WizardStepLayout) {
         const vals = this.formsValues;
-        this.commiting = true;
         this.error = undefined;
         if (page.commit) {
+            this.commiting = true;
             page.commit(vals)
                 .pipe(
                     take(1),
@@ -72,7 +73,7 @@ export class WizardComponent implements OnInit, OnDestroy {
                 .subscribe(
                     () => {
                         this.commiting = false;
-                        this.wizard.forceNext();
+                        this.onNext(page);
                         // issue when skipPage is dynamic
                         this.cdr.markForCheck();
                         setTimeout(() => {
@@ -85,6 +86,15 @@ export class WizardComponent implements OnInit, OnDestroy {
                         this.cdr.detectChanges();
                     }
                 );
+        } else {
+            this.onNext(page);
+        }
+    }
+
+    onNext(page: HlcClrWizard.WizardStepLayout) {
+        const isLastPage = this.pages.indexOf(page) + 1 === this.pages.length;
+        if (isLastPage) {
+            this.wizard.forceFinish();
         } else {
             this.wizard.forceNext();
         }
@@ -106,8 +116,28 @@ export class WizardComponent implements OnInit, OnDestroy {
         return page.skip(vals);
     }
 
+    isPageValid(page: HlcClrWizard.WizardStepLayout) {
+        if (!this.forms) {
+            return true;
+        }
+        const pageIndex = this.formPages.indexOf(page);
+        const form = this.formsArr[pageIndex];
+        return form ? form.form.formGroup.valid : true;
+    }
+
     private get formsValues() {
-        return this.forms ? this.forms.toArray().map(m => m.form.formGroup.value) : [];
+        const formsArr = this.formsArr;
+        const formPages = this.formPages;
+        const valuePairs = formsArr ? formsArr.map((form, i) => [formPages[i].id, form.form.formGroup.value]) : [];
+        return R.fromPairs(valuePairs as any);
+    }
+
+    private get formsArr() {
+        return this.forms && this.forms.toArray();
+    }
+
+    private get formPages() {
+        return this.pages.filter(page => !this.isCustomPage(page));
     }
 
     //

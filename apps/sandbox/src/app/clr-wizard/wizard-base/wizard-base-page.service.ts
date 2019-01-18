@@ -21,4 +21,7 @@ export class WizardPageService {
         return timer(1000).pipe(mapTo(true));
     }
 
+    validateCopmany(_: any): Observable<any> {
+        return timer(1000).pipe(mapTo(true));
+    }
 }

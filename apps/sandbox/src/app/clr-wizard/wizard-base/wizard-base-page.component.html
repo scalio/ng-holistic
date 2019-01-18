@@ -5,6 +5,11 @@
             company.
         </hlc-clr-alert>
     </ng-template>
+    <ng-template hlcClrWizardCustomPage="finishPage" let-vals let-context="context">
+        <hlc-clr-alert [canClose]="false" alertType="success">
+            Company <a [href]="context.companyId">{{ vals[2]?.name }}</a> sucessfully created.
+        </hlc-clr-alert>
+    </ng-template>
 </hlc-clr-wizard>
 <!--
 <hlc-clr-form [group]="group"> </hlc-clr-form>
