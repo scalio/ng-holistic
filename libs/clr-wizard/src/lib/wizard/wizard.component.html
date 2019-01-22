@@ -42,7 +42,7 @@
                 <ng-container
                     *ngTemplateOutlet="
                         getCustomPageTemplate(page);
-                        context: { $implicit: formsValues, context: page.context }
+                        context: { $implicit: formsValues, context: getCustomPageContext(page) }
                     "
                 ></ng-container>
             </ng-template>

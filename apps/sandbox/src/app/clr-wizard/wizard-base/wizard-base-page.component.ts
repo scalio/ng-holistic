@@ -107,7 +107,7 @@ const pages = (
             id: 'finishPage',
             title: 'Complete',
             navTitle: 'Complete',
-            context: { companyId },
+            context: () => ({ companyId }),
             buttons: {
                 reset: {
                     text: 'Create next'

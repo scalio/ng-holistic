@@ -146,7 +146,6 @@ export class WizardComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             const keys = R.keys(this.formsValues) as string[];
             if (!R.equals(this.pervFormsKeys, keys)) {
-                // console.log('111', keys, this.pervFormsKeys);
                 this.pervFormsKeys = keys;
                 this.formsChanged.emit(this.formsGroups);
             }
@@ -189,5 +188,9 @@ export class WizardComponent implements OnInit, OnDestroy {
     getCustomPageTemplate(page: HlcClrWizard.WizardStepCustomLayout) {
         const customPage = this.customPages.find(f => f.hlcClrWizardCustomPage === page.id);
         return customPage && customPage.templateRef;
+    }
+
+    getCustomPageContext(page: HlcClrWizard.WizardStepCustomLayout) {
+        return page && page.context && (page.context instanceof Function ? page.context() : page.context);
     }
 }

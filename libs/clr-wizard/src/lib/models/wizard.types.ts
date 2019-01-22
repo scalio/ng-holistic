@@ -3,7 +3,6 @@ import { FormFields } from '@ng-holistic/forms';
 import { Observable } from 'rxjs';
 
 export namespace HlcClrWizard {
-
     export interface Button {
         text: string;
     }
@@ -27,7 +26,7 @@ export namespace HlcClrWizard {
     }
 
     export interface WizardStepCustomLayout extends WizardStepBaseLayout {
-        context?: any;
+        context?: () => any | any;
     }
 
     export type WizardStepLayout<T = never> = WizardStepFormLayout<T> | WizardStepCustomLayout;
