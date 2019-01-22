@@ -8,10 +8,10 @@
 >
     <clr-wizard-title>{{ title }}</clr-wizard-title>
 
-    <clr-wizard-button *ngIf="!isInline" type="cancel">Cancel</clr-wizard-button>
-    <clr-wizard-button type="previous">Back</clr-wizard-button>
-    <clr-wizard-button type="next">Next</clr-wizard-button>
-    <clr-wizard-button type="finish">Finish</clr-wizard-button>
+    <clr-wizard-button *ngIf="!isInline" type="cancel">{{ config.buttonsText.cancel }}</clr-wizard-button>
+    <clr-wizard-button type="previous">{{ config.buttonsText.back }}</clr-wizard-button>
+    <clr-wizard-button type="next">{{ config.buttonsText.next }}</clr-wizard-button>
+    <clr-wizard-button type="finish">{{ config.buttonsText.finish }}</clr-wizard-button>
 
     <ng-container *ngFor="let page of pages; trackBy: trackByPage">
         <clr-wizard-page

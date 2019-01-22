@@ -4,9 +4,11 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
+    Inject,
     Input,
     OnDestroy,
     OnInit,
+    Optional,
     Output,
     QueryList,
     ViewChild,
@@ -21,6 +23,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 import { WizardCustomPageDirective } from './wizard-custom-page.directive';
+import { defaultWizardConfig, HLC_CLR_WIZARD_CONFIG, WizardConfig } from './wizard.config';
 
 @Component({
     selector: 'hlc-clr-wizard',
@@ -29,6 +32,7 @@ import { WizardCustomPageDirective } from './wizard-custom-page.directive';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WizardComponent implements OnInit, OnDestroy {
+    readonly config: WizardConfig;
     private readonly destroy$ = new Subject();
     // formsChanged flow
     pervFormsKeys: string[] = [];
@@ -49,7 +53,12 @@ export class WizardComponent implements OnInit, OnDestroy {
     @ViewChildren('form') forms: QueryList<ClrFormComponent>;
     @ContentChildren(WizardCustomPageDirective) customPages: QueryList<WizardCustomPageDirective>;
 
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    constructor(
+        private readonly cdr: ChangeDetectorRef,
+        @Inject(HLC_CLR_WIZARD_CONFIG) @Optional() config: WizardConfig
+    ) {
+        this.config = config || defaultWizardConfig;
+    }
 
     ngOnInit() {}
 
