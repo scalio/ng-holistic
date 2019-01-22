@@ -606,6 +606,36 @@
                     }
                 }
             }
+        },
+        "clr-wizard": {
+            "root": "libs/clr-wizard",
+            "sourceRoot": "libs/clr-wizard/src",
+            "projectType": "library",
+            "prefix": "ng-holistic",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "libs/clr-wizard/tsconfig.lib.json",
+                        "project": "libs/clr-wizard/ng-package.json"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/clr-wizard/src/test.ts",
+                        "tsConfig": "libs/clr-wizard/tsconfig.spec.json",
+                        "karmaConfig": "libs/clr-wizard/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/clr-wizard/tsconfig.lib.json", "libs/clr-wizard/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
+                }
+            }
         }
     },
     "cli": {

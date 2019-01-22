@@ -43,6 +43,9 @@
     },
     "clr-list-sandbox-e2e": {
       "tags": []
+    },
+    "clr-wizard": {
+      "tags": []
     }
   }
 }

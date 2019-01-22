@@ -82,16 +82,18 @@
     <!-- Paginator -->
 
     <clr-dg-footer *ngIf="paginator">
-        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
         <hlc-select
             *ngIf="paginatorItems"
+            #paginatorSelect
             class="page-size-selector"
             [naked]="true"
             [disallowEmpty]="true"
             [value]="paginator.pageSize"
             (valueChange)="onPageSizeChanged($event)"
-            [items]="paginatorItems"
+            [items]="paginatorItems.items"
         ></hlc-select>
+        <div *ngIf="paginatorItems" class="footer-separator-line"></div>
+        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
         <clr-dg-pagination
             #pagination
             [clrDgPageSize]="paginator.pageSize"

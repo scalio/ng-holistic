@@ -28,9 +28,12 @@ export interface TableCellMap {
 export const HLC_CLR_TABLE_CELL_MAP = new InjectionToken<TableCellMap>('HLC_CLR_TABLE_CELL_MAP');
 
 
-//
-/**
- * Paginator items in format defined by `controls DictMapperService`
- * key : number of items
- */
-export const HLC_CLR_TABLE_PAGINATOR_ITEMS = new InjectionToken<any[]>('HLC_CLR_TABLE_PAGINATOR_ITEMS');
+export interface PaginatorItems {
+    // defaultItemKey: any;
+    /**
+     * Paginator items in format defined by `controls DictMapperService`
+     */
+    items: any[];
+}
+
+export const HLC_CLR_TABLE_PAGINATOR_ITEMS = new InjectionToken<PaginatorItems>('HLC_CLR_TABLE_PAGINATOR_ITEMS');

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Table, TableDescription } from '@ng-holistic/clr-list';
-import { timer, Subject } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
 import * as R from 'ramda';
+import { Subject, timer } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 const table: TableDescription = {
     cols: [
@@ -38,27 +38,27 @@ const table: TableDescription = {
         {
             id: 'custom',
             customCell: true,
-            title: 'Custom',
+            title: 'Custom'
         }
     ]
 };
 
-const rows: Table.Row[] = [
-    {
-        id: '1',
-        title: 'aaaa',
-        amount: 2
-    },
-    {
-        id: '2',
-        title: 'bbb',
-        amount: 3
-    }
-];
-
 const dataProvider: Table.Data.DataProvider = {
-    load(_) {
-        return timer(0).pipe(mapTo({ rows }));
+    load(state: any) {
+        const rows: Table.Row[] = R.range(0, state.page && state.page.size && state.page.size > 25 ? 30 : 25).map(
+            i => ({
+                id: i.toString(),
+                title: 'aaaa ' + i,
+                amount: i * 100
+            })
+        );
+
+        const paginator: Table.Data.Paginator = {
+            pageSize: (state.page && state.page.size) || 25,
+            pageIndex: 1,
+            length: 30
+        };
+        return timer(0).pipe(mapTo({ rows, paginator }));
     }
 };
 

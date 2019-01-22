@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
-
 import { AppLayoutModule } from './app-layout/app-layout.module';
 import { ClrControlsModule } from './clr-controls/clr-controls.module';
 import { routes as clrControlsRoutes } from './clr-controls/clr-controls.routing.module';
-import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.module';
-import { routes as clrFileUploadRoutes } from './clr-file-upload/clr-file-upload.routing.module';
-import { ClrFormsModule } from './clr-forms/clr-forms.module';
 import { ClrFileUploadModule } from './clr-file-upload/clr-file-upload.module';
+import { routes as clrFileUploadRoutes } from './clr-file-upload/clr-file-upload.routing.module';
+import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.module';
+import { ClrFormsModule } from './clr-forms/clr-forms.module';
+import { routes as clrWziardRoutes } from './clr-wizard/clr-wizard.routing.module';
+import { ClrWizardModule } from './clr-wizard/clr-wizard.module';
 
 export const routes: Routes = [
     {
@@ -31,13 +32,24 @@ export const routes: Routes = [
             {
                 path: 'clr-file-upload',
                 children: clrFileUploadRoutes
+            },
+            {
+                path: 'clr-wizard',
+                children: clrWziardRoutes
             }
         ]
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), AppLayoutModule, ClrControlsModule, ClrFormsModule, ClrFileUploadModule],
+    imports: [
+        RouterModule.forChild(routes),
+        AppLayoutModule,
+        ClrControlsModule,
+        ClrFormsModule,
+        ClrFileUploadModule,
+        ClrWizardModule
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
