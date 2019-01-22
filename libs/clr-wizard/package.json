@@ -1,0 +1,11 @@
+{
+    "name": "@ng-holistic/clr-wizard",
+    "version": "0.0.24",
+    "peerDependencies": {
+        "@angular/common": "^7.1.0",
+        "@angular/core": "^7.1.0",
+        "@ng-holistic/clr-controls": "0.0.24",
+        "@ng-holistic/forms": "0.0.24",
+        "@ng-holistic/clr-forms": "0.0.24"
+    }
+}

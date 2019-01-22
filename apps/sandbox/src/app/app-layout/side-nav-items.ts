@@ -36,6 +36,16 @@ export default [
         ]
     },
     {
+        title: 'Clr Wizard',
+        icon: 'wand',
+        children: [
+            {
+                title: 'Base Wizard',
+                path: ['/clr-wizard', 'wizard-base']
+            }
+        ]
+    },
+    {
         title: 'Clr Controls',
         icon: 'blocks-group',
         children: [
