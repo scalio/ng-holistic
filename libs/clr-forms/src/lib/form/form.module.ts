@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     FieldsLayoutMap,
+    GroupsLayoutMap,
     HlcFieldsLayoutModule,
     HlcFormModule,
-    GroupsLayoutMap,
     HLC_FIELDS_LAYOUT_MAP,
     HLC_FORM_FIELD_WRAPPER,
     HLC_GROUPS_LAYOUT
@@ -20,7 +20,6 @@ import { InputContainerComponent } from '../input-container/input-container.comp
 import { HlcClrInputContainerModule } from '../input-container/input-container.module';
 import { HlcClrTabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
-import { HlcClrWizardLayoutModule } from '../wzard-layout/wizard-layout.module';
 
 @NgModule({
     imports: [
@@ -30,7 +29,6 @@ import { HlcClrWizardLayoutModule } from '../wzard-layout/wizard-layout.module';
         HlcClrTabsLayoutModule,
         GroupsLayoutModule,
         HlcClrInputContainerModule,
-        HlcClrWizardLayoutModule,
         ...clrFieldsLayoutModules
     ],
     declarations: [ClrFormComponent],
