@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef, AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { format } from 'date-fns/esm/fp';
-import { ClrFormLayouts, InputErrorDisplayStartegy, ClrFormComponent } from '@ng-holistic/clr-forms';
+import { ClrFormComponent, ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
 import { distinctPropChanged } from '@ng-holistic/forms';
+import { format } from 'date-fns/esm/fp';
+import { map } from 'rxjs/operators';
 
 export const recalcFormGroup = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'fields',
@@ -11,43 +11,51 @@ export const recalcFormGroup = (form: FormGroup): ClrFormLayouts.ClrFormLayout =
         {
             id: 'select',
             kind: 'SelectField',
-            label: 'Select',
-            items: [
-                { key: '0', label: 'disable text' },
-                { key: '1', label: 'set date control value to current date' },
-                { key: '2', label: 'make textarea required' },
-                { key: '3', label: 'hide text' }
-            ]
+            props: {
+                label: 'Select',
+                items: [
+                    { key: '0', label: 'disable text' },
+                    { key: '1', label: 'set date control value to current date' },
+                    { key: '2', label: 'make textarea required' },
+                    { key: '3', label: 'hide text' }
+                ]
+            }
         },
         {
             id: 'text',
             kind: 'TextField',
-            label: 'Text',
-            placeholder: 'Type something',
-            readonly: form.valueChanges.pipe(map(({ select }) => select === '0')),
+            props: {
+                label: 'Text',
+                placeholder: 'Type something',
+                readonly: form.valueChanges.pipe(map(({ select }) => select === '0'))
+            },
             // it makes sence to remove validators for readOnly state
-            $validators: form.valueChanges.pipe(map(({ select }) => (select !== '0' ? [Validators.required] : []))),
+            validators: form.valueChanges.pipe(map(({ select }) => (select !== '0' ? [Validators.required] : []))),
             validatorsErrorsMap: { required: 'This field is required ' },
-            $hidden: form.valueChanges.pipe(map(({ select }) => select === '3'))
+            hidden: form.valueChanges.pipe(map(({ select }) => select === '3'))
         },
         {
             id: 'date',
             kind: 'DateField',
-            label: 'Date',
-            $value: form.valueChanges.pipe(
+            props: {
+                label: 'Date'
+            },
+            value: form.valueChanges.pipe(
                 distinctPropChanged('select'),
                 map(({ select, date }) => {
                     // tslint:disable-next-line:quotemark
-                    return (select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date);
+                    return select === '1' ? format("yyyy-MM-dd'T'HH:mm:ss", new Date()) : date;
                 })
             )
         },
         {
             id: 'textarea',
             kind: 'TextAreaField',
-            label: 'Text Area',
-            placeholder: 'Type something',
-            $validators: form.valueChanges.pipe(map(({ select }) => (select === '2' ? [Validators.required] : [])))
+            props: {
+                label: 'Text Area',
+                placeholder: 'Type something'
+            },
+            validators: form.valueChanges.pipe(map(({ select }) => (select === '2' ? [Validators.required] : [])))
         }
     ]
 });

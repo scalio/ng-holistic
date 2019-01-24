@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil, filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 import { FormFields } from '../models/form-fields.type';
 import { setComponentProperties } from '../set-component-properties';
 import { CustomFieldDirective } from './custom-field.directive';
@@ -69,6 +69,9 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         this.componentRef = factory.create(this.injector);
         const view = this.componentRef.hostView as EmbeddedViewRef<any>;
 
+        // properties to initalize components properties from
+        const propsBag = { id: this.field.id, label: this.field.label, kind: this.field.kind, ...this.field.props };
+
         if (this.wrapper) {
             // Insert generated component inside wrapper content
             const wrapperFactory = this.componentFactoryResolver.resolveComponentFactory(this.wrapper);
@@ -77,12 +80,12 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
             ]);
 
             setComponentProperties(
-                ['kind'],
+                [],
                 wrapperFactory,
                 this.wrapperRef.changeDetectorRef,
                 this.destroy$,
                 this.wrapperRef.instance,
-                this.field
+                propsBag
             );
 
             // control view is not attached directly to viewcontainerref, we need to attach it to CD manually
@@ -112,12 +115,12 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
         this.syncVisibility(this.wrapperRef ? this.wrapperRef.hostView : view);
 
         setComponentProperties(
-            ['kind'],
+            [],
             factory,
             this.componentRef.changeDetectorRef,
             this.destroy$,
             this.componentRef.instance,
-            this.field
+            propsBag
         );
 
         view.detectChanges();
@@ -137,8 +140,8 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     }
 
     private syncVisibility(view: ViewRef) {
-        if (this.field && this.field.$hidden) {
-            this.field.$hidden
+        if (this.field && this.field.hidden) {
+            this.field.hidden
                 .pipe(
                     takeUntil(this.destroy$),
                     distinctUntilChanged()
@@ -175,13 +178,13 @@ export class FormFieldHostDirective implements OnInit, OnDestroy {
     }
 
     /**
-     * Set form's control value from field $value property.
-     * It updates both form control value and component value, in contrast with just `value` property update
+     * Set form's control value from field `value` property.
+     * It updates both form control value and component value, in contrast with just `props.value` property update
      * which will update only component value.
      */
     private syncControlValue() {
-        if (this.field.$value) {
-            this.field.$value
+        if (this.field.value) {
+            this.field.value
                 .pipe(
                     takeUntil(this.destroy$),
                     distinctUntilChanged(),

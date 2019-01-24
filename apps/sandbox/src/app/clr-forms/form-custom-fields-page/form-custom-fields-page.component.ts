@@ -27,7 +27,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
              * with form value
              */
             valueAccessor: 'first-child',
-            $validators: [Validators.required]
+            validators: [Validators.required]
         }
     ]
 };

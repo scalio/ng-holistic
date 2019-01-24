@@ -8,7 +8,8 @@ import {
     QueryList,
     ViewChildren,
     ViewContainerRef,
-    Optional
+    Optional,
+    ViewChild
 } from '@angular/core';
 import {
     ExtractFieldsFun,
@@ -21,6 +22,18 @@ import { merge, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as R from 'ramda';
 import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig, defaultTabsLayoutConfig } from './tabs-layout.config';
+
+@Component({
+    selector: 'hlc-tab-layout',
+    template: '<ng-container #vc></ng-container>',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TabLayoutComponent {
+    @ViewChild('vc', { read: ViewContainerRef })
+    vc: ViewContainerRef;
+
+    constructor() {}
+}
 
 @Component({
     selector: 'hlc-tabs-layout',

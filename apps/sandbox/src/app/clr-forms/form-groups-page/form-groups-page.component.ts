@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { Validators } from '@angular/forms';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'tabs',
@@ -40,19 +40,26 @@ const group: ClrFormLayouts.ClrFormLayout = {
                                 {
                                     kind: 'SelectField',
                                     id: 'maritalStatus',
-                                    label: 'Marital Status',
-                                    items: [{ key: 'single', label: 'Single' }, { key: 'married', label: 'Married' }]
+                                    props: {
+                                        label: 'Marital Status',
+                                        items: [
+                                            { key: 'single', label: 'Single' },
+                                            { key: 'married', label: 'Married' }
+                                        ]
+                                    }
                                 },
                                 {
                                     kind: 'SelectField',
                                     id: 'childrenNumber',
-                                    label: 'Children Number',
-                                    items: [
-                                        { key: '1', label: '1' },
-                                        { key: '2', label: '2' },
-                                        { key: '3', label: '3' },
-                                        { key: '3+', label: '3+' }
-                                    ]
+                                    props: {
+                                        label: 'Children Number',
+                                        items: [
+                                            { key: '1', label: '1' },
+                                            { key: '2', label: '2' },
+                                            { key: '3', label: '3' },
+                                            { key: '3+', label: '3+' }
+                                        ]
+                                    }
                                 }
                             ]
                         }
@@ -71,7 +78,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
                             kind: 'TextField',
                             id: 'country',
                             label: 'Country',
-                            $validators: [Validators.required]
+                            validators: [Validators.required]
                         },
                         {
                             kind: 'TextField',
@@ -99,7 +106,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormGroupsPageComponent implements AfterViewInit {
     group = group;
 
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    constructor(readonly cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         // in order to correctly display formGroup.value on init

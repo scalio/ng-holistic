@@ -18,18 +18,20 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
                         {
                             id: 'select',
                             kind: 'SelectField',
-                            label: 'Select',
-                            items: [
-                                { key: '0', label: 'hide family group' },
-                                { key: '3', label: 'hide job group' },
-                                { key: '1', label: 'hide address group' },
-                                { key: '2', label: 'hide custom' }
-                            ]
+                            props: {
+                                label: 'Select',
+                                items: [
+                                    { key: '0', label: 'hide family group' },
+                                    { key: '3', label: 'hide job group' },
+                                    { key: '1', label: 'hide address group' },
+                                    { key: '2', label: 'hide custom' }
+                                ]
+                            }
                         },
                         {
                             id: 'custom',
                             kind: 'CustomField',
-                            $hidden: form.valueChanges.pipe(map(({ select }) => select === '2'))
+                            hidden: form.valueChanges.pipe(map(({ select }) => select === '2'))
                         }
                     ]
                 },
@@ -65,19 +67,26 @@ const group = (hide$: Observable<boolean>) => (form: FormGroup): ClrFormLayouts.
                                 {
                                     kind: 'SelectField',
                                     id: 'maritalStatus',
-                                    label: 'Marital Status',
-                                    items: [{ key: 'single', label: 'Single' }, { key: 'married', label: 'Married' }]
+                                    props: {
+                                        label: 'Marital Status',
+                                        items: [
+                                            { key: 'single', label: 'Single' },
+                                            { key: 'married', label: 'Married' }
+                                        ]
+                                    }
                                 },
                                 {
                                     kind: 'SelectField',
                                     id: 'childrenNumber',
-                                    label: 'Children Number',
-                                    items: [
-                                        { key: '1', label: '1' },
-                                        { key: '2', label: '2' },
-                                        { key: '3', label: '3' },
-                                        { key: '3+', label: '3+' }
-                                    ]
+                                    props: {
+                                        label: 'Children Number',
+                                        items: [
+                                            { key: '1', label: '1' },
+                                            { key: '2', label: '2' },
+                                            { key: '3', label: '3' },
+                                            { key: '3+', label: '3+' }
+                                        ]
+                                    }
                                 }
                             ]
                         }

@@ -9,16 +9,20 @@ const filterFields: ClrFormFields.FormField[] = [
     {
         id: 'text',
         kind: 'TextField',
-        label: 'Text',
-        placeholder: 'Type something',
-        value: 'test',
-        $validators: [Validators.required]
+        props: {
+            label: 'Text',
+            placeholder: 'Type something',
+            value: 'test'
+        },
+        validators: [Validators.required]
     },
     {
         id: 'select',
         kind: 'SelectField',
-        label: 'Select',
-        items: [{ key: 1, label: 'one' }, { key: 2, label: 'two' }]
+        props: {
+            label: 'Select',
+            items: [{ key: 1, label: 'one' }, { key: 2, label: 'two' }]
+        }
     },
     {
         id: 'date',

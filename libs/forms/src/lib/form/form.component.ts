@@ -65,6 +65,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
     customFields: QueryList<CustomFieldDirective> | undefined;
 
     @Output() formCreated = new EventEmitter<FormGroup>();
+    @Output() formValueChanged = new EventEmitter<any>();
 
     formGroup: FormGroup;
 
@@ -123,6 +124,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
 
         this.initialValue = this.formGroup.value;
         this.formCreated.emit(this.formGroup);
+        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => this.formValueChanged.emit(val));
     }
 
     private rebuildForm(data: any) {

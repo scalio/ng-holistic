@@ -14,8 +14,8 @@ import {
     clrFieldsLayoutMap,
     clrFieldsLayoutModules
 } from '../fields-layout/fields-layout-map';
+import { GroupLayoutModule } from '../group-layout/group-layout.module';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
 import { InputContainerComponent } from '../input-container/input-container.component';
 import { HlcClrInputContainerModule } from '../input-container/input-container.module';
 import { HlcClrTabsLayoutModule } from '../tabs-layout/tabs-layout.module';
@@ -27,7 +27,7 @@ import { ClrFormComponent } from './form.component';
         HlcFormModule,
         HlcFieldsLayoutModule,
         HlcClrTabsLayoutModule,
-        GroupsLayoutModule,
+        GroupLayoutModule,
         HlcClrInputContainerModule,
         ...clrFieldsLayoutModules
     ],

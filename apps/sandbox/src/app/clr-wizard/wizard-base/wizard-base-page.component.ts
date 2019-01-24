@@ -34,7 +34,7 @@ const pages = (
                     id: 'adminEmail',
                     kind: 'TextField',
                     label: 'Admin Email',
-                    $validators: [Validators.required, Validators.email]
+                    validators: [Validators.required, Validators.email]
                 }
             ],
             commit(vals) {
@@ -70,14 +70,14 @@ const pages = (
                     id: 'firstName',
                     kind: 'TextField',
                     label: 'First Name',
-                    $validators: [Validators.required]
+                    validators: [Validators.required]
                 },
                 {
                     id: 'lastName',
                     kind: 'TextField',
                     label: 'Last Name',
-                    $validators: [Validators.required],
-                    $hidden: lastNameHidden$
+                    validators: [Validators.required],
+                    hidden: lastNameHidden$
                 }
             ],
             commit(vals) {
@@ -96,7 +96,7 @@ const pages = (
                     id: 'companyName',
                     kind: 'TextField',
                     label: 'Company Name',
-                    $validators: [Validators.required]
+                    validators: [Validators.required]
                 }
             ],
             commit(val) {

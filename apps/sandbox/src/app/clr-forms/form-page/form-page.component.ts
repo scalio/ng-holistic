@@ -1,9 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 import { TextMask } from '@ng-holistic/clr-controls';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { FormComponent } from '@ng-holistic/forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
-import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -11,16 +12,20 @@ const group: ClrFormLayouts.ClrFormLayout = {
         {
             id: 'text',
             kind: 'TextField',
-            label: 'Text',
-            placeholder: 'Type something'
+            props: {
+                label: 'Text',
+                placeholder: 'Type something'
+            }
         },
         {
             id: 'num',
             kind: 'MaskField',
-            label: 'Number',
-            placeholder: '0000000',
-            mask: TextMask.int(7),
-            unmask: TextMask.unmaskNumber
+            props: {
+                label: 'Number',
+                placeholder: '0000000',
+                mask: TextMask.int(7),
+                unmask: TextMask.unmaskNumber
+            }
         },
         {
             id: 'phone',
@@ -35,8 +40,10 @@ const group: ClrFormLayouts.ClrFormLayout = {
         {
             id: 'textarea',
             kind: 'TextAreaField',
-            label: 'Text Area',
-            placeholder: 'Type something'
+            props: {
+                label: 'Text Area',
+                placeholder: 'Type something'
+            }
         },
         {
             id: 'date',
@@ -56,26 +63,34 @@ const group: ClrFormLayouts.ClrFormLayout = {
         {
             id: 'select',
             kind: 'SelectField',
-            label: 'Select',
-            items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+            props: {
+                label: 'Select',
+                items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+            }
         },
         {
             id: 'toggle',
             kind: 'ToggleField',
-            label: 'Toggle',
-            text: 'Use feature'
+            props: {
+                label: 'Toggle',
+                text: 'Use feature'
+            }
         },
         {
             id: 'options',
             kind: 'OptionsField',
-            label: 'Options',
-            items: [{ key: 'opt1', label: 'opt1' }, { key: 'opt2', label: 'opt2' }]
+            props: {
+                label: 'Options',
+                items: [{ key: 'opt1', label: 'opt1' }, { key: 'opt2', label: 'opt2' }]
+            }
         },
         {
             id: 'checkboxes',
             kind: 'CheckboxesField',
-            label: 'Checkboxes',
-            items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
+            props: {
+                label: 'Checkboxes',
+                items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
+            }
         }
     ]
 };
@@ -83,11 +98,13 @@ const group: ClrFormLayouts.ClrFormLayout = {
 @Component({
     selector: 'hlc-form-page',
     templateUrl: './form-page.component.html',
-    styleUrls: ['./form-page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./form-page.component.scss']
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormPageComponent implements AfterViewInit {
     group = group;
+
+    @ViewChild(FormComponent) form: FormComponent;
 
     readonly dataAccess: FormFooterDataAccess = {
         update(_: any) {
@@ -95,7 +112,7 @@ export class FormPageComponent implements AfterViewInit {
         }
     };
 
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    constructor(readonly cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         // in order to correctly display formGroup.value on init

@@ -26,7 +26,7 @@ const rebuildGroup = (
                                     id: `${t}.${i}.$text.${k}`,
                                     kind: 'TextField' as 'TextField',
                                     label: `Field ${t} ${i} ${k}`,
-                                    $validators: [Validators.required]
+                                    validators: [Validators.required]
                                 } as FormFields.Field)
                         )
                     }
