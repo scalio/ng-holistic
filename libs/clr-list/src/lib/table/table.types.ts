@@ -28,7 +28,7 @@ export namespace Table {
     }
 
     export interface RowBase {
-        id: string;
+        id: string | number;
     }
 
     export interface Row extends RowBase {
