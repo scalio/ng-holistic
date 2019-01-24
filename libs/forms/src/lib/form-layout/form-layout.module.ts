@@ -10,10 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     providers: [],
     exports: [FormLayoutComponent]
 })
-export class FormLayoutModule {
+export class HlcFormLayoutModule {
     static forRoot(groupsLayoutMap: GroupsLayoutMap): ModuleWithProviders {
         return {
-            ngModule: FormLayoutModule,
+            ngModule: HlcFormLayoutModule,
             providers: [
                 {
                     provide: HLC_GROUPS_LAYOUT,

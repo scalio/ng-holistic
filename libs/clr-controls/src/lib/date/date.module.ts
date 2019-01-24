@@ -11,6 +11,6 @@ import { DateComponent } from './date.component';
     providers: [DateConvertService],
     entryComponents: [DateComponent]
 })
-export class DateModule {
+export class HlcClrDateModule {
     constructor() {}
 }

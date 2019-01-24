@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ClrLayoutModule, ClrMainContainerModule } from '@clr/angular';
-import { ClrFormModule } from '@ng-holistic/clr-forms';
+import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { hlcConfigProviders } from './hlc.config';
@@ -15,7 +15,7 @@ import { hlcConfigProviders } from './hlc.config';
         ClrMainContainerModule,
         ClrLayoutModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
-        ClrFormModule.forRoot()
+        HlcClrFormModule.forRoot()
     ],
     bootstrap: [AppComponent],
     entryComponents: [],

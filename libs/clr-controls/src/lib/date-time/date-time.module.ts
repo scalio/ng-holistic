@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { ClrDatepickerModule, ClrIconModule } from '@clr/angular';
 import { DateConvertService } from '../date-convert.service';
 import { DateTimeComponent } from './date-time.component';
-import { SelectModule } from '../select/select.module';
+import { HlcClrSelectModule } from '../select/select.module';
 
 @NgModule({
-    imports: [CommonModule, ClrDatepickerModule, ClrIconModule, SelectModule],
+    imports: [CommonModule, ClrDatepickerModule, ClrIconModule, HlcClrSelectModule],
     declarations: [DateTimeComponent],
     exports: [DateTimeComponent],
     providers: [DateConvertService]
 })
-export class DateTimeModule {
+export class HlcClrDateTimeModule {
     constructor() {}
 }

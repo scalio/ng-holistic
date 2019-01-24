@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ViewConta
     template: '<ng-container #vc></ng-container>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupLayoutComponent {
+export class HlcClrGroupLayoutComponent {
     @ViewChild('vc', { read: ViewContainerRef })
     vc: ViewContainerRef;
 
@@ -18,7 +18,7 @@ export class GroupLayoutComponent {
     styleUrls: ['./groups-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupsLayoutComponent implements OnInit {
+export class HlcClrGroupsLayoutComponent implements OnInit {
     @Input()
     title: string;
     @ViewChild('vc', { read: ViewContainerRef })

@@ -8,4 +8,4 @@ import { ClrPasswordModule } from '@clr/angular';
     declarations: [PasswordComponent],
     exports: [PasswordComponent]
 })
-export class PasswordModule {}
+export class HlcClrPasswordModule {}

@@ -17,6 +17,6 @@ import { SideNavComponent } from './side-nav.component';
     declarations: [SideNavComponent],
     exports: [SideNavComponent]
 })
-export class SideNavModule {
+export class HlcClrSideNavModule {
     constructor() {}
 }

@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClrIconModule, ClrDatagridModule } from '@clr/angular';
 import { FileUploadComponent } from './file-upload.component';
-import { FileUploaderModule } from '../file-uploader/file-uploader.module';
+import { HlcClrFileUploaderModule } from '../file-uploader/file-uploader.module';
 
 @NgModule({
-    imports: [CommonModule, ReactiveFormsModule, ClrIconModule, FileUploaderModule, ClrDatagridModule],
+    imports: [CommonModule, ReactiveFormsModule, ClrIconModule, HlcClrFileUploaderModule, ClrDatagridModule],
     declarations: [FileUploadComponent],
     exports: [FileUploadComponent]
 })
-export class FileUploadModule {}
+export class HlcClrFileUploadModule {}

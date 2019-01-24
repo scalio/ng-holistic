@@ -8,6 +8,6 @@ import { ClrCheckboxModule } from '@clr/angular';
     declarations: [CheckboxesComponent],
     exports: [CheckboxesComponent]
 })
-export class CheckboxesModule {
+export class HlcClrCheckboxesModule {
     constructor() {}
 }

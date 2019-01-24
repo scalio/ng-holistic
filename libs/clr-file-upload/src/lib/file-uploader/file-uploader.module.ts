@@ -9,4 +9,4 @@ import { ClrIconModule } from '@clr/angular';
     declarations: [FileUploaderComponent],
     exports: [FileUploaderComponent]
 })
-export class FileUploaderModule {}
+export class HlcClrFileUploaderModule {}

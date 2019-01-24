@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     FieldsLayoutMap,
-    FieldsLayoutModule,
-    FormModule,
+    HlcFieldsLayoutModule,
+    HlcFormModule,
     GroupsLayoutMap,
     HLC_FIELDS_LAYOUT_MAP,
     HLC_FORM_FIELD_WRAPPER,
@@ -17,34 +17,34 @@ import {
 import { clrGroupLayoutsMap } from '../group-layouts-map';
 import { GroupsLayoutModule } from '../groups-layout/groups-layout.module';
 import { InputContainerComponent } from '../input-container/input-container.component';
-import { InputContainerModule } from '../input-container/input-container.module';
-import { TabsLayoutModule } from '../tabs-layout/tabs-layout.module';
+import { HlcClrInputContainerModule } from '../input-container/input-container.module';
+import { HlcClrTabsLayoutModule } from '../tabs-layout/tabs-layout.module';
 import { ClrFormComponent } from './form.component';
-import { WizardLayoutModule } from '../wzard-layout/wizard-layout.module';
+import { HlcClrWizardLayoutModule } from '../wzard-layout/wizard-layout.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormModule,
-        FieldsLayoutModule,
-        TabsLayoutModule,
+        HlcFormModule,
+        HlcFieldsLayoutModule,
+        HlcClrTabsLayoutModule,
         GroupsLayoutModule,
-        InputContainerModule,
-        WizardLayoutModule,
+        HlcClrInputContainerModule,
+        HlcClrWizardLayoutModule,
         ...clrFieldsLayoutModules
     ],
     declarations: [ClrFormComponent],
-    exports: [ClrFormComponent, FieldsLayoutModule],
+    exports: [ClrFormComponent, HlcFieldsLayoutModule],
     entryComponents: clrFieldsLayoutComponents
 })
-export class ClrFormModule {
+export class HlcClrFormModule {
     static forRoot(
         fieldsLayoutMap?: FieldsLayoutMap,
         groupsLayoutMap?: GroupsLayoutMap,
         inputContainer?: any
     ): ModuleWithProviders {
         return {
-            ngModule: ClrFormModule,
+            ngModule: HlcClrFormModule,
             providers: [
                 {
                     provide: HLC_FIELDS_LAYOUT_MAP,

@@ -7,4 +7,4 @@ import { ToggleComponent } from './toggle.component';
     declarations: [ToggleComponent],
     exports: [ToggleComponent]
 })
-export class ToggleModule {}
+export class HlcClrToggleModule {}

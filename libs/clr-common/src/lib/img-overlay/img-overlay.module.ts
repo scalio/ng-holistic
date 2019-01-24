@@ -8,4 +8,4 @@ import { ImgOverlayComponent } from './img-overlay.component';
     imports: [CommonModule],
     providers: []
 })
-export class ImgOverlayModule {}
+export class HlcClrImgOverlayModule {}

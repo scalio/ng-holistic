@@ -9,4 +9,4 @@ import { TextComponent } from './text.component';
     exports: [TextComponent],
     entryComponents: [TextComponent]
 })
-export class TextModule {}
+export class HlcClrTextModule {}

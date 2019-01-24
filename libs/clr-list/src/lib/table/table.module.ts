@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ClrDatagridModule, ClrIconModule, ClrLoadingModule } from '@clr/angular';
-import { SelectModule } from '@ng-holistic/clr-controls';
+import { HlcClrSelectModule } from '@ng-holistic/clr-controls';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -11,7 +11,7 @@ import { TableComponent } from './table.component';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
 
 @NgModule({
-    imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, SelectModule, ClrIconModule],
+    imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, HlcClrSelectModule, ClrIconModule],
     declarations: [
         TableComponent,
         TableCellHostDirective,

@@ -10,6 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     exports: [SelectComponent],
     entryComponents: [SelectComponent]
 })
-export class SelectModule {
+export class HlcClrSelectModule {
     constructor() {}
 }

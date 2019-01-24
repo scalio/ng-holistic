@@ -9,4 +9,4 @@ import { TabsLayoutComponent } from './tabs-layout.component';
     exports: [TabsLayoutComponent],
     entryComponents: [TabsLayoutComponent]
 })
-export class TabsLayoutModule {}
+export class HlcClrTabsLayoutModule {}

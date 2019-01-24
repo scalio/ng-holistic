@@ -9,4 +9,4 @@ import { TextAreaComponent } from './text-area.component';
     exports: [TextAreaComponent],
     entryComponents: [TextAreaComponent]
 })
-export class TextAreaModule {}
+export class HlcClrTextAreaModule {}

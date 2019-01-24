@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { FormFooterDataAccess } from '../form-footer/form-footer.component';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
-import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { HlcClrAlertModalComponent } from './alert-modal/alert-modal.component';
+import { HlcClrConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { FormProvider, ModalComponent } from './modal/modal.component';
 import { OverlayService } from './overlay.service';
 import { AlertType } from '../common.types';
@@ -123,9 +123,9 @@ export class ModalService {
     }
 
     confirm(title: string, message: string) {
-        const { instance$, ok } = this.show<ConfirmModalComponent>({
+        const { instance$, ok } = this.show<HlcClrConfirmModalComponent>({
             title: title,
-            contentComponentType: ConfirmModalComponent
+            contentComponentType: HlcClrConfirmModalComponent
         });
 
         instance$
@@ -141,9 +141,9 @@ export class ModalService {
     }
 
     alert(title: string, message: string, alertType: AlertType) {
-        const { instance$, ok, modalInstance } = this.show<AlertModalComponent>({
+        const { instance$, ok, modalInstance } = this.show<HlcClrAlertModalComponent>({
             title: title,
-            contentComponentType: AlertModalComponent
+            contentComponentType: HlcClrAlertModalComponent
         });
 
         modalInstance.hideCancel = true;

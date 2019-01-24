@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
     DateComponent,
-    DateModule,
+    HlcClrDateModule,
+    HlcClrTextAreaModule,
+    HlcClrTextModule,
     TextAreaComponent,
-    TextAreaModule,
-    TextComponent,
-    TextModule
+    TextComponent
 } from '@ng-holistic/clr-controls';
 import { SelectPageComponent } from './select-page/select-page.component';
 import { SelectPageModule } from './select-page/select-page.module';
@@ -31,7 +31,13 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), TextModule, TextAreaModule, DateModule, SelectPageModule],
+    imports: [
+        RouterModule.forChild(routes),
+        HlcClrTextModule,
+        HlcClrTextAreaModule,
+        HlcClrDateModule,
+        SelectPageModule
+    ],
     exports: [RouterModule],
     entryComponents: []
 })

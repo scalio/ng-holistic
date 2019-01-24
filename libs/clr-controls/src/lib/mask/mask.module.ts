@@ -10,4 +10,4 @@ import { NgxMaskModule } from '../ngx-mask/ngx-mask.module';
     declarations: [MaskComponent],
     exports: [MaskComponent]
 })
-export class MaskModule {}
+export class HlcClrMaskModule {}

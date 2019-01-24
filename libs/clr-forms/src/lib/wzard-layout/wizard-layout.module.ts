@@ -10,4 +10,4 @@ import { WizardLayoutComponent } from './wizard-layout.component';
     entryComponents: [WizardLayoutComponent]
 
 })
-export class WizardLayoutModule {}
+export class HlcClrWizardLayoutModule {}

@@ -12,10 +12,10 @@ import { CustomFieldDirective, CustomFieldInputDirective } from './custom-field.
     exports: [FieldsLayoutComponent, CustomFieldDirective, CustomFieldInputDirective],
     entryComponents: [FieldsLayoutComponent]
 })
-export class FieldsLayoutModule {
+export class HlcFieldsLayoutModule {
     static forRoot(fieldsLayoutMap: FieldsLayoutMap, fieldWrapper?: Type<any>): ModuleWithProviders {
         return {
-            ngModule: FieldsLayoutModule,
+            ngModule: HlcFieldsLayoutModule,
             providers: [
                 {
                     provide: HLC_FIELDS_LAYOUT_MAP,

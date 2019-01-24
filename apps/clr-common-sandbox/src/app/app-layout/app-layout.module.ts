@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { AppLayoutComponent } from './app-layout.component';
-import { MainLayoutModule, MainHeaderModule } from '@ng-holistic/clr-common';
+import { HlcClrMainLayoutModule, HlcClrMainHeaderModule } from '@ng-holistic/clr-common';
 
 @NgModule({
     declarations: [AppLayoutComponent],
-    imports: [MainLayoutModule, MainHeaderModule],
+    imports: [HlcClrMainLayoutModule, HlcClrMainHeaderModule],
     providers: [],
     bootstrap: []
 })

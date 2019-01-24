@@ -9,4 +9,4 @@ import { FormErrorComponent } from './form-error.component';
     imports: [CommonModule, ClrIconModule],
     providers: []
 })
-export class FormErrorModule {}
+export class HlcClrFormErrorModule {}

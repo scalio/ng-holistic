@@ -9,6 +9,6 @@ import { MainHeaderComponent } from './main-header.component';
     declarations: [MainHeaderComponent],
     exports: [MainHeaderComponent]
 })
-export class MainHeaderModule {
+export class HlcClrMainHeaderModule {
     constructor() {}
 }

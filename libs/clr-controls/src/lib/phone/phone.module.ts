@@ -8,4 +8,4 @@ import { NgxMaskModule } from '../ngx-mask/ngx-mask.module';
     declarations: [PhoneComponent],
     exports: [PhoneComponent]
 })
-export class PhoneModule {}
+export class HlcClrPhoneModule {}

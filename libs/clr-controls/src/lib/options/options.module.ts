@@ -8,6 +8,6 @@ import { ClrRadioModule } from '@clr/angular';
     declarations: [OptionsComponent],
     exports: [OptionsComponent]
 })
-export class OptionsModule {
+export class HlcClrOptionsModule {
     constructor() {}
 }
