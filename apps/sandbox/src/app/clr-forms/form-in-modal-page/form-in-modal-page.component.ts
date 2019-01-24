@@ -39,6 +39,7 @@ export class FormInModalPageComponent {
             title: 'Form in modal',
             componentFormField: 'form$',
             contentComponentType: FormInModalComponent,
+            allowOkWhenFormPristine: false,
             dataAccess: {
                 update(_) {
                     return timer(1000);

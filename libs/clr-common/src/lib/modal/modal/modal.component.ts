@@ -16,7 +16,6 @@ import { defaultModalConfig, HLC_CLR_MODAL_CONFIG, ModalConfig } from './modal.c
 export interface FormProvider {
     form: FormGroup;
     dataAccess?: FormFooterDataAccess;
-    // TODO !
     allowOkWhenFormPristine?: boolean;
 }
 
