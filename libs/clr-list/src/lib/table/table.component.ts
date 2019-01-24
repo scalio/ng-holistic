@@ -183,7 +183,6 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
             this._freezeInitialStateChange = false;
@@ -418,11 +417,12 @@ export class TableComponent implements TableCustomCellsProvider, OnDestroy {
 
     //
     getRowActions(row: Table.Row) {
-        return (
+        const actions =
             this.table &&
             this.table.rowActions &&
-            (typeof this.table.rowActions === 'function' ? this.table.rowActions(row) : this.table.rowActions)
-        );
+            (typeof this.table.rowActions === 'function' ? this.table.rowActions(row) : this.table.rowActions);
+
+        return actions && actions.length > 0 ? actions : undefined;
     }
 
     onActionClick(action: Table.RowAction, row: Table.Row) {

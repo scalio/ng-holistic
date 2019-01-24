@@ -45,7 +45,8 @@ const table: TableDescription = {
             title: 'Custom'
         }
     ],
-    rowActions: (_: TableRow) => [{ id: 'remove', title: 'Remove' }, { id: 'edit', title: 'Edit' }]
+    rowActions: (row: TableRow) =>
+        row.id === '2' ? [{ id: 'remove', title: 'Remove' }, { id: 'edit', title: 'Edit' }] : []
 };
 
 const rows: TableRow[] = [
