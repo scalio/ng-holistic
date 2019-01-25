@@ -11,18 +11,18 @@ export interface DateTimeValues {
 }
 
 @Component({
-    selector: 'hlc-date-time',
+    selector: 'hlc-clr-date-time',
     templateUrl: './date-time.component.html',
     styleUrls: ['./date-time.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateTimeComponent),
+            useExisting: forwardRef(() => HlcClrDateTimeComponent),
             multi: true
         }
     ]
 })
-export class DateTimeComponent implements OnInit, OnInit, ControlValueAccessor, DateTimeValues {
+export class HlcClrDateTimeComponent implements OnInit, OnInit, ControlValueAccessor, DateTimeValues {
     readonly hours: any[];
     readonly minutes: any[];
 

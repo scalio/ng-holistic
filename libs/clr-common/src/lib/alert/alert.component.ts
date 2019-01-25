@@ -7,7 +7,7 @@ import { AlertType } from '../common.types';
     styleUrls: ['./alert.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlertComponent implements OnInit {
+export class HlcClrAlertComponent implements OnInit {
 
     @Input() alertType: AlertType = 'info';
     @Input() canClose = true;

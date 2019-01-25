@@ -19,12 +19,12 @@ const defaultLabels: FileUploaderLabels = {
 };
 
 @Component({
-    selector: 'hlc-file-uploader',
+    selector: 'hlc-clr-file-uploader',
     templateUrl: './file-uploader.component.html',
     styleUrls: ['./file-uploader.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileUploaderComponent implements OnInit {
+export class HlcClrFileUploaderComponent implements OnInit {
     // allows add only single file
     @Input() single: boolean | undefined;
     @Input() disabled: boolean;

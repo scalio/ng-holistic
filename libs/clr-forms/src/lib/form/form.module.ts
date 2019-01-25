@@ -16,10 +16,10 @@ import {
 } from '../fields-layout/fields-layout-map';
 import { GroupLayoutModule } from '../group-layout/group-layout.module';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
-import { InputContainerComponent } from '../input-container/input-container.component';
+import { HlcClrInputContainerComponent } from '../input-container/input-container.component';
 import { HlcClrInputContainerModule } from '../input-container/input-container.module';
 import { HlcClrTabsLayoutModule } from '../tabs-layout/tabs-layout.module';
-import { ClrFormComponent } from './form.component';
+import { HlcClrFormComponent } from './form.component';
 
 @NgModule({
     imports: [
@@ -31,8 +31,8 @@ import { ClrFormComponent } from './form.component';
         HlcClrInputContainerModule,
         ...clrFieldsLayoutModules
     ],
-    declarations: [ClrFormComponent],
-    exports: [ClrFormComponent, HlcFieldsLayoutModule],
+    declarations: [HlcClrFormComponent],
+    exports: [HlcClrFormComponent, HlcFieldsLayoutModule],
     entryComponents: clrFieldsLayoutComponents
 })
 export class HlcClrFormModule {
@@ -66,7 +66,7 @@ export class HlcClrFormModule {
                 },
                 {
                     provide: HLC_FORM_FIELD_WRAPPER,
-                    useValue: inputContainer || InputContainerComponent
+                    useValue: inputContainer || HlcClrInputContainerComponent
                 }
             ]
         };

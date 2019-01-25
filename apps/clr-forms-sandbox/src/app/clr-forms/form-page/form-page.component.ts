@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular
 import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 import { TextMask } from '@ng-holistic/clr-controls';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
-import { FormComponent } from '@ng-holistic/forms';
+import { HlcFormComponent } from '@ng-holistic/forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
@@ -104,7 +104,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
 export class FormPageComponent implements AfterViewInit {
     group = group;
 
-    @ViewChild(FormComponent) form: FormComponent;
+    @ViewChild(HlcFormComponent) form: HlcFormComponent;
 
     readonly dataAccess: FormFooterDataAccess = {
         update(_: any) {

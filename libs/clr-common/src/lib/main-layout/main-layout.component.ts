@@ -7,7 +7,7 @@ import { SideNavItem } from '../side-nav/side-nav.types';
     styleUrls: ['./main-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainLayoutComponent implements OnInit {
+export class HlcClrMainLayoutComponent implements OnInit {
     @Input() sideNavItems: SideNavItem[] | undefined;
 
     constructor() {}

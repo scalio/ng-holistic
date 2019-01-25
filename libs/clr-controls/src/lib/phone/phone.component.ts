@@ -14,18 +14,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { defaultPhoneConfig, HLC_CLR_PHONE_CONFIG, PhoneConfig } from './phone.config';
 
 @Component({
-    selector: 'hlc-phone',
+    selector: 'hlc-clr-phone',
     templateUrl: './phone.component.html',
     styleUrls: ['./phone.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => PhoneComponent),
+            useExisting: forwardRef(() => HlcClrPhoneComponent),
             multi: true
         }
     ]
 })
-export class PhoneComponent implements OnInit, ControlValueAccessor {
+export class HlcClrPhoneComponent implements OnInit, ControlValueAccessor {
     private codeJustFocused = false;
 
     private readonly config: PhoneConfig;

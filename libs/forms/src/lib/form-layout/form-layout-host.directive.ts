@@ -44,7 +44,7 @@ export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS
 @Directive({
     selector: '[hlcFormLayoutHost]'
 })
-export class GroupLayoutHostDirective implements OnInit, OnDestroy {
+export class HlcGroupLayoutHostDirective implements OnInit, OnDestroy {
     private componentRefs: ComponentRef<any>[];
     private destroy$ = new Subject();
     private groupsLayoutMap: GroupsLayoutMap;

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
+import { AlertType } from '../common.types';
 import { FormFooterDataAccess } from '../form-footer/form-footer.component';
 import { HlcClrAlertModalComponent } from './alert-modal/alert-modal.component';
 import { HlcClrConfirmModalComponent } from './confirm-modal/confirm-modal.component';
-import { FormProvider, ModalComponent } from './modal/modal.component';
-import { OverlayService } from './overlay.service';
-import { AlertType } from '../common.types';
+import { FormProvider, HlcClrModalComponent } from './modal/modal.component';
+import { HlcClrOverlayService } from './overlay.service';
 
 export interface ModalShowParams {
     title: string;
@@ -25,16 +25,19 @@ export interface ModalShowFormParams extends ModalShowParams {
  * Provides API to show / hide modal.
  */
 @Injectable()
-export class ModalService {
+export class HlcClrModalService {
     private readonly hide$ = new Subject();
 
-    constructor(private readonly overlayService: OverlayService) {}
+    constructor(private readonly overlayService: HlcClrOverlayService) {}
 
     // TODOD : separate showForm
     show<T>(params: ModalShowParams) {
-        const { backdropClick, instance } = this.overlayService.showComponent<ModalComponent>(ModalComponent, {
-            position: 'center'
-        });
+        const { backdropClick, instance } = this.overlayService.showComponent<HlcClrModalComponent>(
+            HlcClrModalComponent,
+            {
+                position: 'center'
+            }
+        );
 
         instance.title = params.title;
         instance.contentComponentType = params.contentComponentType;

@@ -46,7 +46,7 @@ export interface FormFooterDataAccess {
     styleUrls: ['./form-footer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormFooterComponent implements OnInit, OnDestroy {
+export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
     error: string | null;
     originalValue: any;
     updateButtonState$ = new BehaviorSubject(ClrLoadingState.DEFAULT);

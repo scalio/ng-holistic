@@ -29,7 +29,7 @@ type ContentParams = TemplateParams | ComponentParams;
  * Provides API to show / hide layout.
  */
 @Injectable()
-export class OverlayService {
+export class HlcClrOverlayService {
     private overlayRef: OverlayRef;
     private positionStrategy: GlobalPositionStrategy;
 

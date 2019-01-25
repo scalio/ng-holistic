@@ -482,7 +482,7 @@
                         "tsConfig": "apps/clr-list-sandbox/tsconfig.app.json",
                         "assets": ["apps/clr-list-sandbox/src/favicon.ico", "apps/clr-list-sandbox/src/assets"],
                         "styles": [
-                            "apps/sandbox/src/styles.scss",
+                            "apps/clr-list-sandbox/src/styles.scss",
                             "node_modules/@clr/ui/clr-ui.min.css",
                             "node_modules/@clr/icons/clr-icons.min.css"
                         ],

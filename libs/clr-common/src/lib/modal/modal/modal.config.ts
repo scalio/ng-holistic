@@ -1,19 +1,19 @@
 import { InjectionToken } from '@angular/core';
 
-export interface ModalConfigLabels {
+export interface HlcClrModalConfigLabels {
     okText: string;
     cancelText: string;
 }
 
-export interface ModalConfig {
-    labels: ModalConfigLabels;
+export interface HlcClrModalConfig {
+    labels: HlcClrModalConfigLabels;
 }
 
-export const defaultModalConfig: ModalConfig = {
+export const hlcClrDefaultModalConfig: HlcClrModalConfig = {
     labels: {
         okText: 'OK',
         cancelText: 'Cancel'
     }
 };
 
-export const HLC_CLR_MODAL_CONFIG = new InjectionToken<ModalConfig>('HLC_CLR_MODAL_CONFIG');
+export const HLC_CLR_MODAL_CONFIG = new InjectionToken<HlcClrModalConfig>('HLC_CLR_MODAL_CONFIG');

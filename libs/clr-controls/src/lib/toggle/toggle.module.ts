@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ToggleComponent } from './toggle.component';
+import { HlcClrToggleComponent } from './toggle.component';
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [ToggleComponent],
-    exports: [ToggleComponent]
+    declarations: [HlcClrToggleComponent],
+    exports: [HlcClrToggleComponent]
 })
 export class HlcClrToggleModule {}

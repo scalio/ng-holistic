@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { NumberPipe } from './number.pipe';
-import { PhonePipe } from './phone.pipe';
+import { HlcNumberPipe } from './number.pipe';
+import { HlcPhonePipe } from './phone.pipe';
 
 @NgModule({
     imports: [],
-    declarations: [PhonePipe, NumberPipe],
-    exports: [PhonePipe, NumberPipe]
+    declarations: [HlcPhonePipe, HlcNumberPipe],
+    exports: [HlcPhonePipe, HlcNumberPipe]
 })
 export class HlcPipesModule {
     constructor() {}

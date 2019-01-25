@@ -11,7 +11,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { FormFooterDataAccess } from '../../form-footer/form-footer.component';
-import { defaultModalConfig, HLC_CLR_MODAL_CONFIG, ModalConfig } from './modal.config';
+import { hlcClrDefaultModalConfig, HLC_CLR_MODAL_CONFIG, HlcClrModalConfig } from './modal.config';
 
 export interface FormProvider {
     form: FormGroup;
@@ -25,7 +25,7 @@ export interface FormProvider {
     styleUrls: ['./modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModalComponent implements OnInit {
+export class HlcClrModalComponent implements OnInit {
     error: string | undefined;
     @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
     @Input() title: string;
@@ -44,14 +44,14 @@ export class ModalComponent implements OnInit {
     ok = new EventEmitter<void>();
     cancel = new EventEmitter<void>();
 
-    readonly config: ModalConfig;
+    readonly config: HlcClrModalConfig;
     readonly contentInstance$ = new Subject();
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: ModalConfig
+        @Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: HlcClrModalConfig
     ) {
-        this.config = modalConfig || defaultModalConfig;
+        this.config = modalConfig || hlcClrDefaultModalConfig;
     }
 
     ngOnInit() {}

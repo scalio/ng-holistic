@@ -1,19 +1,19 @@
 <input class="hlc-clr-input" [readonly]="readonly" [placeholder]="placeholder" #input type="date" [(clrDate)]="date" />
 
 <div class="time-container">
-    <hlc-select
+    <hlc-clr-select
         [disallowEmpty]="true"
         [items]="hours"
         [value]="hour"
         [dictMapper]="dictMapper"
         (valueChange)="onHourChange($event)"
-    ></hlc-select>
+    ></hlc-clr-select>
 
-    <hlc-select
+    <hlc-clr-select
         [disallowEmpty]="true"
         [items]="minutes"
         [value]="minute"
         [dictMapper]="dictMapper"
         (valueChange)="onMinuteChange($event)"
-    ></hlc-select>
+    ></hlc-clr-select>
 </div>

@@ -3,19 +3,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isNil } from 'ramda';
 
 @Component({
-    selector: 'hlc-password',
+    selector: 'hlc-clr-password',
     templateUrl: './password.component.html',
     styleUrls: ['./password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => PasswordComponent),
+            useExisting: forwardRef(() => HlcClrPasswordComponent),
             multi: true
         }
     ]
 })
-export class PasswordComponent implements OnInit, ControlValueAccessor {
+export class HlcClrPasswordComponent implements OnInit, ControlValueAccessor {
     @Input() value: string;
 
     @Input() placeholder: string | undefined;

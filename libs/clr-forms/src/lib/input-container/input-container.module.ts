@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClrIconModule } from '@clr/angular';
-import { InputContainerComponent } from './input-container.component';
+import { HlcClrInputContainerComponent } from './input-container.component';
 import { InputErrorComponent } from './input-error/input-error.component';
 import {
     ValidationErrorsMapConfig,
@@ -12,9 +12,9 @@ import { ValidationErrorsComponent } from './validation-errors/validation-errors
 
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule, ClrIconModule],
-    declarations: [InputContainerComponent, InputErrorComponent, ValidationErrorsComponent],
-    exports: [InputContainerComponent, InputErrorComponent],
-    entryComponents: [InputContainerComponent]
+    declarations: [HlcClrInputContainerComponent, InputErrorComponent, ValidationErrorsComponent],
+    exports: [HlcClrInputContainerComponent, InputErrorComponent],
+    entryComponents: [HlcClrInputContainerComponent]
 })
 export class HlcClrInputContainerModule {
     static forRoot({ validationErrorsMap }: { validationErrorsMap: ValidationErrorsMapConfig }): ModuleWithProviders {

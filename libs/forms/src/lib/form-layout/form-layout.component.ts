@@ -11,11 +11,11 @@ import { IFormGroup } from '../models/form-layouts.types';
     providers: [
         {
             provide: HLC_FORM_GROUP_PROVIDER,
-            useExisting: forwardRef(() => FormLayoutComponent)
+            useExisting: forwardRef(() => HlcFormLayoutComponent)
         }
     ]
 })
-export class FormLayoutComponent implements OnInit, OnDestroy, FormGroupProvider {
+export class HlcFormLayoutComponent implements OnInit, OnDestroy, FormGroupProvider {
     @Input()
     form: FormGroup;
     @Input()

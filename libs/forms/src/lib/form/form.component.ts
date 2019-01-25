@@ -32,11 +32,11 @@ import { initFormGroup } from './form-builder';
     providers: [
         {
             provide: HLC_FORM_CUSTOM_FIELDS_PROVIDER,
-            useExisting: forwardRef(() => FormComponent)
+            useExisting: forwardRef(() => HlcFormComponent)
         }
     ]
 })
-export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
+export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
     /**

@@ -10,10 +10,10 @@ import {
     Optional,
     Inject
 } from '@angular/core';
-import { ClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { HlcClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
-import { HLC_FORM_FIELD_WRAPPER, FormComponent } from '@ng-holistic/forms';
-import { FilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
+import { HLC_FORM_FIELD_WRAPPER, HlcFormComponent } from '@ng-holistic/forms';
+import { HlcClrFilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
 import { HLC_CLR_FILTER_LABELS_CONFIG, FilterLabelsConfig, defaultFilterLabelsConfig } from './filter.config';
 
 @Component({
@@ -24,18 +24,18 @@ import { HLC_CLR_FILTER_LABELS_CONFIG, FilterLabelsConfig, defaultFilterLabelsCo
     providers: [
         {
             provide: HLC_FORM_FIELD_WRAPPER,
-            useValue: FilterInputWrapperComponent
+            useValue: HlcClrFilterInputWrapperComponent
         }
     ]
 })
-export class FilterComponent implements OnInit, AfterViewInit {
+export class HlcClrFilterComponent implements OnInit, AfterViewInit {
     _fields: ClrFormFields.FormField[];
     group: ClrFormLayouts.FieldsLayout;
     labelsConfig: FilterLabelsConfig;
 
     @Output() filter = new EventEmitter<any>();
 
-    @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
+    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
 
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
@@ -78,7 +78,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
         this.filter.emit(this.value);
     }
 
-    get form(): FormComponent {
+    get form(): HlcFormComponent {
         return this.clrForm.form;
     }
 

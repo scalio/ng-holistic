@@ -4,8 +4,8 @@ import { ClrAlertModule, ClrWizardModule } from '@clr/angular';
 import { HlcClrTextModule } from '@ng-holistic/clr-controls';
 import { clrFieldsLayoutMap, HlcClrFormModule, HlcClrInputContainerModule } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_MAP } from '@ng-holistic/forms';
-import { WizardCustomPageDirective } from './wizard-custom-page.directive';
-import { WizardComponent } from './wizard.component';
+import { HlcClrWizardCustomPageDirective } from './wizard-custom-page.directive';
+import { HlcClrWizardComponent } from './wizard.component';
 
 @NgModule({
     imports: [
@@ -16,8 +16,8 @@ import { WizardComponent } from './wizard.component';
         HlcClrTextModule,
         ClrAlertModule
     ],
-    declarations: [WizardComponent, WizardCustomPageDirective],
-    exports: [WizardComponent, WizardCustomPageDirective],
+    declarations: [HlcClrWizardComponent, HlcClrWizardCustomPageDirective],
+    exports: [HlcClrWizardComponent, HlcClrWizardCustomPageDirective],
     providers: [
         {
             provide: HLC_FIELDS_LAYOUT_MAP,

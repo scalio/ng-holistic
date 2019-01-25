@@ -45,7 +45,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     styleUrls: ['./table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent implements TableCustomCellsProvider, OnDestroy {
+export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private _dataProviderState: any;

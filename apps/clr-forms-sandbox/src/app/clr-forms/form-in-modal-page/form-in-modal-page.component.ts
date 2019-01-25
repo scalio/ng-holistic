@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { InputErrorDisplayStartegy, ClrFormComponent } from '@ng-holistic/clr-forms';
-import { ModalService } from '@ng-holistic/clr-common';
+import { InputErrorDisplayStartegy, HlcClrFormComponent } from '@ng-holistic/clr-forms';
+import { HlcClrModalService } from '@ng-holistic/clr-common';
 import { timer } from 'rxjs';
 import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component';
 import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
@@ -17,7 +17,7 @@ import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
 export class FormInModalComponent {
     group = recalcFormGroup;
 
-    @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
+    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
 
     get form$() {
         return this.clrForm.form.formCreated;
@@ -32,7 +32,7 @@ export class FormInModalComponent {
     providers: [InputErrorDisplayStartegy]
 })
 export class FormInModalPageComponent {
-    constructor(private readonly modalService: ModalService) {}
+    constructor(private readonly modalService: HlcClrModalService) {}
 
     onShowModal() {
         this.modalService.showForm({

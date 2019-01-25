@@ -36,12 +36,12 @@ export class TabLayoutComponent {
 }
 
 @Component({
-    selector: 'hlc-tabs-layout',
+    selector: 'hlc-clr-tabs-layout',
     templateUrl: './tabs-layout.component.html',
     styleUrls: ['./tabs-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabsLayoutComponent implements OnInit, OnDestroy {
+export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
     readonly config: TabsLayoutConfig;
 

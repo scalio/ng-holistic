@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'hlc-link-cell',
+    selector: 'hlc-clr-link-cell',
     templateUrl: './link-cell.component.html',
     styleUrls: ['./link-cell.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LinkCellComponent implements OnInit {
+export class HlcClrLinkCellComponent implements OnInit {
     @Input() title: string;
     @Input() link: any;
 

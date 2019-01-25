@@ -1,61 +1,61 @@
 import {
-    CheckboxesComponent,
+    HlcClrCheckboxesComponent,
     HlcClrCheckboxesModule,
-    DateComponent,
+    HlcClrDateComponent,
     HlcClrDateModule,
-    DateRangeComponent,
+    HlcClrDateRangeComponent,
     HlcClrDateRangeModule,
-    DateTimeComponent,
+    HlcClrDateTimeComponent,
     HlcClrDateTimeModule,
-    MaskComponent,
+    HlcClrMaskComponent,
     HlcClrMaskModule,
-    OptionsComponent,
+    HlcClrOptionsComponent,
     HlcClrOptionsModule,
-    SelectComponent,
+    HlcClrSelectComponent,
     HlcClrSelectModule,
-    TextAreaComponent,
+    HlcClrTextAreaComponent,
     HlcClrTextAreaModule,
-    TextComponent,
+    HlcClrTextComponent,
     HlcClrTextModule,
-    ToggleComponent,
+    HlcClrToggleComponent,
     HlcClrToggleModule,
-    PhoneComponent,
+    HlcClrPhoneComponent,
     HlcClrPhoneModule,
     HlcClrPasswordModule,
-    PasswordComponent
+    HlcClrPasswordComponent
 } from '@ng-holistic/clr-controls';
 
 /**
  * Predefined set of controls based on clarity design system which could be possible generated on form layout.
  */
 export const clrFieldsLayoutMap = {
-    TextField: TextComponent,
-    TextAreaField: TextAreaComponent,
-    SelectField: SelectComponent,
-    DateField: DateComponent,
-    ToggleField: ToggleComponent,
-    OptionsField: OptionsComponent,
-    CheckboxesField: CheckboxesComponent,
-    DateTimeField: DateTimeComponent,
-    DateRangeField: DateRangeComponent,
-    MaskField: MaskComponent,
-    PhoneField: PhoneComponent,
-    PasswordField: PasswordComponent
+    TextField: HlcClrTextComponent,
+    TextAreaField: HlcClrTextAreaComponent,
+    SelectField: HlcClrSelectComponent,
+    DateField: HlcClrDateComponent,
+    ToggleField: HlcClrToggleComponent,
+    OptionsField: HlcClrOptionsComponent,
+    CheckboxesField: HlcClrCheckboxesComponent,
+    DateTimeField: HlcClrDateTimeComponent,
+    DateRangeField: HlcClrDateRangeComponent,
+    MaskField: HlcClrMaskComponent,
+    PhoneField: HlcClrPhoneComponent,
+    PasswordField: HlcClrPasswordComponent
 };
 
 export const clrFieldsLayoutComponents = [
-    TextComponent,
-    TextAreaComponent,
-    SelectComponent,
-    DateComponent,
-    ToggleComponent,
-    OptionsComponent,
-    CheckboxesComponent,
-    DateTimeComponent,
-    DateRangeComponent,
-    MaskComponent,
-    PhoneComponent,
-    PasswordComponent
+    HlcClrTextComponent,
+    HlcClrTextAreaComponent,
+    HlcClrSelectComponent,
+    HlcClrDateComponent,
+    HlcClrToggleComponent,
+    HlcClrOptionsComponent,
+    HlcClrCheckboxesComponent,
+    HlcClrDateTimeComponent,
+    HlcClrDateRangeComponent,
+    HlcClrMaskComponent,
+    HlcClrPhoneComponent,
+    HlcClrPasswordComponent
 ];
 
 export const clrFieldsLayoutModules = [

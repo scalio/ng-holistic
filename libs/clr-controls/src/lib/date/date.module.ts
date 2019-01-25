@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClrDatepickerModule, ClrIconModule } from '@clr/angular';
 import { DateConvertService } from '../date-convert.service';
-import { DateComponent } from './date.component';
+import { HlcClrDateComponent } from './date.component';
 
 @NgModule({
     imports: [CommonModule, ClrDatepickerModule, ClrIconModule],
-    declarations: [DateComponent],
-    exports: [DateComponent],
+    declarations: [HlcClrDateComponent],
+    exports: [HlcClrDateComponent],
     providers: [DateConvertService],
-    entryComponents: [DateComponent]
+    entryComponents: [HlcClrDateComponent]
 })
 export class HlcClrDateModule {
     constructor() {}

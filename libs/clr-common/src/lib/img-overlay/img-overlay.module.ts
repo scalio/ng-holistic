@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ImgOverlayComponent } from './img-overlay.component';
+import { HlcClrImgOverlayComponent } from './img-overlay.component';
 
 @NgModule({
-    declarations: [ImgOverlayComponent],
-    exports: [ImgOverlayComponent],
+    declarations: [HlcClrImgOverlayComponent],
+    exports: [HlcClrImgOverlayComponent],
     imports: [CommonModule],
     providers: []
 })

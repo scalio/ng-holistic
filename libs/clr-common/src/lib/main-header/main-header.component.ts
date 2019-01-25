@@ -6,7 +6,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
     styleUrls: ['./main-header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainHeaderComponent implements OnInit {
+export class HlcClrMainHeaderComponent implements OnInit {
     @Input() logo: string | undefined;
     @Input() title: string | undefined;
 

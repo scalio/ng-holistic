@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { ClrFormComponent, ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { HlcClrFormComponent, ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
 import { distinctPropChanged } from '@ng-holistic/forms';
 import { format } from 'date-fns/esm/fp';
 import { map } from 'rxjs/operators';
@@ -70,7 +70,7 @@ export const recalcFormGroup = (form: FormGroup): ClrFormLayouts.ClrFormLayout =
 export class FormRecalcPageComponent implements AfterViewInit {
     group = recalcFormGroup;
 
-    @ViewChild(ClrFormComponent) clrForm: ClrFormComponent;
+    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
 
     constructor(private readonly cdr: ChangeDetectorRef) {}
 

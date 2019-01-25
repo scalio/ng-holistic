@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
-    DateComponent,
+    HlcClrDateComponent,
     HlcClrDateModule,
     HlcClrTextAreaModule,
     HlcClrTextModule,
-    TextAreaComponent,
-    TextComponent
+    HlcClrTextAreaComponent,
+    HlcClrTextComponent
 } from '@ng-holistic/clr-controls';
 import { SelectPageComponent } from './select-page/select-page.component';
 import { SelectPageModule } from './select-page/select-page.module';
@@ -14,15 +14,15 @@ import { SelectPageModule } from './select-page/select-page.module';
 export const routes: Routes = [
     {
         path: 'text',
-        component: TextComponent
+        component: HlcClrTextComponent
     },
     {
         path: 'text-area',
-        component: TextAreaComponent
+        component: HlcClrTextAreaComponent
     },
     {
         path: 'date',
-        component: DateComponent
+        component: HlcClrDateComponent
     },
     {
         path: 'select',

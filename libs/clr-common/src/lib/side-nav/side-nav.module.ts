@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ClrIconModule, ClrNavigationModule, ClrVerticalNavModule } from '@clr/angular';
-import { SideNavComponent } from './side-nav.component';
+import { HlcClrSideNavComponent } from './side-nav.component';
 
 @NgModule({
     imports: [
@@ -14,8 +14,8 @@ import { SideNavComponent } from './side-nav.component';
         RouterModule,
         ClrNavigationModule
     ],
-    declarations: [SideNavComponent],
-    exports: [SideNavComponent]
+    declarations: [HlcClrSideNavComponent],
+    exports: [HlcClrSideNavComponent]
 })
 export class HlcClrSideNavModule {
     constructor() {}

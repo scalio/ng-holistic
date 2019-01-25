@@ -7,20 +7,20 @@ import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
 import { TableCellHostDirective } from './table-cell-host.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
-import { TableComponent } from './table.component';
+import { HlcClrTableComponent } from './table.component';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
 
 @NgModule({
     imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, HlcClrSelectModule, ClrIconModule],
     declarations: [
-        TableComponent,
+        HlcClrTableComponent,
         TableCellHostDirective,
         CustomCellDirective,
         TableCustomCellHostDirective,
         RowDetailDirective,
         ...cellComponents
     ],
-    exports: [TableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],
+    exports: [HlcClrTableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],
     entryComponents: cellComponents
 })
 export class HlcClrTableModule {

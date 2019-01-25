@@ -8,18 +8,18 @@ export interface TextAreaValues {
 }
 
 @Component({
-    selector: 'hlc-text-area',
+    selector: 'hlc-clr-text-area',
     templateUrl: './text-area.component.html',
     styleUrls: ['./text-area.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => TextAreaComponent),
+            useExisting: forwardRef(() => HlcClrTextAreaComponent),
             multi: true
         }
     ]
 })
-export class TextAreaComponent implements OnInit, ControlValueAccessor, TextAreaValues {
+export class HlcClrTextAreaComponent implements OnInit, ControlValueAccessor, TextAreaValues {
     @Input() value: string;
 
     @Input() placeholder: string;

@@ -28,7 +28,7 @@ export const HLC_FORM_FIELD_WRAPPER = new InjectionToken<Type<any>>('HLC_FORM_FI
 @Directive({
     selector: '[hlcFormFieldHost]'
 })
-export class FormFieldHostDirective implements OnInit, OnDestroy {
+export class HlcFormFieldHostDirective implements OnInit, OnDestroy {
     private componentRef: ComponentRef<any> | undefined;
     private wrapperRef: ComponentRef<any> | undefined;
     private destroy$ = new Subject();

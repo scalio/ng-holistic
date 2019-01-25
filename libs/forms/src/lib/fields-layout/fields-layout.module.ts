@@ -1,16 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FieldsLayoutComponent, FieldsLayoutMap, HLC_FIELDS_LAYOUT_MAP } from './fields-layout.component';
-import { FormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-host.directive';
 import { CustomFieldDirective, CustomFieldInputDirective } from './custom-field.directive';
+import { FieldsLayoutMap, HlcFieldsLayoutComponent, HLC_FIELDS_LAYOUT_MAP } from './fields-layout.component';
+import { HlcFormFieldHostDirective, HLC_FORM_FIELD_WRAPPER } from './form-field-host.directive';
 
 @NgModule({
-    declarations: [FieldsLayoutComponent, FormFieldHostDirective, CustomFieldDirective, CustomFieldInputDirective],
+    declarations: [
+        HlcFieldsLayoutComponent,
+        HlcFormFieldHostDirective,
+        CustomFieldDirective,
+        CustomFieldInputDirective
+    ],
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
     providers: [],
-    exports: [FieldsLayoutComponent, CustomFieldDirective, CustomFieldInputDirective],
-    entryComponents: [FieldsLayoutComponent]
+    exports: [HlcFieldsLayoutComponent, CustomFieldDirective, CustomFieldInputDirective],
+    entryComponents: [HlcFieldsLayoutComponent]
 })
 export class HlcFieldsLayoutModule {
     static forRoot(fieldsLayoutMap: FieldsLayoutMap, fieldWrapper?: Type<any>): ModuleWithProviders {

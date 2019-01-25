@@ -9,18 +9,18 @@ export interface CheckboxesValues {
 }
 
 @Component({
-    selector: 'hlc-checkboxes',
+    selector: 'hlc-clr-checkboxes',
     templateUrl: './checkboxes.component.html',
     styleUrls: ['./checkboxes.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CheckboxesComponent),
+            useExisting: forwardRef(() => HlcClrCheckboxesComponent),
             multi: true
         }
     ]
 })
-export class CheckboxesComponent implements OnInit, ControlValueAccessor, CheckboxesValues {
+export class HlcClrCheckboxesComponent implements OnInit, ControlValueAccessor, CheckboxesValues {
     @Input()
     items: any[];
     @Input()

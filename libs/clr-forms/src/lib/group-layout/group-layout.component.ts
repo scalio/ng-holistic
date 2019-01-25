@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
-    selector: 'hlc-group-layout',
+    selector: 'hlc-clr-group-layout',
     templateUrl: './group-layout.component.html',
     styleUrls: ['./group-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
