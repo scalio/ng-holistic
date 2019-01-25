@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/sandbox",
+    "outDir": "../../dist/out-tsc/apps/clr-forms-sandbox",
     "types": [
       "jasmine",
       "node"
