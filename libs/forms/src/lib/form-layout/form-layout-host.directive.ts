@@ -17,10 +17,10 @@ import { AbstractControl } from '@angular/forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { FormGroupProvider, HLC_FORM_GROUP_PROVIDER } from '../fields-layout/fields-layout.component';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { IFormGroup } from '../models/form-layouts.types';
 import { setComponentProperties } from '../set-component-properties';
-import { HLC_FORM_GROUP_PROVIDER, FormGroupProvider } from '../fields-layout/fields-layout.component';
 
 const disableControls = (controls: AbstractControl[]) => {
     // console.log('disbale controls', controls);
@@ -44,7 +44,7 @@ export const HLC_GROUPS_LAYOUT = new InjectionToken<GroupsLayoutMap>('HLC_GROUPS
 @Directive({
     selector: '[hlcFormLayoutHost]'
 })
-export class GroupLayoutHostDirective implements OnInit, OnDestroy {
+export class HlcGroupLayoutHostDirective implements OnInit, OnDestroy {
     private componentRefs: ComponentRef<any>[];
     private destroy$ = new Subject();
     private groupsLayoutMap: GroupsLayoutMap;

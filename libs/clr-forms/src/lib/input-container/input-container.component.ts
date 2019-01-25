@@ -25,11 +25,11 @@ export interface InputContainerConfig {
 export const INPUT_CONTAINER_CONFIG = new InjectionToken<InputContainerConfig>('INPUT_CONTAINER_CONFIG');
 
 @Component({
-    selector: 'hlc-input-container',
+    selector: 'hlc-clr-input-container',
     templateUrl: './input-container.component.html',
     styleUrls: ['./input-container.component.scss']
 })
-export class InputContainerComponent implements OnInit, OnDestroy {
+export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
 
     @Input()

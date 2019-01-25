@@ -21,18 +21,18 @@ export interface DateValues {
 }
 
 @Component({
-    selector: 'hlc-date',
+    selector: 'hlc-clr-date',
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateComponent),
+            useExisting: forwardRef(() => HlcClrDateComponent),
             multi: true
         }
     ]
 })
-export class DateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
+export class HlcClrDateComponent implements OnInit, OnInit, ControlValueAccessor, DateValues {
     @Input()
     value: string | undefined | null;
 

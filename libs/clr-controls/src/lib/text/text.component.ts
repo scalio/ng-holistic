@@ -8,18 +8,18 @@ export interface TextValues {
 }
 
 @Component({
-    selector: 'hlc-text',
+    selector: 'hlc-clr-text',
     templateUrl: './text.component.html',
     styleUrls: ['./text.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => TextComponent),
+            useExisting: forwardRef(() => HlcClrTextComponent),
             multi: true
         }
     ]
 })
-export class TextComponent implements OnInit, ControlValueAccessor, TextValues {
+export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextValues {
     @Input() value: string;
 
     @Input() placeholder: string | undefined;

@@ -9,18 +9,18 @@ export interface SelectValues {
 }
 
 @Component({
-    selector: 'hlc-select',
+    selector: 'hlc-clr-select',
     templateUrl: './select.component.html',
     styleUrls: ['./select.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SelectComponent),
+            useExisting: forwardRef(() => HlcClrSelectComponent),
             multi: true
         }
     ]
 })
-export class SelectComponent implements OnInit, OnInit, ControlValueAccessor, SelectValues {
+export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccessor, SelectValues {
     @Input()
     items: any[];
     @Input()

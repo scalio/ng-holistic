@@ -16,13 +16,13 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrWizard } from '@clr/angular';
-import { ClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { HlcClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
-import { WizardCustomPageDirective } from './wizard-custom-page.directive';
+import { HlcClrWizardCustomPageDirective } from './wizard-custom-page.directive';
 import { defaultWizardConfig, HLC_CLR_WIZARD_CONFIG, WizardConfig } from './wizard.config';
 
 @Component({
@@ -31,7 +31,7 @@ import { defaultWizardConfig, HLC_CLR_WIZARD_CONFIG, WizardConfig } from './wiza
     styleUrls: ['./wizard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WizardComponent implements OnInit, OnDestroy {
+export class HlcClrWizardComponent implements OnInit, OnDestroy {
     readonly config: WizardConfig;
     private readonly destroy$ = new Subject();
     // formsChanged flow
@@ -50,8 +50,8 @@ export class WizardComponent implements OnInit, OnDestroy {
     @Output() formsChanged = new EventEmitter<{ [key: string]: FormGroup }>();
 
     @ViewChild('wizard') wizard: ClrWizard;
-    @ViewChildren('form') forms: QueryList<ClrFormComponent>;
-    @ContentChildren(WizardCustomPageDirective) customPages: QueryList<WizardCustomPageDirective>;
+    @ViewChildren('form') forms: QueryList<HlcClrFormComponent>;
+    @ContentChildren(HlcClrWizardCustomPageDirective) customPages: QueryList<HlcClrWizardCustomPageDirective>;
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -170,7 +170,7 @@ export class WizardComponent implements OnInit, OnDestroy {
         return this.getFormsPairs(form => form.form.formGroup);
     }
 
-    private getFormsPairs<T>(mf: (form: ClrFormComponent) => T): { [key: string]: T } {
+    private getFormsPairs<T>(mf: (form: HlcClrFormComponent) => T): { [key: string]: T } {
         const formsArr = this.formsArr;
         const valuePairs = formsArr ? formsArr.map(form => [form.id, mf(form)]) : [];
         return R.fromPairs(valuePairs as any);

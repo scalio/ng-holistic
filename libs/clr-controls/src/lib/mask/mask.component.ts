@@ -3,18 +3,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Mask } from './mask.types';
 
 @Component({
-    selector: 'hlc-mask',
+    selector: 'hlc-clr-mask',
     templateUrl: './mask.component.html',
     styleUrls: ['./mask.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => MaskComponent),
+            useExisting: forwardRef(() => HlcClrMaskComponent),
             multi: true,
         },
     ],
 })
-export class MaskComponent implements OnInit, ControlValueAccessor {
+export class HlcClrMaskComponent implements OnInit, ControlValueAccessor {
     @Input()
     value: string;
 

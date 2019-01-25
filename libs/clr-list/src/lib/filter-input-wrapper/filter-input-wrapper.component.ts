@@ -17,12 +17,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'hlc-filter-input-wrapper',
+    selector: 'hlc-clr-filter-input-wrapper',
     templateUrl: './filter-input-wrapper.component.html',
     styleUrls: ['./filter-input-wrapper.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FilterInputWrapperComponent implements OnInit, OnDestroy {
+export class HlcClrFilterInputWrapperComponent implements OnInit, OnDestroy {
     readonly destroy$ = new Subject();
 
     @Input() id: string;

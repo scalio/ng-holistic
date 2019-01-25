@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
     styleUrls: ['./img-overlay.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImgOverlayComponent {
+export class HlcClrImgOverlayComponent {
 
     @Input() src: string;
     @Input() width: string;

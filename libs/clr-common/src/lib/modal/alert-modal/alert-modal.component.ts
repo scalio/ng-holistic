@@ -7,7 +7,7 @@ import { AlertType } from '../../common.types';
     styleUrls: ['./alert-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlertModalComponent implements OnInit {
+export class HlcClrAlertModalComponent implements OnInit {
     @Input() message: string;
     @Input() alertType: AlertType;
 

@@ -8,18 +8,18 @@ export interface OptionsValues {
 }
 
 @Component({
-    selector: 'hlc-options',
+    selector: 'hlc-clr-options',
     templateUrl: './options.component.html',
     styleUrls: ['./options.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => OptionsComponent),
+            useExisting: forwardRef(() => HlcClrOptionsComponent),
             multi: true
         }
     ]
 })
-export class OptionsComponent implements OnInit, ControlValueAccessor, OptionsValues {
+export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, OptionsValues {
     @Input()
     items: any[];
     @Input()

@@ -8,8 +8,8 @@ export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: Fo
     R.pipe(
         R.map<FormFields.FormField, [string, any, any]>(field => [
             field.id,
-            R.propOr<any, any, any[]>([], '$validators', field),
-            field.value
+            R.propOr<any, any, any[]>([], 'validators', field),
+            field.props && field.props.value
         ]),
         R.forEach(([k, v, val]: [string, any, any]) => {
             // when $validators are observable not use them for initialziation
@@ -21,8 +21,8 @@ export const buildFormGroup = (formGroup: FormGroup, fb: FormBuilder, inputs: Fo
 
 export const sniffAndUpdateValidators = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
     fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
-        if (field.$validators && field.$validators instanceof Observable) {
-            const stream$ = field.$validators.pipe(
+        if (field.validators && field.validators instanceof Observable) {
+            const stream$ = field.validators.pipe(
                 distinctUntilChanged(),
                 tap(val => {
                     form.controls[field.id].setValidators(val || []);
@@ -41,8 +41,8 @@ export const sniffAndUpdateValidators = (form: FormGroup, fields: FormFields.For
 
 export const sniffAndUpdateVisibility = (form: FormGroup, fields: FormFields.FormField[]): Observable<any> | null =>
     fields.reduce((aggr: Observable<any> | null, field: FormFields.FormField) => {
-        if (field.$hidden && field.$hidden instanceof Observable) {
-            const stream$ = field.$hidden.pipe(
+        if (field.hidden && field.hidden instanceof Observable) {
+            const stream$ = field.hidden.pipe(
                 distinctUntilChanged(),
                 tap(hide => {
                     if (hide) {

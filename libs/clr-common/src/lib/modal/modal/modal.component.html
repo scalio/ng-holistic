@@ -21,6 +21,7 @@
                     (cancel)="onCancel()"
                     (dataAccessError)="onDataAccessError($event)"
                     [displayError]="false"
+                    [allowOkWhenFormPristine]="formProvider.allowOkWhenFormPristine"
                 >
                 </hlc-clr-form-footer>
                 <ng-template #simpleFooter>

@@ -1,5 +1,5 @@
-<hlc-file-uploader *ngIf="!readonly" [accept]="accept" [single]="false" (filesAdded)="onAddFiles($event)">
-</hlc-file-uploader>
+<hlc-clr-file-uploader *ngIf="!readonly" [accept]="accept" [single]="false" (filesAdded)="onAddFiles($event)">
+</hlc-clr-file-uploader>
 
 <ul class="list-unstyled list-compact">
     <li *ngFor="let file of files; trackBy: trackByFile; let i = index">

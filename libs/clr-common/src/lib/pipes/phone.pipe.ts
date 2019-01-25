@@ -59,7 +59,7 @@ export const formatPhone = (tel: string) => {
 @Pipe({
     name: 'phone'
 })
-export class PhonePipe implements PipeTransform {
+export class HlcPhonePipe implements PipeTransform {
     transform(tel: string) {
         return formatPhone(tel);
     }

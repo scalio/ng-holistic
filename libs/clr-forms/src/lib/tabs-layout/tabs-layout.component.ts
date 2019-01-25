@@ -8,7 +8,8 @@ import {
     QueryList,
     ViewChildren,
     ViewContainerRef,
-    Optional
+    Optional,
+    ViewChild
 } from '@angular/core';
 import {
     ExtractFieldsFun,
@@ -23,12 +24,24 @@ import * as R from 'ramda';
 import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig, defaultTabsLayoutConfig } from './tabs-layout.config';
 
 @Component({
-    selector: 'hlc-tabs-layout',
+    selector: 'hlc-tab-layout',
+    template: '<ng-container #vc></ng-container>',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TabLayoutComponent {
+    @ViewChild('vc', { read: ViewContainerRef })
+    vc: ViewContainerRef;
+
+    constructor() {}
+}
+
+@Component({
+    selector: 'hlc-clr-tabs-layout',
     templateUrl: './tabs-layout.component.html',
     styleUrls: ['./tabs-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabsLayoutComponent implements OnInit, OnDestroy {
+export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
     readonly config: TabsLayoutConfig;
 

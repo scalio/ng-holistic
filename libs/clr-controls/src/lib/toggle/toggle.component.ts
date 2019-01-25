@@ -2,18 +2,18 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-    selector: 'hlc-toggle',
+    selector: 'hlc-clr-toggle',
     templateUrl: './toggle.component.html',
     styleUrls: ['./toggle.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => ToggleComponent),
+            useExisting: forwardRef(() => HlcClrToggleComponent),
             multi: true
         }
     ]
 })
-export class ToggleComponent implements OnInit, ControlValueAccessor {
+export class HlcClrToggleComponent implements OnInit, ControlValueAccessor {
     private static togglesCount = 0;
 
     id: string;
@@ -24,8 +24,8 @@ export class ToggleComponent implements OnInit, ControlValueAccessor {
     propagateChange = (_: any) => {};
 
     constructor() {
-        this.id = `toggle_${ToggleComponent.togglesCount}`;
-        ToggleComponent.togglesCount++;
+        this.id = `toggle_${HlcClrToggleComponent.togglesCount}`;
+        HlcClrToggleComponent.togglesCount++;
     }
 
     ngOnInit() {}

@@ -46,7 +46,7 @@ export interface FormFooterDataAccess {
     styleUrls: ['./form-footer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormFooterComponent implements OnInit, OnDestroy {
+export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
     error: string | null;
     originalValue: any;
     updateButtonState$ = new BehaviorSubject(ClrLoadingState.DEFAULT);
@@ -69,6 +69,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     @Input() cancelLabel: string | undefined;
     @Input() dataAccess: FormFooterDataAccess | undefined;
     @Input() disabled: boolean | undefined;
+    @Input() allowOkWhenFormPristine = false;
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
@@ -94,7 +95,7 @@ export class FormFooterComponent implements OnInit, OnDestroy {
     }
 
     get isFormEnabled() {
-        return this.form && this.form.valid && this.form.dirty;
+        return this.form && this.form.valid && (this.allowOkWhenFormPristine || this.form.dirty);
     }
 
     onSave() {

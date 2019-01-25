@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DateModule } from '../date/date.module';
-import { DateRangeComponent } from './date-range.component';
+import { HlcClrDateModule } from '../date/date.module';
+import { HlcClrDateRangeComponent } from './date-range.component';
 
 @NgModule({
-    imports: [CommonModule, DateModule],
-    declarations: [DateRangeComponent],
-    exports: [DateRangeComponent]
+    imports: [CommonModule, HlcClrDateModule],
+    declarations: [HlcClrDateRangeComponent],
+    exports: [HlcClrDateRangeComponent]
 })
-export class DateRangeModule {
+export class HlcClrDateRangeModule {
     constructor() {}
 }

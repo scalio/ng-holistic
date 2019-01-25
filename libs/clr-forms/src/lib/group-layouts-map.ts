@@ -1,12 +1,10 @@
-import { FieldsLayoutComponent } from '@ng-holistic/forms';
-import { GroupLayoutComponent, GroupsLayoutComponent } from './groups-layout/groups-layout.component';
-import { TabsLayoutComponent } from './tabs-layout/tabs-layout.component';
-import { WizardLayoutComponent } from './wzard-layout/wizard-layout.component';
+import { HlcFieldsLayoutComponent } from '@ng-holistic/forms';
+import { HlcClrGroupLayoutComponent } from './group-layout/group-layout.component';
+import { TabLayoutComponent, HlcClrTabsLayoutComponent } from './tabs-layout/tabs-layout.component';
 
 export const clrGroupLayoutsMap = {
-    fields: FieldsLayoutComponent,
-    group: GroupsLayoutComponent,
-    tab: GroupLayoutComponent,
-    tabs: TabsLayoutComponent,
-    wizard: WizardLayoutComponent
+    fields: HlcFieldsLayoutComponent,
+    group: HlcClrGroupLayoutComponent,
+    tab: TabLayoutComponent,
+    tabs: HlcClrTabsLayoutComponent
 };

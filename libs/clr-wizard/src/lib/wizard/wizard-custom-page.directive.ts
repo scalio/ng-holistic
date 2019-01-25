@@ -3,7 +3,7 @@ import { Directive, Input, TemplateRef } from '@angular/core';
 @Directive({
     selector: '[hlcClrWizardCustomPage]'
 })
-export class WizardCustomPageDirective {
+export class HlcClrWizardCustomPageDirective {
 
     @Input()
     hlcClrWizardCustomPage: string;

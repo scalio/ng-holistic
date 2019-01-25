@@ -3,6 +3,11 @@ import { Table, TableDescription } from '@ng-holistic/clr-list';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
+interface TableRow extends Table.RowBase {
+    title: string;
+    amount: number;
+}
+
 const table: TableDescription = {
     cols: [
         {
@@ -40,10 +45,11 @@ const table: TableDescription = {
             title: 'Custom'
         }
     ],
-    rowActions: [{ id: 'remove', title: 'Remove' }, { id: 'edit', title: 'Edit' }]
+    rowActions: (row: TableRow) =>
+        row.id === '2' ? [{ id: 'remove', title: 'Remove' }, { id: 'edit', title: 'Edit' }] : []
 };
 
-const rows: Table.Row[] = [
+const rows: TableRow[] = [
     {
         id: '1',
         title: 'aaaa',
