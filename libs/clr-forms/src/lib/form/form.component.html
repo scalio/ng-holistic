@@ -1,2 +1,8 @@
-<hlc-form [group]="group" [customFields]="customFields" [value]="value"> </hlc-form>
+<hlc-form
+    [group]="group"
+    [customFields]="customFields"
+    [value]="value"
+    (formValueChanged)="formValueChanged.emit($event)"
+>
+</hlc-form>
 <ng-content selector="[form-footer]"></ng-content>

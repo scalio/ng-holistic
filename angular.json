@@ -3,23 +3,23 @@
     "version": 1,
     "newProjectRoot": "",
     "projects": {
-        "sandbox": {
-            "root": "apps/sandbox/",
-            "sourceRoot": "apps/sandbox/src",
+        "clr-forms-sandbox": {
+            "root": "apps/clr-forms-sandbox/",
+            "sourceRoot": "apps/clr-forms-sandbox/src",
             "projectType": "application",
             "prefix": "hlc",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/apps/sandbox",
-                        "index": "apps/sandbox/src/index.html",
-                        "main": "apps/sandbox/src/main.ts",
-                        "polyfills": "apps/sandbox/src/polyfills.ts",
-                        "tsConfig": "apps/sandbox/tsconfig.app.json",
-                        "assets": ["apps/sandbox/src/favicon.ico", "apps/sandbox/src/assets"],
+                        "outputPath": "dist/apps/clr-forms-sandbox",
+                        "index": "apps/clr-forms-sandbox/src/index.html",
+                        "main": "apps/clr-forms-sandbox/src/main.ts",
+                        "polyfills": "apps/clr-forms-sandbox/src/polyfills.ts",
+                        "tsConfig": "apps/clr-forms-sandbox/tsconfig.app.json",
+                        "assets": ["apps/clr-forms-sandbox/src/favicon.ico", "apps/clr-forms-sandbox/src/assets"],
                         "styles": [
-                            "apps/sandbox/src/styles.scss",
+                            "apps/clr-forms-sandbox/src/styles.scss",
                             "node_modules/@clr/ui/clr-ui.min.css",
                             "node_modules/@clr/icons/clr-icons.min.css"
                         ],
@@ -32,8 +32,8 @@
                         "production": {
                             "fileReplacements": [
                                 {
-                                    "replace": "apps/sandbox/src/environments/environment.ts",
-                                    "with": "apps/sandbox/src/environments/environment.prod.ts"
+                                    "replace": "apps/clr-forms-sandbox/src/environments/environment.ts",
+                                    "with": "apps/clr-forms-sandbox/src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -49,8 +49,8 @@
                         "production-local-libs": {
                             "fileReplacements": [
                                 {
-                                    "replace": "apps/sandbox/src/environments/environment.ts",
-                                    "with": "apps/sandbox/src/environments/environment.prod.ts"
+                                    "replace": "apps/clr-forms-sandbox/src/environments/environment.ts",
+                                    "with": "apps/clr-forms-sandbox/src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -76,45 +76,45 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "sandbox:build"
+                        "browserTarget": "clr-forms-sandbox:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "sandbox:build:production"
+                            "browserTarget": "clr-forms-sandbox:build:production"
                         },
                         "dev-local-libs": {
-                            "browserTarget": "sandbox:build:dev-local-libs"
+                            "browserTarget": "clr-forms-sandbox:build:dev-local-libs"
                         },
                         "production-local-libs": {
-                            "browserTarget": "sandbox:build:production-local-libs"
+                            "browserTarget": "clr-forms-sandbox:build:production-local-libs"
                         },
                         "ru": {
-                            "browserTarget": "sandbox:build:ru"
+                            "browserTarget": "clr-forms-sandbox:build:ru"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "sandbox:build"
+                        "browserTarget": "clr-forms-sandbox:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "apps/sandbox/src/test.ts",
-                        "polyfills": "apps/sandbox/src/polyfills.ts",
-                        "tsConfig": "apps/sandbox/tsconfig.spec.json",
-                        "karmaConfig": "apps/sandbox/karma.conf.js",
-                        "styles": ["apps/sandbox/src/styles.scss"],
+                        "main": "apps/clr-forms-sandbox/src/test.ts",
+                        "polyfills": "apps/clr-forms-sandbox/src/polyfills.ts",
+                        "tsConfig": "apps/clr-forms-sandbox/tsconfig.spec.json",
+                        "karmaConfig": "apps/clr-forms-sandbox/karma.conf.js",
+                        "styles": ["apps/clr-forms-sandbox/src/styles.scss"],
                         "scripts": [],
-                        "assets": ["apps/sandbox/src/favicon.ico", "apps/sandbox/src/assets"]
+                        "assets": ["apps/clr-forms-sandbox/src/favicon.ico", "apps/clr-forms-sandbox/src/assets"]
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": ["apps/sandbox/tsconfig.app.json", "apps/sandbox/tsconfig.spec.json"],
+                        "tsConfig": ["apps/clr-forms-sandbox/tsconfig.app.json", "apps/clr-forms-sandbox/tsconfig.spec.json"],
                         "exclude": ["**/node_modules/**"]
                     }
                 }
@@ -482,7 +482,7 @@
                         "tsConfig": "apps/clr-list-sandbox/tsconfig.app.json",
                         "assets": ["apps/clr-list-sandbox/src/favicon.ico", "apps/clr-list-sandbox/src/assets"],
                         "styles": [
-                            "apps/sandbox/src/styles.scss",
+                            "apps/clr-list-sandbox/src/styles.scss",
                             "node_modules/@clr/ui/clr-ui.min.css",
                             "node_modules/@clr/icons/clr-icons.min.css"
                         ],
@@ -645,7 +645,7 @@
         },
         "defaultCollection": "@nrwl/schematics"
     },
-    "defaultProject": "sandbox",
+    "defaultProject": "clr-forms-sandbox",
     "schematics": {
         "@schematics/angular:component": {
             "styleext": "scss",

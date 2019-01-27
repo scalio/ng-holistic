@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { GroupLayoutHostDirective, GroupsLayoutMap, HLC_GROUPS_LAYOUT } from './form-layout-host.directive';
-import { FormLayoutComponent } from './form-layout.component';
+import { HlcGroupLayoutHostDirective, GroupsLayoutMap, HLC_GROUPS_LAYOUT } from './form-layout-host.directive';
+import { HlcFormLayoutComponent } from './form-layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [FormLayoutComponent, GroupLayoutHostDirective],
+    declarations: [HlcFormLayoutComponent, HlcGroupLayoutHostDirective],
     imports: [CommonModule, ReactiveFormsModule],
     providers: [],
-    exports: [FormLayoutComponent]
+    exports: [HlcFormLayoutComponent]
 })
-export class FormLayoutModule {
+export class HlcFormLayoutModule {
     static forRoot(groupsLayoutMap: GroupsLayoutMap): ModuleWithProviders {
         return {
-            ngModule: FormLayoutModule,
+            ngModule: HlcFormLayoutModule,
             providers: [
                 {
                     provide: HLC_GROUPS_LAYOUT,

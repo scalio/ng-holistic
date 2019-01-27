@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClrIconModule } from '@clr/angular';
-import { FormErrorComponent } from './form-error.component';
+import { HlcClrFormErrorComponent } from './form-error.component';
 
 @NgModule({
-    declarations: [FormErrorComponent],
-    exports: [FormErrorComponent],
+    declarations: [HlcClrFormErrorComponent],
+    exports: [HlcClrFormErrorComponent],
     imports: [CommonModule, ClrIconModule],
     providers: []
 })
-export class FormErrorModule {}
+export class HlcClrFormErrorModule {}

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClrIconModule } from '@clr/angular';
-import { AlertComponent } from './alert.component';
+import { HlcClrAlertComponent } from './alert.component';
 
 @NgModule({
-    declarations: [AlertComponent],
-    exports: [AlertComponent],
+    declarations: [HlcClrAlertComponent],
+    exports: [HlcClrAlertComponent],
     imports: [CommonModule, ClrIconModule],
     providers: []
 })

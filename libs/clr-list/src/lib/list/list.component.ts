@@ -17,7 +17,7 @@ import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import {
     HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
-    TableComponent,
+    HlcClrTableComponent,
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
@@ -31,12 +31,12 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
     providers: [
         {
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
-            useExisting: forwardRef(() => ListComponent)
+            useExisting: forwardRef(() => HlcClrListComponent)
         },
         FilterService
     ]
 })
-export class ListComponent implements TableCustomCellsProvider, OnInit {
+export class HlcClrListComponent implements TableCustomCellsProvider, OnInit {
     labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
@@ -77,7 +77,7 @@ export class ListComponent implements TableCustomCellsProvider, OnInit {
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
 
-    @ViewChild(TableComponent) tableComponent: TableComponent;
+    @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(@Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;

@@ -18,7 +18,7 @@ export interface SideNavItem {
     styleUrls: ['./side-nav.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SideNavComponent implements OnInit {
+export class HlcClrSideNavComponent implements OnInit {
     collapsed: boolean;
     @Input() items: SideNavItem[];
 

@@ -1,9 +1,9 @@
-import { LinkCellComponent } from './link-cell/link-cell.component';
-import { ImgCellComponent } from './img-cell/img-cell.component';
+import { HlcClrLinkCellComponent } from './link-cell/link-cell.component';
+import { HlcClrImgCellComponent } from './img-cell/img-cell.component';
 
-export const cellComponents = [LinkCellComponent, ImgCellComponent];
+export const cellComponents = [HlcClrLinkCellComponent, HlcClrImgCellComponent];
 
 export const cellsMap = {
-    LinkColumn: LinkCellComponent,
-    ImgColumn: ImgCellComponent
+    LinkColumn: HlcClrLinkCellComponent,
+    ImgColumn: HlcClrImgCellComponent
 };

@@ -1,5 +1,5 @@
 import { Component, Input, Optional } from '@angular/core';
-import { InputContainerComponent } from '../input-container.component';
+import { HlcClrInputContainerComponent } from '../input-container.component';
 import { InputErrorDisplayStartegy } from '../input-error-display-strategy';
 
 @Component({
@@ -12,7 +12,7 @@ export class InputErrorComponent {
     for: string;
 
     constructor(
-        private readonly container: InputContainerComponent,
+        private readonly container: HlcClrInputContainerComponent,
         @Optional() private readonly strategy?: InputErrorDisplayStartegy
     ) {}
 

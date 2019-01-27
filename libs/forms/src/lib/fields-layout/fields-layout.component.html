@@ -1,4 +1,4 @@
-<form novalidate [ngClass]="formClass" [formGroup]="formGroup" #formContainer>
+<form novalidate autocomplete="off" [ngClass]="formClass" [formGroup]="formGroup" #formContainer>
     <ng-container *ngFor="let field of fields; trackBy: trackByFields">
         <ng-container
             *hlcFormFieldHost="

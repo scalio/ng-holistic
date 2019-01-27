@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
-import { ListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -9,16 +9,20 @@ const filterFields: ClrFormFields.FormField[] = [
     {
         id: 'text',
         kind: 'TextField',
-        label: 'Text',
-        placeholder: 'Type something',
-        value: 'test',
-        $validators: [Validators.required]
+        props: {
+            label: 'Text',
+            placeholder: 'Type something',
+            value: 'test'
+        },
+        validators: [Validators.required]
     },
     {
         id: 'select',
         kind: 'SelectField',
-        label: 'Select',
-        items: [{ key: 1, label: 'one' }, { key: 2, label: 'two' }]
+        props: {
+            label: 'Select',
+            items: [{ key: 1, label: 'one' }, { key: 2, label: 'two' }]
+        }
     },
     {
         id: 'date',
@@ -110,7 +114,7 @@ export class ListPageComponent implements OnInit {
     dataProvider = dataProvider;
     filterFields = filterFields;
 
-    @ViewChild(ListComponent) private list: ListComponent;
+    @ViewChild(HlcClrListComponent) private list: HlcClrListComponent;
 
     constructor() {}
 

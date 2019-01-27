@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
     styleUrls: ['./confirm-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConfirmModalComponent implements OnInit {
+export class HlcClrConfirmModalComponent implements OnInit {
     @Input() message: string;
 
     constructor() {}

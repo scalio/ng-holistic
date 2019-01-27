@@ -4,13 +4,19 @@
 param([string] $groupName,
       [string] $location = "northeurope")
 
+$groupExists = az group exists -n $groupName
+
+if ($groupExists -eq $true) {
+    return $groupName + '7app'
+}
+
 az group create --name $groupName --location $location
 $deploy = az group deployment create --resource-group $groupName --template-file 'hlc-azure-deploy-arm.json'
 
-$deploy
+$deployJson = $deploy | out-string | ConvertFrom-Json
 
-# $storageAccountName = $deploy.properties.outputs.storageAccountName
+$storageAccountName = $deployJson.properties.outputs.storageAccountName.value
 
-# $storageAccountName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $groupName -Name $groupName).Outputs.storageAccountName.value
+az storage blob service-properties update --account-name $storageAccountName --static-website --index-document 'index.html'
 
-# az storage blob service-properties update --account-name $storageAccountName --static-website --index-document 'index.html'
+return $storageAccountName

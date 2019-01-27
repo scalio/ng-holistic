@@ -5,7 +5,7 @@ import { isNil } from 'ramda';
 @Pipe({
     name: 'number'
 })
-export class NumberPipe implements PipeTransform {
+export class HlcNumberPipe implements PipeTransform {
     constructor(@Inject(LOCALE_ID) private readonly localeId: string) {}
 
     transform(val: number | undefined) {

@@ -49,7 +49,7 @@ export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('
     styleUrls: ['./fields-layout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FieldsLayoutComponent implements OnInit {
+export class HlcFieldsLayoutComponent implements OnInit {
     private readonly fieldLayoutMap: FieldsLayoutMap;
 
     @Input()

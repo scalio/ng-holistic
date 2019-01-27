@@ -28,19 +28,19 @@ interface FileError {
 const UPLOAD_DEBOUNCE_TIME = 1000;
 
 @Component({
-    selector: 'hlc-file-upload',
+    selector: 'hlc-clr-file-upload',
     templateUrl: './file-upload.component.html',
     styleUrls: ['./file-upload.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => FileUploadComponent),
+            useExisting: forwardRef(() => HlcClrFileUploadComponent),
             multi: true
         }
     ]
 })
-export class FileUploadComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValueAccessor {
     private readonly destroy$ = new Subject();
 
     removingFiles: any[] = [];

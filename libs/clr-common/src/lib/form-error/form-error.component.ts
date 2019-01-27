@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from 
     styleUrls: ['./form-error.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormErrorComponent {
+export class HlcClrFormErrorComponent {
 
     @Input() message: string | undefined;
 

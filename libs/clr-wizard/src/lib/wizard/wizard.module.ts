@@ -1,16 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClrAlertModule, ClrWizardModule } from '@clr/angular';
-import { TextModule } from '@ng-holistic/clr-controls';
-import { clrFieldsLayoutMap, ClrFormModule, InputContainerModule } from '@ng-holistic/clr-forms';
+import { HlcClrTextModule } from '@ng-holistic/clr-controls';
+import { clrFieldsLayoutMap, HlcClrFormModule, HlcClrInputContainerModule } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_MAP } from '@ng-holistic/forms';
-import { WizardCustomPageDirective } from './wizard-custom-page.directive';
-import { WizardComponent } from './wizard.component';
+import { HlcClrWizardCustomPageDirective } from './wizard-custom-page.directive';
+import { HlcClrWizardComponent } from './wizard.component';
 
 @NgModule({
-    imports: [CommonModule, ClrWizardModule, ClrFormModule, InputContainerModule, TextModule, ClrAlertModule],
-    declarations: [WizardComponent, WizardCustomPageDirective],
-    exports: [WizardComponent, WizardCustomPageDirective],
+    imports: [
+        CommonModule,
+        ClrWizardModule,
+        HlcClrFormModule,
+        HlcClrInputContainerModule,
+        HlcClrTextModule,
+        ClrAlertModule
+    ],
+    declarations: [HlcClrWizardComponent, HlcClrWizardCustomPageDirective],
+    exports: [HlcClrWizardComponent, HlcClrWizardCustomPageDirective],
     providers: [
         {
             provide: HLC_FIELDS_LAYOUT_MAP,

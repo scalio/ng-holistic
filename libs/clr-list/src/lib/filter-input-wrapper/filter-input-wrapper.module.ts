@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClrIconModule } from '@clr/angular';
-import { FilterInputWrapperComponent } from './filter-input-wrapper.component';
+import { HlcClrFilterInputWrapperComponent } from './filter-input-wrapper.component';
 
 @NgModule({
     imports: [CommonModule, ClrIconModule],
-    declarations: [FilterInputWrapperComponent],
-    exports: [FilterInputWrapperComponent]
+    declarations: [HlcClrFilterInputWrapperComponent],
+    exports: [HlcClrFilterInputWrapperComponent]
 })
 export class HlcClrFilterInputWrapperModule {}

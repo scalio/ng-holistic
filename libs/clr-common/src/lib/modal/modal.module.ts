@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule as CdkOverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
-import { ModalComponent } from './modal/modal.component';
-import { OverlayService } from './overlay.service';
-import { ModalService } from './modal.service';
+import { HlcClrModalComponent } from './modal/modal.component';
+import { HlcClrOverlayService } from './overlay.service';
+import { HlcClrModalService } from './modal.service';
 import { ClrModalModule, ClrIconModule } from '@clr/angular';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
-import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { HlcClrAlertModalComponent } from './alert-modal/alert-modal.component';
+import { HlcClrConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { NgxComponentOutlet } from '../ngxComponentOutlet';
-import { FormFooterModule } from '../form-footer/form-footer.module';
-import { FormErrorModule } from '../form-error/form-error.module';
+import { HlcClrFormFooterModule } from '../form-footer/form-footer.module';
+import { HlcClrFormErrorModule } from '../form-error/form-error.module';
 import { HlcClrAlertModule } from '../alert/alert.module';
 
 @NgModule({
@@ -20,13 +20,13 @@ import { HlcClrAlertModule } from '../alert/alert.module';
         A11yModule,
         ClrModalModule,
         ClrIconModule,
-        FormFooterModule,
-        FormErrorModule,
+        HlcClrFormFooterModule,
+        HlcClrFormErrorModule,
         HlcClrAlertModule
     ],
-    declarations: [ModalComponent, NgxComponentOutlet, AlertModalComponent, ConfirmModalComponent],
-    exports: [ModalComponent, NgxComponentOutlet],
-    providers: [OverlayService, ModalService, NgxComponentOutlet],
-    entryComponents: [ModalComponent, AlertModalComponent, ConfirmModalComponent]
+    declarations: [HlcClrModalComponent, NgxComponentOutlet, HlcClrAlertModalComponent, HlcClrConfirmModalComponent],
+    exports: [HlcClrModalComponent, NgxComponentOutlet],
+    providers: [HlcClrOverlayService, HlcClrModalService, NgxComponentOutlet],
+    entryComponents: [HlcClrModalComponent, HlcClrAlertModalComponent, HlcClrConfirmModalComponent]
 })
 export class HlcClrModalModule {}

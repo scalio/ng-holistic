@@ -32,11 +32,11 @@ import { initFormGroup } from './form-builder';
     providers: [
         {
             provide: HLC_FORM_CUSTOM_FIELDS_PROVIDER,
-            useExisting: forwardRef(() => FormComponent)
+            useExisting: forwardRef(() => HlcFormComponent)
         }
     ]
 })
-export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
+export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
     /**
@@ -65,6 +65,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
     customFields: QueryList<CustomFieldDirective> | undefined;
 
     @Output() formCreated = new EventEmitter<FormGroup>();
+    @Output() formValueChanged = new EventEmitter<any>();
 
     formGroup: FormGroup;
 
@@ -123,6 +124,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFi
 
         this.initialValue = this.formGroup.value;
         this.formCreated.emit(this.formGroup);
+        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => this.formValueChanged.emit(val));
     }
 
     private rebuildForm(data: any) {

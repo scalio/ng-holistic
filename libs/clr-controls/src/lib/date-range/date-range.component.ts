@@ -1,6 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DateComponent } from '../date/date.component';
+import { HlcClrDateComponent } from '../date/date.component';
 import { RangeMapperService } from '../range.config';
 
 export interface DateRangeValues {
@@ -9,18 +9,18 @@ export interface DateRangeValues {
 }
 
 @Component({
-    selector: 'hlc-date-range',
+    selector: 'hlc-clr-date-range',
     templateUrl: './date-range.component.html',
     styleUrls: ['./date-range.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateRangeComponent),
+            useExisting: forwardRef(() => HlcClrDateRangeComponent),
             multi: true
         }
     ]
 })
-export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRangeValues {
+export class HlcClrDateRangeComponent implements OnInit, ControlValueAccessor, DateRangeValues {
     @Input()
     value: any | undefined | null;
 
@@ -30,8 +30,8 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor, DateRan
     readonly: boolean;
 
     // required for reset
-    @ViewChildren(DateComponent)
-    dateComponents: QueryList<DateComponent>;
+    @ViewChildren(HlcClrDateComponent)
+    dateComponents: QueryList<HlcClrDateComponent>;
 
     @Output()
     valueChange = new EventEmitter<any | null | undefined>();

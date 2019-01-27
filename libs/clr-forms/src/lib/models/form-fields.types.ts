@@ -7,10 +7,22 @@ export namespace ClrFormFields {
         [key: string]: T;
     }
 
-    export interface BaseField<TKind extends string, TVal = any> extends FormFields.FormField<TKind> {
+    export interface BaseBaseFieldProps<TVal> {
         label?: FormFields.FormFieldProp<string>;
         value?: FormFields.FormFieldProp<TVal>;
         readonly?: FormFields.FormFieldProp<boolean>;
+    }
+
+    export type BaseFieldProps<TVal, TExtProps = {}> = BaseBaseFieldProps<TVal> & TExtProps;
+
+    export type BaseFieldPropsP<TVal, TExtProps = {}> = BaseFieldProps<
+        TVal,
+        TExtProps & {
+            placeholder?: FormFields.FormFieldProp<string>;
+        }
+    >;
+
+    export interface BaseFieldWithProps<TKind extends string, TProps> extends FormFields.FormField<TKind, TProps> {
         /**
          * Dictionary of validation error key / message for control.
          * @example
@@ -19,42 +31,77 @@ export namespace ClrFormFields {
         validatorsErrorsMap?: FieldValidatorsErrorsMap;
     }
 
-    export interface BaseFieldP<TKind extends string, TVal = any> extends BaseField<TKind, TVal> {
-        placeholder?: FormFields.FormFieldProp<string>;
-    }
+    /**
+     * Field with label, value, readonly props
+     */
+    export type BaseField<TKind extends string, TVal = any, TExtProps = {}> = BaseFieldWithProps<
+        TKind,
+        BaseFieldProps<TVal, TExtProps>
+    >;
+    /**
+     * Field with ...BaseField + placeholder props
+     */
+    export type BaseFieldP<TKind extends string, TVal = any, TExtProps = {}> = BaseFieldWithProps<
+        TKind,
+        BaseFieldPropsP<TVal, TExtProps>
+    >;
 
-    export interface TextField extends BaseFieldP<'TextField', string> {
-        valueChanged?: Subject<string>;
-    }
+    export type TextField = BaseFieldP<
+        'TextField',
+        string,
+        {
+            valueChanged?: Subject<string>;
+        }
+    >;
 
-    export interface SelectField extends BaseFieldP<'SelectField'> {
-        items: FormFields.FormFieldProp<any[]>;
-    }
+    export type SelectField = BaseFieldP<
+        'SelectField',
+        any,
+        {
+            items: FormFields.FormFieldProp<any[]>;
+        }
+    >;
 
-    export interface DateField extends BaseField<'DateField', string> {}
+    export type DateField = BaseField<'DateField', string>;
 
-    export interface TextAreaField extends BaseFieldP<'TextAreaField', string> {}
+    export type TextAreaField = BaseFieldP<'TextAreaField', string>;
 
-    export interface ToggleField extends BaseField<'ToggleField', boolean> {
-        text?: string;
-    }
+    export type ToggleField = BaseField<
+        'ToggleField',
+        boolean,
+        {
+            text?: string;
+        }
+    >;
 
-    export interface OptionsField extends BaseField<'OptionsField'> {
-        items: FormFields.FormFieldProp<any[]>;
-    }
+    export type OptionsField = BaseField<
+        'OptionsField',
+        any,
+        {
+            items: FormFields.FormFieldProp<any[]>;
+        }
+    >;
 
-    export interface CheckboxesField extends BaseField<'CheckboxesField'> {
-        items: FormFields.FormFieldProp<any[]>;
-    }
+    export type CheckboxesField = BaseField<
+        'CheckboxesField',
+        any,
+        {
+            items: FormFields.FormFieldProp<any[]>;
+        }
+    >;
 
-    export interface DateTimeField extends BaseField<'DateTimeField', string> {}
+    export type DateTimeField = BaseField<'DateTimeField', string>;
 
-    export interface DateRangeField extends BaseField<'DateRangeField'> {}
+    export type DateRangeField = BaseField<'DateRangeField'>;
 
-    export interface MaskField extends BaseFieldP<'MaskField'> {
-        mask: Mask.MaskValue;
-        unmask?: Mask.UnmaskFun;
-    }
+    export type MaskField = BaseFieldP<
+        'MaskField',
+        string,
+        {
+            mask: Mask.MaskValue;
+            unmask?: Mask.UnmaskFun;
+        }
+    >;
 
     export interface PhoneField extends BaseField<'PhoneField'> {}
 

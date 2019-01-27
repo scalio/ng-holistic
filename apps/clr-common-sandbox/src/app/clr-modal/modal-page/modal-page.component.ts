@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalService } from '@ng-holistic/clr-common';
+import { HlcClrModalService } from '@ng-holistic/clr-common';
 import { throwError, timer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class ModalPageFormComponent implements OnInit {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalPageComponent implements OnInit {
-    constructor(private readonly modalService: ModalService) {}
+    constructor(private readonly modalService: HlcClrModalService) {}
 
     ngOnInit() {}
 
