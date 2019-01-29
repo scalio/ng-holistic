@@ -5,9 +5,9 @@ import {
     InjectionToken,
     Input,
     OnInit,
-    Type,
+    Optional,
     QueryList,
-    Optional
+    Type
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';

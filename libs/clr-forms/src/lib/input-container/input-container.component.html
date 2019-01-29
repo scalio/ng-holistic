@@ -7,7 +7,9 @@
         </span>
     </label>
 
-    <ng-container #ref> <ng-content></ng-content> </ng-container>
+    <div class="clr-control-container">
+        <ng-container #ref> <ng-content></ng-content> </ng-container>
 
-    <hlc-validation-errors></hlc-validation-errors>
+        <hlc-validation-errors></hlc-validation-errors>
+    </div>
 </div>
