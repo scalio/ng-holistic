@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } 
 import { Validators } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 
-const group: ClrFormLayouts.ClrFormLayout = {
+export const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'tabs',
     $content: [
         {

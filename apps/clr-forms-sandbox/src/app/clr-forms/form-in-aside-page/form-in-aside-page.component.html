@@ -1,0 +1,8 @@
+<hlc-clr-aside-panel *ngIf="isOpen" (close)="isOpen = false">
+    <hlc-clr-form content [group]="group" #clrForm></hlc-clr-form>
+    <div footer>
+        <hlc-clr-form-footer [form]="clrForm.form.formGroup" (save)="isOpen = false" (cancel)="isOpen = false">
+        </hlc-clr-form-footer>
+    </div>
+</hlc-clr-aside-panel>
+<button class="btn" (click)="isOpen = true">Show Aside</button>

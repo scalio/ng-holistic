@@ -32,6 +32,10 @@ export default [
             {
                 title: 'Form In Modal',
                 path: ['/clr-forms', 'form-in-modal']
+            },
+            {
+                title: 'Form In Aside',
+                path: ['/clr-forms', 'form-in-aside']
             }
         ]
     },
