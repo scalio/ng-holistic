@@ -1,0 +1,13 @@
+<ng-template hlcAside (backdropClicked)="close.emit()">
+    <div class="aside-header">
+        <button aria-label="Close" class="close" type="button" (click)="close.emit()">
+            <clr-icon aria-hidden="true" shape="close"></clr-icon>
+        </button>
+
+        <div class="aside-title"><ng-content select="[header]"></ng-content></div>
+    </div>
+
+    <div class="aside-body"><ng-content select="[content]"></ng-content></div>
+
+    <ng-content select="[footer]"></ng-content>
+</ng-template>

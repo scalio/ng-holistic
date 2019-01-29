@@ -1,0 +1,5 @@
+<hlc-clr-aside-panel *ngIf="isOpen" (close)="isOpen = false">
+    <h2 header>Header</h2>
+    <div content>Content</div>
+</hlc-clr-aside-panel>
+<button class="btn" (click)="isOpen = true">Show Aside</button>

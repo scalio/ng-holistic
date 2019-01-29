@@ -2,12 +2,16 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
-        title: 'Clr Modal',
+        title: 'Clr Modal / Aside',
         icon: 'pop-out',
         children: [
             {
                 title: 'Modal',
                 path: ['/clr-modal', 'modal']
+            },
+            {
+                title: 'Aside',
+                path: ['/clr-aside', 'aside']
             }
         ]
     },
