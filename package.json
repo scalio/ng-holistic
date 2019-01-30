@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "start:home": "ng serve hlc-home-app --port=4305",
     "start:clr-common": "ng serve clr-common-sandbox --port=4300",
     "start:clr-forms": "ng serve clr-forms-sandbox --port=4301",
     "start:clr-list": "ng serve clr-list-sandbox --port=4302",
