@@ -1,40 +1,28 @@
-<clr-vertical-nav
-    [clrVerticalNavCollapsible]="true"
-    [(clrVerticalNavCollapsed)]="collapsed">
-
+<clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed">
     <ng-container *ngFor="let item of items">
-        <clr-vertical-nav-group
+        <a
+            *ngIf="!item.children; else itemWithChildren"
+            aria-hidden="true"
+            clrVerticalNavLink
             routerLinkActive="active"
-            [clrVerticalNavGroupExpanded]="true">
+            [routerLink]="item.path"
+        >
+            <clr-icon clrVerticalNavIcon *ngIf="item.icon" [attr.shape]="item.icon"></clr-icon>
+            {{ item.title }}
+        </a>
 
-            <clr-icon
-                clrVerticalNavIcon
-                *ngIf="item.icon"
-                [attr.shape]="item.icon"></clr-icon>
-            {{item.title}}
-            <clr-vertical-nav-group-children *clrIfExpanded>
-
-                <ng-container *ngFor="let child of item.children">
-
-                    <clr-icon
-                        clrVerticalNavIcon
-                        *ngIf="child.icon"
-                        [attr.shape]="child.icon"></clr-icon>
-
-                    <a
-                        aria-hidden="true"
-                        clrVerticalNavLink
-                        routerLinkActive="active"
-                        [routerLink]="child.path">
-                        {{child.title}}
-                    </a>
-
-                </ng-container>
-
-            </clr-vertical-nav-group-children>
-
-        </clr-vertical-nav-group>
-
+        <ng-template #itemWithChildren>
+            <clr-vertical-nav-group routerLinkActive="active" [clrVerticalNavGroupExpanded]="true">
+                {{ item.title }}
+                <clr-vertical-nav-group-children *clrIfExpanded>
+                    <ng-container *ngFor="let child of item.children">
+                        <a aria-hidden="true" clrVerticalNavLink routerLinkActive="active" [routerLink]="child.path">
+                            <clr-icon clrVerticalNavIcon *ngIf="child.icon" [attr.shape]="child.icon"></clr-icon>
+                            {{ child.title }}
+                        </a>
+                    </ng-container>
+                </clr-vertical-nav-group-children>
+            </clr-vertical-nav-group>
+        </ng-template>
     </ng-container>
-
 </clr-vertical-nav>

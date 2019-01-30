@@ -9,6 +9,7 @@ export interface SideNavChildItem {
 export interface SideNavItem {
     title: string;
     icon?: string;
+    path?: string;
     children?: SideNavChildItem[];
 }
 
