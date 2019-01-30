@@ -46,9 +46,6 @@
     },
     "hlc-home-app": {
       "tags": []
-    },
-    "hlc-home-app-e2e": {
-      "tags": []
     }
   }
 }
