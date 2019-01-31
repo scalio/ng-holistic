@@ -1,85 +1,104 @@
 <!-- TODO: cant compile this module with clr-common !!! -->
-<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+<div
+    class="alert alert-danger"
+    role="alert"
+    *ngIf="errorMessage">
     <div class="alert-items">
         <div class="alert-item static">
-            <div class="alert-icon-wrapper"><clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon></div>
+            <div class="alert-icon-wrapper">
+                <clr-icon
+                    class="alert-icon"
+                    shape="exclamation-circle"></clr-icon>
+            </div>
             {{ errorMessage }}
         </div>
     </div>
-    <button type="button" class="close" aria-label="Close">
-        <clr-icon aria-hidden="true" shape="close" (click)="errorMessage = undefined"></clr-icon>
+    <button
+        type="button"
+        class="close"
+        aria-label="Close">
+        <clr-icon
+            aria-hidden="true"
+            shape="close"
+            (click)="errorMessage = undefined"></clr-icon>
     </button>
 </div>
-<!--
-<hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
+<!-- <hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
     errorMessage
-}}</hlc-clr-alert>
--->
+}}</hlc-clr-alert> -->
 <clr-datagrid
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
     [clrDgSelected]="selectedRows"
-    (clrDgSelectedChange)="onSelectedRowsChanged($event)"
->
-    <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
+    (clrDgSelectedChange)="onSelectedRowsChanged($event)">
+    <clr-dg-action-bar>
+        <ng-content select="[action-bar]"></ng-content>
+    </clr-dg-action-bar>
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
-        [clrDgField]="getColSort(col)"
-    >
+        [clrDgField]="getColSort(col)">
         {{ col.title }}
     </clr-dg-column>
 
-    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
-        <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol"> {{ getAggrColValue(col) }} </clr-dg-cell>
+
+    <clr-dg-row
+        *ngIf="aggregateRow && rows?.length > 0"
+        class="aggregate-row"
+        [clrDgItem]="null">
+        <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol">{{ getAggrColValue(col) }}</clr-dg-cell>
     </clr-dg-row>
+
 
     <clr-dg-row
         *ngFor="let row of rows; trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
-        [clrDgItem]="row.id"
-    >
+        [clrDgItem]="row.id">
         <clr-dg-action-overflow *ngIf="getRowActions(row) as rowActions">
             <button
                 *ngFor="let action of rowActions; trackBy: trackByAction"
                 class="action-item"
-                (click)="onActionClick(action, row)"
-            >
+                (click)="onActionClick(action, row)">
                 {{ action.title }}
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol" (click)="onCellClick(cell, row)">
+
+        <clr-dg-cell
+            *ngFor="let cell of table?.cols; trackBy: trackByCol"
+            (click)="onCellClick(cell, row)">
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 
+
         <!-- Details -->
 
-        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details; else detailsCard">
-            <ng-container *ngFor="let detail of table.details.rows(row); trackBy: trackByDetailsRow">
+
+        <ng-container
+            ngProjectAs="clr-dg-row-detail"
+            *ngIf="table.details; else detailsCard">
+            <ng-container *ngFor="let detail of getDetailsRows(row); trackBy: trackByDetailsRow">
                 <clr-dg-row-detail *clrIfExpanded>
                     <!-- Details in columns -->
                     <ng-container *ngIf="table.details.cols; else detailsCard">
                         <clr-dg-cell *ngFor="let cell of table.cols; trackBy: trackByCol">
                             <ng-container *ngIf="getDetailsCol(cell.id) as detailsCell">
-                                <ng-container
-                                    *ngTemplateOutlet="rowCell; context: { cell: detailsCell, row: detail }"
-                                ></ng-container>
+                                <ng-container *ngTemplateOutlet="rowCell; context: { cell: detailsCell, row: detail }"></ng-container>
                             </ng-container>
                         </clr-dg-cell>
                     </ng-container>
                     <!-- Details in card -->
                     <ng-template #detailsCard>
-                        <ng-container
-                            *ngTemplateOutlet="rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"
-                        ></ng-container>
+                        <ng-container *ngTemplateOutlet="rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"></ng-container>
                     </ng-template>
                 </clr-dg-row-detail>
             </ng-container>
         </ng-container>
     </clr-dg-row>
 
+
     <!-- Paginator -->
+
 
     <clr-dg-footer *ngIf="paginator">
         <hlc-clr-select
@@ -90,33 +109,38 @@
             [disallowEmpty]="true"
             [value]="paginator.pageSize"
             (valueChange)="onPageSizeChanged($event)"
-            [items]="paginatorItems.items"
-        ></hlc-clr-select>
-        <div *ngIf="paginatorItems" class="footer-separator-line"></div>
-        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
+            [items]="paginatorItems.items"></hlc-clr-select>
+        <div
+            *ngIf="paginatorItems"
+            class="footer-separator-line"></div>
+        <span>
+            {{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}
+        </span>
         <clr-dg-pagination
             #pagination
             [clrDgPageSize]="paginator.pageSize"
             [clrDgPage]="paginator.pageIndex"
-            [clrDgTotalItems]="paginator.length"
-        >
+            [clrDgTotalItems]="paginator.length">
         </clr-dg-pagination>
     </clr-dg-footer>
     <clr-dg-footer *ngIf="!paginator"></clr-dg-footer>
 </clr-datagrid>
 
-<ng-template #rowCell let-cell="cell" let-row="row">
+
+<ng-template
+    #rowCell
+    let-cell="cell"
+    let-row="row">
     <!-- regular cell -->
     <ng-template [ngIf]="!cell.kind && !cell.customCell">
-        <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
+        <span [ngClass]="getCellClass(cell, row)">{{ getCellDisplayValue(cell, row) }}</span>
     </ng-template>
     <!-- custom cell -->
     <ng-template [ngIf]="cell.customCell">
         <ng-container
             [hlcTableCustomCellHost]="cell"
             [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
-            [hlcTableCustomCellHostRow]="row"
-        >
+            [hlcTableCustomCellHostRow]="row">
         </ng-container>
     </ng-template>
     <!-- map cell -->
@@ -124,8 +148,7 @@
         <ng-container
             [hlcTableCellHost]="cell"
             [hlcTableCellHostComponentType]="getCellComponentType(cell)"
-            [hlcTableCellHostRow]="row"
-        >
+            [hlcTableCellHostRow]="row">
         </ng-container>
     </ng-template>
 </ng-template>
