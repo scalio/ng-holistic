@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import {
     HlcClrDateComponent,
     HlcClrDateModule,
-    HlcClrTextAreaModule,
-    HlcClrTextModule,
+    HlcClrPairsListComponent,
+    HlcClrPairsListModule,
     HlcClrTextAreaComponent,
-    HlcClrTextComponent
+    HlcClrTextAreaModule,
+    HlcClrTextComponent,
+    HlcClrTextModule
 } from '@ng-holistic/clr-controls';
 import { SelectPageComponent } from './select-page/select-page.component';
 import { SelectPageModule } from './select-page/select-page.module';
@@ -27,6 +29,10 @@ export const routes: Routes = [
     {
         path: 'select',
         component: SelectPageComponent
+    },
+    {
+        path: 'pairs-list',
+        component: HlcClrPairsListComponent
     }
 ];
 
@@ -36,6 +42,7 @@ export const routes: Routes = [
         HlcClrTextModule,
         HlcClrTextAreaModule,
         HlcClrDateModule,
+        HlcClrPairsListModule,
         SelectPageModule
     ],
     exports: [RouterModule],
