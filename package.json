@@ -8,6 +8,7 @@
     "start:clr-common": "ng serve clr-common-sandbox --port=4300",
     "start:clr-forms": "ng serve clr-forms-sandbox --port=4301",
     "start:clr-list": "ng serve clr-list-sandbox --port=4302",
+    "build:hlc-home-app": "ng build hlc-home-app",
     "build:clr-common-sandbox-app": "ng build clr-common-sandbox",
     "build:clr-forms-sandbox-app": "ng build clr-forms-sandbox",
     "build:clr-list-sandbox-app": "ng build clr-list-sandbox",
