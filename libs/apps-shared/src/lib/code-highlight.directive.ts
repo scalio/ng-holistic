@@ -53,6 +53,8 @@ export class HlcCodeHighlightDirective implements AfterViewInit {
     set highlight(val: string) {
         if (val && val.trim() !== '') {
             this._highlight = val;
+            // const elClass = 'language-' + this._highlight;
+            // this.renderer.addClass(this._el.nativeElement, elClass);
         }
     }
 
