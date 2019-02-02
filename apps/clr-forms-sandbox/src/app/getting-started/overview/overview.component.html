@@ -1,30 +1,12 @@
 <h1>NG-HOLISTIC / FORMS</h1>
 
 Set of angular libraries which provide a way to relaiable build complex forms with minimal effort via declaration in js
-objects. Every field of the form defined as a simple js object via simple rules. Here example of the form with text input
-field.
+objects. Every field of the form defined as a simple js object via simple rules. Here example of the form with text
+input field.
 
-<div class="clr-row">
-    <div class="clr-col-9">
-        <h3>Code</h3>
-        <pre>
-    <code hlc-code-highlight="language-ts">
-        @Component(&#123;
-            selector: 'hlc-sample-form',
-            template: '&lt;hlc-clr-form [group]="group"&gt;&lt;/hlc-clr-form&gt;'
-        &#125;)
-        export class SampleFormComponent &#123;
-            readonly group: ClrFormLayouts.ClrFormLayout = &#123;
-                kind: 'fields',
-                fields: [&#123; id: 'name', kind: 'TextField', props: &#123; label: 'Name' &#125; &#125;]
-            &#125;
-        &#125;
-    </code>
-</pre>
-    </div>
-    <div class="clr-col-3">
-        <h3>Rendered UI</h3>
-        <page-sample-form></page-sample-form>
-    </div>
-</div>
+<hlc-code-render-example>
+    {{ pageSampleFormCode }}
+    <page-sample-form render></page-sample-form>
+</hlc-code-render-example>
+
 <button class="btn btn-primary" [routerLink]="['/getting-started/install-packages']">Next: Install Packages</button>

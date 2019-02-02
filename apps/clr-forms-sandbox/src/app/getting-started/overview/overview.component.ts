@@ -21,6 +21,19 @@ export class PageSampleFormComponent {
     imports: [HlcClrFormModule]
 })
 export class SampleFormModule {}
+
+const pageSampleFormCode = `
+    @Component({
+        selector: 'page-sample-form',
+        template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    })
+    export class PageSampleFormComponent {
+        readonly group: ClrFormLayouts.ClrFormLayout = {
+            kind: 'fields',
+            fields: [{ id: 'name', kind: 'TextField', props: { label: 'Name' } }]
+        };
+    }
+`;
 //
 
 @Component({
@@ -30,6 +43,8 @@ export class SampleFormModule {}
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OverviewComponent implements OnInit {
+    pageSampleFormCode = pageSampleFormCode;
+
     constructor() {}
 
     ngOnInit() {}

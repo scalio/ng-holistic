@@ -4,14 +4,23 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 import { isPlatformBrowser } from '@angular/common';
-import { AfterContentInit, Directive, ElementRef, Inject, Input, PLATFORM_ID, Renderer2 } from '@angular/core';
+import {
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    Inject,
+    Input,
+    PLATFORM_ID,
+    Renderer2,
+    ViewContainerRef
+} from '@angular/core';
 
 declare var Prism: any;
 
 // tslint:disable-next-line:directive-selector
 @Directive({ selector: 'code[hlc-code-highlight]' })
 // tslint:disable-next-line:directive-class-suffix
-export class HlcCodeHighlightDirective implements AfterContentInit {
+export class HlcCodeHighlightDirective implements AfterViewInit {
     private _highlight = '';
 
     // Had to use renderer because I wanted to add to existing classes on the code block
@@ -19,19 +28,24 @@ export class HlcCodeHighlightDirective implements AfterContentInit {
     constructor(
         private _el: ElementRef,
         private renderer: Renderer2,
-        @Inject(PLATFORM_ID) private platformId: Object
-    ) {
-        console.log('???', 'wtf');
-    }
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private readonly viewContainer: ViewContainerRef
+    ) {}
 
-    ngAfterContentInit(): void {
+    ngAfterViewInit(): void {
         this.redraw();
     }
 
     public redraw() {
         // Only run Prism in browser engines
         if (this._el && this._el.nativeElement && isPlatformBrowser(this.platformId)) {
-            Prism.highlightElement(this._el.nativeElement);
+            const html = Prism.highlight(
+                this.viewContainer.element.nativeElement.innerText,
+                Prism.languages[this._highlight]
+            );
+            const elClass = 'language-' + this._highlight;
+            this.renderer.addClass(this._el.nativeElement, elClass);
+            this.viewContainer.element.nativeElement.innerHTML = html;
         }
     }
 
@@ -39,7 +53,6 @@ export class HlcCodeHighlightDirective implements AfterContentInit {
     set highlight(val: string) {
         if (val && val.trim() !== '') {
             this._highlight = val;
-            this.renderer.addClass(this._el.nativeElement, this._highlight);
         }
     }
 
