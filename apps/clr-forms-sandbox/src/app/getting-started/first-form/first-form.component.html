@@ -44,14 +44,30 @@ input control.
     </tbody>
 </table>
 
-<h3>Set rendered component properties from Observable</h3>
+<h3>Set rendered component properties via Observable</h3>
 
 As demonstarted above every @Input() property on the rendered component could be initialzied from the property with the
 same name on 'props' field of the form definition object. There is another feature, it is possible to use not just
-scalar value for initialziation of the components properties but 'observale' stream, which case the component
-property will be updated every time when stream emits some value.
+scalar value for initialziation of the components properties but 'observale' stream, which case the component property
+will be updated every time when stream emits some value.
 
 <hlc-code-render-example>
     {{ pageSampleFormObservableProp }}
     <page-sample-obs-prop-form render></page-sample-obs-prop-form>
 </hlc-code-render-example>
+
+<h3>Handle Output events of the rendered component</h3>
+
+There is way to hook on the rendered component's @Ouptut() events. Output events is just an property with Observable
+value, so it is possible to subscribe on it and recieve updates when them happens. For this purpose create field on the
+'props' object (same as for Input ones) but value of the property must be a Subject object, this way you could subscribe
+on this stream and recieve updates about any required event.
+
+<hlc-code-render-example>
+    {{ pageSampleOutputForm }}
+    <page-sample-output-form render></page-sample-output-form>
+</hlc-code-render-example>
+
+In example above component associated with 'TextField' kind has 'valueChanged' output event, also 'valueChanged'
+property defined on 'props' object definition, with value of type Subject, hence this subject will recieve updates from
+component event.

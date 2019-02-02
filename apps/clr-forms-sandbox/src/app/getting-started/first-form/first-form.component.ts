@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, NgModule, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { ClrFormLayouts, HlcClrFormModule } from '@ng-holistic/clr-forms';
-import { interval } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { interval, Subject } from 'rxjs';
+import { map, take, takeUntil } from 'rxjs/operators';
 
 // SampleForm
 
@@ -98,6 +98,90 @@ export class PageSampleFormObsPropComponent {
 `;
 //
 
+// SampleOutputForm
+
+@Component({
+    // tslint:disable-next-line:component-selector
+    selector: 'page-sample-output-form',
+    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+})
+export class PageSampleOutputComponent implements OnDestroy {
+    readonly destroy$ = new Subject();
+    readonly subj = new Subject<string>();
+
+    readonly group: ClrFormLayouts.ClrFormLayout;
+
+    constructor() {
+        this.group = {
+            kind: 'fields',
+            fields: [
+                {
+                    id: 'name',
+                    kind: 'TextField',
+                    props: {
+                        label: 'Name',
+                        valueChanged: this.subj
+                    }
+                }
+            ]
+        };
+
+        this.subj.pipe(takeUntil(this.destroy$)).subscribe(val => {
+            console.log('Text value changed : ' + val);
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
+}
+
+@NgModule({
+    declarations: [PageSampleOutputComponent],
+    exports: [PageSampleOutputComponent],
+    imports: [HlcClrFormModule]
+})
+export class PageSampleOutputFormModule {}
+
+const pageSampleOutputForm = `
+@Component({
+    // tslint:disable-next-line:component-selector
+    selector: 'page-sample-output-form',
+    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+})
+export class PageSampleOutputComponent implements OnDestroy {
+    readonly destroy$ = new Subject();
+    readonly subj = new Subject<string>();
+
+    readonly group: ClrFormLayouts.ClrFormLayout;
+
+    constructor() {
+        this.group = {
+            kind: 'fields',
+            fields: [
+                {
+                    id: 'name',
+                    kind: 'TextField',
+                    props: {
+                        label: 'Name',
+                        valueChanged: this.subj
+                    }
+                }
+            ]
+        };
+
+        this.subj.pipe(takeUntil(this.destroy$)).subscribe(val => {
+            console.log('Text value changed : ' + val);
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
+}
+`;
+//
+
 @Component({
     selector: 'hlc-first-form',
     templateUrl: './first-form.component.html',
@@ -107,6 +191,7 @@ export class PageSampleFormObsPropComponent {
 export class FirstFormComponent implements OnInit {
     pageSampleFormCode = pageSampleFormCode;
     pageSampleFormObservableProp = pageSampleFormObservableProp;
+    pageSampleOutputForm = pageSampleOutputForm;
 
     constructor() {}
 
