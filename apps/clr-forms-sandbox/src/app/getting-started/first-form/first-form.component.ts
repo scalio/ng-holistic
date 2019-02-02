@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, NgModule, OnInit } from '@angular/core';
 import { ClrFormLayouts, HlcClrFormModule } from '@ng-holistic/clr-forms';
+import { interval } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 // SampleForm
 
@@ -36,6 +38,66 @@ const pageSampleFormCode = `
 `;
 //
 
+// SampleFormObservableProp
+
+@Component({
+    // tslint:disable-next-line:component-selector
+    selector: 'page-sample-obs-prop-form',
+    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+})
+export class PageSampleFormObsPropComponent {
+    readonly group: ClrFormLayouts.ClrFormLayout = {
+        kind: 'fields',
+        fields: [
+            {
+                id: 'name',
+                kind: 'TextField',
+                props: {
+                    label: 'Name',
+                    placeholder: interval(1000).pipe(
+                        take(100),
+                        map(m => `enter : ${m}`)
+                    )
+                }
+            }
+        ]
+    };
+}
+
+@NgModule({
+    declarations: [PageSampleFormObsPropComponent],
+    exports: [PageSampleFormObsPropComponent],
+    imports: [HlcClrFormModule]
+})
+export class PageSampleFormObsPropModule {}
+
+const pageSampleFormObservableProp = `
+@Component({
+    // tslint:disable-next-line:component-selector
+    selector: 'page-sample-obs-prop-form',
+    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+})
+export class PageSampleFormObsPropComponent {
+    readonly group: ClrFormLayouts.ClrFormLayout = {
+        kind: 'fields',
+        fields: [
+            {
+                id: 'name',
+                kind: 'TextField',
+                props: {
+                    label: 'Name',
+                    placeholder: interval(1000).pipe(
+                        take(100),
+                        map(m => 'enter : ' + m)
+                    )
+                }
+            }
+        ]
+    };
+}
+`;
+//
+
 @Component({
     selector: 'hlc-first-form',
     templateUrl: './first-form.component.html',
@@ -44,6 +106,7 @@ const pageSampleFormCode = `
 })
 export class FirstFormComponent implements OnInit {
     pageSampleFormCode = pageSampleFormCode;
+    pageSampleFormObservableProp = pageSampleFormObservableProp;
 
     constructor() {}
 

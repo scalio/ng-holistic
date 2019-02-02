@@ -43,3 +43,15 @@ input control.
         </tr>
     </tbody>
 </table>
+
+<h3>Set rendered component properties from Observable</h3>
+
+As demonstarted above every @Input() property on the rendered component could be initialzied from the property with the
+same name on 'props' field of the form definition object. There is another feature, it is possible to use not just
+scalar value for initialziation of the components properties but 'observale' stream, which case the component
+property will be updated every time when stream emits some value.
+
+<hlc-code-render-example>
+    {{ pageSampleFormObservableProp }}
+    <page-sample-obs-prop-form render></page-sample-obs-prop-form>
+</hlc-code-render-example>
