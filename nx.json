@@ -46,6 +46,9 @@
     },
     "hlc-home-app": {
       "tags": []
+    },
+    "apps-shared": {
+      "tags": []
     }
   }
 }
