@@ -1,16 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'hlc-wellcome',
-  templateUrl: './wellcome.component.html',
-  styleUrls: ['./wellcome.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'hlc-wellcome',
+    templateUrl: './wellcome.component.html',
+    styleUrls: ['./wellcome.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WellcomeComponent implements OnInit {
 
-  constructor() { }
+    readonly appUrls = environment.appUrls;
 
-  ngOnInit() {
-  }
+    constructor() {}
 
+    ngOnInit() {}
 }

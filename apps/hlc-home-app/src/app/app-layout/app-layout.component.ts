@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 import SIDE_NAV_ITEMS from './side-nav-items';
 
 @Component({
@@ -9,7 +9,23 @@ import SIDE_NAV_ITEMS from './side-nav-items';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppLayoutComponent implements OnInit {
-    sideNavItems = SIDE_NAV_ITEMS;
+    readonly sideNavItems = SIDE_NAV_ITEMS;
+    readonly navLinks = [
+        {
+            title: 'Forms',
+            href: environment.appUrls.forms
+        },
+        {
+            title: 'Lists',
+            href: environment.appUrls.forms
+        },
+        {
+            title: 'Common',
+            href: environment.appUrls.common
+        }
+    ];
+    readonly titleHref = environment.appUrls.home;
+
     constructor() {}
 
     ngOnInit() {}

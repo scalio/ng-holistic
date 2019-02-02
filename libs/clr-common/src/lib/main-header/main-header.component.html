@@ -1,19 +1,17 @@
 <header class="header-6">
     <div class="branding">
-        <a
-            class="nav-link"
-            [routerLink]="['/']">
-            <img
-                *ngIf="logo"
-                class="img-responsive"
-                [src]="logo">
-            <span
-                *ngIf="title"
-                class="title">
-                {{title}}
-            </span>
+        <a class="nav-link" [href]="titleHref || 'javascript://;'">
+            <img *ngIf="logo" class="img-responsive" [src]="logo" />
+            <span *ngIf="title" class="title"> {{ title }} </span>
         </a>
-
     </div>
-
+    <div class="header-nav">
+        <a
+            *ngFor="let navLink of navLinks; trackBy: trackByLink; let index = index"
+            [href]="navLink.href || 'javascript://;'"
+            class="nav-link nav-text"
+            [class.active]="activeNavLinkIndex === index"
+            >{{ navLink.title }}</a
+        >
+    </div>
 </header>
