@@ -1,1 +1,45 @@
-<p>first-form works!</p>
+<h1>Create basic form</h1>
+
+<hlc-code-render-example>
+    {{ pageSampleFormCode }}
+    <page-sample-form render></page-sample-form>
+</hlc-code-render-example>
+
+Here we create form with single text input. There is three most important properties of the field which define generated
+input control.
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>id</td>
+            <td class="left">
+                Identifier of the generated input control, id plays crucial role in form's binding, this property will
+                be automatically created on formGroup and input's value binding will be sync; all changes on the input
+                control will be reflected on the formGroup and vice versa, if generated control implements
+                <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank"> ControlValueAccessor </a>
+                interface.
+            </td>
+        </tr>
+        <tr>
+            <td>kind</td>
+            <td class="left">
+                Type of the generated control, there is number of the <a href="#">most common controls</a> already
+                included in the library, you could <a href="#">add any custom component</a> to be generated on the form.
+            </td>
+        </tr>
+        <tr>
+            <td>props</td>
+            <td class="left">
+                Contains set of values for generated component's Input properties. In the example above 'placeholder'
+                property exists on the component associated with TextField kind, so the component 'placeholder' property
+                will be initialized from value of the 'props.placeholder' field. 'label' property exists on the
+                <a href="#">control wrapper</a>, so it also will be initialzied from here.
+            </td>
+        </tr>
+    </tbody>
+</table>

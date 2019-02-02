@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FirstFormComponent } from './first-form/first-form.component';
+import { FirstFormModule } from './first-form/first-form.module';
 import { InstallPackagesComponent } from './install-packages/install-packages.component';
 import { InstallPackagesModule } from './install-packages/install-packages.module';
 import { OverviewComponent } from './overview/overview.component';
@@ -22,7 +23,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), OverviewModule, InstallPackagesModule],
+    imports: [RouterModule.forChild(routes), OverviewModule, InstallPackagesModule, FirstFormModule],
     exports: [RouterModule],
     entryComponents: []
 })
