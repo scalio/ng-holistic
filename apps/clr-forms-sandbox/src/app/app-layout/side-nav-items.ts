@@ -2,6 +2,24 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
+        title: 'Getting started',
+        icon: 'home',
+        children: [
+            {
+                title: 'Overview',
+                path: ['/getting-started', 'overview']
+            },
+            {
+                title: 'Install packages',
+                path: ['/getting-started', 'install-packages']
+            },
+            {
+                title: 'Create first form',
+                path: ['/getting-started', 'first-form']
+            }
+        ]
+    },
+    {
         title: 'Clr Forms',
         icon: 'align-left-text',
         children: [

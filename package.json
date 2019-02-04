@@ -87,6 +87,7 @@
     "date-fns": "^2.0.0-alpha.25",
     "lib": "^3.0.2",
     "ngx-file-drop": "^5.0.0",
+    "prismjs": "^1.15.0",
     "ramda": "^0.26.1",
     "rxjs": "^6.3.3",
     "typescript-memoize": "^1.0.0-alpha.3",

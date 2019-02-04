@@ -25,6 +25,9 @@
       "@text-mask-core": [
         "text-mask-core/text-mask-core"
       ],
+      "@apps/shared": [
+        "libs/apps-shared/src/index.ts"
+      ],
       "@ng-holistic/forms": [
         "libs/forms/src/index.ts"
       ],
@@ -48,6 +51,9 @@
       ],
       "@ng-holistic/clr-wizard": [
         "libs/clr-wizard/src/index.ts"
+      ],
+      "@ng-holistic/apps-shared": [
+        "libs/apps-shared/src/index.ts"
       ]
     }
   },
