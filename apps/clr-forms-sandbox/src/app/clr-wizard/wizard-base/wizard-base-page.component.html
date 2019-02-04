@@ -1,4 +1,5 @@
 <hlc-clr-wizard
+    #wizard
     [pages]="pages"
     title="Create customer"
     [open]="true"
@@ -6,6 +7,10 @@
     [isInline]="true"
     (formsChanged)="onFormsChanged($event)"
 >
+    <ng-template hlcCustomField="adminInfoCustomField">
+        <hlc-clr-alert> Admin will be created: {{ wizard.formsValues?.adminEmailPage?.adminEmail }} </hlc-clr-alert>
+    </ng-template>
+
     <ng-template hlcClrWizardCustomPage="adminExistsHintPage" let-vals>
         <hlc-clr-alert [canClose]="false">
             Admin with email {{ vals.adminEmailPage?.adminEmail }} already registered in the system it will be used as
@@ -14,8 +19,7 @@
     </ng-template>
     <ng-template hlcClrWizardCustomPage="finishPage" let-vals let-context="context">
         <hlc-clr-alert [canClose]="false" alertType="success">
-            Company &nbsp;<a [href]="context.companyId">{{ context.companyId }}</a> &nbsp; sucessfully
-            created.
+            Company &nbsp;<a [href]="context.companyId">{{ context.companyId }}</a> &nbsp; sucessfully created.
         </hlc-clr-alert>
     </ng-template>
 </hlc-clr-wizard>

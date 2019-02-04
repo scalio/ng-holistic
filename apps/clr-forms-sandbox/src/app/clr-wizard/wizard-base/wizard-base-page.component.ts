@@ -67,6 +67,10 @@ const pages = (
             navTitle: 'Admin Info',
             fields: [
                 {
+                    id: 'adminInfoCustomField',
+                    kind: 'CustomField'
+                },
+                {
                     id: 'firstName',
                     kind: 'TextField',
                     label: 'First Name',

@@ -24,6 +24,7 @@ import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 import { HlcClrWizardCustomPageDirective } from './wizard-custom-page.directive';
 import { defaultWizardConfig, HLC_CLR_WIZARD_CONFIG, WizardConfig } from './wizard.config';
+import { CustomFieldDirective } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-clr-wizard',
@@ -52,6 +53,7 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy {
     @ViewChild('wizard') wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<HlcClrFormComponent>;
     @ContentChildren(HlcClrWizardCustomPageDirective) customPages: QueryList<HlcClrWizardCustomPageDirective>;
+    @ContentChildren(CustomFieldDirective) customFields: QueryList<CustomFieldDirective>;
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -162,7 +164,7 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy {
         return form ? form.form.formGroup.valid : true;
     }
 
-    private get formsValues() {
+    get formsValues() {
         return this.getFormsPairs(form => form.form.formGroup.value);
     }
 
