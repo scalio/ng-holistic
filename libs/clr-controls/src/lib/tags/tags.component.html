@@ -1,0 +1,9 @@
+<hlc-clr-tags-list [items]="value" (remove)="onRemove($event)"></hlc-clr-tags-list>
+<hlc-clr-typeahead
+    #typeahead
+    [config]="_config"
+    placeholder="Type to add a tag..."
+    [allowAddNew]="allowAddNew"
+    (addNew)="onAddNew($event)"
+    (valueChange)="onChange($event)"
+></hlc-clr-typeahead>

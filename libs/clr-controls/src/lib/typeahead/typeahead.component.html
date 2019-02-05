@@ -1,0 +1,21 @@
+<input
+    #input
+    type="text"
+    [placeholder]="placeholder || ''"
+    [hlcTypeahead]="search"
+    [value]="value"
+    [resultTemplate]="result"
+    [resultFormatter]="getLabel"
+    [allowAddNew]="allowAddNew"
+    (valueChange)="onChange($event)"
+    (addNew)="addNew.emit($event)">
+<ng-template
+    #result
+    let-item>
+    <span [innerHtml]="getLabel(item)"></span>
+    <div
+        class="description"
+        *ngIf="getDescription(item)">
+        {{getDescription(item)}}
+    </div>
+</ng-template>
