@@ -88,6 +88,14 @@ export default [
                 path: ['/clr-controls', 'select']
             },
             {
+                title: 'Typeahead',
+                path: ['/clr-controls', 'typeahead']
+            },
+            {
+                title: 'Tags',
+                path: ['/clr-controls', 'tags']
+            },
+            {
                 title: 'Pairs List',
                 path: ['/clr-controls', 'pairs-list']
             }

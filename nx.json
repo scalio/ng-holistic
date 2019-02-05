@@ -49,6 +49,9 @@
     },
     "apps-shared": {
       "tags": []
+    },
+    "typeahead": {
+      "tags": []
     }
   }
 }

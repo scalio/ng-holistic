@@ -814,6 +814,41 @@
           }
         }
       }
+    },
+    "typeahead": {
+      "root": "libs/typeahead",
+      "sourceRoot": "libs/typeahead/src",
+      "projectType": "library",
+      "prefix": "ng-holistic",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/typeahead/tsconfig.lib.json",
+            "project": "libs/typeahead/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/typeahead/src/test.ts",
+            "tsConfig": "libs/typeahead/tsconfig.spec.json",
+            "karmaConfig": "libs/typeahead/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/typeahead/tsconfig.lib.json",
+              "libs/typeahead/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

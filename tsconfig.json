@@ -54,6 +54,9 @@
       ],
       "@ng-holistic/apps-shared": [
         "libs/apps-shared/src/index.ts"
+      ],
+      "@ng-holistic/typeahead": [
+        "libs/typeahead/src/index.ts"
       ]
     }
   },
@@ -61,7 +64,6 @@
     "node_modules",
     "dist",
     "tmp",
-    "src/test.ts",
-    "**/*.spec.ts"
+    "src/test.ts"
   ]
 }

@@ -12,6 +12,8 @@ import { PairsListPageComponent } from './pairs-list/pairs-list-page.component';
 import { PairsListPageModule } from './pairs-list/pairs-list-page.module';
 import { SelectPageComponent } from './select-page/select-page.component';
 import { SelectPageModule } from './select-page/select-page.module';
+import { TypeaheadPageComponent } from './tyepahead-page/typeahead-page.component';
+import { TypeaheadPageModule } from './tyepahead-page/typeahead-page.module';
 
 export const routes: Routes = [
     {
@@ -33,6 +35,14 @@ export const routes: Routes = [
     {
         path: 'pairs-list',
         component: PairsListPageComponent
+    },
+    {
+        path: 'typeahead',
+        component: TypeaheadPageComponent
+    },
+    {
+        path: 'tags',
+        component: TypeaheadPageComponent
     }
 ];
 
@@ -43,7 +53,8 @@ export const routes: Routes = [
         HlcClrTextAreaModule,
         HlcClrDateModule,
         PairsListPageModule,
-        SelectPageModule
+        SelectPageModule,
+        TypeaheadPageModule
     ],
     exports: [RouterModule],
     entryComponents: []
