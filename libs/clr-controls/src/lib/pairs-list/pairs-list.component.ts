@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
-import { DictMapperService } from '../list-items.config';
+import { DictMapperService, DictMapperSetterService } from '../list-items.config';
 
 @Component({
     selector: 'hlc-clr-pairs-list',
@@ -17,38 +17,52 @@ import { DictMapperService } from '../list-items.config';
 })
 export class HlcClrPairsListComponent implements OnInit, ControlValueAccessor {
     @Input()
-    items: any[];
-    @Input()
-    value: string[] | undefined;
+    value: any[] | undefined;
     @Input()
     readonly: boolean;
     @Output()
     valueChange = new EventEmitter<string[] | undefined>();
     propagateChange = (_: any) => {};
 
-    constructor(private readonly dictMapper: DictMapperService) {}
+    constructor(
+        private readonly dictMapper: DictMapperService,
+        private readonly dictMapperSetter: DictMapperSetterService
+    ) {}
 
     ngOnInit() {}
 
-    onChange(item: any) {
-        const key = this.mapKey(item);
-        const index = (this.value || []).indexOf(key);
-        if (!this.value) {
-            this.value = [];
-        }
-        if (index === -1) {
-            this.value = R.insert(0, key, this.value);
-        } else {
-            this.value = R.remove(index, 1, this.value);
-        }
-
+    onChangeKey(itemIndex: number, key: string) {
+        const value = this.value || [];
+        // this.dictMapperSetter.setKey(value[itemIndex], key);
+        this.value = R.update(itemIndex, this.dictMapperSetter.setKey(value[itemIndex], key), value);
         this.valueChange.emit(this.value);
         this.propagateChange(this.value);
     }
 
-    isChecked(item: any) {
-        const itemKey = this.mapKey(item);
-        return this.value && R.contains(itemKey, this.value);
+    onChangeValue(itemIndex: number, label: string) {
+        const value = this.value || [];
+        // this.dictMapperSetter.setLabel(value[itemIndex], label);
+        this.value = R.update(itemIndex, this.dictMapperSetter.setLabel(value[itemIndex], label), value);
+        this.valueChange.emit(this.value);
+        this.propagateChange(this.value);
+    }
+
+    onRemove(itemIndex: number) {
+        const value = this.value || [];
+        this.value = R.remove(itemIndex, 1, value);
+        this.valueChange.emit(this.value);
+        this.propagateChange(this.value);
+    }
+
+    onAdd() {
+        const value = this.value || [];
+        const item = R.pipe(
+            (i: any) => this.dictMapperSetter.setKey(i, ''),
+            (i: any) => this.dictMapperSetter.setLabel(i, '')
+        )({});
+        this.value = R.insert(0, item, value);
+        this.valueChange.emit(this.value);
+        this.propagateChange(this.value);
     }
 
     mapKey(obj: any) {
@@ -59,8 +73,8 @@ export class HlcClrPairsListComponent implements OnInit, ControlValueAccessor {
         return this.dictMapper.getLabel(obj);
     }
 
-    trackBy = (_: number, obj: any) => {
-        return this.mapKey(obj);
+    trackBy = (i: number) => {
+        return i;
     };
 
     //

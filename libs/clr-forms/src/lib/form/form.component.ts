@@ -38,8 +38,6 @@ export class HlcClrFormComponent {
     @Input('customFields') inputCustomFields: CustomFieldDirective[];
 
     get customFields() {
-        const res = [...this.contentCustomFields.toArray(), ...(this.inputCustomFields || [])];
-        console.log('+++', res);
-        return res;
+        return [...this.contentCustomFields.toArray(), ...(this.inputCustomFields || [])];
     }
 }

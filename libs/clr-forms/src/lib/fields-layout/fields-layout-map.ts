@@ -11,6 +11,12 @@ import {
     HlcClrMaskModule,
     HlcClrOptionsComponent,
     HlcClrOptionsModule,
+    HlcClrPairsListComponent,
+    HlcClrPairsListModule,
+    HlcClrPasswordComponent,
+    HlcClrPasswordModule,
+    HlcClrPhoneComponent,
+    HlcClrPhoneModule,
     HlcClrSelectComponent,
     HlcClrSelectModule,
     HlcClrTextAreaComponent,
@@ -18,11 +24,7 @@ import {
     HlcClrTextComponent,
     HlcClrTextModule,
     HlcClrToggleComponent,
-    HlcClrToggleModule,
-    HlcClrPhoneComponent,
-    HlcClrPhoneModule,
-    HlcClrPasswordModule,
-    HlcClrPasswordComponent
+    HlcClrToggleModule
 } from '@ng-holistic/clr-controls';
 
 /**
@@ -40,7 +42,8 @@ export const clrFieldsLayoutMap = {
     DateRangeField: HlcClrDateRangeComponent,
     MaskField: HlcClrMaskComponent,
     PhoneField: HlcClrPhoneComponent,
-    PasswordField: HlcClrPasswordComponent
+    PasswordField: HlcClrPasswordComponent,
+    PairsListField: HlcClrPairsListComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -55,7 +58,8 @@ export const clrFieldsLayoutComponents = [
     HlcClrDateRangeComponent,
     HlcClrMaskComponent,
     HlcClrPhoneComponent,
-    HlcClrPasswordComponent
+    HlcClrPasswordComponent,
+    HlcClrPairsListComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -70,5 +74,6 @@ export const clrFieldsLayoutModules = [
     HlcClrDateRangeModule,
     HlcClrMaskModule,
     HlcClrPhoneModule,
-    HlcClrPasswordModule
+    HlcClrPasswordModule,
+    HlcClrPairsListModule
 ];

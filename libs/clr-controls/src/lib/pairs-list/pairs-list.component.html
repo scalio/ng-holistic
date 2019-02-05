@@ -1,4 +1,14 @@
-<clr-input-container *ngFor="let item of items; trackBy: trackBy; let index = index">
-    <input type="text" clrInput [value]="mapKey(item)" (change)="onChange(item)" /> &nbsp;
-    <input type="text" clrInput [value]="mapLabel(item)" (change)="onChange(item)" />
-</clr-input-container>
+<button type="button" class="btn btn-icon btn-sm btn-secondary" (click)="onAdd()">
+    <clr-icon shape="plus"></clr-icon>Add Item
+</button>
+<div class="clr-row" *ngFor="let item of value; trackBy: trackBy; let index = index">
+    <clr-input-container>
+        <input type="text" clrInput [value]="mapKey(item)" (keyup)="onChangeKey(index, $event.target.value)" />
+    </clr-input-container>
+    <clr-input-container>
+        <input type="text" clrInput [value]="mapLabel(item)" (keyup)="onChangeValue(index, $event.target.value)" />
+    </clr-input-container>
+    <button type="button" class="btn btn-icon btn-sm btn-link" style="margin-top: 1rem" (click)="onRemove(index)">
+        <clr-icon shape="times"></clr-icon>
+    </button>
+</div>

@@ -107,6 +107,8 @@ export namespace ClrFormFields {
 
     export interface PasswordField extends BaseFieldP<'PasswordField'> {}
 
+    export interface PairsListField extends BaseFieldP<'PairsListField'> {}
+
     export type FormField =
         | TextField
         | SelectField
@@ -120,5 +122,6 @@ export namespace ClrFormFields {
         | FormFields.CustomFormField
         | MaskField
         | PhoneField
-        | PasswordField;
+        | PasswordField
+        | PairsListField;
 }
