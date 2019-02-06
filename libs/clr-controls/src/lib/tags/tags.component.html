@@ -1,8 +1,8 @@
-<hlc-clr-tags-list [items]="value" (remove)="onRemove($event)"></hlc-clr-tags-list>
+<hlc-clr-tags-list [items]="showSorted ? sortedValue : value" (remove)="onRemove($event)"></hlc-clr-tags-list>
 <hlc-clr-typeahead
     #typeahead
     [config]="_config"
-    placeholder="Type to add a tag..."
+    [placeholder]="placeholder"
     [allowAddNew]="allowAddNew"
     (addNew)="onAddNew($event)"
     (valueChange)="onChange($event)"

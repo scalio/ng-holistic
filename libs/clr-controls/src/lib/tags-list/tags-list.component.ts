@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DictMapper } from '../list-items.config';
+import { DictMapperService } from '../list-items.config';
 
 @Component({
     selector: 'hlc-clr-tags-list',
@@ -10,7 +10,7 @@ export class HlcClrTagsListComponent implements OnInit {
     @Input() items: any[];
     @Output() remove = new EventEmitter<any>();
 
-    constructor(private readonly dictMapper: DictMapper) {}
+    constructor(private readonly dictMapper: DictMapperService) {}
 
     ngOnInit() {}
 

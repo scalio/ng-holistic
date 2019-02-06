@@ -1,4 +1,4 @@
-import { Mask } from '@ng-holistic/clr-controls';
+import { Mask, TypeaheadConfig } from '@ng-holistic/clr-controls';
 import { FormFields } from '@ng-holistic/forms';
 import { Subject } from 'rxjs';
 
@@ -107,7 +107,33 @@ export namespace ClrFormFields {
 
     export interface PasswordField extends BaseFieldP<'PasswordField'> {}
 
-    export interface PairsListField extends BaseFieldP<'PairsListField'> {}
+    export interface PairsListField extends BaseField<'PairsListField'> {}
+
+    export interface TypeaheadField
+        extends BaseFieldP<
+            'TypeaheadField',
+            any,
+            {
+                config?: FormFields.FormFieldProp<TypeaheadConfig>;
+                readonly?: FormFields.FormFieldProp<boolean>;
+                allowAddNew?: FormFields.FormFieldProp<boolean>;
+                valueChange?: Subject<any>;
+                addNew?: Subject<string>;
+            }
+        > {}
+
+    export interface TagsField
+        extends BaseFieldP<
+            'TagsField',
+            any[],
+            {
+                config?: FormFields.FormFieldProp<TypeaheadConfig>;
+                readonly?: FormFields.FormFieldProp<boolean>;
+                allowAddNew?: FormFields.FormFieldProp<boolean>;
+                valueChange?: Subject<any>;
+                addNew?: Subject<string>;
+            }
+        > {}
 
     export type FormField =
         | TextField
@@ -123,5 +149,7 @@ export namespace ClrFormFields {
         | MaskField
         | PhoneField
         | PasswordField
-        | PairsListField;
+        | PairsListField
+        | TypeaheadField
+        | TagsField;
 }

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { SearchArg } from '@ng-holistic/typeahead';
+import { Observable } from 'rxjs';
+import { TypeaheadMapper, TypeaheadMapperService } from './typeahead-mapper.service';
 
 export interface TypeaheadObjectMap {
     key: string;
@@ -11,7 +12,7 @@ export interface TypeaheadObjectMap {
 
 export interface TypeaheadConfig {
     search: (text: Observable<SearchArg>) => Observable<any[]>;
-    mapObj?: TypeaheadObjectMap;
+    mapper?: TypeaheadMapper;
 }
 
 @Component({
@@ -22,9 +23,9 @@ export interface TypeaheadConfig {
         {
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => HlcClrTypeaheadComponent),
-            multi: true,
-        },
-    ],
+            multi: true
+        }
+    ]
 })
 export class HlcClrTypeaheadComponent implements OnInit, ControlValueAccessor {
     @Input()
@@ -49,22 +50,24 @@ export class HlcClrTypeaheadComponent implements OnInit, ControlValueAccessor {
 
     propagateChange = (_: any) => {};
 
-    constructor() {}
+    constructor(private readonly mapper: TypeaheadMapperService) {}
 
     ngOnInit() {}
 
     getKey(obj: any) {
-        return this.config && this.config.mapObj ? obj[this.config.mapObj.key] : obj;
+        return this.config && this.config.mapper ? this.config.mapper.getKey(obj) : this.mapper.getKey(obj);
     }
 
     getLabel = (obj: any) => {
-        return this.config && this.config.mapObj ? obj[this.config.mapObj.label] : obj;
+        return this.config && this.config.mapper ? obj[this.config.mapper.getLabel(obj)] : this.mapper.getLabel(obj);
     };
 
     getDescription(obj: any) {
-        return (
-            this.config && this.config.mapObj && this.config.mapObj.description && obj[this.config.mapObj.description]
-        );
+        return this.config && this.config.mapper && this.config.mapper.getDescription
+            ? this.config.mapper.getDescription(obj)
+            : this.mapper.getDescription
+            ? this.mapper.getDescription(obj)
+            : null;
     }
 
     get search() {

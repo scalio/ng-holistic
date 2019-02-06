@@ -39,3 +39,4 @@ export * from './lib/toggle/toggle.component';
 export * from './lib/toggle/toggle.module';
 export * from './lib/typeahead/typeahead.component';
 export * from './lib/typeahead/typeahead.module';
+export * from './lib/typeahead/typeahead-mapper.service';

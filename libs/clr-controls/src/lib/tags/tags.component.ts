@@ -1,8 +1,9 @@
 import { Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { cleanupTypeaheadValue } from '@ng-holistic/typeahead';
+import { cleanupTypeaheadValue, SearchArg } from '@ng-holistic/typeahead';
+import * as R from 'ramda';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { flatMap, withLatestFrom } from 'rxjs/operators';
+import { withLatestFrom } from 'rxjs/operators';
 import { DictMapperService } from '../list-items.config';
 import { HlcClrTypeaheadComponent, TypeaheadConfig } from '../typeahead/typeahead.component';
 
@@ -33,6 +34,10 @@ export class HlcClrTagsComponent implements ControlValueAccessor {
     readonly: boolean | undefined;
     @Input()
     allowAddNew: boolean;
+    @Input()
+    placeholder: string | undefined;
+    @Input()
+    showSorted: boolean | ((item: any) => R.Ord) = true;
 
     @Output()
     addNew = new EventEmitter<string>();
@@ -44,11 +49,10 @@ export class HlcClrTagsComponent implements ControlValueAccessor {
 
     constructor(private readonly dictMapper: DictMapperService) {}
 
-    private search = (term$: Observable<string>) => {
-        return term$.pipe(
-            flatMap((this.config as TypeaheadConfig).search) as any,
-            withLatestFrom(this.value$, (items, val) => this.filterItems(val || [])(items as any))
-        );
+    private search = (args$: Observable<SearchArg>) => {
+        return (this.config as TypeaheadConfig)
+            .search(args$)
+            .pipe(withLatestFrom(this.value$, (items, val) => this.filterItems(val || [])(items as any)));
     };
 
     get _config() {
@@ -78,6 +82,12 @@ export class HlcClrTagsComponent implements ControlValueAccessor {
         this.typeahead.resetValue();
         this.propagateChange(this.value);
         this.addNew.emit(text);
+    }
+
+    //
+    get sortedValue() {
+        const sort = R.is(Function, this.showSorted) ? this.showSorted : this.dictMapper.getLabel.bind(this.dictMapper);
+        return this.value && R.sortBy(sort, this.value);
     }
     //
 

@@ -1,19 +1,17 @@
-:host {
-    ::ng-deep .hlc-typeahead-result-item.active {
-        background-color: #1e90ff;
-        color: white;
-    }
+::ng-deep .hlc-typeahead-result-item.active {
+    background-color: #1e90ff;
+    color: white;
+}
 
-    ::ng-deep .hlc-typeahead-result-item em {
-        font-weight: bold;
-    }
+::ng-deep .hlc-typeahead-result-item em {
+    font-weight: bold;
+}
 
-    ::ng-deep .hlc-typeahead-results-container {
-        background-color: white;
-    }
+::ng-deep .hlc-typeahead-results-container {
+    background-color: white;
+}
 
-    .description {
-        color: darkgray;
-        font-size: x-small;
-    }
+.description {
+    color: darkgray;
+    font-size: x-small;
 }

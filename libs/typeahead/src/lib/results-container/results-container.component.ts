@@ -1,15 +1,15 @@
-import {
-    Component,
-    Input,
-    ViewChildren,
-    QueryList,
-    AfterViewInit,
-    Output,
-    EventEmitter,
-    TemplateRef,
-} from '@angular/core';
-import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
+import {
+    AfterViewInit,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    QueryList,
+    TemplateRef,
+    ViewChildren
+} from '@angular/core';
 import { HlcResultItemComponent } from '../result-item/result-item.component';
 
 export type ResultFormatter = (item: any) => string;
@@ -27,7 +27,7 @@ export interface ContainerProperties {
 @Component({
     selector: 'hlc-results-container',
     templateUrl: './results-container.component.html',
-    styleUrls: ['./results-container.component.scss'],
+    styleUrls: ['./results-container.component.scss']
 })
 export class HlcResultsContentComponent implements AfterViewInit, ContainerProperties {
     keyManager: ActiveDescendantKeyManager<HlcResultItemComponent>;
@@ -104,7 +104,9 @@ export class HlcResultsContentComponent implements AfterViewInit, ContainerPrope
     }
 
     setActiveItem(index: number) {
-        this.keyManager.setActiveItem(index);
+        if (index !== -1) {
+            this.keyManager.setActiveItem(index);
+        }
     }
 
     onSelect(item: any) {
