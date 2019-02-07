@@ -40,4 +40,8 @@ export class HlcClrFormComponent {
     get customFields() {
         return [...this.contentCustomFields.toArray(), ...(this.inputCustomFields || [])];
     }
+
+    get formGroup() {
+        return this.form && this.form.formGroup;
+    }
 }

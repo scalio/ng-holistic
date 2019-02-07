@@ -16,6 +16,10 @@ export default [
             {
                 title: 'Create first form',
                 path: ['/getting-started', 'first-form']
+            },
+            {
+                title: 'Form values',
+                path: ['/getting-started', 'form-values']
             }
         ]
     },
