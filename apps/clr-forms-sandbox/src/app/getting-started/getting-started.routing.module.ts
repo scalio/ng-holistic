@@ -8,6 +8,8 @@ import { InstallPackagesModule } from './install-packages/install-packages.modul
 import { OverviewComponent } from './overview/overview.component';
 import { OverviewModule } from './overview/overview.module';
 import { FormValuesPageComponent } from './form-values-page/form-values-page.component';
+import { FormFieldPropsModule } from './form-field-props/form-field-props.module';
+import { FormFieldPropsComponent } from './form-field-props/form-field-props.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +27,10 @@ export const routes: Routes = [
     {
         path: 'form-values',
         component: FormValuesPageComponent
+    },
+    {
+        path: 'form-field-props',
+        component: FormFieldPropsComponent
     }
 ];
 
@@ -34,7 +40,8 @@ export const routes: Routes = [
         OverviewModule,
         InstallPackagesModule,
         FirstFormModule,
-        FormValuesPageModule
+        FormValuesPageModule,
+        FormFieldPropsModule
     ],
     exports: [RouterModule],
     entryComponents: []

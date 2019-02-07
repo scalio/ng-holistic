@@ -20,6 +20,10 @@ export default [
             {
                 title: 'Form values',
                 path: ['/getting-started', 'form-values']
+            },
+            {
+                title: 'Form field',
+                path: ['/getting-started', 'form-field-props']
             }
         ]
     },
