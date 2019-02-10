@@ -22,6 +22,10 @@ export default [
             {
                 title: 'Image Overlay',
                 path: ['/images', 'img-overlay']
+            },
+            {
+                title: 'Image Preview',
+                path: ['/images', 'img-preview']
             }
         ]
     }

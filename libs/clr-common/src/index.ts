@@ -6,6 +6,8 @@ export * from './lib/aside/aside.directive';
 export * from './lib/aside/aside.module';
 export * from './lib/aside/aside.service';
 export * from './lib/common.types';
+export * from './lib/file-preview-overlay/file-preview-overlay.module';
+export * from './lib/file-preview-overlay/file-preview-overlay.service';
 export * from './lib/form-error/form-error.component';
 export * from './lib/form-error/form-error.module';
 export * from './lib/form-footer/form-footer.component';
