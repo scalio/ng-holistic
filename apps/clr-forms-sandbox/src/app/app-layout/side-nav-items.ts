@@ -24,7 +24,31 @@ export default [
             {
                 title: 'Form field',
                 path: ['/getting-started', 'form-field-props']
-            }
+            },
+            {
+                title: 'Form field wrapper',
+                path: ['/getting-started', 'form-field-wrapper']
+            },
+            {
+                title: 'Form layout',
+                path: ['/getting-started', 'form-layout']
+            },
+            {
+                title: 'Custom form field',
+                path: ['/getting-started', 'custom-form-field']
+            },
+            {
+                title: 'Custom form field warpper',
+                path: ['/getting-started', 'custom-form-field-wrapper']
+            },
+            {
+                title: 'Custom layout',
+                path: ['/getting-started', 'custom-layout']
+            },
+            {
+                title: 'Inline custom component',
+                path: ['/getting-started', 'custom-inline-component']
+            },
         ]
     },
     {

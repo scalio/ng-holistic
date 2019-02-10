@@ -1,0 +1,21 @@
+<h1>Form field wrapper</h1>
+
+Usually when control is placed on form it supposed to have some accompanied features
+which doesn't belong to it directly but which create context of that control. The inextricate example of such context is
+labels and validation errors. So when form control is rendered it will be placed inside container component. Default
+'ng-holistic' container component has following features.
+
+<ul>
+    <li>Label</li>
+    <li>Required field hint</li>
+    <li>Errors hint</li>
+</ul>
+
+See source of the defualt wrapper <a href="" target="_blank">here</a>.
+<br>
+Any input / output property of the wrapper component could be initialized by the same rules as a form field
+control <a routerLink="/getting-started/form-field-props">see 'props' field of the definition object</a>
+
+<h3>Required fields hint</h3>
+
+When control has 'required' validator on it we could hint user that this field is required see
