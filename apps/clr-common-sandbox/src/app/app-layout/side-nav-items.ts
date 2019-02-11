@@ -26,6 +26,10 @@ export default [
             {
                 title: 'Image Preview',
                 path: ['/images', 'img-preview']
+            },
+            {
+                title: 'Image',
+                path: ['/images', 'image']
             }
         ]
     }

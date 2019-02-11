@@ -1,0 +1,15 @@
+<hlc-clr-img-overlay *ngIf="isReady" [src]="src" [height]="height" [width]="width" (click)="onClick()">
+    <div>{{ title }}</div>
+    <clr-icon class="overlay-icon" *ngIf="allowUpload" shape="upload" size="36" (click)="onUploadClick()"></clr-icon>
+    <clr-icon class="overlay-icon" *ngIf="allowRemove" shape="trash" size="36" (click)="onRemoveClick()"></clr-icon>
+    <clr-icon class="overlay-icon" *ngIf="allowPreview" shape="eye" size="36" (click)="onPreviewClick()"></clr-icon>
+</hlc-clr-img-overlay>
+
+<div *ngIf="isEmpty" class="empty-image-container" [style.max-width]="width" [style.max-height]="height">
+    <img [src]="_emptySrc" class="empty-image-img"  />
+    <div *ngIf="allowUpload" class="empty-image-overlay">
+        <div class="empty-image-overlay-content">
+            <clr-icon class="overlay-icon" shape="upload" size="36" (click)="onUploadClick()"></clr-icon>
+        </div>
+    </div>
+</div>

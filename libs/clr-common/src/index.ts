@@ -12,6 +12,8 @@ export * from './lib/form-error/form-error.component';
 export * from './lib/form-error/form-error.module';
 export * from './lib/form-footer/form-footer.component';
 export * from './lib/form-footer/form-footer.module';
+export * from './lib/image/image.component';
+export * from './lib/image/image.module';
 export * from './lib/img-overlay/img-overlay.component';
 export * from './lib/img-overlay/img-overlay.module';
 export * from './lib/main-header/main-header.component';

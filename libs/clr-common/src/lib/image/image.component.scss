@@ -1,17 +1,17 @@
 /* Container needed to position the overlay. Adjust the width as needed */
-.container {
+.empty-image-container {
     position: relative;
     width: 100%;
 }
 
 /* Make the image to responsive */
-.image {
+.empty-image-img {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 /* The overlay effect (full height and width) - lays on top of the container and over the image */
-.overlay {
+.empty-image-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -19,20 +19,21 @@
     right: 0;
     height: 100%;
     width: 100%;
-    opacity: 0;
+    opacity: 0.5;
 }
 
-/* When you mouse over the container, fade in the overlay icon*/
-.container:hover .overlay {
-    opacity: 0.8;
-}
 
 /* The icon inside the overlay is positioned in the middle vertically and horizontally */
-.overlay-content {
+.empty-image-overlay-content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
+}
+
+
+.overlay-icon {
+    margin: 15px;
 }
