@@ -138,6 +138,10 @@ export default [
         icon: 'upload-cloud',
         children: [
             {
+                title: 'Image Upload',
+                path: ['/clr-file-upload', 'image-upload']
+            },
+            {
                 title: 'File Upload',
                 path: ['/clr-file-upload', 'file-upload']
             },
