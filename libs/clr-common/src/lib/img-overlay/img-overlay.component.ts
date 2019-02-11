@@ -10,5 +10,6 @@ export class HlcClrImgOverlayComponent {
 
     @Input() src: string;
     @Input() width: string;
+    @Input() height: string;
     @Input() overlayOpacity = 1;
 }
