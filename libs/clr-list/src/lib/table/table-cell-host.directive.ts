@@ -36,6 +36,10 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
     @Input('hlcTableCellHostRow')
     row: any;
 
+    // tslint:disable-next-line:no-input-rename
+    @Input('hlcTableCellHostParentRow')
+    parentRow: any;
+
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
@@ -73,7 +77,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
             R.toPairs,
             R.map(([k, v]) => {
                 if (typeof v === 'function') {
-                    return [k, v(this.row[this.cell.id], this.row)];
+                    return [k, v(this.row[this.cell.id], this.row, this.parentRow)];
                 } else {
                     return [k, v];
                 }

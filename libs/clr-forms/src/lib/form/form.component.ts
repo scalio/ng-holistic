@@ -8,7 +8,7 @@ import {
     QueryList,
     ViewChild
 } from '@angular/core';
-import { CustomFieldDirective, HlcFormComponent, FormLayoutConfig, HLC_FORM_EXTRACT_FIELDS } from '@ng-holistic/forms';
+import { CustomFieldDirective, FormLayoutConfig, HlcFormComponent, HLC_FORM_EXTRACT_FIELDS } from '@ng-holistic/forms';
 import { flatGroup } from './form-utils';
 
 @Component({
@@ -32,5 +32,16 @@ export class HlcClrFormComponent {
     @ViewChild(HlcFormComponent) form: HlcFormComponent;
 
     @ContentChildren(CustomFieldDirective)
-    customFields: QueryList<CustomFieldDirective>;
+    contentCustomFields: QueryList<CustomFieldDirective>;
+
+    // tslint:disable-next-line:no-input-rename
+    @Input('customFields') inputCustomFields: CustomFieldDirective[];
+
+    get customFields() {
+        return [...this.contentCustomFields.toArray(), ...(this.inputCustomFields || [])];
+    }
+
+    get formGroup() {
+        return this.form && this.form.formGroup;
+    }
 }

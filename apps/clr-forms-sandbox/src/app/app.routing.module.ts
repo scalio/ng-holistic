@@ -8,8 +8,10 @@ import { ClrFileUploadModule } from './clr-file-upload/clr-file-upload.module';
 import { routes as clrFileUploadRoutes } from './clr-file-upload/clr-file-upload.routing.module';
 import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.module';
 import { ClrFormsModule } from './clr-forms/clr-forms.module';
-import { routes as clrWziardRoutes } from './clr-wizard/clr-wizard.routing.module';
 import { ClrWizardModule } from './clr-wizard/clr-wizard.module';
+import { routes as clrWziardRoutes } from './clr-wizard/clr-wizard.routing.module';
+import { GettingStartedModule } from './getting-started/getting-started.module';
+import { routes as gettingStartedRoutes } from './getting-started/getting-started.routing.module';
 
 export const routes: Routes = [
     {
@@ -21,6 +23,10 @@ export const routes: Routes = [
         path: '',
         component: AppLayoutComponent,
         children: [
+            {
+                path: 'getting-started',
+                children: gettingStartedRoutes
+            },
             {
                 path: 'clr-controls',
                 children: clrControlsRoutes
@@ -45,6 +51,7 @@ export const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         AppLayoutModule,
+        GettingStartedModule,
         ClrControlsModule,
         ClrFormsModule,
         ClrFileUploadModule,

@@ -8,7 +8,8 @@
             "@ng-holistic/clr-file-upload": ["dist/libs/clr-file-upload"],
             "@ng-holistic/clr-common": ["dist/libs/clr-common"],
             "@ng-holistic/clr-list": ["dist/libs/clr-list"],
-            "@ng-holistic/clr-wizard": ["dist/libs/clr-wizard"]
+            "@ng-holistic/clr-wizard": ["dist/libs/clr-wizard"],
+            "@ng-holistic/typeahead": ["dist/libs/typeahead"]
         }
     }
 }

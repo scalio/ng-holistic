@@ -3,13 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import {
     HlcClrDateComponent,
     HlcClrDateModule,
-    HlcClrTextAreaModule,
-    HlcClrTextModule,
     HlcClrTextAreaComponent,
-    HlcClrTextComponent
+    HlcClrTextAreaModule,
+    HlcClrTextComponent,
+    HlcClrTextModule
 } from '@ng-holistic/clr-controls';
+import { PairsListPageComponent } from './pairs-list/pairs-list-page.component';
+import { PairsListPageModule } from './pairs-list/pairs-list-page.module';
 import { SelectPageComponent } from './select-page/select-page.component';
 import { SelectPageModule } from './select-page/select-page.module';
+import { TypeaheadPageComponent } from './tyepahead-page/typeahead-page.component';
+import { TypeaheadPageModule } from './tyepahead-page/typeahead-page.module';
 
 export const routes: Routes = [
     {
@@ -27,6 +31,18 @@ export const routes: Routes = [
     {
         path: 'select',
         component: SelectPageComponent
+    },
+    {
+        path: 'pairs-list',
+        component: PairsListPageComponent
+    },
+    {
+        path: 'typeahead',
+        component: TypeaheadPageComponent
+    },
+    {
+        path: 'tags',
+        component: TypeaheadPageComponent
     }
 ];
 
@@ -36,7 +52,9 @@ export const routes: Routes = [
         HlcClrTextModule,
         HlcClrTextAreaModule,
         HlcClrDateModule,
-        SelectPageModule
+        PairsListPageModule,
+        SelectPageModule,
+        TypeaheadPageModule
     ],
     exports: [RouterModule],
     entryComponents: []

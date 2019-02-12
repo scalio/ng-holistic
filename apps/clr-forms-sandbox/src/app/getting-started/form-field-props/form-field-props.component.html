@@ -1,0 +1,72 @@
+<h1>Form field common properties</h1>
+
+Every form declaration contains some group with fields list. The items from this list describe set of components and
+their properties which will be rendered and bound to form value. Here base class declaration for any FromField.
+
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ classDef }}
+    </code>
+</pre>
+
+<h3>FormField common properties</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>id</td>
+            <td class="left">
+                Identifier of the generated input control, id plays crucial role in form's binding, this property will
+                be automatically created on formGroup and input's value binding will be sync; all changes on the input
+                control will be reflected on the formGroup and vice versa, if generated control implements
+                <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank"> ControlValueAccessor </a>
+                interface.
+            </td>
+        </tr>
+        <tr>
+            <td>kind</td>
+            <td class="left">
+                Type of the generated control, there is number of the <a href="#">most common controls</a> already
+                included in the library, you could <a href="#">add any custom component</a> to be generated on the form.
+            </td>
+        </tr>
+        <tr>
+            <td>props</td>
+            <td class="left">
+                Contains set of values for generated component's Input properties. In the example above 'placeholder'
+                property exists on the component associated with TextField kind, so the component 'placeholder' property
+                will be initialized from value of the 'props.placeholder' field. 'label' property exists on the
+                <a href="#">control wrapper</a>, so it also will be initialzied from here.
+            </td>
+        </tr>
+        <tr>
+            <td>validators</td>
+            <td class="left">
+                Contains array of regualr angular validators to be applied to the generated form control, works the same
+                way as in standard 'FormGroup' control initialization. Also this value could be observable with the same
+                array of validators as emitted value, this case control validators will be updated accordingly to the
+                emitted value.
+            </td>
+        </tr>
+        <tr>
+            <td>hidden</td>
+            <td class="left">
+                Observable - hide / show control on the form, when controls is hidden it value will be removed from
+                formGroup automatically. See example <a href="#" [routerLink]="['/clr-forms/form-recalc']">here</a>.
+            </td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td class="left">
+                Observable - define the current value of the control, the way to implement form fields values
+                recalculation. See example <a href="#" [routerLink]="['/clr-forms/form-recalc']">here</a>.
+            </td>
+        </tr>
+    </tbody>
+</table>

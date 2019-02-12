@@ -17,6 +17,7 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { Memoize } from 'typescript-memoize';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
@@ -359,6 +360,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         if (this.containerCustomCellsProvider) {
             return this.containerCustomCellsProvider.customCells.find(f => f.hlcClrCustomCell === cell.id);
         }
+    }
+
+    @Memoize()
+    getDetailsRows(row: Table.Row) {
+        if (!this.table || !this.table.details) {
+            return [];
+        }
+        return this.table.details.rows(row);
     }
 
     // trackBy

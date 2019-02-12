@@ -17,9 +17,6 @@
     "clr-controls": {
       "tags": []
     },
-    "clr-layout": {
-      "tags": []
-    },
     "clr-forms": {
       "tags": []
     },
@@ -45,6 +42,15 @@
       "tags": []
     },
     "clr-wizard": {
+      "tags": []
+    },
+    "hlc-home-app": {
+      "tags": []
+    },
+    "apps-shared": {
+      "tags": []
+    },
+    "typeahead": {
       "tags": []
     }
   }

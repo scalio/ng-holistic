@@ -4,7 +4,7 @@ import { TextMask } from '@ng-holistic/clr-controls';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { HlcFormComponent } from '@ng-holistic/forms';
 import { throwError, timer } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 
 const group: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -65,7 +65,49 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'SelectField',
             props: {
                 label: 'Select',
-                items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
+                items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }, { key: 'three', label: 'three' }]
+            }
+        },
+        {
+            id: 'typeahead',
+            kind: 'TypeaheadField',
+            props: {
+                label: 'Typeahead',
+                config: {
+                    search: text$ =>
+                        text$.pipe(
+                            map(args =>
+                                [
+                                    { key: 'one', label: 'one' },
+                                    { key: 'two', label: 'two' },
+                                    { key: 'three', label: 'three' }
+                                ].filter(f =>
+                                    args.kind === 'SearchArgTyping' ? !args.term || f.label.startsWith(args.term) : true
+                                )
+                            )
+                        )
+                }
+            }
+        },
+        {
+            id: 'tags',
+            kind: 'TagsField',
+            props: {
+                label: 'Tags',
+                config: {
+                    search: text$ =>
+                        text$.pipe(
+                            map(args =>
+                                [
+                                    { key: 'one', label: 'one' },
+                                    { key: 'two', label: 'two' },
+                                    { key: 'three', label: 'three' }
+                                ].filter(f =>
+                                    args.kind === 'SearchArgTyping' ? !args.term || f.label.startsWith(args.term) : true
+                                )
+                            )
+                        )
+                }
             }
         },
         {
@@ -90,6 +132,14 @@ const group: ClrFormLayouts.ClrFormLayout = {
             props: {
                 label: 'Checkboxes',
                 items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
+            }
+        },
+        {
+            id: 'pairslist',
+            kind: 'PairsListField',
+            props: {
+                label: 'Pairs List',
+                value: [{ key: 'key1', label: 'label1' }, { key: 'key2', label: 'label2' }]
             }
         }
     ]

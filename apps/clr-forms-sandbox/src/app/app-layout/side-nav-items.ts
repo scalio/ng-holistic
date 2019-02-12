@@ -2,6 +2,56 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
+        title: 'Getting started',
+        icon: 'home',
+        children: [
+            {
+                title: 'Overview',
+                path: ['/getting-started', 'overview']
+            },
+            {
+                title: 'Install packages',
+                path: ['/getting-started', 'install-packages']
+            },
+            {
+                title: 'Create first form',
+                path: ['/getting-started', 'first-form']
+            },
+            {
+                title: 'Form values',
+                path: ['/getting-started', 'form-values']
+            },
+            {
+                title: 'Form field',
+                path: ['/getting-started', 'form-field-props']
+            },
+            {
+                title: 'Form field wrapper',
+                path: ['/getting-started', 'form-field-wrapper']
+            },
+            {
+                title: 'Form layout',
+                path: ['/getting-started', 'form-layout']
+            },
+            {
+                title: 'Custom form field',
+                path: ['/getting-started', 'custom-form-field']
+            },
+            {
+                title: 'Custom form field warpper',
+                path: ['/getting-started', 'custom-form-field-wrapper']
+            },
+            {
+                title: 'Custom layout',
+                path: ['/getting-started', 'custom-layout']
+            },
+            {
+                title: 'Inline custom component',
+                path: ['/getting-started', 'custom-inline-component']
+            },
+        ]
+    },
+    {
         title: 'Clr Forms',
         icon: 'align-left-text',
         children: [
@@ -68,6 +118,18 @@ export default [
             {
                 title: 'Select',
                 path: ['/clr-controls', 'select']
+            },
+            {
+                title: 'Typeahead',
+                path: ['/clr-controls', 'typeahead']
+            },
+            {
+                title: 'Tags',
+                path: ['/clr-controls', 'tags']
+            },
+            {
+                title: 'Pairs List',
+                path: ['/clr-controls', 'pairs-list']
             }
         ]
     },
@@ -75,6 +137,10 @@ export default [
         title: 'Clr File Upload',
         icon: 'upload-cloud',
         children: [
+            {
+                title: 'Image Upload',
+                path: ['/clr-file-upload', 'image-upload']
+            },
             {
                 title: 'File Upload',
                 path: ['/clr-file-upload', 'file-upload']

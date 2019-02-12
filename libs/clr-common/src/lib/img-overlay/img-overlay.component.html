@@ -1,8 +1,6 @@
-<div class="container" [style.max-width]="width" >
-    <img [src]="src" class="image" />
+<div class="container" [style.max-width]="width" [style.max-height]="height">
+    <img [src]="src" class="image" [style.width]="width" [style.height]="height" />
     <div class="overlay">
-        <div class="overlay-content">
-            <ng-content></ng-content>
-        </div>
+        <div class="overlay-content"><ng-content></ng-content></div>
     </div>
 </div>

@@ -20,7 +20,7 @@ import { HlcAsideService } from './aside.service';
  * @example
  * ```
  * <!-- will display Hello on rigth side overlay -->
- * <ng-template scalioAside>
+ * <ng-template hlcClrAside>
  *   <h5> Hello </h5>
  * </ng-template>
  * ```

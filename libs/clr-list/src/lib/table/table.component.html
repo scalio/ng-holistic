@@ -10,11 +10,9 @@
         <clr-icon aria-hidden="true" shape="close" (click)="errorMessage = undefined"></clr-icon>
     </button>
 </div>
-<!--
-<hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
+<!-- <hlc-clr-alert alertType="danger" *ngIf="errorMessage" (close)="errorMessage = undefined">{{
     errorMessage
-}}</hlc-clr-alert>
--->
+}}</hlc-clr-alert> -->
 <clr-datagrid
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
@@ -25,13 +23,14 @@
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
+        [ngClass]="col.cls"
         [clrDgField]="getColSort(col)"
     >
         {{ col.title }}
     </clr-dg-column>
 
     <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
-        <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol"> {{ getAggrColValue(col) }} </clr-dg-cell>
+        <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol">{{ getAggrColValue(col) }}</clr-dg-cell>
     </clr-dg-row>
 
     <clr-dg-row
@@ -50,20 +49,25 @@
         </clr-dg-action-overflow>
 
         <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol" (click)="onCellClick(cell, row)">
-            <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
+            <ng-container
+                *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"
+            ></ng-container>
         </clr-dg-cell>
 
         <!-- Details -->
 
         <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details; else detailsCard">
-            <ng-container *ngFor="let detail of table.details.rows(row); trackBy: trackByDetailsRow">
+            <ng-container *ngFor="let detail of getDetailsRows(row); trackBy: trackByDetailsRow">
                 <clr-dg-row-detail *clrIfExpanded>
                     <!-- Details in columns -->
                     <ng-container *ngIf="table.details.cols; else detailsCard">
                         <clr-dg-cell *ngFor="let cell of table.cols; trackBy: trackByCol">
                             <ng-container *ngIf="getDetailsCol(cell.id) as detailsCell">
                                 <ng-container
-                                    *ngTemplateOutlet="rowCell; context: { cell: detailsCell, row: detail }"
+                                    *ngTemplateOutlet="
+                                        rowCell;
+                                        context: { cell: detailsCell, row: detail, parentRow: row }
+                                    "
                                 ></ng-container>
                             </ng-container>
                         </clr-dg-cell>
@@ -93,7 +97,7 @@
             [items]="paginatorItems.items"
         ></hlc-clr-select>
         <div *ngIf="paginatorItems" class="footer-separator-line"></div>
-        <span>{{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }}</span>
+        <span> {{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }} </span>
         <clr-dg-pagination
             #pagination
             [clrDgPageSize]="paginator.pageSize"
@@ -105,10 +109,10 @@
     <clr-dg-footer *ngIf="!paginator"></clr-dg-footer>
 </clr-datagrid>
 
-<ng-template #rowCell let-cell="cell" let-row="row">
+<ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
     <!-- regular cell -->
     <ng-template [ngIf]="!cell.kind && !cell.customCell">
-        <span [ngClass]="getCellClass(cell, row)"> {{ getCellDisplayValue(cell, row) }} </span>
+        <span [ngClass]="getCellClass(cell, row)">{{ getCellDisplayValue(cell, row) }}</span>
     </ng-template>
     <!-- custom cell -->
     <ng-template [ngIf]="cell.customCell">
@@ -116,6 +120,7 @@
             [hlcTableCustomCellHost]="cell"
             [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
             [hlcTableCustomCellHostRow]="row"
+            [hlcTableCustomCellHostParentRow]="parentRow"
         >
         </ng-container>
     </ng-template>
@@ -125,6 +130,7 @@
             [hlcTableCellHost]="cell"
             [hlcTableCellHostComponentType]="getCellComponentType(cell)"
             [hlcTableCellHostRow]="row"
+            [hlcTableCellHostParentRow]="parentRow"
         >
         </ng-container>
     </ng-template>

@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isNil } from 'ramda';
 
@@ -22,6 +22,7 @@ export interface TextValues {
 export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextValues {
     @Input() value: string;
 
+    @Input() id: string;
     @Input() placeholder: string | undefined;
     @Input() readonly: boolean | undefined;
 

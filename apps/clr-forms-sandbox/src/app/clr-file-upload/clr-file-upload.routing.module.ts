@@ -4,8 +4,14 @@ import { FileUploadPageComponent } from './file-upload/file-upload-page.componen
 import { FileUploadPageModule } from './file-upload/file-upload-page.module';
 import { FileUploaderPageComponent } from './file-uploader/file-uploader-page.component';
 import { FileUploaderPageModule } from './file-uploader/file-uploader-page.module';
+import { ImageUploadPageComponent } from './image-upload/image-upload-page.component';
+import { ImageUploadPageModule } from './image-upload/image-upload-page.module';
 
 export const routes: Routes = [
+    {
+        path: 'image-upload',
+        component: ImageUploadPageComponent
+    },
     {
         path: 'file-upload',
         component: FileUploadPageComponent
@@ -17,7 +23,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), FileUploadPageModule, FileUploaderPageModule],
+    imports: [RouterModule.forChild(routes), FileUploadPageModule, FileUploaderPageModule, ImageUploadPageModule],
     exports: [RouterModule],
     entryComponents: []
 })

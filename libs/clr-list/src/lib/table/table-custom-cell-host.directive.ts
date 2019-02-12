@@ -29,6 +29,10 @@ export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChange
     @Input('hlcTableCustomCellHostRow')
     row: any;
 
+    // tslint:disable-next-line:no-input-rename
+    @Input('hlcTableCustomCellHostParentRow')
+    parentRow: any;
+
     constructor(private readonly vcr: ViewContainerRef) {}
 
     ngOnInit() {}
@@ -46,7 +50,8 @@ export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChange
             this.view = this.vcr.createEmbeddedView(this.directive.templateRef, {
                 $implicit: this.row[this.cell.id],
                 row: this.row,
-                cell: this.cell
+                cell: this.cell,
+                parentRow: this.parentRow
             });
 
             this.vcr.insert(this.view);

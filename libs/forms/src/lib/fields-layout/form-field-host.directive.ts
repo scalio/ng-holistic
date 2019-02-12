@@ -11,6 +11,7 @@ import {
     OnDestroy,
     OnInit,
     Optional,
+    Renderer2,
     Type,
     ViewContainerRef,
     ViewRef
@@ -53,7 +54,8 @@ export class HlcFormFieldHostDirective implements OnInit, OnDestroy {
         private readonly appRef: ApplicationRef,
         @Optional()
         @Inject(HLC_FORM_FIELD_WRAPPER)
-        private readonly wrapper: Type<any>
+        private readonly wrapper: Type<any>,
+        private readonly renderer: Renderer2
     ) {}
 
     ngOnInit() {
@@ -122,6 +124,15 @@ export class HlcFormFieldHostDirective implements OnInit, OnDestroy {
             this.componentRef.instance,
             propsBag
         );
+
+        // consumer could use this class to assign dynamic styles to generated input component
+        const metaClass = `hlc-form-input-${this.field.id}`;
+        this.renderer.addClass(this.componentRef.location.nativeElement, metaClass);
+
+        if (this.wrapperRef) {
+            const metaClassContainer = `hlc-form-input-container-${this.field.id}`;
+            this.renderer.addClass(this.wrapperRef.location.nativeElement, metaClassContainer);
+        }
 
         view.detectChanges();
 
