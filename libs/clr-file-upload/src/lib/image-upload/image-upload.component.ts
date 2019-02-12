@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ImageState } from '@ng-holistic/clr-common';
-import { RemoveFileFun, UploadFileFun } from '@ng-holistic/clr-file-upload';
+import { RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
 
 @Component({
     selector: 'hlc-clr-image-upload',
