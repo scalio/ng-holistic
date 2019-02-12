@@ -77,9 +77,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         readonly config: FileUploadConfig
     ) {}
 
-    ngOnInit() {
-        console.log('???', this.files);
-    }
+    ngOnInit() {}
 
     ngOnDestroy() {
         this.destroy$.next();
@@ -120,6 +118,15 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     }
 
     //
+
+    onSetFiles(files: File[]) {
+        this.files = [...files];
+        if (this.uploadFileFun) {
+            this.uploadFiles(files);
+        } else {
+            this.onChange();
+        }
+    }
 
     onAddFiles(files: File[]) {
         this.files = [...files, ...(this.files || [])];

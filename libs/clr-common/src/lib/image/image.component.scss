@@ -1,3 +1,13 @@
+.overlay-icon {
+    color: white;
+}
+
+:host ::ng-deep {
+    input[type='file'] {
+        display: none;
+    }
+}
+
 /* Container needed to position the overlay. Adjust the width as needed */
 .empty-image-container {
     position: relative;
@@ -23,7 +33,6 @@
     opacity: 0.5;
 }
 
-
 /* The icon inside the overlay is positioned in the middle vertically and horizontally */
 .empty-image-overlay-content {
     position: absolute;
@@ -33,7 +42,6 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
-
 
 .overlay-icon {
     margin: 15px;

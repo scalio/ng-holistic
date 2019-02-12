@@ -25,6 +25,7 @@
 /* When you mouse over the container, fade in the overlay icon*/
 .container:hover .overlay {
     opacity: 0.8;
+    background-color: black;
 }
 
 /* The icon inside the overlay is positioned in the middle vertically and horizontally */

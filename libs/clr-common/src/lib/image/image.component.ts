@@ -11,9 +11,12 @@ export type ImageState = 'ready' | 'loading' | 'empty';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcClrImageComponent implements OnInit {
+    static intancesCount = 0;
+    instanceId: string;
+
     constructor(private readonly filePreviewOverlay: HlcFilePreviewOverlayService) {}
 
-    @Input() isUploading = false;
+    @Input() processing = false;
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
@@ -26,10 +29,13 @@ export class HlcClrImageComponent implements OnInit {
 
     @Output() click = new EventEmitter();
     @Output() removeClick = new EventEmitter();
-    @Output() uploadClick = new EventEmitter();
+    @Output() uploadFile = new EventEmitter<File>();
     @Output() previewClick = new EventEmitter();
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.instanceId = `image_component_${HlcClrImageComponent.intancesCount}`;
+        HlcClrImageComponent.intancesCount++;
+    }
 
     get _emptySrc() {
         return this.emptySrc || emptySrc;
@@ -47,8 +53,7 @@ export class HlcClrImageComponent implements OnInit {
         return this.state ? this.state === 'empty' : !this.src;
     }
 
-    onClick() {
-    }
+    onClick() {}
 
     onPreviewClick() {
         if (this.src) {
@@ -61,7 +66,16 @@ export class HlcClrImageComponent implements OnInit {
         this.removeClick.emit();
     }
 
-    onUploadClick() {
-        this.uploadClick.emit();
+    onUploadFile(event: any) {
+        if (!event) {
+            return;
+        }
+        const ctrl = event.target;
+        const files = Array.prototype.slice.call(ctrl.files, 0);
+        if (files && files.length === 0) {
+            return;
+        }
+
+        this.uploadFile.emit(files[0]);
     }
 }
