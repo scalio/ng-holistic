@@ -2,11 +2,13 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    EventEmitter,
     forwardRef,
     Inject,
     Input,
     OnDestroy,
-    OnInit
+    OnInit,
+    Output
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as R from 'ramda';
@@ -46,6 +48,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     removingFiles: any[] = [];
     fileErrors: FileError[] = [];
 
+    @Input() single = false;
     @Input() files: any[] | undefined;
 
     @Input() accept: string | undefined;
@@ -64,6 +67,8 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
      */
     @Input() removeFileFun: RemoveFileFun | undefined;
 
+    @Output() filesChanged = new EventEmitter<string[] | File[]>();
+
     propagateChange = (_: any) => {};
 
     constructor(
@@ -72,7 +77,9 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         readonly config: FileUploadConfig
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log('???', this.files);
+    }
 
     ngOnDestroy() {
         this.destroy$.next();
@@ -178,7 +185,9 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     private onChange() {
         // TODO : !!! Handle uploadFileFun & removeFileFun (see description)
-        this.propagateChange(this.uploadedFiles);
+        const files = this.uploadedFiles;
+        this.filesChanged.emit(files);
+        this.propagateChange(files);
     }
 
     private uploadFiles(files: File[]) {
@@ -186,7 +195,10 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
             const res$ = files.map(file => this.uploadFile(file).pipe(catchError(() => empty())));
 
             merge(...res$)
-                .pipe(debounceTime(UPLOAD_DEBOUNCE_TIME))
+                .pipe(
+                    debounceTime(UPLOAD_DEBOUNCE_TIME)
+                    // takeUntil(this.destroy$)
+                )
                 .subscribe(_ => {
                     this.onChange();
                 });

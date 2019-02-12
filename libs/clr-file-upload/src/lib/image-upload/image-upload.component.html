@@ -1,1 +1,17 @@
-<hlc-clr-image></hlc-clr-image>
+<hlc-clr-image
+    [src]="src"
+    [width]="width"
+    [height]="height"
+    (removeClick)="fileUpload.onRemoveFile(fileUpload.uploadedFiles[0])"
+>
+    <hlc-clr-file-upload
+        [single]="true"
+        [uploadFileFun]="uploadFileFun"
+        [removeFileFun]="removeFileFun"
+        emptyImage
+        accept=".jpg, .png, .gif"
+        (filesChanged)="onFilesChanged($event)"
+        #fileUpload
+    >
+    </hlc-clr-file-upload>
+</hlc-clr-image>

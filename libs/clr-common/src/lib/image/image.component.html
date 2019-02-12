@@ -8,8 +8,14 @@
 <div *ngIf="isEmpty" class="empty-image-container" [style.max-width]="width" [style.max-height]="height">
     <img [src]="_emptySrc" class="empty-image-img"  />
     <div *ngIf="allowUpload" class="empty-image-overlay">
+        <!--
         <div class="empty-image-overlay-content">
             <clr-icon class="overlay-icon" shape="upload" size="36" (click)="onUploadClick()"></clr-icon>
         </div>
+        -->
+        <ng-content select="[emptyImage]">
+        </ng-content>
     </div>
 </div>
+
+

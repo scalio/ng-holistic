@@ -13,6 +13,7 @@ export namespace Table {
          * Sort column id or true if sort id = column id
          */
         sort?: string | boolean;
+        cls?: string;
     }
 
     export interface Column extends ColumnBase {

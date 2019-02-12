@@ -41,4 +41,9 @@ export class HlcClrImageUploadComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {}
+
+    onFilesChanged(files: any[]) {
+        const file = files[0];
+        this.src = file && file.src;
+    }
 }

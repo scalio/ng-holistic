@@ -58,7 +58,6 @@ export class HlcClrImageComponent implements OnInit {
     }
 
     onRemoveClick() {
-        this.src = undefined;
         this.removeClick.emit();
     }
 

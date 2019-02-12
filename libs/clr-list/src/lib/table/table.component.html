@@ -23,6 +23,7 @@
     <clr-dg-column
         *ngFor="let col of table?.cols; trackBy: trackByCol"
         [class.sortable]="col.sort"
+        [ngClass]="col.cls"
         [clrDgField]="getColSort(col)"
     >
         {{ col.title }}
