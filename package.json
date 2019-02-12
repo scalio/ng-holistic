@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.25",
+    "version": "0.0.27",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -15,7 +15,6 @@
         "build:clr-list-app": "ng build clr-list-sandbox",
         "build:clr-layout": "ng build clr-layout",
         "build:clr-common": "ng build clr-common",
-        "build:hlc-typeahead": "ng build hlc-typeahead",
         "build:clr-controls": "npm run build:typeahead && ng build clr-controls --ts-config=tsconfig.build.json",
         "build:clr-file-upload": "ng build clr-file-upload --ts-config=tsconfig.build.json",
         "build:typeahead": "ng build typeahead --ts-config=tsconfig.build.json",
