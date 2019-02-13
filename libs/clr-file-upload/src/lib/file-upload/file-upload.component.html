@@ -1,4 +1,10 @@
-<hlc-clr-file-uploader *ngIf="!readonly" [accept]="accept" [single]="single" (filesAdded)="onAddFiles($event)">
+<hlc-clr-file-uploader
+    *ngIf="!readonly"
+    [dragLabel]="dragLabel"
+    [accept]="accept"
+    [single]="single"
+    (filesAdded)="onAddFiles($event)"
+>
 </hlc-clr-file-uploader>
 
 <ul class="list-unstyled list-compact">

@@ -53,6 +53,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     @Input() accept: string | undefined;
     @Input() readonly: boolean;
+    @Input() dragLabel: string;
 
     /**
      * If this function is not provided, control value will be changed immmediately after new file is added,
@@ -77,7 +78,9 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         readonly config: FileUploadConfig
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log('+++', this.height);
+    }
 
     ngOnDestroy() {
         this.destroy$.next();

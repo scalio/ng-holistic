@@ -1,5 +1,5 @@
 <span class="clr-subtext">
-    <ng-container *ngIf="accept else acceptAll">{{ labels.acceptFilesLabel }} {{ accept }}</ng-container>
+    <ng-container *ngIf="accept; else acceptAll">{{ labels.acceptFilesLabel }} {{ accept }}</ng-container>
     <ng-template #acceptAll> &nbsp; </ng-template>
 </span>
 <file-drop
@@ -10,7 +10,7 @@
 >
     <div class="clr-break-row">
         <div class="clr-col">
-            <h5 class="file-drop__title">{{ labels.dragLabel }}</h5>
+            <h5 class="file-drop__title">{{ _dragLabel }}</h5>
         </div>
         <div class="clr-break-row"></div>
         <div class="clr-col">

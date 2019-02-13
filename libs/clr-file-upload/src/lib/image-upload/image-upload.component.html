@@ -7,10 +7,11 @@
     [processing]="processing"
 >
     <hlc-clr-file-upload
+        emptyImage
+        dragLabel="Drag image here"
         [single]="true"
         [uploadFileFun]="uploadFileFun && _uploadFileFun"
         [removeFileFun]="removeFileFun && _removeFileFun"
-        emptyImage
         accept=".jpg, .png, .gif, .jpeg"
         (filesChanged)="onFilesChanged($event)"
         #fileUpload
