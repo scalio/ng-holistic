@@ -79,7 +79,6 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     ) {}
 
     ngOnInit() {
-        console.log('+++', this.height);
     }
 
     ngOnDestroy() {

@@ -1,3 +1,9 @@
+/**
+ * When ng-packagr build library with imports from @angular/router or @angular/cdk-some it will break build of the
+ * library which includes the build, here we get rid of all modules which may cause this problem.
+ * The normally build @ng-holistic/clr-common may only be included in application projects not in another libraries !
+ * TODO: Create github issue.
+ */
 export * from './lib/alert/alert.component';
 export * from './lib/alert/alert.module';
 export * from './lib/aside-panel/aside-panel.component';
@@ -16,6 +22,7 @@ export * from './lib/image/image.component';
 export * from './lib/image/image.module';
 export * from './lib/img-overlay/img-overlay.component';
 export * from './lib/img-overlay/img-overlay.module';
+/*
 export * from './lib/main-header/main-header.component';
 export * from './lib/main-header/main-header.module';
 
@@ -26,10 +33,13 @@ export * from './lib/modal/modal.module';
 
 export * from './lib/modal/modal.service';
 export * from './lib/modal/modal/modal.config';
+*/
 
 export * from './lib/pipes/common-pipes.module';
 export * from './lib/pipes/number.pipe';
 export * from './lib/pipes/phone.pipe';
 
+/*
 export * from './lib/side-nav/side-nav.component';
 export * from './lib/side-nav/side-nav.module';
+*/

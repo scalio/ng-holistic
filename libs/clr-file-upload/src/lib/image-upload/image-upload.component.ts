@@ -46,7 +46,6 @@ export class HlcClrImageUploadComponent implements OnInit {
     ngOnInit() {}
 
     onFilesChanged(files: any[]) {
-        console.log('111', files);
         const file = files[0];
         this.src = file && file.src;
     }
@@ -56,7 +55,6 @@ export class HlcClrImageUploadComponent implements OnInit {
     }
 
     onUploadFile(file: any) {
-        console.log('2222', file);
         this.fileUploadComponent.onSetFiles([file]);
     }
 
