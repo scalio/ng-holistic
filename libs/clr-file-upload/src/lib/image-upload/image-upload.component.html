@@ -8,7 +8,7 @@
 >
     <hlc-clr-file-upload
         emptyImage
-        dragLabel="Drag image here"
+        [dragLabel]="dragLabel"
         [single]="true"
         [uploadFileFun]="uploadFileFun && _uploadFileFun"
         [removeFileFun]="removeFileFun && _removeFileFun"

@@ -23,6 +23,7 @@ export class HlcClrImageUploadComponent implements OnInit {
      */
     @Input() removeFileFun: RemoveFileFun | undefined;
 
+    @Input() dragLabel = 'Drag image here';
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
@@ -80,5 +81,9 @@ export class HlcClrImageUploadComponent implements OnInit {
 
     get file() {
         return this.fileUploadComponent && this.fileUploadComponent.files && this.fileUploadComponent.files[0];
+    }
+
+    get fileName() {
+        return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
     }
 }
