@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     ContentChildren,
@@ -6,7 +7,6 @@ import {
     forwardRef,
     Inject,
     Input,
-    OnInit,
     Optional,
     Output,
     QueryList,
@@ -16,8 +16,8 @@ import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import {
-    HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
     HlcClrTableComponent,
+    HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
@@ -36,7 +36,7 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
         FilterService
     ]
 })
-export class HlcClrListComponent implements TableCustomCellsProvider, OnInit {
+export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit {
     labelsConfig: ListLabelsConfig;
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
@@ -76,14 +76,18 @@ export class HlcClrListComponent implements TableCustomCellsProvider, OnInit {
     @Output() selectedRowsChanged = new EventEmitter<Table.Row[]>();
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
-
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(@Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
     }
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        if (!this.hasFilters) {
+            // If there is no filters on init, loading still should be dispatched with empty filter
+            this.tableComponent.refreshData();
+        }
+    }
 
     addRow(row: Table.Row) {
         this.tableComponent.addRow(row);
@@ -108,5 +112,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, OnInit {
 
     onToggleFilter() {
         this.isFilterShown = !this.isFilterShown;
+    }
+
+    get hasFilters() {
+        return !!this.filterFields && this.filterFields.length > 0;
     }
 }

@@ -240,6 +240,13 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             .subscribe(() => {});
     }
 
+    refreshData() {
+        const dataProvider = this.dataProvider;
+        if (dataProvider) {
+            this.loadData(dataProvider, {}).subscribe(() => {});
+        }
+    }
+
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
         const dpState = this.dataProviderConfig.mapState(state);
 

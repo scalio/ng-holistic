@@ -8,6 +8,7 @@ import {
     Input,
     OnDestroy,
     OnInit,
+    Optional,
     Output
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -74,12 +75,12 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        @Optional()
         @Inject(HLC_CLR_FILE_UPLOAD_CONFIG)
-        readonly config: FileUploadConfig
+        readonly config?: FileUploadConfig
     ) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ngOnDestroy() {
         this.destroy$.next();
@@ -98,7 +99,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     }
 
     getFileName(file: any) {
-        return file instanceof File ? file.name : this.config.getName(file);
+        return file instanceof File ? file.name : this.config && this.config.getName(file);
     }
 
     //
@@ -141,7 +142,8 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     onRemoveFile(file: any) {
         // use specific component function or form config by default
-        const removeFileFun = this.removeFileFun || (this.config.remove && this.config.remove.bind(this.config));
+        const removeFileFun =
+            this.removeFileFun || (this.config && this.config.remove && this.config.remove.bind(this.config));
         if (removeFileFun) {
             this.setFileAsRemoving(file);
             const res$ = removeFileFun(file).pipe(
@@ -246,7 +248,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     private getFileIndex(file: any, files: any[]) {
         return files.findIndex(f =>
-            file instanceof File ? file === f : this.config.getId(file) === this.config.getId(f)
+            file instanceof File ? file === f : !!this.config && this.config.getId(file) === this.config.getId(f)
         );
     }
 
@@ -277,7 +279,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     //
     private getFileErrorIndex(file: any) {
         return this.fileErrors.findIndex(f =>
-            f.rawFile ? f.rawFile === file : this.config.getId(file) === this.config.getId(f.file)
+            f.rawFile ? f.rawFile === file : !!this.config && this.config.getId(file) === this.config.getId(f.file)
         );
     }
 

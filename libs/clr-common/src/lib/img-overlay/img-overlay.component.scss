@@ -28,9 +28,16 @@
     background-color: black;
 }
 
+.container.overlay-visible .overlay {
+    opacity: 0.8;
+    background-color: black;
+}
+
+
 /* The icon inside the overlay is positioned in the middle vertically and horizontally */
 .overlay-content {
     position: absolute;
+    width: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

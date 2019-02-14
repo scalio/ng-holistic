@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import { ImageState } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
@@ -42,7 +51,7 @@ export class HlcClrImageUploadComponent implements OnInit {
     @ViewChild(HlcClrFileUploadComponent) fileUploadComponent: HlcClrFileUploadComponent;
     processing = false;
 
-    constructor() {}
+    constructor(private readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {}
 
@@ -64,9 +73,16 @@ export class HlcClrImageUploadComponent implements OnInit {
             return undefined;
         }
 
+        this.cdr.markForCheck();
+
         this.processing = true;
 
-        return this.uploadFileFun(file).pipe(finalize(() => (this.processing = false)));
+        return this.uploadFileFun(file).pipe(
+            finalize(() => {
+                this.processing = false;
+                this.cdr.detectChanges();
+            })
+        );
     };
 
     _removeFileFun = (file: any) => {

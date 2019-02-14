@@ -1,4 +1,11 @@
-<hlc-clr-img-overlay *ngIf="isReady" [src]="src" [height]="height" [width]="width" (click)="onClick()">
+<hlc-clr-img-overlay
+    *ngIf="isReady"
+    [src]="src"
+    [height]="height"
+    [width]="width"
+    (click)="onClick()"
+    [overlayVisible]="processing"
+>
     <div>{{ title }}</div>
     <ng-container *ngIf="!processing; else processingTmpl">
         <label [for]="instanceId">
