@@ -133,14 +133,6 @@ const group: ClrFormLayouts.ClrFormLayout = {
                 label: 'Checkboxes',
                 items: [{ key: 'chk1', label: 'chk1' }, { key: 'chk2', label: 'chk2' }]
             }
-        },
-        {
-            id: 'pairslist',
-            kind: 'PairsListField',
-            props: {
-                label: 'Pairs List',
-                value: [{ key: 'key1', label: 'label1' }, { key: 'key2', label: 'label2' }]
-            }
         }
     ]
 };

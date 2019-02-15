@@ -1,0 +1,33 @@
+// layer
+@mixin layer($top, $right, $bottom, $left, $z-index: auto) {
+    position: absolute;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    z-index: $z-index;
+}
+
+// layer-fixed
+@mixin layer-fixed($top, $right, $bottom, $left, $z-index: auto) {
+    position: fixed;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    z-index: $z-index;
+}
+
+// img-responsive
+@mixin img-responsive($display: block) {
+    display: $display;
+    max-width: 100%;
+    height: auto;
+}
+
+// img-responsive-height
+@mixin img-responsive-height($display: block) {
+    display: $display;
+    max-height: 100%;
+    width: auto;
+}

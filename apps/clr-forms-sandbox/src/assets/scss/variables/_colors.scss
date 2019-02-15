@@ -1,0 +1,63 @@
+$white: #ffffff;
+$black: #000000;
+
+// grays
+$gray-lightest: clr-getColor(lightest); // #ffffff
+$gray-lighter: #f6f6f6;
+$gray-light: clr-getColor(light); // #eeeeee
+$gray-lighter-midtone: $clr-lighter-midtone-gray; // #dddddd
+$gray-light-midtone: clr-getColor(light-midtone); // #cccccc
+$gray-dark-midtone: clr-getColor(dark-midtone); // #9a9a9a
+$gray-dark: clr-getColor(dark); // #737373
+$gray-darker: clr-getColor(darker); // #565656
+$gray-darkest: #212529;
+
+// blues
+$action-blues-lightest: #e3f5fa;
+$action-blues-lighter: clr-getColor(lighter, action-blues); // #89cbdf
+$action-blues-light: clr-getColor(light, action-blues); // #49afd9
+$action-blues-light-midtone: clr-getColor(light-midtone, action-blues); // #0094d2
+$action-blues-dark-midtone: clr-getColor(dark-midtone, action-blues); // #007cbb
+$action-blues-dark: clr-getColor(dark, action-blues); // #004a70
+$action-blues-darker: clr-getColor(darker, action-blues); // #003a59
+$action-blues-darkest: clr-getColor(darkest, action-blues); // #002538
+
+// reds
+$reds-lightest: clr-getColor(lightest, reds); // #fbf1f2
+$reds-lighter: clr-getColor(lighter, reds); // #f5dbd9
+$reds-light: clr-getColor(light, reds); // #ebafa6
+$reds-light-midtone: clr-getColor(light-midtone, reds); // #e62700
+$reds-dark-midtone: clr-getColor(dark-midtone, reds); // #c92100
+$reds-dark: clr-getColor(dark, reds); // #a32100
+$reds-darker: clr-getColor(darker, reds); // #7d2100
+$reds-darkest: clr-getColor(darkest, reds); // #642100
+
+// greens
+$greens-lightest: clr-getColor(lightest, greens); // #dff0d0
+$greens-lighter: clr-getColor(lighter, greens); // #c6e4ab
+$greens-light: clr-getColor(light, greens); // #60b515
+$greens-light-midtone: clr-getColor(light-midtone, greens); // #62a420
+$greens-dark-midtone: clr-getColor(dark-midtone, greens); // #318700
+$greens-dark: clr-getColor(dark, greens); // #266900
+$greens-darker: clr-getColor(darker, greens); // #1d5100
+$greens-darkest: clr-getColor(darkest, greens); // #0f2900
+
+// purples
+$action-purples-lightest: clr-getColor(lightest, action-purples); // #f3ecf7
+$action-purples-lighter: clr-getColor(lighter, action-purples); // #e7d9f0
+$action-purples-light: clr-getColor(light, action-purples); // #b68cd1
+$action-purples-light-midtone: clr-getColor(light-midtone, action-purples); // #9460b8
+$action-purples-dark-midtone: clr-getColor(dark-midtone, action-purples); // #853fb3
+$action-purples-dark: clr-getColor(dark, action-purples); // #660092
+$action-purples-darker: clr-getColor(darker, action-purples); // #50266b
+$action-purples-darkest: clr-getColor(darkest, action-purples); // #281336
+
+// yellows
+$yellows-lightest: clr-getColor(lightest, yellows); // #fffadc
+$yellows-lighter: clr-getColor(lighter, yellows); // #feecb5
+$yellows-light: clr-getColor(light, yellows); // #ffdc0b
+$yellows-light-midtone: clr-getColor(light-midtone, yellows); // #eb8d00
+$yellows-dark-midtone: clr-getColor(dark-midtone, yellows); // #ce5c00
+$yellows-dark: clr-getColor(dark, yellows); // #c25400
+$yellows-darker: clr-getColor(darker, yellows); // #9e4100
+$yellows-darkest: clr-getColor(darkest, yellows); // #642100

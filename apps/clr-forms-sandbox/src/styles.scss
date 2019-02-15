@@ -1,6 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~@angular/cdk/overlay-prebuilt.css';
-@import '~@angular/cdk/a11y-prebuilt.css';
+@import 'assets/scss/vendor';
+@import 'assets/scss/app';
+
+// clr-vertical-nav
+.clr-vertical-nav {
+    border-right: solid 1px $clr-vertical-nav-border-color;
+}
 
 /* You can add global styles to this file, and also import other style files */
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
