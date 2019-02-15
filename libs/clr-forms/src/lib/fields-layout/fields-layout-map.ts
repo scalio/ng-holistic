@@ -17,6 +17,8 @@ import {
     HlcClrPasswordModule,
     HlcClrPhoneComponent,
     HlcClrPhoneModule,
+    HlcClrRichTextComponent,
+    HlcClrRichTextModule,
     HlcClrSelectComponent,
     HlcClrSelectModule,
     HlcClrTagsComponent,
@@ -49,7 +51,8 @@ export const clrFieldsLayoutMap = {
     PasswordField: HlcClrPasswordComponent,
     PairsListField: HlcClrPairsListComponent,
     TypeaheadField: HlcClrTypeaheadComponent,
-    TagsField: HlcClrTagsComponent
+    TagsField: HlcClrTagsComponent,
+    RichTextField: HlcClrRichTextComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -67,7 +70,8 @@ export const clrFieldsLayoutComponents = [
     HlcClrPasswordComponent,
     HlcClrPairsListComponent,
     HlcClrTypeaheadComponent,
-    HlcClrTagsComponent
+    HlcClrTagsComponent,
+    HlcClrRichTextComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -85,5 +89,6 @@ export const clrFieldsLayoutModules = [
     HlcClrPasswordModule,
     HlcClrPairsListModule,
     HlcClrTypeaheadModule,
-    HlcClrTagsModule
+    HlcClrTagsModule,
+    HlcClrRichTextModule
 ];
