@@ -4,6 +4,7 @@
     (removeClick)="onRemoveFile()"
     (uploadFile)="onUploadFile($event)"
     [processing]="processing"
+    [allowPreview]="false"
 >
     <hlc-clr-file-upload
         emptyImage
@@ -17,4 +18,8 @@
         #fileUpload
     >
     </hlc-clr-file-upload>
+
+    <a *ngIf="isSrcUploaded" last-button [href]="src" target="_blank"
+        ><clr-icon class="overlay-icon" shape="download" size="36"></clr-icon
+    ></a>
 </hlc-clr-image>

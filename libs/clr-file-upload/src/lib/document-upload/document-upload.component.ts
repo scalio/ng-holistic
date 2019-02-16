@@ -138,6 +138,10 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
         return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
     }
 
+    get isSrcUploaded() {
+        return !(this.value instanceof File);
+    }
+
     //
 
     writeValue(obj: any) {

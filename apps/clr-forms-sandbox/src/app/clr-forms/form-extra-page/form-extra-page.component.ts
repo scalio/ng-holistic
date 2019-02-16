@@ -16,7 +16,8 @@ const group: FormLayouts.FormLayout = {
             id: 'docUpload',
             kind: 'DocumentUploadField',
             props: {
-                label: 'Document upload'
+                label: 'Document upload',
+                accept: '.doc, .docx, .pdf'
             }
         },
         {

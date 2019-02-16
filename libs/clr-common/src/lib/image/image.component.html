@@ -21,6 +21,7 @@
         />
         <clr-icon class="overlay-icon" *ngIf="allowRemove" shape="trash" size="36" (click)="onRemoveClick()"></clr-icon>
         <clr-icon class="overlay-icon" *ngIf="allowPreview" shape="eye" size="36" (click)="onPreviewClick()"></clr-icon>
+        <ng-content select="[last-button]"></ng-content>
     </ng-container>
     <ng-template #processingTmpl> <span class="spinner"> Processing... </span> </ng-template>
 </hlc-clr-img-overlay>
