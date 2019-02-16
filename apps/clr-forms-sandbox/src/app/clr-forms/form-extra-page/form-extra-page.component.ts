@@ -14,7 +14,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
             }
         }
     ]
-};
+} as any;
 
 @Component({
     selector: 'hlc-form-extra-page',

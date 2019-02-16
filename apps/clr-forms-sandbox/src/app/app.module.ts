@@ -6,6 +6,7 @@ import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { hlcConfigProviders } from './hlc.config';
+import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
 
 @NgModule({
     declarations: [AppComponent],
@@ -15,10 +16,11 @@ import { hlcConfigProviders } from './hlc.config';
         ClrMainContainerModule,
         ClrLayoutModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
-        HlcClrFormModule.forRoot()
+        HlcClrFormModule.forRoot({ RichTextField: HlcClrRichTextComponent }),
+        HlcClrRichTextModule
     ],
     bootstrap: [AppComponent],
-    entryComponents: [],
+    entryComponents: [HlcClrRichTextComponent],
     providers: [...hlcConfigProviders]
 })
 export class AppModule {

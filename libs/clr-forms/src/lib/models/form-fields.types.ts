@@ -135,8 +135,6 @@ export namespace ClrFormFields {
             }
         > {}
 
-    export interface RichTextField extends BaseFieldP<'RichTextField'> {}
-
     export type FormField =
         | TextField
         | SelectField
@@ -153,6 +151,5 @@ export namespace ClrFormFields {
         | PasswordField
         | PairsListField
         | TypeaheadField
-        | TagsField
-        | RichTextField;
+        | TagsField;
 }

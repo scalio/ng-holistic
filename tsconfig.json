@@ -10,6 +10,7 @@
     "noUnusedParameters": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "importHelpers": true,
     "module": "es2015",
     "target": "es5",
     "skipLibCheck": true,
@@ -57,6 +58,9 @@
       ],
       "@ng-holistic/typeahead": [
         "libs/typeahead/src/index.ts"
+      ],
+      "quill.imageUploader": [
+          "node_modules/quill-image-uploader/dist/quill.imageUploader.min.js"
       ]
     }
   },

@@ -27,8 +27,6 @@ export * from './lib/phone/phone.component';
 export * from './lib/phone/phone.config';
 export * from './lib/phone/phone.module';
 export * from './lib/range.config';
-export * from './lib/rich-text/rich-text.component';
-export * from './lib/rich-text/rich-text.module';
 export * from './lib/select/select.component';
 export * from './lib/select/select.module';
 export * from './lib/tags/tags.component';
