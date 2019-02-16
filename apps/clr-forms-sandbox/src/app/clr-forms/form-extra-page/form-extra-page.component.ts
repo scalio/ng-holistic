@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { HlcFormComponent } from '@ng-holistic/forms';
+import { FormLayouts } from '../../shared';
 
-const group: ClrFormLayouts.ClrFormLayout = {
+const group: FormLayouts.FormLayout = {
     kind: 'fields',
     fields: [
         {
@@ -14,7 +14,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
             }
         }
     ]
-} as any;
+};
 
 @Component({
     selector: 'hlc-form-extra-page',
