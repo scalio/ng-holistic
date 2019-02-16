@@ -20,6 +20,9 @@ export namespace FormLayouts {
             }
         > {}
 
-    type FormField = RichTextField | ImageUploadField;
+    export interface DocumentUploadField extends ClrFormFields.BaseField<'DocumentUploadField'> {}
+
+    type FormField = RichTextField | ImageUploadField | DocumentUploadField;
+
     export type FormLayout = ClrFormLayouts.ClrFormLayout<FormField>;
 }

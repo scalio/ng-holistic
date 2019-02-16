@@ -13,6 +13,13 @@ const group: FormLayouts.FormLayout = {
     kind: 'fields',
     fields: [
         {
+            id: 'docUpload',
+            kind: 'DocumentUploadField',
+            props: {
+                label: 'Document upload'
+            }
+        },
+        {
             id: 'richText',
             kind: 'RichTextField',
             props: {
