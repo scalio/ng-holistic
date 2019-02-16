@@ -42,7 +42,7 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     @Input() removeFileFun: RemoveFileFun | undefined;
 
     @Input() dragLabel = 'Drag image here';
-    @Input() buttonLabel = 'Click for upload';
+    @Input() buttonLabel: string;
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
@@ -120,6 +120,10 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
         return this.removeFileFun(file).pipe(finalize(() => (this.processing = false)));
     };
+
+    get _buttonLabel() {
+        return this.buttonLabel && (this.uploadFileFun ? 'Click for upload' : 'Click for add');
+    }
 
     get file() {
         return this.fileUploadComponent && this.fileUploadComponent.files && this.fileUploadComponent.files[0];
