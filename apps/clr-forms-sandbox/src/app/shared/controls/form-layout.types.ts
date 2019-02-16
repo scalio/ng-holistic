@@ -9,15 +9,7 @@ export namespace FormLayouts {
             { style?: FormFields.FormFieldProp<{ [key: string]: any }> }
         > {}
 
-    export interface ImageUploadField
-        extends ClrFormFields.BaseFieldWithProps<
-            'ImageUploadField',
-            {
-                readonly?: FormFields.FormFieldProp<string>;
-                label?: FormFields.FormFieldProp<string>;
-                src?: FormFields.FormFieldProp<string>;
-            }
-        > {}
+    export interface ImageUploadField extends ClrFormFields.BaseField<'ImageUploadField'> {}
 
     type FormField = RichTextField | ImageUploadField;
     export type FormLayout = ClrFormLayouts.ClrFormLayout<FormField>;

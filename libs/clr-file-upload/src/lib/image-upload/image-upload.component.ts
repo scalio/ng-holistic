@@ -47,12 +47,21 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     @Input() allowRemove = true;
     @Input() allowPreview = true;
     @Input() state: ImageState | undefined;
-    @Input() value: string | File | null;
     @Input() src: string | undefined;
     @Input() emptySrc: string;
     @Input() title: string;
     @Input() height: number;
     @Input() width: number;
+    @Input() set value(val: string | File | null) {
+        this._value = val;
+        if (typeof val === 'string') {
+            // when value is string, consider it image url and update src automaticaly
+            this.src = val;
+        } else if (!val) {
+            this.src = undefined;
+        }
+        // File value shouldn't update src property
+    }
 
     @Output() click = new EventEmitter();
     @Output() removeClick = new EventEmitter();
@@ -61,6 +70,8 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
     @ViewChild(HlcClrFileUploadComponent) fileUploadComponent: HlcClrFileUploadComponent;
     processing = false;
+
+    private _value: string | File | null;
 
     propagateChange = (_: any) => {};
 
@@ -71,16 +82,15 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     async onFilesChanged(files: any[]) {
         const file = files[0];
         if (!file) {
-            this.src = undefined;
             this.value = null;
-            this.propagateChange(this.value);
+            this.propagateChange(this._value);
             return;
         }
         if (file instanceof File) {
             this.src = await this.imageUtilsService.encodeFile64(file);
             this.value = file;
             this.cdr.detectChanges();
-            this.propagateChange(this.value);
+            this.propagateChange(this._value);
         } else {
             this.src = file.src;
         }
