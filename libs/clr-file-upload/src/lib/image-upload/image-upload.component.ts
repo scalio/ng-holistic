@@ -3,12 +3,14 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    forwardRef,
     Input,
     OnInit,
     Output,
     ViewChild
 } from '@angular/core';
-import { ImageState } from '@ng-holistic/clr-common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
 
@@ -16,9 +18,16 @@ import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file
     selector: 'hlc-clr-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HlcClrImageUploadComponent),
+            multi: true
+        }
+    ]
 })
-export class HlcClrImageUploadComponent implements OnInit {
+export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor {
     /**
      * If this function is not provided, control value will be changed immmediately after new file is added,
      * so in value could be both `domain` files and `raw` just uploaded files.
@@ -33,10 +42,12 @@ export class HlcClrImageUploadComponent implements OnInit {
     @Input() removeFileFun: RemoveFileFun | undefined;
 
     @Input() dragLabel = 'Drag image here';
+    @Input() buttonLabel = 'Click for upload';
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
     @Input() state: ImageState | undefined;
+    @Input() value: string | File | null;
     @Input() src: string | undefined;
     @Input() emptySrc: string;
     @Input() title: string;
@@ -51,13 +62,28 @@ export class HlcClrImageUploadComponent implements OnInit {
     @ViewChild(HlcClrFileUploadComponent) fileUploadComponent: HlcClrFileUploadComponent;
     processing = false;
 
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    propagateChange = (_: any) => {};
+
+    constructor(private readonly cdr: ChangeDetectorRef, private readonly imageUtilsService: ImageUtilsService) {}
 
     ngOnInit() {}
 
-    onFilesChanged(files: any[]) {
+    async onFilesChanged(files: any[]) {
         const file = files[0];
-        this.src = file && file.src;
+        if (!file) {
+            this.src = undefined;
+            this.value = null;
+            this.propagateChange(this.value);
+            return;
+        }
+        if (file instanceof File) {
+            this.src = await this.imageUtilsService.encodeFile64(file);
+            this.value = file;
+            this.cdr.detectChanges();
+            this.propagateChange(this.value);
+        } else {
+            this.src = file.src;
+        }
     }
 
     onRemoveFile() {
@@ -102,4 +128,16 @@ export class HlcClrImageUploadComponent implements OnInit {
     get fileName() {
         return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
     }
+
+    //
+
+    writeValue(obj: any) {
+        this.src = obj;
+    }
+
+    registerOnChange(fn: any) {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched(_: any) {}
 }

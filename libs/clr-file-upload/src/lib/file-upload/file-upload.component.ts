@@ -55,6 +55,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     @Input() accept: string | undefined;
     @Input() readonly: boolean;
     @Input() dragLabel: string;
+    @Input() buttonLabel: string;
 
     /**
      * If this function is not provided, control value will be changed immmediately after new file is added,
@@ -127,7 +128,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         if (this.uploadFileFun) {
             this.uploadFiles(files);
         } else {
-            this.onChange();
+            this.onChange(false);
         }
     }
 
@@ -136,7 +137,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         if (this.uploadFileFun) {
             this.uploadFiles(files);
         } else {
-            this.onChange();
+            this.onChange(false);
         }
     }
 
@@ -167,7 +168,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
             // TODO: Error handle
         } else {
             this.removeFile(file);
-            this.onChange();
+            this.onChange(false);
         }
     }
 
@@ -194,9 +195,9 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
         }
     }
 
-    private onChange() {
+    private onChange(useUploaded = true) {
         // TODO : !!! Handle uploadFileFun & removeFileFun (see description)
-        const files = this.uploadedFiles;
+        const files = useUploaded ? this.uploadedFiles : this.files;
         this.filesChanged.emit(files);
         this.propagateChange(files);
     }

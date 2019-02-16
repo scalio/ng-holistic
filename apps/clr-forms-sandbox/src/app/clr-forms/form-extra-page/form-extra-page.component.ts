@@ -10,7 +10,15 @@ const group: FormLayouts.FormLayout = {
             kind: 'RichTextField',
             props: {
                 label: 'Rich text',
-                placeholder: 'Type something'
+                placeholder: 'Type something',
+                style: { height: '150px' }
+            }
+        },
+        {
+            id: 'imageUpload',
+            kind: 'ImageUploadField',
+            props: {
+                label: 'Image'
             }
         }
     ]

@@ -28,6 +28,7 @@ Quill.register('modules/imageResize', ImageResize);
     ]
 })
 export class HlcClrRichTextComponent implements OnInit, ControlValueAccessor {
+    @Input() style: { [key: string]: any };
     @Input() placeholder: string;
 
     @Input()

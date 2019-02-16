@@ -1,6 +1,7 @@
 <hlc-clr-file-uploader
     *ngIf="!readonly"
     [dragLabel]="dragLabel"
+    [buttonLabel]="buttonLabel"
     [accept]="accept"
     [single]="single"
     (filesAdded)="onAddFiles($event)"
