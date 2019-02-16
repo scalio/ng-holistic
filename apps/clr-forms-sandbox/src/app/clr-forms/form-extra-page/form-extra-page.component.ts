@@ -1,6 +1,13 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { HlcFormComponent } from '@ng-holistic/forms';
+import { timer } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 import { FormLayouts } from '../../shared';
+
+const uploadFileFun = (file: File) =>
+    timer(1000).pipe(mapTo({ id: file.name, name: file.name, src: 'https://pbs.twimg.com/media/DuEkvqTW0AIlTSo.jpg' }));
+
+const removeFileFun = (file: File) => timer(1000).pipe(mapTo({ id: file.name, name: file.name }));
 
 const group: FormLayouts.FormLayout = {
     kind: 'fields',
@@ -15,10 +22,19 @@ const group: FormLayouts.FormLayout = {
             }
         },
         {
-            id: 'imageUpload',
+            id: 'image',
             kind: 'ImageUploadField',
             props: {
                 label: 'Image'
+            }
+        },
+        {
+            id: 'imageUpload',
+            kind: 'ImageUploadField',
+            props: {
+                label: 'Image with upload',
+                uploadFileFun,
+                removeFileFun
             }
         }
     ]

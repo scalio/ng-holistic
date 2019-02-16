@@ -1,3 +1,4 @@
+import { RemoveFileFun, UploadFileFun } from '@ng-holistic/clr-file-upload';
 import { ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FormFields } from '@ng-holistic/forms';
 
@@ -9,7 +10,15 @@ export namespace FormLayouts {
             { style?: FormFields.FormFieldProp<{ [key: string]: any }> }
         > {}
 
-    export interface ImageUploadField extends ClrFormFields.BaseField<'ImageUploadField'> {}
+    export interface ImageUploadField
+        extends ClrFormFields.BaseField<
+            'ImageUploadField',
+            any,
+            {
+                uploadFileFun?: FormFields.FormFieldProp<UploadFileFun>;
+                removeFileFun?: FormFields.FormFieldProp<RemoveFileFun>;
+            }
+        > {}
 
     type FormField = RichTextField | ImageUploadField;
     export type FormLayout = ClrFormLayouts.ClrFormLayout<FormField>;

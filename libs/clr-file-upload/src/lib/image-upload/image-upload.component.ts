@@ -92,7 +92,8 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
             this.cdr.detectChanges();
             this.propagateChange(this._value);
         } else {
-            this.src = file.src;
+            this.value = file.src;
+            this.propagateChange(this._value);
         }
     }
 

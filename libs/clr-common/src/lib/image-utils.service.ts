@@ -8,7 +8,7 @@ export class ImageUtilsService {
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
             reader.onerror = reject;
-        });
+        }) as any;
     }
 
     async loadFile(_: string) {
