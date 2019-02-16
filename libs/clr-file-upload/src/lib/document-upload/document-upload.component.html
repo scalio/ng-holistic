@@ -1,6 +1,7 @@
 <hlc-clr-image
     [src]="src"
     height="120px"
+    [title]="fileName"
     (removeClick)="onRemoveFile()"
     (uploadFile)="onUploadFile($event)"
     [processing]="processing"

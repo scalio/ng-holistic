@@ -141,7 +141,10 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     }
 
     get fileName() {
-        return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
+        if (this.file instanceof File) {
+            return this.file.name;
+        }
+        return this.src && typeof this.src === 'string' ? this.src.substr(this.src.lastIndexOf('/') + 1) : null;
     }
 
     //

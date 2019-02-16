@@ -6,7 +6,7 @@
     (click)="onClick()"
     [overlayVisible]="processing"
 >
-    <div>{{ title }}</div>
+    <div class="overlay-title">{{ title }}</div>
     <ng-container *ngIf="!processing; else processingTmpl">
         <label [for]="instanceId">
             <clr-icon class="overlay-icon" *ngIf="allowUpload" shape="upload" size="36"></clr-icon>
