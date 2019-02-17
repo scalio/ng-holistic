@@ -7,8 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     imports: [BrowserModule, ClrIconModule, ClrDropdownModule, ReactiveFormsModule],
     declarations: [HlcClrSelectComponent],
-    exports: [HlcClrSelectComponent],
-    entryComponents: [HlcClrSelectComponent]
+    exports: [HlcClrSelectComponent]
 })
 export class HlcClrSelectModule {
     constructor() {}

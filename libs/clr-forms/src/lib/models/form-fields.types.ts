@@ -62,6 +62,14 @@ export namespace ClrFormFields {
         }
     >;
 
+    export type MultiSelectField = BaseFieldP<
+        'MultiSelectField',
+        any[],
+        {
+            items: FormFields.FormFieldProp<any[]>;
+        }
+    >;
+
     export type DateField = BaseField<'DateField', string>;
 
     export type TextAreaField = BaseFieldP<'TextAreaField', string>;
@@ -138,6 +146,7 @@ export namespace ClrFormFields {
     export type FormField =
         | TextField
         | SelectField
+        | MultiSelectField
         | DateField
         | TextAreaField
         | ToggleField
