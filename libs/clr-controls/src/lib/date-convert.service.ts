@@ -10,7 +10,7 @@ export interface DateTimeConfig {
     domainFormat?: string;
 }
 
-export const DATE_CONVERT_CONFIG = new InjectionToken('DATE_CONVERT_CONFIG');
+export const DATE_CONVERT_CONFIG = new InjectionToken<DateTimeConfig>('DATE_CONVERT_CONFIG');
 
 const parse = (format: string) => (str: string | null | undefined) => {
     if (!str) {
