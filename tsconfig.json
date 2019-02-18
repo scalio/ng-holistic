@@ -58,9 +58,6 @@
       ],
       "@ng-holistic/typeahead": [
         "libs/typeahead/src/index.ts"
-      ],
-      "quill.imageUploader": [
-          "node_modules/quill-image-uploader/dist/quill.imageUploader.min.js"
       ]
     }
   },

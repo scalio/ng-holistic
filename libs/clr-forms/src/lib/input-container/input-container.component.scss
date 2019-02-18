@@ -9,6 +9,13 @@
     transition: background-size 0.2s ease;
 }
 
+::ng-deep .invalid .clr-input:not([readonly]) {
+    border-bottom-color: #c92100 !important;
+    background: linear-gradient(to bottom, transparent 95%, #c92100 95%) no-repeat;
+    background-size: 0 100%;
+    transition: background-size 0.2s ease;
+}
+
 .required-hint {
     color: darkgray;
     font-weight: normal;

@@ -58,6 +58,7 @@ export namespace ClrFormFields {
         'SelectField',
         any,
         {
+            disallowEmpty?: FormFields.FormFieldProp<boolean>;
             items: FormFields.FormFieldProp<any[]>;
         }
     >;
