@@ -60,6 +60,10 @@ export default [
                 path: ['/clr-forms', 'form']
             },
             {
+                title: 'Form Extra Controls',
+                path: ['/clr-forms', 'form-extra']
+            },
+            {
                 title: 'Form With Groups',
                 path: ['/clr-forms', 'form-groups']
             },

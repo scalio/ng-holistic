@@ -30,6 +30,7 @@ export class HlcClrFileUploaderComponent implements OnInit {
     @Input() disabled: boolean;
     @Input() accept: string | undefined;
     @Input() dragLabel: string;
+    @Input() buttonLabel: string;
     @Output() filesAdded = new EventEmitter<File[]>();
 
     private _rand = Math.random();
@@ -47,6 +48,10 @@ export class HlcClrFileUploaderComponent implements OnInit {
 
     get _dragLabel() {
         return this.dragLabel || this.labels.dragLabel;
+    }
+
+    get _clickForUploadLabel() {
+        return this.buttonLabel || this.labels.clickForUploadLabel;
     }
 
     onFileChange(event: any) {

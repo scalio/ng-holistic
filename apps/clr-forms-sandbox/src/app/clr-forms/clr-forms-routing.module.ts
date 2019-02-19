@@ -4,6 +4,8 @@ import { FormCustomFieldsPageComponent } from './form-custom-fields-page/form-cu
 import { FormCustomFieldsPageModule } from './form-custom-fields-page/form-custom-fields-page.module';
 import { FormDynaPageComponent } from './form-dyna-page/form-dyna-page.component';
 import { FormDynaPageModule } from './form-dyna-page/form-dyna-page.module';
+import { FormExtraPageComponent } from './form-extra-page/form-extra-page.component';
+import { FormExtraPageModule } from './form-extra-page/form-extra-page.module';
 import { FormFullPageComponent } from './form-full-page/form-full-page.component';
 import { FormFullPageModule } from './form-full-page/form-full-page.module';
 import { FormGroupsPageComponent } from './form-groups-page/form-groups-page.component';
@@ -21,6 +23,10 @@ export const routes: Routes = [
     {
         path: 'form',
         component: FormPageComponent
+    },
+    {
+        path: 'form-extra',
+        component: FormExtraPageComponent
     },
     {
         path: 'form-groups',
@@ -56,6 +62,7 @@ export const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         FormPageModule,
+        FormExtraPageModule,
         FormGroupsPageModule,
         FormReclcPageModule,
         FormCustomFieldsPageModule,

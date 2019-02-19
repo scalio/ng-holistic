@@ -8,7 +8,8 @@ import { isNil } from 'ramda';
 export class HlcNumberPipe implements PipeTransform {
     constructor(@Inject(LOCALE_ID) private readonly localeId: string) {}
 
-    transform(val: number | undefined) {
-        return isNil(val) ? '' : formatNumber(val, this.localeId);
+    transform(val: number | undefined, arg?: 'decimal') {
+        const digitsInfo = arg && '1.0-2';
+        return isNil(val) ? '' : formatNumber(val, this.localeId, digitsInfo);
     }
 }

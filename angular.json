@@ -22,13 +22,15 @@
                             "apps/clr-forms-sandbox/src/styles.scss",
                             "node_modules/@clr/ui/clr-ui.min.css",
                             "node_modules/@clr/icons/clr-icons.min.css",
+                            "node_modules/quill/dist/quill.snow.css",
                             "node_modules/prismjs/themes/prism-solarizedlight.css"
                         ],
                         "scripts": [
                             "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
                             "node_modules/@clr/icons/clr-icons.min.js",
                             "node_modules/prismjs/prism.js",
-                            "node_modules/prismjs/components/prism-typescript.min.js"
+                            "node_modules/prismjs/components/prism-typescript.min.js",
+                            "node_modules/quill/dist/quill.min.js"
                         ]
                     },
                     "configurations": {

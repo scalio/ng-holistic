@@ -69,6 +69,14 @@ const group: ClrFormLayouts.ClrFormLayout = {
             }
         },
         {
+            id: 'multiSelect',
+            kind: 'MultiSelectField',
+            props: {
+                label: 'Multi select',
+                items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }, { key: 'three', label: 'three' }]
+            }
+        },
+        {
             id: 'typeahead',
             kind: 'TypeaheadField',
             props: {

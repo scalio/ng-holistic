@@ -3,12 +3,14 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    forwardRef,
     Input,
     OnInit,
     Output,
     ViewChild
 } from '@angular/core';
-import { ImageState } from '@ng-holistic/clr-common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
 
@@ -16,9 +18,16 @@ import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file
     selector: 'hlc-clr-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HlcClrImageUploadComponent),
+            multi: true
+        }
+    ]
 })
-export class HlcClrImageUploadComponent implements OnInit {
+export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor {
     /**
      * If this function is not provided, control value will be changed immmediately after new file is added,
      * so in value could be both `domain` files and `raw` just uploaded files.
@@ -33,6 +42,7 @@ export class HlcClrImageUploadComponent implements OnInit {
     @Input() removeFileFun: RemoveFileFun | undefined;
 
     @Input() dragLabel = 'Drag image here';
+    @Input() buttonLabel: string;
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
@@ -42,6 +52,16 @@ export class HlcClrImageUploadComponent implements OnInit {
     @Input() title: string;
     @Input() height: number;
     @Input() width: number;
+    @Input() set value(val: string | File | null) {
+        this._value = val;
+        if (typeof val === 'string') {
+            // when value is string, consider it image url and update src automaticaly
+            this.src = val;
+        } else if (!val) {
+            this.src = undefined;
+        }
+        // File value shouldn't update src property
+    }
 
     @Output() click = new EventEmitter();
     @Output() removeClick = new EventEmitter();
@@ -51,13 +71,30 @@ export class HlcClrImageUploadComponent implements OnInit {
     @ViewChild(HlcClrFileUploadComponent) fileUploadComponent: HlcClrFileUploadComponent;
     processing = false;
 
-    constructor(private readonly cdr: ChangeDetectorRef) {}
+    private _value: string | File | null;
+
+    propagateChange = (_: any) => {};
+
+    constructor(private readonly cdr: ChangeDetectorRef, private readonly imageUtilsService: ImageUtilsService) {}
 
     ngOnInit() {}
 
-    onFilesChanged(files: any[]) {
+    async onFilesChanged(files: any[]) {
         const file = files[0];
-        this.src = file && file.src;
+        if (!file) {
+            this.value = null;
+            this.propagateChange(this._value);
+            return;
+        }
+        if (file instanceof File) {
+            this.src = await this.imageUtilsService.encodeFile64(file);
+            this.value = file;
+            this.cdr.detectChanges();
+            this.propagateChange(this._value);
+        } else {
+            this.value = file.src;
+            this.propagateChange(this._value);
+        }
     }
 
     onRemoveFile() {
@@ -95,11 +132,30 @@ export class HlcClrImageUploadComponent implements OnInit {
         return this.removeFileFun(file).pipe(finalize(() => (this.processing = false)));
     };
 
+    get _buttonLabel() {
+        return this.buttonLabel && (this.uploadFileFun ? 'Click for upload' : 'Click for add');
+    }
+
     get file() {
         return this.fileUploadComponent && this.fileUploadComponent.files && this.fileUploadComponent.files[0];
     }
 
     get fileName() {
-        return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
+        if (this.file instanceof File) {
+            return this.file.name;
+        }
+        return this.src && typeof this.src === 'string' ? this.src.substr(this.src.lastIndexOf('/') + 1) : null;
     }
+
+    //
+
+    writeValue(obj: any) {
+        this.src = obj;
+    }
+
+    registerOnChange(fn: any) {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched(_: any) {}
 }

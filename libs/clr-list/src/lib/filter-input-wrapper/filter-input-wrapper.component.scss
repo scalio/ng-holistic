@@ -26,3 +26,7 @@
     min-width: 25px;
     height: 25px;
 }
+
+:host ::ng-deep .clr-form-control {
+    margin-top: initial !important;
+}

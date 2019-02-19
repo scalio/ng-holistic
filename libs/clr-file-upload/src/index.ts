@@ -1,3 +1,5 @@
+export * from './lib/document-upload/document-upload.component';
+export * from './lib/document-upload/document-upload.module';
 export * from './lib/file-upload/file-upload.component';
 export * from './lib/file-upload/file-upload.config';
 export * from './lib/file-upload/file-upload.module';

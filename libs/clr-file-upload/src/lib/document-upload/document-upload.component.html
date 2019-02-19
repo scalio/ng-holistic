@@ -1,0 +1,26 @@
+<hlc-clr-image
+    [src]="src"
+    height="120px"
+    [title]="fileName"
+    (removeClick)="onRemoveFile()"
+    (uploadFile)="onUploadFile($event)"
+    [processing]="processing"
+    [allowPreview]="false"
+>
+    <hlc-clr-file-upload
+        emptyImage
+        [dragLabel]="dragLabel"
+        [buttonLabel]="_buttonLabel"
+        [single]="true"
+        [uploadFileFun]="uploadFileFun && _uploadFileFun"
+        [removeFileFun]="removeFileFun && _removeFileFun"
+        [accept]="accept"
+        (filesChanged)="onFilesChanged($event)"
+        #fileUpload
+    >
+    </hlc-clr-file-upload>
+
+    <a *ngIf="isSrcUploaded" last-button [href]="src" target="_blank"
+        ><clr-icon class="overlay-icon" shape="download" size="36"></clr-icon
+    ></a>
+</hlc-clr-image>

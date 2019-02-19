@@ -1,0 +1,7 @@
+<div class="clr-row">
+    <div class="clr-col-6"><hlc-clr-form [group]="group" #clrForm> </hlc-clr-form></div>
+    <div class="clr-col-6">
+        <h3>Form value</h3>
+        {{ clrForm.form.formGroup?.value | json }}
+    </div>
+</div>

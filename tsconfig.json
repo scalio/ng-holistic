@@ -10,6 +10,7 @@
     "noUnusedParameters": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "importHelpers": true,
     "module": "es2015",
     "target": "es5",
     "skipLibCheck": true,

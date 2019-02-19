@@ -1,11 +1,12 @@
 {
     "name": "@ng-holistic/clr-list",
-    "version": "0.0.27",
+    "version": "0.0.28",
     "peerDependencies": {
         "@angular/common": "^7.1.0",
         "@angular/core": "^7.1.0",
         "@ng-holistic/clr-controls": "0.0.22",
         "@ng-holistic/forms": "0.0.22",
-        "@ng-holistic/clr-forms": "0.0.22"
+        "@ng-holistic/clr-forms": "0.0.22",
+        "typescript-memoize": "^1.0.0-alpha.3"
     }
 }
