@@ -19,6 +19,7 @@ import { of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { FilterService } from '../filter.service';
+import { RowsManagerService } from '../rows-manager.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
 import {
@@ -151,10 +152,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         private readonly filterService?: FilterService,
         @Optional()
         @Inject(HLC_CLR_TABLE_PAGINATOR_ITEMS)
-        readonly paginatorItems?: PaginatorItems
+        readonly paginatorItems?: PaginatorItems,
+        @Optional()
+        rowsManagerService?: RowsManagerService
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = cellMaps ? R.mergeAll(cellMaps) : {};
+
+        if (rowsManagerService) {
+            rowsManagerService.addRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.addRow(row));
+            rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.upadteRow(row));
+            rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
+        }
     }
 
     ngOnDestroy() {
