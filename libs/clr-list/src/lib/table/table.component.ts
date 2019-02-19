@@ -138,6 +138,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        @Optional()
         @Inject(HLC_CLR_TABLE_CELL_MAP)
         cellMaps: TableCellMap[],
         @Optional()
@@ -153,7 +154,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         readonly paginatorItems?: PaginatorItems
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
-        this.cellMap = R.mergeAll(cellMaps);
+        this.cellMap = cellMaps ? R.mergeAll(cellMaps) : {};
     }
 
     ngOnDestroy() {
