@@ -75,7 +75,7 @@
                     <!-- Details in card -->
                     <ng-template #detailsCard>
                         <ng-container
-                            *ngTemplateOutlet="rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"
+                            *ngTemplateOutlet="_rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"
                         ></ng-container>
                     </ng-template>
                 </clr-dg-row-detail>

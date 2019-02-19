@@ -1,4 +1,4 @@
-<select multiple (change)="onChange($event)">
+<select clrSelect multiple (change)="onChange($event)">
     <option
         *ngFor="let item of items; trackBy: trackBy"
         [value]="mapKey(item)"

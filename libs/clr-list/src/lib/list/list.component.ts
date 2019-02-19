@@ -10,7 +10,8 @@ import {
     Optional,
     Output,
     QueryList,
-    ViewChild
+    ViewChild,
+    ContentChild
 } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
@@ -22,6 +23,7 @@ import {
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
+import { RowDetailDirective } from '../table/row-detail.directive';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -41,6 +43,11 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
+
+    /**
+    * Row details template
+    */
+    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
 
     /**
      * Custom cells

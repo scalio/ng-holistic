@@ -60,6 +60,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     readonly dataProviderConfig: TableDataProviderConfig;
     errorMessage: string | undefined;
 
+    @Input() rowDetail: RowDetailDirective | undefined;
+
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
     @Input() filter: any;
@@ -99,7 +101,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     /**
      * Row details template
      */
-    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
+    @ContentChild(RowDetailDirective) rowDetailContent: RowDetailDirective | undefined;
 
     /**
      * Custom cells
@@ -156,6 +158,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    get _rowDetail() {
+        return this.rowDetail || this.rowDetailContent;
     }
 
     getAggrColValue(col: Table.Column) {
