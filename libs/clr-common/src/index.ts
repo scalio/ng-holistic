@@ -1,3 +1,4 @@
+export * from './lib/action-button.directive';
 export * from './lib/alert/alert.component';
 export * from './lib/alert/alert.module';
 export * from './lib/aside-panel/aside-panel.component';

@@ -22,7 +22,6 @@ import { HLC_FILE_PREVIEW_DIALOG_DATA } from './file-preview-overlay.tokens';
 
             img {
                 width: 100%;
-                max-width: 500px;
                 height: auto;
             }
 
