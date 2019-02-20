@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    ContentChild,
     ContentChildren,
     EventEmitter,
     forwardRef,
@@ -10,12 +11,12 @@ import {
     Optional,
     Output,
     QueryList,
-    ViewChild,
-    ContentChild
+    ViewChild
 } from '@angular/core';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
+import { RowDetailDirective } from '../table/row-detail.directive';
 import {
     HlcClrTableComponent,
     HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
@@ -23,7 +24,7 @@ import {
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
-import { RowDetailDirective } from '../table/row-detail.directive';
+import { ClrDatagridStateInterface } from '@clr/angular';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -45,8 +46,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() selectedRows: any[];
 
     /**
-    * Row details template
-    */
+     * Row details template
+     */
     @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
 
     /**
@@ -69,6 +70,11 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() table: TableDescription | undefined;
 
     /**
+     * Enable darg & drop
+     */
+    @Input() dragEnabled = false;
+
+    /**
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
@@ -82,6 +88,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
     @Output() selectedRowsChanged = new EventEmitter<Table.Row[]>();
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
+    @Output() drop = new EventEmitter<Table.DropEvent>();
 
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
@@ -92,8 +99,12 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     ngAfterViewInit() {
         if (!this.hasFilters) {
             // If there is no filters on init, loading still should be dispatched with empty filter
-            this.tableComponent.refreshData();
+            this.refreshData();
         }
+    }
+
+    refreshData(data: ClrDatagridStateInterface = {}) {
+        this.tableComponent.refreshData(data);
     }
 
     addRow(row: Table.Row) {

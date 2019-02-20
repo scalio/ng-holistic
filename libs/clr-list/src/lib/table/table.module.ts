@@ -1,6 +1,8 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ClrDatagridModule, ClrIconModule, ClrLoadingModule } from '@clr/angular';
+import { HlcClrAlertModule } from '@ng-holistic/clr-common';
 import { HlcClrSelectModule } from '@ng-holistic/clr-controls';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { CustomCellDirective } from './custom-cell.directive';
@@ -11,7 +13,15 @@ import { HlcClrTableComponent } from './table.component';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
 
 @NgModule({
-    imports: [CommonModule, ClrDatagridModule, ClrLoadingModule, HlcClrSelectModule, ClrIconModule],
+    imports: [
+        CommonModule,
+        ClrDatagridModule,
+        ClrLoadingModule,
+        HlcClrSelectModule,
+        ClrIconModule,
+        HlcClrAlertModule,
+        DragDropModule
+    ],
     declarations: [
         HlcClrTableComponent,
         TableCellHostDirective,

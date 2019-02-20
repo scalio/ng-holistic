@@ -1,4 +1,5 @@
 import { Observable, Subject } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 export namespace Table {
     export interface ColumnFormat {
@@ -55,6 +56,7 @@ export namespace Table {
         row: Row;
     }
 
+    export type DropEvent = CdkDragDrop<Table.Row>;
 }
 
 export namespace Table.MapColumns {

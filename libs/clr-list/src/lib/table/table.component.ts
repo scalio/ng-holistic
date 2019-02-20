@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -66,6 +67,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() aggregateRow: Table.AggregateRow | undefined;
 
     @Input() filter: any;
+
+    /**
+     * Enable darg & drop
+     */
+    @Input() dragEnabled = false;
 
     /// selected
 
@@ -137,6 +143,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
+    @Output() drop = new EventEmitter<Table.DropEvent>();
+
     constructor(
         private readonly cdr: ChangeDetectorRef,
         @Optional()
@@ -182,6 +190,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         const vals = R.pluck(col.id, this.rows);
 
         return this.aggregateRow[col.id](vals, this.rows) || '';
+    }
+
+    // Drag & Drop
+
+    onDrop(event: CdkDragDrop<Table.Row>) {
+        this.drop.emit(event);
     }
 
     // selected
@@ -256,10 +270,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             .subscribe(() => {});
     }
 
-    refreshData() {
+    refreshData(state: ClrDatagridStateInterface = {}) {
         const dataProvider = this.dataProvider;
         if (dataProvider) {
-            this.loadData(dataProvider, {}).subscribe(() => {});
+            this.loadData(dataProvider, state)
+                .pipe(
+                    takeUntil(this.destroy$),
+                    take(1)
+                )
+                .subscribe(() => {
+                    /* TODO : this is workaround
+                    Should use setState method, which will set filter via filterService to new value and other
+                    grid states to one passed to the method
+                    */
+                    this._freezeInitialStateChange = true;
+                });
         }
     }
 

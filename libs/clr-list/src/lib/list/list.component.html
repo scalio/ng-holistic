@@ -6,10 +6,12 @@
     [aggregateRow]="aggregateRow"
     [selectedRows]="selectedRows"
     [rowDetail]="rowDetail"
+    [dragEnabled]="dragEnabled"
     (stateChanged)="onTableStateChanged($event)"
     (rowAction)="rowAction.emit($event)"
     (cellClick)="cellClick.emit($event)"
     (selectedRowsChanged)="selectedRowsChanged.emit($event)"
+    (drop)="drop.emit($event)"
 >
     <ng-container action-bar>
         <div class="clr-row">
