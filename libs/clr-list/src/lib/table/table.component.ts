@@ -17,7 +17,7 @@ import {
 import { ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
-import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { catchError, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { FilterService } from '../filter.service';
 import { RowsManagerService } from '../rows-manager.service';
@@ -258,34 +258,50 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         state$
             .pipe(
                 // ignore if there is no changes on state
+                /*
                 filter(
                     R.pipe(
-                        R.equals(this.state),
-                        R.not
-                    )
+                        compareStates,
+                        R.not,
+                    ),
                 ),
+                */
                 tap(st => this.stateChanged.emit(st)),
                 flatMap(st => this.loadData(dataProvider, st))
             )
             .subscribe(() => {});
     }
 
+    /*
     refreshData(state: ClrDatagridStateInterface = {}) {
         const dataProvider = this.dataProvider;
         if (dataProvider) {
             this.loadData(dataProvider, state)
                 .pipe(
                     takeUntil(this.destroy$),
-                    take(1)
+                    take(1),
                 )
                 .subscribe(() => {
-                    /* TODO : this is workaround
-                    Should use setState method, which will set filter via filterService to new value and other
-                    grid states to one passed to the method
-                    */
-                    this._freezeInitialStateChange = true;
                 });
         }
+    }
+    */
+
+    setState(state: ClrDatagridStateInterface) {
+        if (R.equals(this.state, state)) {
+            return;
+        }
+        const filters = state.filters;
+        if (filters) {
+            const kvp = filters.map((m: any) => [m.property, m.value]);
+            const filterValue = R.fromPairs(kvp as any);
+            if (this.filterService) {
+                this.filterService.setValue(filterValue);
+            }
+        }
+        this.onRefresh(state);
+        // Ignore next refesh
+        this._freezeInitialStateChange = true;
     }
 
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
