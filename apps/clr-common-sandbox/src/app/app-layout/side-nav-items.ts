@@ -32,5 +32,15 @@ export default [
                 path: ['/images', 'image']
             }
         ]
+    },
+    {
+        title: 'Buttons',
+        icon: 'stop',
+        children: [
+            {
+                title: 'Action Button',
+                path: ['/buttons', 'action-button']
+            }
+        ]
     }
 ] as SideNavItem[];

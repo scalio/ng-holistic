@@ -1,7 +1,9 @@
-<input
-    clrInput
-    [placeholder]="placeholder || ''"
-    [readonly]="readonly ? true : undefined"
-    [value]="cleanValue"
-    (keyup)="onChange($event)"
-    type="text">
+<div class="clr-input-wrapper">
+    <input
+        [placeholder]="placeholder || ''"
+        [readonly]="readonly ? true : undefined"
+        [value]="cleanValue"
+        (keyup)="onChange($event)"
+        type="text"
+    />
+</div>
