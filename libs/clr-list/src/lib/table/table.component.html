@@ -11,14 +11,20 @@
     (cdkDropListDropped)="onDrop($event)"
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
-    <clr-dg-column
-        *ngFor="let col of table?.cols; trackBy: trackByCol"
-        [class.sortable]="col.sort"
-        [ngClass]="col.cls"
-        [clrDgField]="getColSort(col)"
-    >
-        {{ col.title }}
-    </clr-dg-column>
+
+    <ng-container *ngFor="let col of table?.cols; trackBy: trackByCol">
+        <clr-dg-column
+            *ngIf="col.sort && !disableSorting; else unsortableColumn"
+            class="sortable"
+            [ngClass]="col.cls"
+            [clrDgField]="getColSort(col)"
+        >
+            {{ col.title }}
+        </clr-dg-column>
+        <ng-template #unsortableColumn>
+            <clr-dg-column [ngClass]="col.cls"> {{ col.title }} </clr-dg-column>
+        </ng-template>
+    </ng-container>
 
     <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
         <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol">{{ getAggrColValue(col) }}</clr-dg-cell>
@@ -75,7 +81,7 @@
 
     <!-- Paginator -->
 
-    <clr-dg-footer *ngIf="paginator">
+    <clr-dg-footer *ngIf="paginator" [hidden]="disablePaginator">
         <hlc-clr-select
             *ngIf="paginatorItems"
             #paginatorSelect

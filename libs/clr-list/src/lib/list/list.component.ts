@@ -11,7 +11,7 @@ import {
     Optional,
     Output,
     QueryList,
-    ViewChild,
+    ViewChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
@@ -21,7 +21,7 @@ import { RowDetailDirective } from '../table/row-detail.directive';
 import {
     HlcClrTableComponent,
     HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
-    TableCustomCellsProvider,
+    TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
@@ -34,13 +34,18 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
     providers: [
         {
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
-            useExisting: forwardRef(() => HlcClrListComponent),
+            useExisting: forwardRef(() => HlcClrListComponent)
         },
-        FilterService,
-    ],
+        FilterService
+    ]
 })
 export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit {
     labelsConfig: ListLabelsConfig;
+
+    @Input() hideFilter = false;
+    @Input() hidePaginator = false;
+    @Input() disableSorting = false;
+
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];

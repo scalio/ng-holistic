@@ -62,6 +62,9 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     readonly dataProviderConfig: TableDataProviderConfig;
     errorMessage: string | undefined;
 
+    @Input() hidePaginator = false;
+    @Input() disableSorting = false;
+
     @Input() rowDetail: RowDetailDirective | undefined;
 
     @Input() aggregateRow: Table.AggregateRow | undefined;

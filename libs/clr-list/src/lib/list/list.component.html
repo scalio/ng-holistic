@@ -7,6 +7,8 @@
     [selectedRows]="selectedRows"
     [rowDetail]="rowDetail"
     [dragEnabled]="dragEnabled"
+    [hidePaginator]="hidePaginator"
+    [disableSorting]="disableSorting"
     (stateChanged)="onTableStateChanged($event)"
     (rowAction)="rowAction.emit($event)"
     (cellClick)="cellClick.emit($event)"
@@ -14,8 +16,9 @@
     (drop)="drop.emit($event)"
 >
     <ng-container action-bar>
+        <!-- Toolbox & filter -->
         <div class="clr-row">
-            <div class="clr-col-2" *ngIf="hasFilters">
+            <div class="clr-col-2" *ngIf="!hideFilter">
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
                     <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
                 </button>
@@ -26,10 +29,9 @@
             <div class="clr-col-10"><ng-content select="[toolbox]"></ng-content></div>
         </div>
         <hlc-clr-filter
-            *ngIf="hasFilters"
             [fields]="filterFields"
             (filter)="onFilter($event)"
-            [hidden]="!isFilterShown"
+            [hidden]="!isFilterShown || hideFilter"
         ></hlc-clr-filter>
     </ng-container>
 </hlc-clr-table>
