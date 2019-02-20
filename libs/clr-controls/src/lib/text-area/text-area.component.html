@@ -1,7 +1,9 @@
-<textarea
-    clrTextarea
-    class="hlc-clr-input"
-    [placeholder]="placeholder || ''"
-    [readonly]="readonly ? true : undefined"
-    [value]="cleanValue"
-    (keyup)="onChange($event)"></textarea>
+<div class="clr-textarea-wrapper">
+    <textarea
+        class="hlc-clr-input"
+        [placeholder]="placeholder || ''"
+        [readonly]="readonly ? true : undefined"
+        [value]="cleanValue"
+        (keyup)="onChange($event)"
+    ></textarea>
+</div>
