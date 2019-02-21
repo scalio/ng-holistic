@@ -67,7 +67,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
-                            "tsConfig": "tsconfig.build.json"
+                            "tsConfig": "tsconfig.prod.json"
                         },
                         "dev-local-libs": {
                             "tsConfig": "tsconfig.build.json"
