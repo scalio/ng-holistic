@@ -2,7 +2,7 @@ import * as R from 'ramda';
 
 export class TextMask {
     static unmaskStrNumber(val: string): string | null {
-        const regex = /\D|\.+/g;
+        const regex = /[\D|[^.]]+/g;
         return val ? val.replace(regex, '') : null;
     }
 
@@ -16,7 +16,7 @@ export class TextMask {
     }
 
     static float(n: number, i: number) {
-        return R.repeat('9', n).join('') + '.' + R.repeat('9', i).join('');
+        return R.repeat('9', n).join('') + '.' + R.repeat('0', i).join('');
     }
 
     /*

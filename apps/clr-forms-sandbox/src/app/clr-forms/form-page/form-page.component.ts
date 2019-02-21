@@ -28,6 +28,16 @@ const group: ClrFormLayouts.ClrFormLayout = {
             }
         },
         {
+            id: 'decNum',
+            kind: 'MaskField',
+            props: {
+                label: 'Decimal number',
+                placeholder: '0000000.00',
+                mask: TextMask.float(7, 2),
+                unmask: TextMask.unmaskNumber
+            }
+        },
+        {
             id: 'phone',
             kind: 'PhoneField',
             label: 'Phone'
