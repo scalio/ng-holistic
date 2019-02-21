@@ -19,6 +19,8 @@ export namespace HlcClrWizard {
         commit?: (vals: { [key: string]: any }) => Observable<any>;
         skip?: (vals: { [key: string]: any }) => boolean;
         buttons?: PageButtons;
+        // User can skip this step by clicking next button
+        canSkip?: boolean;
     }
 
     export interface WizardStepFormLayout<T = never> extends WizardStepBaseLayout {

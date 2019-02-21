@@ -7,8 +7,13 @@
     [isInline]="true"
     (formsChanged)="onFormsChanged($event)"
 >
+
+    <ng-template hlcCustomField="skipStepHint">
+        <hlc-clr-alert> You can skip this step by click Next button </hlc-clr-alert>
+    </ng-template>
+
     <ng-template hlcCustomField="adminInfoCustomField">
-        <hlc-clr-alert> Admin will be created: {{ wizard.formsValues?.adminEmailPage?.adminEmail }} </hlc-clr-alert>
+        <hlc-clr-alert> If you choose to fill these fields, admin will be created: {{ wizard.formsValues?.adminEmailPage?.adminEmail }} </hlc-clr-alert>
     </ng-template>
 
     <ng-template hlcClrWizardCustomPage="adminExistsHintPage" let-vals>

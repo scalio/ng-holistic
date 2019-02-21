@@ -65,7 +65,12 @@ const pages = (
             id: 'adminInfoPage',
             title: 'Admin Info',
             navTitle: 'Admin Info',
+            canSkip: true,
             fields: [
+                {
+                    id: 'skipStepHint',
+                    kind: 'CustomField'
+                },
                 {
                     id: 'adminInfoCustomField',
                     kind: 'CustomField'

@@ -17,7 +17,7 @@
         <clr-wizard-page
             *ngIf="!isPageSkip(page)"
             [clrWizardPagePreventDefault]="true"
-            [clrWizardPageNextDisabled]="!isPageValid(page)"
+            [clrWizardPageNextDisabled]="!isPageValid(page) && !page.canSkip"
             (clrWizardPageOnCommit)="onCommit(page)"
             (clrWizardPageOnCancel)="onCancel()"
             (clrWizardPagePrevious)="onBack()"
