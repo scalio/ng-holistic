@@ -5,7 +5,6 @@ export interface WizardConfigButtonsText {
     next: string;
     back: string;
     finish: string;
-    skip: string;
 }
 
 export interface WizardConfig {
@@ -17,8 +16,7 @@ export const defaultWizardConfig: WizardConfig = {
         cancel: 'Cancel',
         next: 'Next',
         back: 'Back',
-        finish: 'Finish',
-        skip: 'Skip'
+        finish: 'Finish'
     }
 };
 
