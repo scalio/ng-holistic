@@ -1,6 +1,6 @@
 {
     "name": "@ng-holistic/clr-wizard",
-    "version": "0.0.29",
+    "version": "0.0.31",
     "peerDependencies": {
         "@angular/common": "^7.1.0",
         "@angular/core": "^7.1.0",
