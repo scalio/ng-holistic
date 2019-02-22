@@ -7,6 +7,8 @@ import {
     HlcClrDateRangeModule,
     HlcClrDateTimeComponent,
     HlcClrDateTimeModule,
+    HlcClrDisplayComponent,
+    HlcClrDisplayModule,
     HlcClrMaskComponent,
     HlcClrMaskModule,
     HlcClrMultiSelectComponent,
@@ -52,7 +54,8 @@ export const clrFieldsLayoutMap = {
     PairsListField: HlcClrPairsListComponent,
     TypeaheadField: HlcClrTypeaheadComponent,
     TagsField: HlcClrTagsComponent,
-    MultiSelectField: HlcClrMultiSelectComponent
+    MultiSelectField: HlcClrMultiSelectComponent,
+    DisplayField: HlcClrDisplayComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -71,7 +74,8 @@ export const clrFieldsLayoutComponents = [
     HlcClrPairsListComponent,
     HlcClrTypeaheadComponent,
     HlcClrTagsComponent,
-    HlcClrMultiSelectComponent
+    HlcClrMultiSelectComponent,
+    HlcClrDisplayComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -90,5 +94,6 @@ export const clrFieldsLayoutModules = [
     HlcClrPairsListModule,
     HlcClrTypeaheadModule,
     HlcClrTagsModule,
-    HlcClrMultiSelectModule
+    HlcClrMultiSelectModule,
+    HlcClrDisplayModule
 ];
