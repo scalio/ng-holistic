@@ -144,6 +144,14 @@ export namespace ClrFormFields {
             }
         > {}
 
+    export type DisplayField = BaseField<
+        'DisplayField',
+        any,
+        {
+            format: FormFields.FormFieldProp<(val: any) => string>;
+        }
+    >;
+
     export type FormField =
         | TextField
         | SelectField
@@ -161,5 +169,6 @@ export namespace ClrFormFields {
         | PasswordField
         | PairsListField
         | TypeaheadField
-        | TagsField;
+        | TagsField
+        | DisplayField;
 }

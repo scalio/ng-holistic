@@ -8,6 +8,8 @@ export * from './lib/date-time/date-time.module';
 export * from './lib/date.config';
 export * from './lib/date/date.component';
 export * from './lib/date/date.module';
+export * from './lib/display/display.component';
+export * from './lib/display/display.module';
 export * from './lib/list-items.config';
 export * from './lib/mask/mask.component';
 export * from './lib/mask/mask.module';
