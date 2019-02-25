@@ -10,3 +10,4 @@ export * from './lib/table/table.config';
 export * from './lib/table/table.module';
 export * from './lib/table/table.types';
 export * from './lib/table/custom-cell.directive';
+export * from './lib/filter.service';

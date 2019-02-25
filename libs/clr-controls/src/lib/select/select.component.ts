@@ -1,6 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DictMapperService, DictMapper } from '../list-items.config';
+import { DictMapper, DictMapperService } from '../list-items.config';
 
 export interface SelectValues {
     items: any[];
@@ -45,15 +45,15 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
 
     onChange(val: any) {
         /**
-        * Option change event always give string as an option value, event if value actually was other object type,
-        * this is wrong obviously when key is number.
-        * So use selectedIndex instead of val.target.value
-        */
+         * Option change event always give string as an option value, event if value actually was other object type,
+         * this is wrong obviously when key is number.
+         * So use selectedIndex instead of val.target.value
+         */
         const selectedIndex = val.target.selectedIndex - (this.disallowEmpty ? 0 : 1);
 
         this.value = selectedIndex === -1 ? null : this.mapKey(this.items[selectedIndex]);
-        this.valueChange.emit(this.value);
         this.propagateChange(this.value);
+        this.valueChange.emit(this.value);
     }
 
     mapKey(obj: any) {

@@ -46,7 +46,11 @@
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol" (click)="onCellClick(cell, row)">
+        <clr-dg-cell
+            *ngFor="let cell of table?.cols; trackBy: trackByCol"
+            [ngClass]="getCellClass(cell, row)"
+            (click)="onCellClick(cell, row)"
+        >
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 
@@ -107,9 +111,7 @@
 
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
     <!-- regular cell -->
-    <ng-template [ngIf]="!cell.kind && !cell.customCell">
-        <span [ngClass]="getCellClass(cell, row)">{{ getCellDisplayValue(cell, row) }}</span>
-    </ng-template>
+    <ng-template [ngIf]="!cell.kind && !cell.customCell"> {{ getCellDisplayValue(cell, row) }} </ng-template>
     <!-- custom cell -->
     <ng-template [ngIf]="cell.customCell">
         <ng-container
