@@ -11,10 +11,12 @@ import {
     Optional,
     Output,
     QueryList,
+    SkipSelf,
     ViewChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
+import { concat } from 'ramda';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import { RowDetailDirective } from '../table/row-detail.directive';
@@ -58,7 +60,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     /**
      * Custom cells
      */
-    @ContentChildren(CustomCellDirective) customCells: QueryList<CustomCellDirective>;
+    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
 
     // Table props delegators
 
@@ -97,7 +99,12 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
-    constructor(@Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig) {
+    constructor(
+        @Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig,
+        @SkipSelf()
+        @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
+        private readonly containerCustomCellsProvider?: TableCustomCellsProvider
+    ) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
     }
 
@@ -106,6 +113,13 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             // If there is no filters on init, loading still should be dispatched with empty filter
             this.setState({});
         }
+    }
+
+    get customCells() {
+        return concat(
+            this.customCellsContent ? this.customCellsContent.toArray() : [],
+            (this.containerCustomCellsProvider && this.containerCustomCellsProvider.customCells) || []
+        );
     }
 
     setState(state: ClrDatagridStateInterface) {

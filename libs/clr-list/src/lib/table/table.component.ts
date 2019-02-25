@@ -35,7 +35,7 @@ import {
 import { Table, TableDescription } from './table.types';
 
 export interface TableCustomCellsProvider {
-    customCells: QueryList<CustomCellDirective>;
+    customCells: CustomCellDirective[];
 }
 
 export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCustomCellsProvider>(
@@ -116,7 +116,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     /**
      * Custom cells
      */
-    @ContentChildren(CustomCellDirective) customCells: QueryList<CustomCellDirective>;
+    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
 
     /**
      * Redux like integration with external store for rows
@@ -175,6 +175,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.upadteRow(row));
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
+    }
+
+    get customCells() {
+        return this.customCellsContent ? this.customCellsContent.toArray() : [];
     }
 
     ngOnDestroy() {
@@ -425,8 +429,15 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             return dir;
         }
         if (this.containerCustomCellsProvider) {
-            return this.containerCustomCellsProvider.customCells.find(f => f.hlcClrCustomCell === cell.id);
+            const cellFromProvider = this.containerCustomCellsProvider.customCells.find(
+                f => f.hlcClrCustomCell === cell.id
+            );
+            if (cellFromProvider) {
+                return cellFromProvider;
+            }
         }
+
+        console.error('Custom cell template not found', cell, this.containerCustomCellsProvider);
     }
 
     @Memoize()

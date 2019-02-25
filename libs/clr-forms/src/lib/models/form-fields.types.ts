@@ -116,7 +116,9 @@ export namespace ClrFormFields {
 
     export interface PasswordField extends BaseFieldP<'PasswordField'> {}
 
-    export interface PairsListField extends BaseField<'PairsListField'> {}
+    export interface PairsListField extends BaseField<'PairsListField'> {
+
+    }
 
     export interface TypeaheadField
         extends BaseFieldP<
