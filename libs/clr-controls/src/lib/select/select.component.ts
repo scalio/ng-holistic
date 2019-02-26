@@ -1,12 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isNil } from 'ramda';
 import { DictMapper, DictMapperService } from '../list-items.config';
-
-export interface SelectValues {
-    items: any[];
-    disallowEmpty?: boolean;
-    readonly?: boolean;
-}
 
 @Component({
     selector: 'hlc-clr-select',
@@ -20,11 +15,36 @@ export interface SelectValues {
         }
     ]
 })
-export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccessor, SelectValues {
+export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccessor {
+    _items: any[] | undefined;
+    _value: any | undefined;
+    /**
+     * This value has temp val in case in items there is no item for the real value.
+     * Items provided after value case.
+     */
+    _tmpValue: any | undefined;
+
     @Input()
-    items: any[];
+    set items(items: any[] | undefined) {
+        this._items = items;
+        if (this._tmpValue) {
+            this.setValue(this._tmpValue);
+        }
+    }
+
+    get items() {
+        return this._items;
+    }
+
     @Input()
-    value: any | undefined;
+    set value(val: any | null) {
+        this.setValue(val);
+    }
+
+    get value() {
+        return this._tmpValue || this._value;
+    }
+
     // true - Don't wrap to 'select' class container, use original browser look
     @Input()
     naked: boolean | undefined;
@@ -67,6 +87,22 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
     trackBy = (_: number, obj: any) => {
         return this.mapKey(obj);
     };
+
+    setValue(val: any | null) {
+        if (isNil(val)) {
+            this._tmpValue = null;
+            this._value = null;
+            return;
+        }
+        const hasItem = (this.items || []).some(i => this.mapKey(i) === val);
+        if (hasItem) {
+            this._tmpValue = null;
+            this._value = val;
+        } else {
+            this._tmpValue = val;
+            this._value = null;
+        }
+    }
 
     //
 

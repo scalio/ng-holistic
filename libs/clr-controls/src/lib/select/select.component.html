@@ -3,7 +3,7 @@
         class="hlc-clr-input"
         [disabled]="readonly"
         (change)="onChange($event)"
-        [value]="value">
+        [value]="_value">
         <option
             *ngIf="!disallowEmpty"
             [attr.value]="null"></option>
