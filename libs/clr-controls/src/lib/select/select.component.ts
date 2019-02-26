@@ -71,7 +71,7 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
          */
         const selectedIndex = val.target.selectedIndex - (this.disallowEmpty ? 0 : 1);
 
-        this.value = selectedIndex === -1 ? null : this.mapKey(this.items[selectedIndex]);
+        this.value = selectedIndex === -1 ? null : this.mapKey((this.items || [])[selectedIndex]);
         this.propagateChange(this.value);
         this.valueChange.emit(this.value);
     }
