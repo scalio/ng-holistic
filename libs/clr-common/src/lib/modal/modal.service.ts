@@ -19,6 +19,7 @@ export interface ModalShowFormParams extends ModalShowParams {
     dataAccess: FormFooterDataAccess;
     allowOkWhenFormPristine?: boolean;
     value?: any;
+    closeOnOk?: boolean;
 }
 
 /**
@@ -86,12 +87,11 @@ export class HlcClrModalService {
 
         result.ok = res$.pipe(flatMap(x => x));
 
-        result.ok
-            .pipe(
-                take(1),
-                takeUntil(this.hide$)
-            )
-            .subscribe(() => this.hide());
+        if (params.closeOnOk !== false) {
+            result.ok = result.ok.pipe(take(1));
+        }
+
+        result.ok.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
 
         return result;
     }
