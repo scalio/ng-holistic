@@ -1,1 +1,24 @@
 {{ formattedValue }}
+
+<clr-tooltip *ngIf="iconTooltipText && icon">
+    <button
+        clrTooltipTrigger
+        class="btn btn-link btn-icon btn-sm"
+        type="Button"
+        style="margin: initial"
+        (click)="iconClick.emit(value)"
+    >
+        <clr-icon [attr.shape]="icon"></clr-icon>
+    </button>
+    <clr-tooltip-content clrPosition="top-right" clrSize="sm" *clrIfOpen> <span>Edit</span> </clr-tooltip-content>
+</clr-tooltip>
+
+<button
+    *ngIf="!iconTooltipText && icon"
+    class="btn btn-link btn-icon btn-sm"
+    type="Button"
+    style="margin: initial"
+    (click)="iconClick.emit()"
+>
+    <clr-icon [attr.shape]="icon"></clr-icon>
+</button>

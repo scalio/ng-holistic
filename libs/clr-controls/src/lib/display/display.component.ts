@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -16,6 +16,11 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export class HlcClrDisplayComponent {
     @Input() value: any;
     @Input() format: (val: any) => string;
+
+    @Input() icon: string;
+    @Input() iconTooltipText: string;
+
+    @Output() iconClick = new EventEmitter();
 
     //
     writeValue(obj: any) {

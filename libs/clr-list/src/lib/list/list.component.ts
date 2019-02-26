@@ -101,6 +101,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     constructor(
         @Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig,
+        @Optional()
         @SkipSelf()
         @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider

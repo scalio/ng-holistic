@@ -116,9 +116,7 @@ export namespace ClrFormFields {
 
     export interface PasswordField extends BaseFieldP<'PasswordField'> {}
 
-    export interface PairsListField extends BaseField<'PairsListField'> {
-
-    }
+    export interface PairsListField extends BaseField<'PairsListField'> {}
 
     export interface TypeaheadField
         extends BaseFieldP<
@@ -150,7 +148,10 @@ export namespace ClrFormFields {
         'DisplayField',
         any,
         {
-            format: FormFields.FormFieldProp<(val: any) => string>;
+            format?: FormFields.FormFieldProp<(val: any) => string>;
+            icon?: FormFields.FormFieldProp<string>;
+            iconTooltipText?: FormFields.FormFieldProp<string>;
+            iconClick?: Subject<any>;
         }
     >;
 
