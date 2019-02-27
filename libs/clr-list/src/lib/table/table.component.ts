@@ -222,7 +222,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
-
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
             this._freezeInitialStateChange = false;
@@ -276,7 +275,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             )
             .subscribe(() => {});
     }
-
 
     setState(state: ClrDatagridStateInterface, isInitial = false) {
         if (R.equals(this.state, state)) {
