@@ -22,6 +22,12 @@ export interface ModalShowFormParams extends ModalShowParams {
     closeOnOk?: boolean;
 }
 
+export interface ShowModalResult<T> {
+    instance$: Observable<T>;
+    modalInstance: HlcClrModalComponent;
+    ok: Observable<void>;
+}
+
 /**
  * Provides API to show / hide modal.
  */
@@ -32,7 +38,7 @@ export class HlcClrModalService {
     constructor(private readonly overlayService: HlcClrOverlayService) {}
 
     // TODOD : separate showForm
-    show<T>(params: ModalShowParams) {
+    show<T>(params: ModalShowParams): ShowModalResult<T> {
         const { backdropClick, instance } = this.overlayService.showComponent<HlcClrModalComponent>(
             HlcClrModalComponent,
             {
@@ -50,7 +56,7 @@ export class HlcClrModalService {
         instance.cancel.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
 
         const result = {
-            instance$: instance.contentInstance$.asObservable() as Observable<T>,
+            instance$: instance.contentInstance$.pipe(shareReplay(1)) as Observable<T>,
             modalInstance: instance,
             ok: instance.ok.asObservable()
         };
@@ -65,7 +71,7 @@ export class HlcClrModalService {
         return result;
     }
 
-    showForm<T>(params: ModalShowFormParams) {
+    showForm<T>(params: ModalShowFormParams): ShowModalResult<T> {
         const result = this.show<T>(params);
 
         // ok after update success
@@ -91,7 +97,7 @@ export class HlcClrModalService {
             result.ok = result.ok.pipe(take(1));
         }
 
-        result.ok.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
+        result.ok.pipe(takeUntil(this.hide$)).subscribe(() => {}, () => {}, () => this.hide());
 
         return result;
     }
