@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,7 @@ export class HlcClrToggleComponent implements OnInit, ControlValueAccessor {
     @Input() text: string;
     @Input() value: boolean;
     @Input() readonly: boolean | undefined;
+    @Output() valueChanged = new EventEmitter<boolean>();
 
     propagateChange = (_: any) => {};
 
@@ -33,6 +34,7 @@ export class HlcClrToggleComponent implements OnInit, ControlValueAccessor {
     onChange(val: any) {
         this.value = val;
         this.propagateChange(val);
+        this.valueChanged.emit(val);
     }
 
     //

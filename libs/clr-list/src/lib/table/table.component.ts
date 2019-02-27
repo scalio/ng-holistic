@@ -51,6 +51,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
 export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
+    private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
     /**
@@ -221,20 +222,20 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
             this._freezeInitialStateChange = false;
             return;
         }
 
-        // console.log('111', state, this.state);
         if (this.state && R.isEmpty(state)) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
             return;
         }
 
-        if (state && state.page && !this.state.page) {
+        if (state && state.page && (this.state && !this.state.page)) {
             // first time state.page recieved, usually after first load, just ignore
             this.state = state;
             return;
@@ -243,6 +244,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         const dataProvider = this.dataProvider;
         if (!dataProvider) {
             return;
+        }
+
+        if (this._initState) {
+            state = this._initState;
+            this._initState = undefined;
         }
 
         let state$ = of(state);
@@ -265,36 +271,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         state$
             .pipe(
                 // ignore if there is no changes on state
-                /*
-                filter(
-                    R.pipe(
-                        compareStates,
-                        R.not,
-                    ),
-                ),
-                */
                 tap(st => this.stateChanged.emit(st)),
                 flatMap(st => this.loadData(dataProvider, st))
             )
             .subscribe(() => {});
     }
 
-    /*
-    refreshData(state: ClrDatagridStateInterface = {}) {
-        const dataProvider = this.dataProvider;
-        if (dataProvider) {
-            this.loadData(dataProvider, state)
-                .pipe(
-                    takeUntil(this.destroy$),
-                    take(1),
-                )
-                .subscribe(() => {
-                });
-        }
-    }
-    */
 
-    setState(state: ClrDatagridStateInterface) {
+    setState(state: ClrDatagridStateInterface, isInitial = false) {
         if (R.equals(this.state, state)) {
             return;
         }
@@ -306,9 +290,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 this.filterService.setValue(filterValue);
             }
         }
-        this.onRefresh(state);
-        // Ignore next refesh
-        this._freezeInitialStateChange = true;
+
+        if (!isInitial) {
+            this.onRefresh(state);
+            // Ignore next refesh
+            this._freezeInitialStateChange = true;
+        } else {
+            this._initState = state;
+        }
     }
 
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
