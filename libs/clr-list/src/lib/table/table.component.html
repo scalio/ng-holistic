@@ -48,10 +48,11 @@
         </clr-dg-action-overflow>
 
         <clr-dg-cell
-            *ngFor="let cell of table?.cols; trackBy: trackByCol"
+            *ngFor="let cell of table?.cols; trackBy: trackByCol; first as isFirst"
             [ngClass]="getCellClass(cell, row)"
             (click)="onCellClick(cell, row)"
         >
+            <clr-icon *ngIf="isFirst && dragEnabled" shape="drag-handle"></clr-icon>
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 
