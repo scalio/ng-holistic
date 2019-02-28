@@ -140,6 +140,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() dataProvider: Table.Data.DataProvider | undefined;
     @Input() table: TableDescription | undefined;
 
+    @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
+
     /**
      * Value will be already mapped by config.dataProvider.mapState
      */

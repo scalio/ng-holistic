@@ -7,6 +7,7 @@ import { HlcClrSelectModule } from '@ng-holistic/clr-controls';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
+import { SortPipe } from './sort.pipe';
 import { TableCellHostDirective } from './table-cell-host.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 import { HlcClrTableComponent } from './table.component';
@@ -28,6 +29,7 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
         CustomCellDirective,
         TableCustomCellHostDirective,
         RowDetailDirective,
+        SortPipe,
         ...cellComponents
     ],
     exports: [HlcClrTableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],

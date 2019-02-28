@@ -31,7 +31,7 @@
     </clr-dg-row>
 
     <clr-dg-row
-        *ngFor="let row of rows; trackBy: trackByRow"
+        *ngFor="let row of rows | sort : sortFn; trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
         cdkDrag

@@ -27,7 +27,7 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
     @Input()
     set items(items: any[] | undefined) {
         this._items = items;
-        if (this._tmpValue) {
+        if (!isNil(this._tmpValue)) {
             this.setValue(this._tmpValue);
         }
     }
