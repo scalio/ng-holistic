@@ -9,6 +9,7 @@
     cdkDropList
     [cdkDropListDisabled]="!dragEnabled"
     (cdkDropListDropped)="onDrop($event)"
+    [class.datagrid-clickable]="rowSelectable"
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
@@ -31,7 +32,7 @@
     </clr-dg-row>
 
     <clr-dg-row
-        *ngFor="let row of rows | sort : sortFn; trackBy: trackByRow"
+        *ngFor="let row of (rows | sort: sortFn); trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
         cdkDrag
@@ -111,7 +112,9 @@
 
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
     <!-- regular cell -->
-    <ng-template [ngIf]="!cell.kind && !cell.customCell"> {{ getCellDisplayValue(cell, row) }} </ng-template>
+    <ng-template [ngIf]="!cell.kind && !cell.customCell">
+        <span>{{ getCellDisplayValue(cell, row) }}</span>
+    </ng-template>
     <!-- custom cell -->
     <ng-template [ngIf]="cell.customCell">
         <ng-container

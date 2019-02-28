@@ -54,6 +54,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
+    private _activeRow: Table.RowBase | undefined;
     /**
      * FIX : Control unexpected behaviour
      * See following comments for this variable
@@ -69,6 +70,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() rowDetail: RowDetailDirective | undefined;
 
     @Input() aggregateRow: Table.AggregateRow | undefined;
+    @Input() rowSelectable = false;
 
     @Input() filter: any;
 
@@ -343,8 +345,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         );
     }
 
-    isRowActive(_: Table.RowBase) {
-        return false;
+    isRowActive(row: Table.RowBase) {
+        return this._activeRow && row.id === this._activeRow.id;
     }
 
     getColSort(col: Table.ColumnBase) {
@@ -506,6 +508,9 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     onCellClick(cell: Table.ColumnBase, row: Table.Row) {
+        if (this.rowSelectable) {
+            this._activeRow = row;
+        }
         this.cellClick.emit({ cell, row });
     }
 }

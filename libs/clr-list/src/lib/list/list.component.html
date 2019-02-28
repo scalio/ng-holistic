@@ -9,6 +9,7 @@
     [dragEnabled]="dragEnabled"
     [hidePaginator]="hidePaginator"
     [disableSorting]="disableSorting"
+    [rowSelectable]="rowSelectable"
     (stateChanged)="onTableStateChanged($event)"
     (rowAction)="rowAction.emit($event)"
     (cellClick)="cellClick.emit($event)"

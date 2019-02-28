@@ -80,6 +80,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
      * Enable darg & drop
      */
     @Input() dragEnabled = false;
+    @Input() rowSelectable = false;
 
     /**
      * Value will be already mapped by config.dataProvider.mapState
