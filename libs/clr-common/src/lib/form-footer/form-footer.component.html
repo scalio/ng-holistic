@@ -1,10 +1,6 @@
 <div class="form-footer">
     <hlc-clr-form-error *ngIf="displayError" [message]="error" (reset)="error = null"> </hlc-clr-form-error>
     <div class="buttons-panel">
-        <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
-            {{ labels.cancelLabel }}
-        </button>
-
         <button
             [clrLoading]="updateButtonState$ | async"
             class="btn btn-primary"
@@ -13,6 +9,10 @@
             (click)="$event.preventDefault(); onSave()"
         >
             {{ labels.okLabel }}
+        </button>
+
+        <button class="btn btn-outline" type="button" (click)="$event.preventDefault(); onCancel()">
+            {{ labels.cancelLabel }}
         </button>
 
         <ng-content> </ng-content>
