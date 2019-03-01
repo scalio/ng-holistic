@@ -13,6 +13,9 @@
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
+    <clr-dg-column class="datagrid-column-drag-handle" *ngIf="dragEnabled" >
+    </clr-dg-column>
+
     <ng-container *ngFor="let col of table?.cols; trackBy: trackByCol">
         <clr-dg-column
             *ngIf="col.sort && !disableSorting; else unsortableColumn"
@@ -47,12 +50,15 @@
             </button>
         </clr-dg-action-overflow>
 
+        <clr-dg-cell class="datagrid-cell-drag-handle" *ngIf="dragEnabled" >
+            <clr-icon shape="drag-handle"></clr-icon>
+        </clr-dg-cell>
+
         <clr-dg-cell
-            *ngFor="let cell of table?.cols; trackBy: trackByCol; first as isFirst"
+            *ngFor="let cell of table?.cols; trackBy: trackByCol;"
             [ngClass]="getCellClass(cell, row)"
             (click)="onCellClick(cell, row)"
         >
-            <clr-icon *ngIf="isFirst && dragEnabled" shape="drag-handle"></clr-icon>
             <ng-container *ngTemplateOutlet="rowCell; context: { cell: cell, row: row }"></ng-container>
         </clr-dg-cell>
 
