@@ -16,7 +16,7 @@
     (selectedRowsChanged)="selectedRowsChanged.emit($event)"
     (drop)="drop.emit($event)"
 >
-    <ng-container action-bar>
+    <ng-container *ngIf="filterFields" action-bar>
         <!-- Toolbox & filter -->
         <div class="clr-row">
             <div class="clr-col-2" *ngIf="!hideFilter">
