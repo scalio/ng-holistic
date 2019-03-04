@@ -13,7 +13,7 @@
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
-    <clr-dg-column class="datagrid-column-drag-handle" *ngIf="dragEnabled" >
+    <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled" >
     </clr-dg-column>
 
     <ng-container *ngFor="let col of table?.cols; trackBy: trackByCol">
@@ -50,7 +50,7 @@
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell class="datagrid-cell-drag-handle" *ngIf="dragEnabled" >
+        <clr-dg-cell class="datagrid-cell-handle" *ngIf="dragEnabled" >
             <clr-icon shape="drag-handle"></clr-icon>
         </clr-dg-cell>
 

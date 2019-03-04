@@ -17,12 +17,18 @@
                 type="button"
             >
                 {{ tab.title }}
-                <clr-tooltip *ngIf="tabHasErrors(tab)">
+                <clr-tooltip *ngIf="config?.tabErrorHint && tabHasErrors(tab)">
                     <clr-icon clrTooltipTrigger class="error-icon" shape="exclamation-circle" size="24"></clr-icon>
                     <clr-tooltip-content clrPosition="right" clrSize="md" *clrIfOpen>
                         <span class="error-content">{{ config.tabErrorHint }}</span>
                     </clr-tooltip-content>
                 </clr-tooltip>
+                <clr-icon
+                    *ngIf="!config?.tabErrorHint && tabHasErrors(tab)"
+                    class="error-icon"
+                    shape="exclamation-circle"
+                    size="24"
+                ></clr-icon>
             </button>
         </li>
     </ng-container>

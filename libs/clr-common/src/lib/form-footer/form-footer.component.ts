@@ -70,6 +70,7 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
     @Input() dataAccess: FormFooterDataAccess | undefined;
     @Input() disabled: boolean | undefined;
     @Input() allowOkWhenFormPristine = false;
+    @Input() footerClass = 'form-footer';
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();

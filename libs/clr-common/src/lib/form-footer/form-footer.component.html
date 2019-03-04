@@ -1,4 +1,4 @@
-<div class="form-footer">
+<div [ngClass]="footerClass">
     <hlc-clr-form-error *ngIf="displayError" [message]="error" (reset)="error = null"> </hlc-clr-form-error>
     <div class="buttons-panel">
         <button
