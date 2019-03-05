@@ -1,5 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { isNil } from 'ramda';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { AlertType } from '../common.types';
@@ -12,12 +13,16 @@ import { HlcClrOverlayService } from './overlay.service';
 export interface ModalShowParams {
     title: string;
     contentComponentType: any;
+    // default true
+    hideOnClickOverlay?: boolean;
 }
 
 export interface ModalShowTemplateParams {
     title: string;
     contentComponentTemplate: TemplateRef<any>;
     hideFooter: boolean;
+    // default true
+    hideOnClickOverlay?: boolean;
 }
 
 export interface ModalShowFormParams extends ModalShowParams {
@@ -26,6 +31,8 @@ export interface ModalShowFormParams extends ModalShowParams {
     allowOkWhenFormPristine?: boolean;
     value?: any;
     closeOnOk?: boolean;
+    // default false, since we dont wont user lost entered data when ocasionally click on background
+    hideOnClickOverlay?: boolean;
 }
 
 export interface ShowModalResult<T> {
@@ -54,9 +61,12 @@ export class HlcClrModalService {
         instance.title = params.title;
         instance.contentComponentType = params.contentComponentType;
 
-        backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
-            this.hide();
-        });
+        const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? true : params.hideOnClickOverlay;
+        if (hideOnClickOverlay) {
+            backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
+                this.hide();
+            });
+        }
 
         instance.cancel.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
 
@@ -88,9 +98,12 @@ export class HlcClrModalService {
         instance.contentComponentTemplate = params.contentComponentTemplate;
         instance.hideFooter = params.hideFooter;
 
-        backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
-            this.hide();
-        });
+        const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? true : params.hideOnClickOverlay;
+        if (hideOnClickOverlay) {
+            backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
+                this.hide();
+            });
+        }
 
         instance.cancel.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
 
@@ -126,9 +139,13 @@ export class HlcClrModalService {
             takeUntil(this.hide$)
         );
 
-        res$.subscribe(() => {
-            result.modalInstance.detectChanges();
-        });
+        const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? false : params.hideOnClickOverlay;
+
+        if (hideOnClickOverlay) {
+            res$.subscribe(() => {
+                result.modalInstance.detectChanges();
+            });
+        }
 
         result.ok = res$.pipe(flatMap(x => x));
 
