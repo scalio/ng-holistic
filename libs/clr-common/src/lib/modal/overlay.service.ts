@@ -40,7 +40,7 @@ export class HlcClrOverlayService {
         // example: when using with hlc-forms
         const overlayConfig = new OverlayConfig({
             hasBackdrop: true,
-            positionStrategy: this.positionStrategy,
+            positionStrategy: this.positionStrategy
             // backdropClass: 'modal-backdrop'
         });
 
@@ -97,8 +97,8 @@ export class HlcClrOverlayService {
 
         const portal = this.createPortal(content);
 
-        const x = this.overlayRef.attach(portal);
+        const { instance } = this.overlayRef.attach(portal);
 
-        return { instance: x.instance as T, backdropClick: this.overlayRef.backdropClick() };
+        return { instance: instance as T, backdropClick: this.overlayRef.backdropClick() };
     }
 }
