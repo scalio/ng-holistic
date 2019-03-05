@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
@@ -12,6 +12,12 @@ import { HlcClrOverlayService } from './overlay.service';
 export interface ModalShowParams {
     title: string;
     contentComponentType: any;
+}
+
+export interface ModalShowTemplateParams {
+    title: string;
+    contentComponentTemplate: TemplateRef<any>;
+    hideFooter: boolean;
 }
 
 export interface ModalShowFormParams extends ModalShowParams {
@@ -37,7 +43,6 @@ export class HlcClrModalService {
 
     constructor(private readonly overlayService: HlcClrOverlayService) {}
 
-    // TODOD : separate showForm
     show<T>(params: ModalShowParams): ShowModalResult<T> {
         const { backdropClick, instance } = this.overlayService.showComponent<HlcClrModalComponent>(
             HlcClrModalComponent,
@@ -48,6 +53,40 @@ export class HlcClrModalService {
 
         instance.title = params.title;
         instance.contentComponentType = params.contentComponentType;
+
+        backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
+            this.hide();
+        });
+
+        instance.cancel.pipe(takeUntil(this.hide$)).subscribe(() => this.hide());
+
+        const result = {
+            instance$: instance.contentInstance$.pipe(shareReplay(1)) as Observable<T>,
+            modalInstance: instance,
+            ok: instance.ok.asObservable()
+        };
+
+        result.ok
+            .pipe(
+                take(1),
+                takeUntil(this.hide$)
+            )
+            .subscribe(() => this.hide());
+
+        return result;
+    }
+
+    showTemplate<T>(params: ModalShowTemplateParams): ShowModalResult<T> {
+        const { backdropClick, instance } = this.overlayService.showComponent<HlcClrModalComponent>(
+            HlcClrModalComponent,
+            {
+                position: 'center'
+            }
+        );
+
+        instance.title = params.title;
+        instance.contentComponentTemplate = params.contentComponentTemplate;
+        instance.hideFooter = params.hideFooter;
 
         backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
             this.hide();

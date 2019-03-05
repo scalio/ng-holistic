@@ -9,9 +9,14 @@
             </div>
             <div class="modal-body">
                 <hlc-clr-form-error [message]="error" (reset)="error = undefined;"></hlc-clr-form-error>
-                <ng-template *ngxComponentOutlet="contentComponentType; create$: contentInstance$"></ng-template>
+                <ng-container *ngIf="contentComponentType">
+                    <ng-template *ngxComponentOutlet="contentComponentType; create$: contentInstance$"></ng-template>
+                </ng-container>
+                <ng-container *ngIf="contentComponentTemplate">
+                    <ng-container *ngTemplateOutlet="contentComponentTemplate"></ng-container>
+                </ng-container>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" *ngIf="!hideFooter">
                 <hlc-clr-form-footer *ngIf="formProvider else simpleFooter"
                     #footer
                     [okLabel] = "okLabel"

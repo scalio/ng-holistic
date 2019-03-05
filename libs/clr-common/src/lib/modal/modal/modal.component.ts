@@ -6,7 +6,8 @@ import {
     Inject,
     Input,
     OnInit,
-    Optional
+    Optional,
+    TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -30,9 +31,11 @@ export class HlcClrModalComponent implements OnInit {
     @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
     @Input() title: string;
     @Input() contentComponentType: any;
+    @Input() contentComponentTemplate: TemplateRef<any>;
     @Input() okClass: 'btn-primary' | 'btn-success' | 'btn-warning' | 'btn-danger' | 'btn-danger';
     @Input() okText: string;
     @Input() cancelText: string;
+    @Input() hideFooter = false;
     /**
      * Expect content has form, in this case will be used form-footer component
      */
