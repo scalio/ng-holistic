@@ -18,8 +18,8 @@
 >
     <ng-container *ngIf="filterFields" action-bar>
         <!-- Toolbox & filter -->
-        <div class="clr-row">
-            <div class="clr-col-2" *ngIf="!hideFilter">
+        <div class="flex-row flex-space-between">
+            <div *ngIf="!hideFilter">
                 <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
                     <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
                 </button>
@@ -27,7 +27,7 @@
                     <clr-icon shape="angle" dir="up"></clr-icon>{{ labelsConfig.showFilter }}
                 </button>
             </div>
-            <div class="clr-col-10"><ng-content select="[toolbox]"></ng-content></div>
+            <div><ng-content select="[toolbox]"></ng-content></div>
         </div>
         <hlc-clr-filter
             [fields]="filterFields"
