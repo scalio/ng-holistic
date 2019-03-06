@@ -1,5 +1,7 @@
-<select multiple (change)="onChange($event)">
-    <option *ngFor="let item of items; trackBy: trackBy" [value]="mapKey(item)" [selected]="isSelected(item)">
-        {{ mapLabel(item) }}
-    </option>
-</select>
+<div class="clr-multiselect-wrapper">
+    <select multiple (change)="onChange($event)">
+        <option *ngFor="let item of items; trackBy: trackBy" [value]="mapKey(item)" [selected]="isSelected(item)">
+            {{ mapLabel(item) }}
+        </option>
+    </select>
+</div>
