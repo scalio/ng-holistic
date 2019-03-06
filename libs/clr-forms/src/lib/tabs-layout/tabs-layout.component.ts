@@ -25,7 +25,7 @@ import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig } from './tabs-layout.conf
 
 @Component({
     selector: 'hlc-tab-layout',
-    template: '<ng-container #vc></ng-container>',
+    template: '<div class="clr-row"><div class="clr-col-sm-10"><ng-container #vc></ng-container></div></div>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabLayoutComponent {
