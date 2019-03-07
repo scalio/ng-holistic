@@ -18,8 +18,8 @@ interface FilePreviewDialogConfig {
 
 const DEFAULT_CONFIG: FilePreviewDialogConfig = {
     hasBackdrop: true,
-    backdropClass: 'dark-backdrop',
-    panelClass: 'tm-file-preview-dialog-panel'
+    // backdropClass: 'dark-backdrop',
+    // panelClass: 'tm-file-preview-dialog-panel'
 };
 
 @Injectable()
@@ -27,6 +27,7 @@ export class HlcFilePreviewOverlayService {
     constructor(private injector: Injector, private overlay: Overlay) {}
 
     open(img: string, config?: Partial<FilePreviewDialogConfig>) {
+
         // Override default configuration
         const dialogConfig = { ...DEFAULT_CONFIG, ...(config || {}) };
 
@@ -82,7 +83,8 @@ export class HlcFilePreviewOverlayService {
             backdropClass: config.backdropClass,
             panelClass: config.panelClass,
             scrollStrategy: this.overlay.scrollStrategies.block(),
-            positionStrategy
+            positionStrategy,
+            maxWidth: '90%'
         });
 
         return overlayConfig;

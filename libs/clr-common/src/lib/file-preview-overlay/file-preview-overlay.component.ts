@@ -21,12 +21,14 @@ import { HLC_FILE_PREVIEW_DIALOG_DATA } from './file-preview-overlay.tokens';
             }
 
             img {
-                width: 100%;
-                height: auto;
+                width: auto;
+                height: 100%;
+
             }
 
             .overlay-content {
-                padding: 1em;
+                // width: 100%;
+                height: 100%;
             }
         `
     ]
