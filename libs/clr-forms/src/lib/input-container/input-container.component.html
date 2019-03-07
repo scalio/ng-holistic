@@ -1,5 +1,6 @@
 <div class="clr-form-control" [class.invalid]="isInvalid">
-    <label class="clr-control-label" (click)="onLabelClick()">
+    <label *ngIf="label" class="clr-control-label" (click)="onLabelClick()">
+        <clr-icon *ngIf="toggleInputControl" shape="angle" [dir]="toggleInputControl === 'on' ? 'down' : 'up'"></clr-icon>
         {{ label }}
         <span class="required-hint">
             <span *ngIf="showRequiredHint === 'optional' && isOptional">{{ optinalLabel }}</span>
@@ -7,7 +8,7 @@
         </span>
     </label>
 
-    <div class="clr-control-container">
+    <div [hidden]="toggleInputControl === 'off'" class="clr-control-container">
         <ng-container #ref> <ng-content></ng-content> </ng-container>
 
         <hlc-validation-errors></hlc-validation-errors>

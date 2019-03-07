@@ -15,7 +15,7 @@ export namespace ClrFormFields {
 
     export type BaseFieldProps<TVal, TExtProps = {}> = BaseBaseFieldProps<TVal> &
         TExtProps & {
-            labelClick?: Subject<void>;
+            toggleInputControl?: FormFields.FormFieldProp<'on' | 'off' | undefined>;
         };
 
     export type BaseFieldPropsP<TVal, TExtProps = {}> = BaseFieldProps<

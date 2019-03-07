@@ -1,7 +1,6 @@
 import {
     ChangeDetectorRef,
     Component,
-    EventEmitter,
     Host,
     Inject,
     InjectionToken,
@@ -9,7 +8,6 @@ import {
     OnDestroy,
     OnInit,
     Optional,
-    Output,
     SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
@@ -34,6 +32,8 @@ export const INPUT_CONTAINER_CONFIG = new InjectionToken<InputContainerConfig>('
 export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
 
+    @Input() toggleInputControl: 'on' | 'off' | undefined;
+
     @Input()
     label: string;
     @Input()
@@ -45,8 +45,6 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
 
     @Input()
     formControl: FormControl;
-
-    @Output() labelClick = new EventEmitter();
 
     // @ts-ignore
     constructor(
@@ -147,6 +145,6 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
     }
 
     onLabelClick() {
-        this.labelClick.emit();
+        this.toggleInputControl = this.toggleInputControl === 'on' ? 'off' : 'on';
     }
 }
