@@ -1,14 +1,16 @@
 import {
     ChangeDetectorRef,
     Component,
+    EventEmitter,
     Host,
+    Inject,
     InjectionToken,
     Input,
     OnDestroy,
     OnInit,
     Optional,
-    SkipSelf,
-    Inject
+    Output,
+    SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -43,6 +45,8 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
 
     @Input()
     formControl: FormControl;
+
+    @Output() labelClick = new EventEmitter();
 
     // @ts-ignore
     constructor(
@@ -140,5 +144,9 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
         }
 
         return this.control.invalid;
+    }
+
+    onLabelClick() {
+        this.labelClick.emit();
     }
 }

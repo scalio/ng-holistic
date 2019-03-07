@@ -13,7 +13,10 @@ export namespace ClrFormFields {
         readonly?: FormFields.FormFieldProp<boolean>;
     }
 
-    export type BaseFieldProps<TVal, TExtProps = {}> = BaseBaseFieldProps<TVal> & TExtProps;
+    export type BaseFieldProps<TVal, TExtProps = {}> = BaseBaseFieldProps<TVal> &
+        TExtProps & {
+            labelClick?: Subject<void>;
+        };
 
     export type BaseFieldPropsP<TVal, TExtProps = {}> = BaseFieldProps<
         TVal,

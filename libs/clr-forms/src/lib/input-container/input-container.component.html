@@ -1,5 +1,5 @@
 <div class="clr-form-control" [class.invalid]="isInvalid">
-    <label class="clr-control-label">
+    <label class="clr-control-label" (click)="onClick()">
         {{ label }}
         <span class="required-hint">
             <span *ngIf="showRequiredHint === 'optional' && isOptional">{{ optinalLabel }}</span>

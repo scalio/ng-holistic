@@ -1,14 +1,16 @@
 /* Container needed to position the overlay. Adjust the width as needed */
 .container {
     position: relative;
-    width: 100%;
+    width: auto;
 }
 
 /* Make the image to responsive */
+/*
 .image {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
 }
+*/
 
 /* The overlay effect (full height and width) - lays on top of the container and over the image */
 .overlay {
