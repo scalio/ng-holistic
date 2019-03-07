@@ -1,5 +1,5 @@
 <div class="clr-form-control" [class.invalid]="isInvalid">
-    <label *ngIf="label" class="clr-control-label" (click)="onLabelClick()">
+    <label *ngIf="label" [class.label-clickable]="toggleInputControl" class="clr-control-label" (click)="onLabelClick()">
         <clr-icon *ngIf="toggleInputControl" shape="angle" [dir]="toggleInputControl === 'on' ? 'down' : 'up'"></clr-icon>
         {{ label }}
         <span class="required-hint">
