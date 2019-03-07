@@ -1,12 +1,20 @@
 <div
     class="container"
     [class.overlay-visible]="overlayVisible"
+    [class.image-full-width]="width"
+    [class.image-full-height]="height"
     [style.width]="width"
     [style.height]="height"
     [style.max-width]="width"
     [style.max-height]="height"
 >
-    <img [src]="src" class="image" [style.width]="width" [style.height]="height" />
+    <img
+        [src]="src"
+        [class.image-full]="!weigth && !height"
+        class="image"
+        [style.width]="width"
+        [style.height]="height"
+    />
     <div class="overlay">
         <div class="overlay-content"><ng-content></ng-content></div>
     </div>

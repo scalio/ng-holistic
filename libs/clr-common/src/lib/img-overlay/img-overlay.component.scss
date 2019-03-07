@@ -5,12 +5,23 @@
 }
 
 /* Make the image to responsive */
-/*
-.image {
+
+.image-full-height {
     width: auto;
     height: 100%;
 }
-*/
+
+
+.image-full-width {
+    width: 100%;
+    height: auto;
+}
+
+.image-full {
+    width: 100%;
+    height: 100%;
+}
+
 
 /* The overlay effect (full height and width) - lays on top of the container and over the image */
 .overlay {
