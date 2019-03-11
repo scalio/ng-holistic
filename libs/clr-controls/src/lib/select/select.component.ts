@@ -56,7 +56,7 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
     @Input()
     dictMapper: DictMapper | undefined;
     @Output()
-    valueChange = new EventEmitter<string | undefined>();
+    valueChanged = new EventEmitter<any | undefined>();
     propagateChange = (_: any) => {};
 
     constructor(private readonly dictMapperService: DictMapperService) {}
@@ -73,7 +73,7 @@ export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccess
 
         this.value = selectedIndex === -1 ? null : this.mapKey((this.items || [])[selectedIndex]);
         this.propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this.valueChanged.emit(this.value);
     }
 
     mapKey(obj: any) {
