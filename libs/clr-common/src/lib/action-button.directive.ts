@@ -29,6 +29,10 @@ export class HlcClrActionButtonDirective {
     }
 }
 
+/**
+ * clrLoading must be present on element in conjuction with HlcClrActionButtonDirective,
+ * ClrLoadingModule must be imported
+ */
 @NgModule({
     declarations: [HlcClrActionButtonDirective],
     imports: [CommonModule, ClrLoadingButtonModule, ClrLoadingModule],
