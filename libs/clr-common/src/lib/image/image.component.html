@@ -28,5 +28,5 @@
 
 <div *ngIf="isEmpty" class="empty-image-container" [style.max-width]="width" [style.max-height]="height">
     <img *ngIf="emptySrc" [src]="emptySrc" class="empty-image-img" />
-    <div *ngIf="allowUpload" class="empty-image-overlay"><ng-content select="[emptyImage]"> </ng-content></div>
+    <div class="empty-image-overlay"><ng-content select="[emptyImage]"> </ng-content></div>
 </div>
