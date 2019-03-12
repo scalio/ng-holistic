@@ -11,13 +11,12 @@ import {
     OnInit,
     Optional,
     Output,
-    QueryList
+    SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CustomFieldDirective } from '../fields-layout/custom-field.directive';
 import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout/fields-layout.component';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { FormLayoutConfig, FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '../form-rebuild';
@@ -61,8 +60,10 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
             this._tempVal = val;
         }
     }
-    @Input()
-    customFields: QueryList<CustomFieldDirective> | undefined;
+
+    get customFields() {
+        return this.customFieldsProvider && this.customFieldsProvider.customFields;
+    }
 
     @Output() formCreated = new EventEmitter<FormGroup>();
     @Output() formValueChanged = new EventEmitter<any>();
@@ -75,7 +76,11 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
         @Optional()
         @Inject(HLC_FORM_REBUILD_PROVIDER)
-        private readonly formRebuildProvider: FormRebuidProvider | undefined
+        private readonly formRebuildProvider: FormRebuidProvider | undefined,
+        @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER)
+        @Optional()
+        @SkipSelf()
+        private readonly customFieldsProvider: CustomFieldsProvider | undefined
     ) {}
 
     ngOnInit() {}

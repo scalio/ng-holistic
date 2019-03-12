@@ -4,6 +4,7 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
+    forwardRef,
     Inject,
     Input,
     OnDestroy,
@@ -16,7 +17,8 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ClrWizard } from '@clr/angular';
-import { HlcClrFormComponent, ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { ClrFormLayouts, HlcClrFormComponent } from '@ng-holistic/clr-forms';
+import { CustomFieldDirective, CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -24,15 +26,20 @@ import { Memoize } from 'typescript-memoize';
 import { HlcClrWizard } from '../models/wizard.types';
 import { HlcClrWizardCustomPageDirective } from './wizard-custom-page.directive';
 import { defaultWizardConfig, HLC_CLR_WIZARD_CONFIG, WizardConfig } from './wizard.config';
-import { CustomFieldDirective } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-clr-wizard',
     templateUrl: './wizard.component.html',
     styleUrls: ['./wizard.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: HLC_FORM_CUSTOM_FIELDS_PROVIDER,
+            useExisting: forwardRef(() => HlcClrWizardComponent)
+        }
+    ]
 })
-export class HlcClrWizardComponent implements OnInit, OnDestroy {
+export class HlcClrWizardComponent implements OnInit, OnDestroy, CustomFieldsProvider {
     readonly config: WizardConfig;
     private readonly destroy$ = new Subject();
     // formsChanged flow
@@ -53,7 +60,7 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy {
     @ViewChild('wizard') wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<HlcClrFormComponent>;
     @ContentChildren(HlcClrWizardCustomPageDirective) customPages: QueryList<HlcClrWizardCustomPageDirective>;
-    @ContentChildren(CustomFieldDirective) customFields: QueryList<CustomFieldDirective>;
+    @ContentChildren(CustomFieldDirective) _customFields: QueryList<CustomFieldDirective>;
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -66,6 +73,10 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    get customFields() {
+        return this._customFields && this._customFields.toArray();
     }
 
     @Memoize()
@@ -120,8 +131,6 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy {
             this.wizard.forceNext();
         }
     }
-
-
 
     onCancel() {
         this.wizard.close();

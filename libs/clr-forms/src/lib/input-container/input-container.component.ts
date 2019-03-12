@@ -145,6 +145,8 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
     }
 
     onLabelClick() {
-        this.toggleInputControl = this.toggleInputControl === 'on' ? 'off' : 'on';
+        if (!!this.toggleInputControl) {
+            this.toggleInputControl = this.toggleInputControl === 'on' ? 'off' : 'on';
+        }
     }
 }

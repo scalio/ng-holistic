@@ -6,8 +6,7 @@ import {
     Input,
     OnInit,
     Optional,
-    QueryList,
-    Type
+    Type,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
@@ -30,11 +29,11 @@ export interface FormGroupProvider {
 export const HLC_FORM_GROUP_PROVIDER = new InjectionToken<FormGroupProvider>('HLC_FORM_GROUP_PROVIDER');
 
 export interface CustomFieldsProvider {
-    customFields: QueryList<CustomFieldDirective> | undefined;
+    customFields: CustomFieldDirective[] | undefined;
 }
 
 export const HLC_FORM_CUSTOM_FIELDS_PROVIDER = new InjectionToken<CustomFieldsProvider>(
-    'HLC_FORM_CUSTOM_FIELDS_PROVIDER'
+    'HLC_FORM_CUSTOM_FIELDS_PROVIDER',
 );
 
 export interface FieldsLayoutConfig {
@@ -47,7 +46,7 @@ export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('
     selector: 'hlc-fields-layout',
     templateUrl: './fields-layout.component.html',
     styleUrls: ['./fields-layout.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HlcFieldsLayoutComponent implements OnInit {
     private readonly fieldLayoutMap: FieldsLayoutMap;
@@ -59,7 +58,7 @@ export class HlcFieldsLayoutComponent implements OnInit {
         @Inject(HLC_FIELDS_LAYOUT_MAP) fieldLayoutMaps: FieldsLayoutMap[],
         @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider,
         @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER) private readonly customFieldsProvider: CustomFieldsProvider,
-        @Optional() @Inject(HLC_FIELDS_LAYOUT_CONFIG) private readonly fieldsLayoutConfig: FieldsLayoutConfig
+        @Optional() @Inject(HLC_FIELDS_LAYOUT_CONFIG) private readonly fieldsLayoutConfig: FieldsLayoutConfig,
     ) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
     }
