@@ -25,6 +25,8 @@ export class HlcClrTextAreaComponent implements OnInit, ControlValueAccessor, Te
     @Input() placeholder: string;
     @Input() readonly: boolean;
 
+    @Input() rows: number;
+
     propagateChange = (_: any) => {};
 
     constructor() {}

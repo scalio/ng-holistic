@@ -76,7 +76,7 @@ export namespace ClrFormFields {
 
     export type DateField = BaseField<'DateField', string>;
 
-    export type TextAreaField = BaseFieldP<'TextAreaField', string>;
+    export type TextAreaField = BaseFieldP<'TextAreaField', string, { rows?: FormFields.FormFieldProp<number> }>;
 
     export type ToggleField = BaseField<
         'ToggleField',
