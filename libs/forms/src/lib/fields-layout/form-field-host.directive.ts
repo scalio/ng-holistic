@@ -125,9 +125,12 @@ export class HlcFormFieldHostDirective implements OnInit, OnDestroy {
             propsBag
         );
 
+        const nativeElement = this.componentRef.location.nativeElement;
+        // consumer could use this class to select all input components on the form
+        this.renderer.addClass(nativeElement, 'hlc-form-input');
         // consumer could use this class to assign dynamic styles to generated input component
         const metaClass = `hlc-form-input-${this.field.id}`;
-        this.renderer.addClass(this.componentRef.location.nativeElement, metaClass);
+        this.renderer.addClass(nativeElement, metaClass);
 
         if (this.wrapperRef) {
             const metaClassContainer = `hlc-form-input-container-${this.field.id}`;
