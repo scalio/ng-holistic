@@ -1,7 +1,11 @@
-<hlc-sandbox-example-source path="clr-forms/form-page"></hlc-sandbox-example-source>
-
+<hlc-clr-options
+    viewType="buttons"
+    [items]="viewOptions"
+    [value]="viewOptionsValue"
+    (valueChanged)="onViewChanged($event)"
+></hlc-clr-options>
 <div class="clr-row">
-    <div class="clr-col-6">
+    <div class="clr-col-8">
         <hlc-clr-form [group]="group" #clrForm>
             <hlc-clr-form-footer
                 form-footer
@@ -11,7 +15,7 @@
             ></hlc-clr-form-footer>
         </hlc-clr-form>
     </div>
-    <div class="clr-col-6">
+    <div class="clr-col-4">
         <h3>Form value</h3>
         {{ clrForm.form.formGroup?.value | json }}
     </div>

@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
+import { Observable, of } from 'rxjs';
 import { FormFields } from '../models/form-fields.type';
 import { CustomFieldDirective } from './custom-field.directive';
 
@@ -39,7 +40,7 @@ export const HLC_FORM_CUSTOM_FIELDS_PROVIDER = new InjectionToken<CustomFieldsPr
 );
 
 export interface FieldsLayoutConfig {
-    formClass: string;
+    formClass: string | Observable<string>;
 }
 
 export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('HLC_FIELDS_LAYOUT_CONFIG');
@@ -51,6 +52,7 @@ export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
+    readonly formClass$: Observable<string | undefined>;
     private readonly fieldLayoutMap: FieldsLayoutMap;
 
     @Input()
@@ -64,12 +66,21 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         @Inject(DOCUMENT) private readonly document: Document
     ) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
+
+        this.formClass$ =
+            this.fieldsLayoutConfig && this.fieldsLayoutConfig.formClass
+                ? this.fieldsLayoutConfig.formClass instanceof Observable
+                    ? this.fieldsLayoutConfig.formClass
+                    : of(this.fieldsLayoutConfig.formClass)
+                : of(undefined);
     }
 
     ngOnInit() {}
 
     ngAfterViewInit() {
-        // Set first input element on the form focusable if any
+        // Set focus on first input element on the form
+        // Each generated element has hlc-form-input class if component
+        // has many potentially focusable elements it could be defined explicilty by using hlc-element-focusable class
         const firstInput: HTMLElement | null = this.document.querySelector(
             // tslint:disable-next-line:max-line-length
             '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button'
@@ -77,10 +88,6 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         if (firstInput) {
             firstInput.focus();
         }
-    }
-
-    get formClass() {
-        return this.fieldsLayoutConfig && this.fieldsLayoutConfig.formClass;
     }
 
     get formGroup() {

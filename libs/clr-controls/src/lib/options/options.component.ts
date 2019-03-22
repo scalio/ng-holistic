@@ -7,6 +7,11 @@ export interface OptionsValues {
     readonly?: boolean;
 }
 
+export const enum HlcClrOptionsViewType {
+    Simple = 'simple',
+    Buttons = 'buttons'
+}
+
 @Component({
     selector: 'hlc-clr-options',
     templateUrl: './options.component.html',
@@ -21,13 +26,15 @@ export interface OptionsValues {
 })
 export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, OptionsValues {
     @Input()
+    viewType = HlcClrOptionsViewType.Simple;
+    @Input()
     items: any[];
     @Input()
     value: string | undefined;
     @Input()
     readonly: boolean;
     @Output()
-    valueChange = new EventEmitter<string | undefined>();
+    valueChanged = new EventEmitter<string | undefined>();
     propagateChange = (_: any) => {};
 
     constructor(private readonly dictMapper: DictMapperService) {}
@@ -36,7 +43,7 @@ export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, Opt
 
     onChange(val: any) {
         this.value = val || null;
-        this.valueChange.emit(this.value);
+        this.valueChanged.emit(this.value);
         this.propagateChange(this.value);
     }
 

@@ -5,8 +5,10 @@ import {
     InputContainerConfig,
     INPUT_CONTAINER_CONFIG,
     ValidationErrorsMapConfig,
-    VALIDATION_ERRORS_MAP_CONFIG
+    VALIDATION_ERRORS_MAP_CONFIG,
+    HlcClrFormLayoutConfigService
 } from '@ng-holistic/clr-forms';
+import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
 
 export function getInputContainerConfig(localeId: string): InputContainerConfig {
     /**
@@ -76,5 +78,9 @@ export const hlcConfigProviders = [
     {
         provide: HLC_CLR_FILE_UPLOAD_CONFIG,
         useClass: AppFileUploadConfig
+    },
+    {
+        provide: HLC_FIELDS_LAYOUT_CONFIG,
+        useClass: HlcClrFormLayoutConfigService
     }
 ];

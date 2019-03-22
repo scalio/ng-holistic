@@ -1,10 +1,20 @@
-<clr-radio-wrapper *ngFor="let item of items; trackBy: trackBy; let index = index">
-    <input
-        type="radio"
-        clrRadio
-        [checked]="isChecked(item)"
-        [value]="mapKey(item)"
-        (change)="onChange($event.target.value)"
-    />
-    <label>{{ mapLabel(item) }}</label>
-</clr-radio-wrapper>
+<ng-container *ngIf="viewType === 'simple'; else buttonsView">
+    <clr-radio-wrapper *ngFor="let item of items; trackBy: trackBy; let index = index">
+        <input
+            type="radio"
+            clrRadio
+            [checked]="isChecked(item)"
+            [value]="mapKey(item)"
+            (change)="onChange($event.target.value)"
+        />
+        <label>{{ mapLabel(item) }}</label>
+    </clr-radio-wrapper>
+</ng-container>
+<ng-template #buttonsView>
+    <div class="btn-group">
+        <div class="radio btn" *ngFor="let item of items; trackBy: trackBy" (click)="onChange(mapKey(item))">
+            <input type="radio" [checked]="isChecked(item)" [value]="mapKey(item)" />
+            <label>{{ mapLabel(item) }}</label>
+        </div>
+    </div>
+</ng-template>
