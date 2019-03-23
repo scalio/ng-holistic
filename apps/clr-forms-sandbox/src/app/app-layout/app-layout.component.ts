@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ClrIfOpen } from '@clr/angular';
 import { environment } from '../../environments/environment';
 import SIDE_NAV_ITEMS from './side-nav-items';
 
@@ -6,7 +7,8 @@ import SIDE_NAV_ITEMS from './side-nav-items';
     selector: 'hlc-app-layout',
     templateUrl: './app-layout.component.html',
     styleUrls: ['./app-layout.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [ClrIfOpen]
 })
 export class AppLayoutComponent implements OnInit {
     sideNavItems = SIDE_NAV_ITEMS;

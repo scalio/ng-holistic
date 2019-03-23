@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
+import { ClrIconModule, ClrSignpostModule } from '@clr/angular';
+import { HlcClrMainHeaderModule, HlcClrMainLayoutModule } from '@ng-holistic/clr-common';
 import { AppLayoutComponent } from './app-layout.component';
-import { HlcClrMainLayoutModule, HlcClrMainHeaderModule } from '@ng-holistic/clr-common';
 
 @NgModule({
     declarations: [AppLayoutComponent],
-    imports: [HlcClrMainLayoutModule, HlcClrMainHeaderModule],
+    imports: [HlcClrMainLayoutModule, HlcClrMainHeaderModule, ClrIconModule, ClrSignpostModule],
     providers: [],
     bootstrap: []
 })
