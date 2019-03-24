@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 import { TextMask } from '@ng-holistic/clr-controls';
-import { ClrFormLayouts, HlcClrFormLayoutConfigService, HlcClrFormLayoutType } from '@ng-holistic/clr-forms';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { HlcFormComponent } from '@ng-holistic/forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
@@ -155,12 +155,6 @@ const group: ClrFormLayouts.ClrFormLayout = {
     ]
 };
 
-const viewOptions = [
-    { key: HlcClrFormLayoutType.Vertical, label: 'Vertical' },
-    { key: HlcClrFormLayoutType.Horizontal, label: 'Horizontal' },
-    { key: HlcClrFormLayoutType.Compact, label: 'Compact' }
-];
-
 @Component({
     selector: 'hlc-form-page',
     templateUrl: './form-page.component.html',
@@ -169,7 +163,6 @@ const viewOptions = [
 })
 export class FormPageComponent implements AfterViewInit {
     group = group;
-    viewOptions = viewOptions;
 
     @ViewChild(HlcFormComponent) form: HlcFormComponent;
 
@@ -179,14 +172,7 @@ export class FormPageComponent implements AfterViewInit {
         }
     };
 
-    get viewOptionsValue() {
-        return this.formLayoutConfigService.layoutType;
-    }
-
-    constructor(
-        readonly cdr: ChangeDetectorRef,
-        private readonly formLayoutConfigService: HlcClrFormLayoutConfigService
-    ) {}
+    constructor(readonly cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         // in order to correctly display formGroup.value on init
@@ -196,11 +182,5 @@ export class FormPageComponent implements AfterViewInit {
     onSave(val: any) {
         // alert(JSON.stringify(val, null, 2));
         console.log(val);
-    }
-
-    onViewChanged(formLayoutType: HlcClrFormLayoutType) {
-        console.log('WTF ???', formLayoutType);
-        this.formLayoutConfigService.layoutType = formLayoutType;
-        this.cdr.detectChanges();
     }
 }

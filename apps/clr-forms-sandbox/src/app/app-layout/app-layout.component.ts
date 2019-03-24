@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClrIfOpen } from '@clr/angular';
+import { HlcClrFormLayoutConfigService, HlcClrFormLayoutType } from '@ng-holistic/clr-forms';
 import { environment } from '../../environments/environment';
 import SIDE_NAV_ITEMS from './side-nav-items';
+
+const viewOptions = [
+    { key: HlcClrFormLayoutType.Vertical, label: 'Vertical' },
+    { key: HlcClrFormLayoutType.Horizontal, label: 'Horizontal' },
+    { key: HlcClrFormLayoutType.Compact, label: 'Compact' }
+];
 
 @Component({
     selector: 'hlc-app-layout',
@@ -12,6 +19,7 @@ import SIDE_NAV_ITEMS from './side-nav-items';
 })
 export class AppLayoutComponent implements OnInit {
     sideNavItems = SIDE_NAV_ITEMS;
+    viewOptions = viewOptions;
     readonly navLinks = [
         {
             title: 'Forms',
@@ -29,7 +37,19 @@ export class AppLayoutComponent implements OnInit {
     readonly titleHref = environment.appUrls.home;
     readonly activeNavLinkIndex = 0;
 
-    constructor() {}
+    constructor(
+        readonly cdr: ChangeDetectorRef,
+        private readonly formLayoutConfigService: HlcClrFormLayoutConfigService
+    ) {}
+
+    get viewOptionsValue() {
+        return this.formLayoutConfigService.layoutType;
+    }
 
     ngOnInit() {}
+
+    onViewChanged(formLayoutType: HlcClrFormLayoutType) {
+        this.formLayoutConfigService.layoutType = formLayoutType;
+        this.cdr.detectChanges();
+    }
 }

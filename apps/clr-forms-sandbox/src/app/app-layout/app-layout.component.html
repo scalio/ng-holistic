@@ -8,7 +8,16 @@
     >
         <clr-signpost actions>
             <a class="nav-link nav-icon"> <clr-icon shape="cog" clrSignpostTrigger></clr-icon> </a>
-            <clr-signpost-content clrPosition="bottom-left" *clrIfOpen> Lorem ipsum... </clr-signpost-content>
+            <clr-signpost-content clrPosition="bottom-left" *clrIfOpen>
+                <label style="color: black">Form Layouts</label>
+                <br>
+                <hlc-clr-options
+                    viewType="buttons"
+                    [items]="viewOptions"
+                    [value]="viewOptionsValue"
+                    (valueChanged)="onViewChanged($event)"
+                ></hlc-clr-options>
+            </clr-signpost-content>
         </clr-signpost>
     </hlc-main-header>
 </hlc-main-layout>
