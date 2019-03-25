@@ -17,7 +17,7 @@ import {
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
-import { catchError, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
+import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { FilterService } from '../filter.service';
 import { RowsManagerService } from '../rows-manager.service';
@@ -33,6 +33,7 @@ import {
     TableDataProviderConfig
 } from './table.config';
 import { Table, TableDescription } from './table.types';
+import { mapPageState, omitUndefinedFileds } from './table.utils';
 
 export interface TableCustomCellsProvider {
     customCells: CustomCellDirective[];
@@ -54,12 +55,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
-    private _sort: Table.Data.Sort | undefined;
     private _activeRow: Table.RowBase | undefined;
     /**
      * FIX : Control unexpected behaviour
      * See following comments for this variable
      */
+    private _freezeCount: number | undefined;
     private _freezeInitialStateChange: boolean | undefined;
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
@@ -128,7 +129,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() rows: Table.Row[];
     @Input() set paginator(val: Table.Data.Paginator | undefined) {
         this._paginator = val;
-        this.updateStatePage(val);
+        const page = val && mapPageState(val);
+        if (!page) {
+            if (this.state) {
+                this.state.page = undefined;
+            }
+        } else {
+            if (this.state) {
+                this.state.page = page;
+            } else {
+                this.state = { page };
+            }
+        }
     }
 
     get paginator() {
@@ -227,9 +239,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Inline integration, state inside component
      */
     onRefresh(state: ClrDatagridStateInterface) {
+        console.log('onRefresh', state);
+
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
+            console.log('_freezeInitialStateChange ignore onRferesh');
             this._freezeInitialStateChange = false;
+            return;
+        }
+
+        if (this._freezeCount && this._freezeCount > 0) {
+            console.log('_freezeCount ignore onRferesh');
+            this._freezeCount--;
             return;
         }
 
@@ -239,11 +260,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             return;
         }
 
+        /*
+        !!!
         if (state && state.page && (this.state && !this.state.page)) {
             // first time state.page recieved, usually after first load, just ignore
             this.state = state;
             return;
         }
+        */
 
         const dataProvider = this.dataProvider;
         if (!dataProvider) {
@@ -274,7 +298,17 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
         state$
             .pipe(
+                tap(st => {
+                    console.log('check state', st, this.state, R.equals(this.state, st));
+                    return st;
+                }),
                 // ignore if there is no changes on state
+                filter(
+                    R.pipe(
+                        R.equals(this.state),
+                        R.not
+                    )
+                ),
                 tap(st => this.stateChanged.emit(st)),
                 flatMap(st => this.loadData(dataProvider, st))
             )
@@ -314,19 +348,29 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             tap(res => {
                 const mpResult = this.dataProviderConfig.mapResult(res);
                 this.rows = mpResult.rows;
-                this._sort = mpResult.sort;
-                this.state = state;
+
+                const sort = mpResult.sort;
+                const page = mpResult.paginator && mapPageState(mpResult.paginator);
+
+                this.state = omitUndefinedFileds({ ...state, page, sort });
+
+                console.log('loaded', this.state, mpResult.paginator);
+
+                this._paginator = mpResult.paginator;
                 this._dataProviderState = dpState;
                 this.errorMessage = undefined;
-                // map paginator
-                if (mpResult.paginator) {
-                    // page state will be updated automatically
-                    this.paginator = mpResult.paginator;
-                    // for insitial state change onRefresh is invoked by datagrid with incorrect parameters
-                    // for example if on first load `to = 34 and size = 50` data grid will invoke onRefresh with
-                    // `to = 49 and size = 50`
-                    if (this._freezeInitialStateChange === undefined) {
-                        this._freezeInitialStateChange = true;
+
+                if (this._freezeCount === undefined) {
+                    // for insitial state change onRefresh is invoked number of time before set stable
+                    // for example if after loadin page and sort changed onRefersh will be invokde 3 times
+                    // sort, old page + sort, page + sort - only latest must be considered as valid onRefresh
+                    this._freezeCount = 0;
+                    // map paginator
+                    if (page) {
+                        this._freezeCount++;
+                    }
+                    if (sort) {
+                        this._freezeCount++;
                     }
                     // console.log('222', this.state, this.paginator);
                 }
@@ -364,14 +408,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     getColSortOrder(col: Table.ColumnBase) {
-        console.log('333');
-        if (col.sort && this._sort) {
+        const sort = this.state && this.state.sort;
+        if (col.sort && sort) {
             const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
-            if (sortKey === this._sort.by) {
-                console.log('444', sortKey, this._sort);
-                return this._sort.reverse ? ClrDatagridSortOrder.DESC : ClrDatagridSortOrder.ASC;
+            if (sortKey === sort.by) {
+                return sort.reverse ? ClrDatagridSortOrder.DESC : ClrDatagridSortOrder.ASC;
             }
         }
+
         return ClrDatagridSortOrder.UNSORTED;
     }
 
@@ -478,25 +522,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         this.onRefresh(state);
         // after page size state changed onRefresh is invoked by datagrid with incorrect (staled) parameters
         this._freezeInitialStateChange = undefined;
-    }
-
-    /**
-     * Sync paginator with page field of state
-     */
-    private updateStatePage(paginator: Table.Data.Paginator | undefined) {
-        if (!paginator) {
-            // TODO : update dataProviderState ?
-            if (this.state) {
-                this.state.page = undefined;
-            }
-            return;
-        }
-        const size = paginator.pageSize;
-        const from = (paginator.pageIndex - 1) * size;
-        let to = from + size - 1;
-        to = paginator.length - to >= 0 ? to : paginator.length - from - 1;
-        // calcaulate correct page in order to skip next onRefresh, when page items size changed
-        this.state.page = { from, to, size };
     }
 
     //

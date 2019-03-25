@@ -57,7 +57,7 @@ const getAllDecorator = new GetAllLocalStorageDecorator('table-page', x => ({
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {
     _load(state: any) {
-        console.log('111', state);
+        console.log('load', state);
         const length = 30;
         const page = (state && state.page) || {};
         const sort = state && state.sort;
