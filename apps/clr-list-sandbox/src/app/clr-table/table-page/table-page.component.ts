@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table, TableDescription } from '@ng-holistic/clr-list';
+import { getAllLocalStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -43,22 +43,35 @@ const table: TableDescription = {
     ]
 };
 
-const dataProvider: Table.Data.DataProvider = {
-    load(state: any) {
-        const rows: Table.Row[] = R.range(0, state.page && state.page.size && state.page.size > 25 ? 30 : 25).map(
-            i => ({
-                id: i.toString(),
-                title: 'aaaa ' + i,
-                amount: i * 100
-            })
-        );
+const genRows = (len: number): Table.Row[] =>
+    R.range(0, len).map(i => ({
+        id: i.toString(),
+        title: 'aaaa ' + i,
+        amount: i * 100
+    }));
 
+const dataProvider: { _load: any } & Table.Data.DataProvider = {
+    _load(state: any) {
+        const length = 30;
+        const page = (state && state.page) || {};
+        const pageSize = (page && page.size) || 25;
         const paginator: Table.Data.Paginator = {
-            pageSize: (state.page && state.page.size) || 25,
-            pageIndex: 1,
-            length: 30
+            pageSize,
+            pageIndex: page.from ? ((page.from + 1) % pageSize) + 1 : 1,
+            length
         };
-        return timer(0).pipe(mapTo({ rows, paginator }));
+        const rows = R.pipe(
+            genRows,
+            R.drop(page.from ? page.from : 0),
+            R.take(page.to ? page.to - page.from + 1 : pageSize)
+        )(length);
+        const result = { rows: rows, paginator, page };
+        return timer(0).pipe(mapTo(result));
+    },
+
+    load(state: any) {
+        const decorated = getAllLocalStorageDecorator('table-page', x => ({ page: x.page }))(this._load);
+        return decorated(state);
     }
 };
 
