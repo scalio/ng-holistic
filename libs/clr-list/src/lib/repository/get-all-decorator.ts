@@ -1,21 +1,11 @@
-import { isNil } from 'lodash';
 import { isEmpty } from 'ramda';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { IValueStorage, ValueLocalStorage } from './value-storage';
 
 export type GetAllFunc<TState, TResult> = (state: TState) => Observable<TResult>;
 
 export type GetAllDecorator<TState, TResult> = (fn: GetAllFunc<TState, TResult>) => GetAllFunc<TState, TResult>;
-
-export interface IStorage {
-    getValue(key: string): any;
-    setValue(key: string, val: any): void;
-}
-
-export interface IValueStorage {
-    getValue(): any;
-    setValue(val: any): void;
-}
 
 export interface IRepositoryStorage {
     getState(): any;
@@ -45,39 +35,6 @@ export class RepositoryStorage<TState, TResult> implements IRepositoryStorage {
     setResult(result: any) {
         const state = this.map(result);
         this.storage.setValue(state);
-    }
-}
-
-export class ValueStorage implements IValueStorage {
-    constructor(private readonly name: string, private readonly storage: IStorage) {}
-
-    getValue() {
-        return this.storage.getValue(this.name);
-    }
-
-    setValue(val: any) {
-        this.storage.setValue(this.name, val);
-    }
-}
-
-export class LocalStorage implements IStorage {
-    getValue(name: string) {
-        const item = localStorage.getItem(name);
-        return item && JSON.parse(item);
-    }
-
-    setValue(name: string, val: any) {
-        if (isNil(val)) {
-            localStorage.removeItem(name);
-        } else {
-            localStorage.setItem(name, JSON.stringify(val));
-        }
-    }
-}
-
-export class ValueLocalStorage extends ValueStorage {
-    constructor(name: string) {
-        super(name, new LocalStorage());
     }
 }
 
