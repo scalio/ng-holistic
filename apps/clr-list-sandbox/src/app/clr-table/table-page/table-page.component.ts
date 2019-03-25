@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { getAllLocalStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetAllLocalStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -50,6 +50,8 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
+const getAllDecorator = new GetAllLocalStorageDecorator('table-page', x => ({ page: x.page }));
+
 const dataProvider: { _load: any } & Table.Data.DataProvider = {
     _load(state: any) {
         const length = 30;
@@ -70,7 +72,7 @@ const dataProvider: { _load: any } & Table.Data.DataProvider = {
     },
 
     load(state: any) {
-        const decorated = getAllLocalStorageDecorator('table-page', x => ({ page: x.page }))(this._load);
+        const decorated = getAllDecorator.decorate(this._load);
         return decorated(state);
     }
 };
@@ -92,5 +94,8 @@ export class TablePageComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        // reset decorator on init
+        // getAllDecorator.reset();
+    }
 }

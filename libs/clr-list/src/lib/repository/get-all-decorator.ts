@@ -5,25 +5,37 @@ import { IValueStorage, ValueLocalStorage } from './value-storage';
 
 export type GetAllFunc<TState, TResult> = (state: TState) => Observable<TResult>;
 
-export type GetAllDecorator<TState, TResult> = (fn: GetAllFunc<TState, TResult>) => GetAllFunc<TState, TResult>;
+export interface IGetAllDecorator<TState, TResult> {
+    reset(): void;
+    decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult>;
+}
 
 export interface IRepositoryStorage {
     getState(): any;
     setResult(result: any): void;
+    resetState(): void;
 }
 
 /**
  * When state is null or empty object, get latest state from storage and use one for request
  */
-export const getAllDecorator = <TState, TResult>(
-    storage: IRepositoryStorage
-): GetAllDecorator<TState, TResult> => fn => state => {
-    if (!state || isEmpty(state)) {
-        state = storage.getState();
+
+export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState, TResult> {
+    constructor(private readonly storage: IRepositoryStorage) {}
+    decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
+        return state => {
+            if (!state || isEmpty(state)) {
+                state = this.storage.getState();
+            }
+
+            return fn(state).pipe(tap(result => this.storage.setResult(result)));
+        };
     }
 
-    return fn(state).pipe(tap(result => storage.setResult(result)));
-};
+    reset() {
+        this.storage.resetState();
+    }
+}
 
 export class RepositoryStorage<TState, TResult> implements IRepositoryStorage {
     constructor(private readonly map: ((state: TState) => TResult), private readonly storage: IValueStorage) {}
@@ -36,6 +48,10 @@ export class RepositoryStorage<TState, TResult> implements IRepositoryStorage {
         const state = this.map(result);
         this.storage.setValue(state);
     }
+
+    resetState() {
+        this.storage.setValue(null);
+    }
 }
 
 export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<TState, TResult> {
@@ -44,7 +60,8 @@ export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<T
     }
 }
 
-export const getAllLocalStorageDecorator = <TState = any, TResult = any>(
-    name: string,
-    map: ((state: TState) => TResult)
-) => getAllDecorator(new RepositoryLocalStorage(name, map));
+export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
+    constructor(name: string, map: ((state: TState) => TResult)) {
+        super(new RepositoryLocalStorage(name, map));
+    }
+}
