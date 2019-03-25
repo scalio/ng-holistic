@@ -1,4 +1,4 @@
-import { IStorage, LocalStorage } from './storage';
+import { IStorage, LocalStorage, SessionStorage } from './storage';
 
 /**
  * Abstarct storage for single value
@@ -7,7 +7,6 @@ export interface IValueStorage {
     getValue(): any;
     setValue(val: any): void;
 }
-
 
 export class ValueStorage implements IValueStorage {
     constructor(private readonly name: string, private readonly storage: IStorage) {}
@@ -21,9 +20,14 @@ export class ValueStorage implements IValueStorage {
     }
 }
 
-
 export class ValueLocalStorage extends ValueStorage {
     constructor(name: string) {
         super(name, new LocalStorage());
+    }
+}
+
+export class ValueSessionStorage extends ValueStorage {
+    constructor(name: string) {
+        super(name, new SessionStorage());
     }
 }

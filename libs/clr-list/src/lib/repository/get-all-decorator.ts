@@ -1,7 +1,7 @@
 import { isEmpty } from 'ramda';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IValueStorage, ValueLocalStorage } from './value-storage';
+import { IValueStorage, ValueLocalStorage, ValueSessionStorage } from './value-storage';
 
 export type GetAllFunc<TState, TResult> = (state: TState) => Observable<TResult>;
 
@@ -54,6 +54,8 @@ export class RepositoryStorage<TState, TResult> implements IRepositoryStorage {
     }
 }
 
+// Local storage
+
 export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<TState, TResult> {
     constructor(name: string, map: ((state: TState) => TResult)) {
         super(map, new ValueLocalStorage(name));
@@ -63,5 +65,19 @@ export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<T
 export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
     constructor(name: string, map: ((state: TState) => TResult)) {
         super(new RepositoryLocalStorage(name, map));
+    }
+}
+
+// Session storage
+
+export class RepositorySessionStorage<TState, TResult> extends RepositoryStorage<TState, TResult> {
+    constructor(name: string, map: ((state: TState) => TResult)) {
+        super(map, new ValueSessionStorage(name));
+    }
+}
+
+export class GetAllSessionStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
+    constructor(name: string, map: ((state: TState) => TResult)) {
+        super(new RepositorySessionStorage(name, map));
     }
 }
