@@ -118,8 +118,14 @@ export namespace Table.Data {
         length: number;
     }
 
+    export interface Sort {
+        by: string;
+        reverse: boolean;
+    }
+
     export interface Result {
         rows: Table.Row[];
         paginator?: Paginator;
+        sort?: Sort;
     }
 }

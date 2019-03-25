@@ -14,7 +14,7 @@ import {
     Output,
     QueryList
 } from '@angular/core';
-import { ClrDatagridStateInterface } from '@clr/angular';
+import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
 import { catchError, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
@@ -54,6 +54,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
+    private _sort: Table.Data.Sort | undefined;
     private _activeRow: Table.RowBase | undefined;
     /**
      * FIX : Control unexpected behaviour
@@ -313,6 +314,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             tap(res => {
                 const mpResult = this.dataProviderConfig.mapResult(res);
                 this.rows = mpResult.rows;
+                this._sort = mpResult.sort;
                 this.state = state;
                 this._dataProviderState = dpState;
                 this.errorMessage = undefined;
@@ -359,6 +361,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         if (typeof col.sort === 'boolean') {
             return col.id;
         }
+    }
+
+    getColSortOrder(col: Table.ColumnBase) {
+        console.log('333');
+        if (col.sort && this._sort) {
+            const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
+            if (sortKey === this._sort.by) {
+                console.log('444', sortKey, this._sort);
+                return this._sort.reverse ? ClrDatagridSortOrder.DESC : ClrDatagridSortOrder.ASC;
+            }
+        }
+        return ClrDatagridSortOrder.UNSORTED;
     }
 
     getCellClass(cell: Table.Column, row: Table.Row) {

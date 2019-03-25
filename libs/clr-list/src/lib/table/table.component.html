@@ -22,6 +22,7 @@
             class="sortable"
             [ngClass]="col.cls"
             [clrDgField]="getColSort(col)"
+            [clrDgSortOrder]="getColSortOrder(col)"
         >
             {{ col.title }}
         </clr-dg-column>

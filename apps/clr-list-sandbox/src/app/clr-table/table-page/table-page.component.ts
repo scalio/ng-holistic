@@ -50,12 +50,17 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
-const getAllDecorator = new GetAllLocalStorageDecorator('table-page', x => ({ page: x.page }));
+const getAllDecorator = new GetAllLocalStorageDecorator('table-page', x => ({
+    page: x.page,
+    sort: x.sort
+}));
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {
     _load(state: any) {
+        console.log('111', state);
         const length = 30;
         const page = (state && state.page) || {};
+        const sort = state && state.sort;
         const pageSize = (page && page.size) || 25;
         const paginator: Table.Data.Paginator = {
             pageSize,
@@ -67,7 +72,7 @@ const dataProvider: { _load: any } & Table.Data.DataProvider = {
             R.drop(page.from ? page.from : 0),
             R.take(page.to ? page.to - page.from + 1 : pageSize)
         )(length);
-        const result = { rows: rows, paginator, page };
+        const result = { rows: rows, paginator, page, sort };
         return timer(0).pipe(mapTo(result));
     },
 
