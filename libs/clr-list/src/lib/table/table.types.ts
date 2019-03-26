@@ -1,5 +1,5 @@
-import { Observable, Subject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Observable, Subject } from 'rxjs';
 
 export namespace Table {
     export interface ColumnFormat {
@@ -127,5 +127,6 @@ export namespace Table.Data {
         rows: Table.Row[];
         paginator?: Paginator;
         sort?: Sort;
+        filters: { property: string, value: any }[];
     }
 }

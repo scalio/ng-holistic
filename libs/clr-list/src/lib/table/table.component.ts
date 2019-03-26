@@ -348,10 +348,19 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 const mpResult = this.dataProviderConfig.mapResult(res);
                 this.rows = mpResult.rows;
 
+                const filters = mpResult.filters;
                 const sort = mpResult.sort;
                 const page = mpResult.paginator && mapPageState(mpResult.paginator);
 
-                this.state = omitUndefinedFileds({ ...state, page, sort });
+                this.state = omitUndefinedFileds({ ...state, page, sort, filters });
+                if (this.filterService && filters && filters.length > 0) {
+                    // map filters back to filterService model
+                    const objFiletrs = R.pipe(
+                        R.map(({ property, value }) => [property, value]),
+                        R.fromPairs
+                    )(filters);
+                    this.filterService.setValue(objFiletrs);
+                }
 
                 console.log('loaded [state, paginator]', this.state, mpResult.paginator);
 
