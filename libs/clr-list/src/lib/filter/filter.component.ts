@@ -3,18 +3,19 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
+    Inject,
     Input,
     OnInit,
-    Output,
-    ViewChild,
     Optional,
-    Inject
+    Output,
+    ViewChild
 } from '@angular/core';
-import { HlcClrFormComponent, ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
-import { FilterService } from '../filter.service';
-import { HLC_FORM_FIELD_WRAPPER, HlcFormComponent } from '@ng-holistic/forms';
+import { ClrFormFields, ClrFormLayouts, HlcClrFormComponent } from '@ng-holistic/clr-forms';
+import { HlcFormComponent, HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
+import * as R from 'ramda';
 import { HlcClrFilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
-import { HLC_CLR_FILTER_LABELS_CONFIG, FilterLabelsConfig, defaultFilterLabelsConfig } from './filter.config';
+import { FilterService } from '../filter.service';
+import { defaultFilterLabelsConfig, FilterLabelsConfig, HLC_CLR_FILTER_LABELS_CONFIG } from './filter.config';
 
 @Component({
     selector: 'hlc-clr-filter',
@@ -74,6 +75,22 @@ export class HlcClrFilterComponent implements OnInit, AfterViewInit {
     }
 
     onReset() {
+        /**
+         * TODO
+         * If form filter value was set (restored) on list initialization, reset stops to reset displayed
+         * values in inputs, though form value is actually reset.
+         * Just set all forms value to '' and then immediately reset them - this will update input's displayed values
+         */
+        const initValue = this.form.initialValue;
+        const initValueHack =
+            initValue &&
+            R.pipe(
+                R.toPairs,
+                R.map(([k]) => [k, '']),
+                R.fromPairs
+            )(initValue);
+        this.form.formGroup.patchValue(initValueHack);
+
         this.form.resetValue();
         this.filter.emit(this.value);
     }

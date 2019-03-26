@@ -41,7 +41,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     /**
      * Initial value - value on form, right after form initialization
      */
-    private initialValue: any;
+    initialValue: any;
     group: IFormGroup<any> | undefined;
     @Input('group')
     set setGroup(val: FormLayoutConfig | undefined) {
@@ -155,6 +155,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     }
 
     resetValue() {
-        this.formGroup.reset(this.initialValue);
+        this.formGroup.patchValue(this.initialValue);
+        this.formGroup.updateValueAndValidity();
     }
 }

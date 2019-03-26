@@ -16,7 +16,7 @@ export class FilterService {
         // delay value providing till form is set
         return this.formSet$.pipe(
             filter(f => !!f),
-            map(form => form && form.value),
+            map(form => form && form.value)
         );
     }
 
