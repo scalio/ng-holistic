@@ -86,11 +86,15 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
-const getAllDecorator = new GetAllLocalStorageDecorator('list-page', x => ({
-    page: x.page,
-    sort: x.sort,
-    filters: x.filters
-}));
+const getAllDecorator = new GetAllLocalStorageDecorator(
+    'list-page',
+    x => ({
+        page: x.page,
+        sort: x.sort,
+        filters: x.filters
+    }),
+    x => !x || !x.page
+);
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {
     _load(state: any) {
