@@ -372,7 +372,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     if (sort) {
                         this._freezeCount++;
                     }
-                    // console.log('222', this.state, this.paginator);
                 }
             }),
             catchError(err => {
@@ -385,7 +384,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
                 } catch (err) {
-                    console.error(err);
+                    console.warn(err);
                 }
             })
         );

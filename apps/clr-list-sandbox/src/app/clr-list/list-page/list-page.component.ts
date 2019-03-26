@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
-import { HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetAllLocalStorageDecorator, HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-
 const filterFields: ClrFormFields.FormField[] = [
     {
         id: 'text',
@@ -79,27 +79,44 @@ const table: TableDescription = {
     ]
 };
 
-const rows: Table.Row[] = [
-    {
-        id: '1',
-        title: 'aaaa'
+const genRows = (len: number): Table.Row[] =>
+    R.range(0, len).map(i => ({
+        id: i.toString(),
+        title: 'aaaa ' + i,
+        amount: i * 100
+    }));
+
+const getAllDecorator = new GetAllLocalStorageDecorator('list-page', x => ({
+    page: x.page,
+    sort: x.sort,
+    filters: x.filters
+}));
+
+const dataProvider: { _load: any } & Table.Data.DataProvider = {
+    _load(state: any) {
+        console.log('load', state);
+        const length = 30;
+        const page = (state && state.page) || {};
+        const sort = state && state.sort;
+        const filters = state && state.filters;
+        const pageSize = (page && page.size) || 25;
+        const paginator: Table.Data.Paginator = {
+            pageSize,
+            pageIndex: page.from ? ((page.from + 1) % pageSize) + 1 : 1,
+            length
+        };
+        const rows = R.pipe(
+            genRows,
+            R.drop(page.from ? page.from : 0),
+            R.take(page.to ? page.to - page.from + 1 : pageSize)
+        )(length);
+        const result = { rows: rows, paginator, page, sort, filters };
+        return timer(0).pipe(mapTo(result));
     },
-    {
-        id: '2',
-        title: 'bbb'
-    }
-];
 
-const paginator: Table.Data.Paginator = {
-    pageSize: 2,
-    pageIndex: 1,
-    length: 3
-};
-
-const dataProvider: Table.Data.DataProvider = {
-    load(state) {
-        console.log(state);
-        return timer(1000).pipe(mapTo({ rows, paginator }));
+    load(state: any) {
+        const decorated = getAllDecorator.decorate(this._load);
+        return decorated(state);
     }
 };
 

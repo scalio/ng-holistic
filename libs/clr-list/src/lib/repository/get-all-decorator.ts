@@ -17,15 +17,26 @@ export interface IRepositoryStorage {
 }
 
 /**
- * When state is null or empty object, get latest state from storage and use one for request
+ * When state is null or empty object, get latest state from storage and use one for request.
+ * Optionally could use checkInitState - function which check is state is initial in which case
+ * override initial state with stored one if it exists
  */
 
 export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState, TResult> {
-    constructor(private readonly storage: IRepositoryStorage) {}
+    constructor(
+        private readonly storage: IRepositoryStorage,
+        private readonly checkInitState?: (x: TState) => boolean
+    ) {}
     decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
         return state => {
             if (!state || isEmpty(state)) {
                 state = this.storage.getState();
+            } else if (this.checkInitState && this.checkInitState(state)) {
+                const storedState = this.storage.getState();
+                if (storedState) {
+                    // don't override initial state if there is no stored state
+                    state = storedState;
+                }
             }
 
             return fn(state).pipe(tap(result => this.storage.setResult(result)));
@@ -63,8 +74,8 @@ export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<T
 }
 
 export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: ((state: TState) => TResult)) {
-        super(new RepositoryLocalStorage(name, map));
+    constructor(name: string, map: ((state: TState) => TResult), checkInitState?: any) {
+        super(new RepositoryLocalStorage(name, map), checkInitState);
     }
 }
 
