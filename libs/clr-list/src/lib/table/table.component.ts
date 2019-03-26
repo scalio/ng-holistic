@@ -237,9 +237,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     /**
      * Inline integration, state inside component
+     * force = true, will request data load even if request state is not changed
      */
-    onRefresh(state: ClrDatagridStateInterface) {
-        console.log('onRefresh [state]', state);
+    onRefresh(state: ClrDatagridStateInterface, force = false) {
+        console.log('onRefresh [state, force]', state, force);
 
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
@@ -302,12 +303,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     console.log('check state [state, this.sate, equals]', st, this.state, R.equals(this.state, st));
                 }),
                 // ignore if there is no changes on state
-                filter(
-                    R.pipe(
-                        R.equals(this.state),
-                        R.not
-                    )
-                ),
+                filter(st => force || !R.equals(this.state, st)),
                 tap(st => this.stateChanged.emit(st)),
                 flatMap(st => this.loadData(dataProvider, st))
             )
@@ -450,8 +446,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         }
     }
 
-    refreshState() {
-        this.onRefresh(this.state);
+    refreshStateForce() {
+        this.onRefresh(this.state, true);
     }
 
     addRow(row: Table.Row) {

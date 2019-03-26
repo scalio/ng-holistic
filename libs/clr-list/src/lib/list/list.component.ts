@@ -141,7 +141,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     }
 
     onFilter(filter: any) {
-        this.tableComponent.refreshState();
+        this.tableComponent.refreshStateForce();
         this.filter.emit(filter);
     }
 
