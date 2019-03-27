@@ -34,18 +34,16 @@ export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState
     ) {}
     decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
         return state => {
-            if (!state || isEmpty(state)) {
-                const result = this.storage.getResult();
-                state = result && result.state;
-            } else if (this.checkInitState && this.checkInitState(state)) {
-                const result = this.storage.getResult();
-                if (result) {
-                    // don't override initial state if there is no stored result
-                    state = result.state;
+            const storedResult = this.storage.getResult();
+            let initialState: any;
+            if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
+                if (storedResult) {
+                    initialState = storedResult.state;
                 }
             }
 
-            return fn(state).pipe(tap(result => this.storage.setResult(result, null)));
+            // use initial state insted of request in case requested state is initial
+            return fn(initialState || state).pipe(tap(result => this.storage.setResult(result, null)));
         };
     }
 
@@ -77,27 +75,27 @@ export class RepositoryStorage implements IRepositoryStorage {
 // Local storage
 
 export class RepositoryLocalStorage extends RepositoryStorage {
-    constructor(name: string, map: MapResultFun) {
-        super(map, new ValueLocalStorage(name));
+    constructor(name: string, map: MapResultFun, ttl?: number) {
+        super(map, new ValueLocalStorage(name, ttl));
     }
 }
 
 export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>) {
-        super(new RepositoryLocalStorage(name, map), checkInitState);
+    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>, ttl?: number) {
+        super(new RepositoryLocalStorage(name, map, ttl), checkInitState);
     }
 }
 
 // Session storage
 
 export class RepositorySessionStorage extends RepositoryStorage {
-    constructor(name: string, map: MapResultFun) {
-        super(map, new ValueSessionStorage(name));
+    constructor(name: string, map: MapResultFun, ttl?: number) {
+        super(map, new ValueSessionStorage(name, ttl));
     }
 }
 
 export class GetAllSessionStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapResultFun) {
-        super(new RepositorySessionStorage(name, map));
+    constructor(name: string, map: MapResultFun, ttl?: number) {
+        super(new RepositorySessionStorage(name, map, ttl));
     }
 }

@@ -56,7 +56,8 @@ const getAllDecorator = new GetAllRowsLocalStorageDecorator(
         page: x.page,
         sort: x.sort
     }),
-    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page)
+    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page),
+    10000
 );
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {

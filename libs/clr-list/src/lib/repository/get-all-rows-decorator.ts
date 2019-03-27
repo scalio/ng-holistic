@@ -49,7 +49,7 @@ export class GetAllRowsDecorator<TState, TResult> implements IGetAllDecorator<TS
 
             // use initial state insted of request in case requested state is initial
             return fn(initialState || state).pipe(
-                tap(result => this.storage.setResult(result, { requestState: state, result, expired: 1000 }))
+                tap(result => this.storage.setResult(result, { requestState: state, result }))
             );
         };
     }
@@ -60,8 +60,8 @@ export class GetAllRowsDecorator<TState, TResult> implements IGetAllDecorator<TS
 }
 
 export class GetAllRowsLocalStorageDecorator<TState = any, TResult = any> extends GetAllRowsDecorator<TState, TResult> {
-    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>) {
-        super(new RepositoryLocalStorage(name, map), checkInitState);
+    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>, ttl?: number) {
+        super(new RepositoryLocalStorage(name, map, ttl), checkInitState);
     }
 }
 
@@ -69,7 +69,7 @@ export class GetAllRowsSessionStorageDecorator<TState = any, TResult = any> exte
     TState,
     TResult
 > {
-    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>) {
-        super(new RepositorySessionStorage(name, map), checkInitState);
+    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>, ttl?: number) {
+        super(new RepositorySessionStorage(name, map, ttl), checkInitState);
     }
 }
