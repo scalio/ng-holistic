@@ -31,7 +31,7 @@ export class GetAllRowsDecorator<TState, TResult> implements IGetAllDecorator<TS
         return state => {
             const storedResult = this.storage.getResult();
 
-            console.log('GetAllRowsDecorator [storedResult, state]', storedResult, state);
+            console.log('GetAllRowsDecorator::decorate [storedResult, state]', storedResult, state);
 
             let initialState: any;
             if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
