@@ -11,9 +11,9 @@ export interface IGetAllDecorator<TState, TResult> {
 }
 
 export interface IRepositoryStorage {
-    getState(): any;
-    setResult(result: any): void;
-    resetState(): void;
+    getResult(): { state: any; meta: any };
+    setResult(result: any, meta: any): void;
+    reset(): void;
 }
 
 /**
@@ -35,67 +35,69 @@ export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState
     decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
         return state => {
             if (!state || isEmpty(state)) {
-                state = this.storage.getState();
+                const result = this.storage.getResult();
+                state = result && result.state;
             } else if (this.checkInitState && this.checkInitState(state)) {
-                const storedState = this.storage.getState();
-                if (storedState) {
-                    // don't override initial state if there is no stored state
-                    state = storedState;
+                const result = this.storage.getResult();
+                if (result) {
+                    // don't override initial state if there is no stored result
+                    state = result.state;
                 }
             }
 
-            return fn(state).pipe(tap(result => this.storage.setResult(result)));
+            return fn(state).pipe(tap(result => this.storage.setResult(result, null)));
         };
     }
 
     reset() {
-        this.storage.resetState();
+        this.storage.reset();
     }
 }
 
-export class RepositoryStorage<TState, TResult> implements IRepositoryStorage {
-    constructor(private readonly map: ((state: TState) => TResult), private readonly storage: IValueStorage) {}
+export type MapResultFun = (result: any) => any;
 
-    getState() {
+export class RepositoryStorage implements IRepositoryStorage {
+    constructor(private readonly map: MapResultFun, private readonly storage: IValueStorage) {}
+
+    getResult() {
         return this.storage.getValue();
     }
 
-    setResult(result: any) {
+    setResult(result: any, meta: any) {
         const state = this.map(result);
-        this.storage.setValue(state);
+        const val = { state, meta };
+        this.storage.setValue(val);
     }
 
-    resetState() {
+    reset() {
         this.storage.setValue(null);
     }
 }
 
-export type MapStateResultFun<TState, TResult> = (state: TState) => TResult;
-
 // Local storage
 
-export class RepositoryLocalStorage<TState, TResult> extends RepositoryStorage<TState, TResult> {
-    constructor(name: string, map: MapStateResultFun<TState, TResult>) {
+export class RepositoryLocalStorage extends RepositoryStorage {
+    constructor(name: string, map: MapResultFun) {
         super(map, new ValueLocalStorage(name));
     }
 }
 
 export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapStateResultFun<TState, TResult>, checkInitState?: CheckInitStateFun<TState>) {
+    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>) {
         super(new RepositoryLocalStorage(name, map), checkInitState);
     }
 }
 
 // Session storage
 
-export class RepositorySessionStorage<TState, TResult> extends RepositoryStorage<TState, TResult> {
-    constructor(name: string, map: MapStateResultFun<TState, TResult>) {
+export class RepositorySessionStorage extends RepositoryStorage {
+    constructor(name: string, map: MapResultFun) {
         super(map, new ValueSessionStorage(name));
     }
 }
 
 export class GetAllSessionStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapStateResultFun<TState, TResult>) {
+    constructor(name: string, map: MapResultFun) {
         super(new RepositorySessionStorage(name, map));
     }
 }

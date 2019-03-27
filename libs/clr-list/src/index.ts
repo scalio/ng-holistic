@@ -6,6 +6,7 @@ export * from './lib/list/list.component';
 export * from './lib/list/list.config';
 export * from './lib/list/list.module';
 export * from './lib/repository/get-all-decorator';
+export * from './lib/repository/get-all-rows-decorator';
 export * from './lib/rows-manager.service';
 export * from './lib/table/custom-cell.directive';
 export * from './lib/table/sort.pipe';

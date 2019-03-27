@@ -93,7 +93,7 @@ const getAllDecorator = new GetAllLocalStorageDecorator(
         sort: x.sort,
         filters: x.filters
     }),
-    x => !x || !x.page
+    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page)
 );
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {
