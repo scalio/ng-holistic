@@ -348,7 +348,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 const sort = mpResult.sort;
                 const page = mpResult.paginator && mapPageState(mpResult.paginator);
 
-                this.state = omitUndefinedFileds({ ...state, page, sort, filters });
                 if (this.filterService && filters && filters.length > 0) {
                     // map filters back to filterService model
                     const objFiletrs = R.pipe(
@@ -357,8 +356,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     )(filters);
                     this.filterService.setValue(objFiletrs);
                 }
-
-                console.log('loaded [state, paginator]', this.state, mpResult.paginator);
 
                 this._paginator = mpResult.paginator;
                 this._dataProviderState = dpState;
@@ -370,13 +367,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     // sort, old page + sort, page + sort - only latest must be considered as valid onRefresh
                     this._freezeCount = 0;
                     // map paginator
-                    if (page) {
+                    if (page && (!state || !R.equals(page, state.page))) {
                         this._freezeCount++;
                     }
-                    if (sort) {
+                    if (sort && (!state || !R.equals(sort, state.sort))) {
                         this._freezeCount++;
                     }
                 }
+
+                this.state = omitUndefinedFileds({ ...state, page, sort, filters });
+                console.log(
+                    'loaded [state, paginator, freezeCount]',
+                    this.state,
+                    mpResult.paginator,
+                    this._freezeCount
+                );
             }),
             catchError(err => {
                 this.errorMessage = err;
@@ -411,11 +416,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     getColSortOrder(col: Table.ColumnBase) {
+        const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
         const sort = this.state && this.state.sort;
+        const tableSort = this.table && this.table.sort;
         if (col.sort && sort) {
-            const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
             if (sortKey === sort.by) {
                 return sort.reverse ? ClrDatagridSortOrder.DESC : ClrDatagridSortOrder.ASC;
+            }
+        } else if (tableSort) {
+            // sort by default column if state doesn't have sort column
+            if (typeof tableSort === 'string') {
+                if (tableSort === sortKey) {
+                    return ClrDatagridSortOrder.ASC;
+                }
+            } else if (tableSort.name === sortKey) {
+                return tableSort.direction === 'asc' ? ClrDatagridSortOrder.ASC : ClrDatagridSortOrder.DESC;
             }
         }
 

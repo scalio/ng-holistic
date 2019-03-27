@@ -5,6 +5,7 @@ import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
 const table: TableDescription = {
+    sort: 'title',
     cols: [
         {
             id: 'title',

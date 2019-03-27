@@ -57,6 +57,11 @@ export namespace Table {
     }
 
     export type DropEvent = CdkDragDrop<Table.Row>;
+
+    export interface SortColumn {
+        name: string;
+        direction: 'asc' | 'desc';
+    }
 }
 
 export namespace Table.MapColumns {
@@ -102,6 +107,7 @@ export interface TableDescription {
         cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
         rows: (parentRow: Table.Row) => any[];
     };
+    sort?: string | Table.SortColumn;
 }
 
 export namespace Table.Data {
