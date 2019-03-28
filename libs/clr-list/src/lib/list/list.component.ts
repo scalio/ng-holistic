@@ -52,15 +52,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
 
-    /**
-     * Row details template
-     */
-    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
-
-    /**
-     * Custom cells
-     */
-    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
+    // Filter props delegator
+    @Input() filterFields: ClrFormFields.FormField[];
 
     // Table props delegators
 
@@ -83,14 +76,19 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() rowSelectable = false;
 
     /**
+     * Row details template
+     */
+    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
+
+    /**
+     * Custom cells
+     */
+    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
+
+    /**
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
-
-    // Filter props delegator
-
-    @Input() filterFields: ClrFormFields.FormField[];
-
     @Output() filter = new EventEmitter<any>();
 
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();

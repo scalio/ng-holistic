@@ -335,6 +335,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
         const dpState = this.dataProviderConfig.mapState(state);
 
+        console.log('loadData [state, dpState]', state, dpState);
+
         this.loading = true;
         this.cdr.detectChanges();
         return dataProvider.load(dpState).pipe(
@@ -426,10 +428,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         } else if (tableSort) {
             // sort by default column if state doesn't have sort column
             if (typeof tableSort === 'string') {
-                if (tableSort === sortKey) {
-                    return ClrDatagridSortOrder.ASC;
+                if (tableSort === col.id) {
+                    return ClrDatagridSortOrder.DESC;
                 }
-            } else if (tableSort.name === sortKey) {
+            } else if (tableSort.name === col.id) {
                 return tableSort.direction === 'asc' ? ClrDatagridSortOrder.ASC : ClrDatagridSortOrder.DESC;
             }
         }

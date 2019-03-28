@@ -3,11 +3,11 @@ import { isEmpty } from 'ramda';
 import { interval } from 'rxjs';
 import { mapTo, tap } from 'rxjs/operators';
 import {
-    CheckInitStateFun,
+    CheckInitRequestFun,
     GetAllFunc,
     IGetAllDecorator,
     IRepositoryStorage,
-    MapResultFun,
+    MapResultToRequestFun,
     RepositoryLocalStorage,
     RepositorySessionStorage
 } from './get-all-decorator';
@@ -26,12 +26,12 @@ export class GetAllRowsMixedDecorator<TState, TResult> implements IGetAllDecorat
     constructor(
         private readonly stateStorage: IRepositoryStorage,
         private readonly rowsStorage: IRepositoryStorage,
-        private readonly checkInitState?: CheckInitStateFun<TState>
+        private readonly checkInitState?: CheckInitRequestFun
     ) {}
     decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
         return state => {
-            const storedResult = this.stateStorage.getResult();
-            const rowsNotExpired = this.rowsStorage.getResult();
+            const storedResult = this.stateStorage.getRequest();
+            const rowsNotExpired = this.rowsStorage.getRequest();
 
             console.log(
                 'GetAllRowsDecorator::decorate [storedResult, rowsNotExpired, state]',
@@ -44,7 +44,7 @@ export class GetAllRowsMixedDecorator<TState, TResult> implements IGetAllDecorat
             if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
                 if (storedResult) {
                     // don't override initial state if there is no stored result
-                    initialState = storedResult.state;
+                    initialState = storedResult.request;
                 }
             }
 
@@ -57,9 +57,9 @@ export class GetAllRowsMixedDecorator<TState, TResult> implements IGetAllDecorat
             // use initial state insted of request in case requested state is initial
             return fn(initialState || state).pipe(
                 tap(result => {
-                    this.stateStorage.setResult(result, { requestState: state, result });
+                    this.stateStorage.setRequest(state, { requestState: state, result }, result);
                     // Use rows storage just to check expiration
-                    this.rowsStorage.setResult(result, null);
+                    this.rowsStorage.setRequest(state, null, result);
                 })
             );
         };
@@ -80,7 +80,7 @@ export class GetAllRowsMixedStorageDecorator<TState = any, TResult = any> extend
     TState,
     TResult
 > {
-    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>, ttl?: number) {
+    constructor(name: string, map: MapResultToRequestFun, checkInitState?: CheckInitRequestFun, ttl?: number) {
         super(
             new RepositoryLocalStorage(`${name}.state`, map),
             new RepositorySessionStorage(`${name}.rows`, map, ttl),

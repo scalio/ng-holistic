@@ -11,15 +11,15 @@ export interface IGetAllDecorator<TState, TResult> {
 }
 
 export interface IRepositoryStorage {
-    getResult(): { state: any; meta: any };
-    setResult(result: any, meta: any): void;
+    getRequest(): { request: any; meta: any };
+    setRequest(request: any, meta: any, response: any): void;
     reset(): void;
 }
 
 /**
- * Determine if state is initial, i.e. first load on component initialization
+ * Determine if request is initial, i.e. first load on component initialization
  */
-export type CheckInitStateFun<TState> = (state: TState) => boolean;
+export type CheckInitRequestFun = (request: any) => boolean;
 
 /**
  * When state is null or empty object, get latest state from storage and use one for request.
@@ -30,20 +30,28 @@ export type CheckInitStateFun<TState> = (state: TState) => boolean;
 export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState, TResult> {
     constructor(
         private readonly storage: IRepositoryStorage,
-        private readonly checkInitState?: CheckInitStateFun<TState>
+        private readonly checkInitRequest?: CheckInitRequestFun
     ) {}
     decorate(fn: GetAllFunc<TState, TResult>): GetAllFunc<TState, TResult> {
-        return state => {
-            const storedResult = this.storage.getResult();
-            let initialState: any;
-            if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
-                if (storedResult) {
-                    initialState = storedResult.state;
+        return request => {
+            const storedRequest = this.storage.getRequest();
+            console.log('GetAllDecorator::decorate [storedRequest, request]', storedRequest, request);
+            let initialRequest: any;
+            if (!request || isEmpty(request) || (this.checkInitRequest && this.checkInitRequest(request))) {
+                if (storedRequest) {
+                    console.log(
+                        'GetAllDecorator stored request found and rqeuest is initial [storedRequest, request]',
+                        storedRequest,
+                        request
+                    );
+                    initialRequest = storedRequest.request;
                 }
             }
 
-            // use initial state insted of request in case requested state is initial
-            return fn(initialState || state).pipe(tap(result => this.storage.setResult(result, null)));
+            // use initial request instead of active request
+            const indeedRequest = initialRequest || request;
+            console.log('GetAllDecorator [indeedRequest]', indeedRequest);
+            return fn(indeedRequest).pipe(tap(result => this.storage.setRequest(indeedRequest, null, result)));
         };
     }
 
@@ -52,18 +60,24 @@ export class GetAllDecorator<TState, TResult> implements IGetAllDecorator<TState
     }
 }
 
-export type MapResultFun = (result: any) => any;
+// Change request with data according to response, pageIndex could be different for requesed for example
+export type MapResultToRequestFun = (request: any, response: any) => any;
 
 export class RepositoryStorage implements IRepositoryStorage {
-    constructor(private readonly map: MapResultFun, private readonly storage: IValueStorage) {}
+    /**
+     * If response returns paginator what is different from requested, we should be able map response to request
+     */
+    constructor(private readonly storage: IValueStorage, private readonly mp?: MapResultToRequestFun) {}
 
-    getResult() {
+    getRequest() {
         return this.storage.getValue();
     }
 
-    setResult(result: any, meta: any) {
-        const state = this.map(result);
-        const val = { state, meta };
+    setRequest(request: any, meta: any, response: any) {
+        if (this.mp) {
+            request = this.mp(request, response);
+        }
+        const val = { request, meta };
         this.storage.setValue(val);
     }
 
@@ -75,13 +89,13 @@ export class RepositoryStorage implements IRepositoryStorage {
 // Local storage
 
 export class RepositoryLocalStorage extends RepositoryStorage {
-    constructor(name: string, map: MapResultFun, ttl?: number) {
-        super(map, new ValueLocalStorage(name, ttl));
+    constructor(name: string, map?: MapResultToRequestFun, ttl?: number) {
+        super(new ValueLocalStorage(name, ttl), map);
     }
 }
 
 export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapResultFun, checkInitState?: CheckInitStateFun<TState>, ttl?: number) {
+    constructor(name: string, map?: MapResultToRequestFun, checkInitState?: CheckInitRequestFun, ttl?: number) {
         super(new RepositoryLocalStorage(name, map, ttl), checkInitState);
     }
 }
@@ -89,13 +103,13 @@ export class GetAllLocalStorageDecorator<TState = any, TResult = any> extends Ge
 // Session storage
 
 export class RepositorySessionStorage extends RepositoryStorage {
-    constructor(name: string, map: MapResultFun, ttl?: number) {
-        super(map, new ValueSessionStorage(name, ttl));
+    constructor(name: string, map?: MapResultToRequestFun, ttl?: number) {
+        super(new ValueSessionStorage(name, ttl), map);
     }
 }
 
 export class GetAllSessionStorageDecorator<TState = any, TResult = any> extends GetAllDecorator<TState, TResult> {
-    constructor(name: string, map: MapResultFun, ttl?: number) {
+    constructor(name: string, map?: MapResultToRequestFun, ttl?: number) {
         super(new RepositorySessionStorage(name, map, ttl));
     }
 }
