@@ -75,10 +75,13 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() dragEnabled = false;
     @Input() rowSelectable = false;
 
+    // tslint:disable-next-line:no-input-rename
+    @Input('rowDetail') rowDetailInput: RowDetailDirective | undefined;
+
     /**
      * Row details template
      */
-    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
+    @ContentChild(RowDetailDirective) rowDetailTemplate: RowDetailDirective | undefined;
 
     /**
      * Custom cells
@@ -99,7 +102,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(
-        @Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig,
+        @Optional()
+        @Inject(HLC_CLR_LIST_LABELS_CONFIG)
+        labelsConfig?: ListLabelsConfig,
         @Optional()
         @SkipSelf()
         @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
@@ -120,6 +125,10 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             this.customCellsContent ? this.customCellsContent.toArray() : [],
             (this.containerCustomCellsProvider && this.containerCustomCellsProvider.customCells) || []
         );
+    }
+
+    get rowDetail() {
+        return this.rowDetailInput || this.rowDetailTemplate;
     }
 
     setState(state: ClrDatagridStateInterface) {

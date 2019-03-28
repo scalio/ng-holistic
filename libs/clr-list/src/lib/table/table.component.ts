@@ -255,9 +255,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             return;
         }
 
-        if (this.state && R.isEmpty(state)) {
+        if (this.state && (R.isEmpty(state) || R.isNil(state.page))) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
+            console.log('onRefresh on exit');
             return;
         }
 
