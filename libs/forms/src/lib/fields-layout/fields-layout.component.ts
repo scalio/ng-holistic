@@ -63,7 +63,7 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider,
         @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER) private readonly customFieldsProvider: CustomFieldsProvider,
         @Optional() @Inject(HLC_FIELDS_LAYOUT_CONFIG) private readonly fieldsLayoutConfig: FieldsLayoutConfig,
-        @Inject(DOCUMENT) private readonly document: Document
+        @Inject(DOCUMENT) private readonly document: any
     ) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
 
