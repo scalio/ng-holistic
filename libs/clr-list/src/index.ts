@@ -10,6 +10,7 @@ export * from './lib/repository/get-all-rows-decorator';
 export * from './lib/repository/get-all-rows-mixed-decorator';
 export * from './lib/rows-manager.service';
 export * from './lib/table/custom-cell.directive';
+export * from './lib/table/row-detail.directive';
 export * from './lib/table/sort.pipe';
 export * from './lib/table/table.component';
 export * from './lib/table/table.config';
