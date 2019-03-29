@@ -53,7 +53,7 @@ export namespace ClrFormFields {
         'TextField',
         string,
         {
-            valueChanged?: Subject<string>;
+            valueChange?: Subject<string>;
         }
     >;
 

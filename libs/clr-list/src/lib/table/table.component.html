@@ -102,7 +102,7 @@
             [naked]="true"
             [disallowEmpty]="true"
             [value]="paginator.pageSize"
-            (valueChanged)="onPageSizeChanged($event)"
+            (valueChange)="onPageSizeChanged($event)"
             [items]="paginatorItems.items"
         ></hlc-clr-select>
         <div *ngIf="paginatorItems" class="footer-separator-line"></div>

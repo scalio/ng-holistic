@@ -120,7 +120,7 @@ export class PageSampleOutputComponent implements OnDestroy {
                     kind: 'TextField',
                     props: {
                         label: 'Name',
-                        valueChanged: this.subj
+                        valueChange: this.subj
                     }
                 }
             ]
@@ -164,7 +164,7 @@ export class PageSampleOutputComponent implements OnDestroy {
                     kind: 'TextField',
                     props: {
                         label: 'Name',
-                        valueChanged: this.subj
+                        valueChange: this.subj
                     }
                 }
             ]
