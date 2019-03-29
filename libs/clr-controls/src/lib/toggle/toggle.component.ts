@@ -20,7 +20,7 @@ export class HlcClrToggleComponent implements OnInit, ControlValueAccessor {
     @Input() text: string;
     @Input() value: boolean;
     @Input() readonly: boolean | undefined;
-    @Output() valueChanged = new EventEmitter<boolean>();
+    @Output() valueChange = new EventEmitter<boolean>();
 
     propagateChange = (_: any) => {};
 
@@ -34,7 +34,7 @@ export class HlcClrToggleComponent implements OnInit, ControlValueAccessor {
     onChange(val: any) {
         this.value = val;
         this.propagateChange(val);
-        this.valueChanged.emit(val);
+        this.valueChange.emit(val);
     }
 
     //

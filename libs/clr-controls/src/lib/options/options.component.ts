@@ -34,7 +34,7 @@ export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, Opt
     @Input()
     readonly: boolean;
     @Output()
-    valueChanged = new EventEmitter<string | undefined>();
+    valueChange = new EventEmitter<string | undefined>();
     propagateChange = (_: any) => {};
 
     constructor(private readonly dictMapper: DictMapperService) {}
@@ -43,7 +43,7 @@ export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, Opt
 
     onChange(val: any) {
         this.value = val || null;
-        this.valueChanged.emit(this.value);
+        this.valueChange.emit(this.value);
         this.propagateChange(this.value);
     }
 

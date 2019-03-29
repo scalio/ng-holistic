@@ -26,7 +26,7 @@ export class StorageProxy implements IStorage {
         if (isNil(val)) {
             this.storage.removeItem(name);
         } else {
-            localStorage.setItem(name, JSON.stringify(val));
+            this.storage.setItem(name, JSON.stringify(val));
         }
     }
 }

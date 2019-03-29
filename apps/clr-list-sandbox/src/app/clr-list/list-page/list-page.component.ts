@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
-import { GetAllLocalStorageDecorator, HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetAllRowsMixedStorageDecorator, HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -37,6 +37,7 @@ const filterFields: ClrFormFields.FormField[] = [
 ];
 
 const table: TableDescription = {
+    sort: 'title',
     cols: [
         {
             id: 'title',
@@ -86,6 +87,7 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
+/*
 const getAllDecorator = new GetAllLocalStorageDecorator(
     'list-page',
     x => ({
@@ -93,7 +95,19 @@ const getAllDecorator = new GetAllLocalStorageDecorator(
         sort: x.sort,
         filters: x.filters
     }),
-    x => !x || !x.page
+    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page)
+);
+*/
+
+const getAllDecorator = new GetAllRowsMixedStorageDecorator(
+    'list-page',
+    x => ({
+        page: x.page,
+        sort: x.sort,
+        filters: x.filters
+    }),
+    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page),
+    10000
 );
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {

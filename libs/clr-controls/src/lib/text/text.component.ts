@@ -26,7 +26,7 @@ export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextVa
     @Input() placeholder: string | undefined;
     @Input() readonly: boolean | undefined;
 
-    @Output() valueChanged = new EventEmitter<string>();
+    @Output() valueChange = new EventEmitter<string>();
 
     propagateChange = (_: any) => {};
 
@@ -36,7 +36,7 @@ export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextVa
 
     onChange($event: any) {
         this.value = $event.target.value;
-        this.valueChanged.emit(this.value);
+        this.valueChange.emit(this.value);
         this.propagateChange($event.target.value);
     }
 

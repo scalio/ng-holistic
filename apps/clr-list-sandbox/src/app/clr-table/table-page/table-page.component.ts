@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GetAllLocalStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetAllRowsMixedStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
 const table: TableDescription = {
+    sort: 'title',
     cols: [
         {
             id: 'title',
@@ -50,13 +51,14 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
-const getAllDecorator = new GetAllLocalStorageDecorator(
+const getAllDecorator = new GetAllRowsMixedStorageDecorator(
     'table-page',
     x => ({
         page: x.page,
         sort: x.sort
     }),
-    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page)
+    (state: any) => !state || R.isNil(state.page) || R.isEmpty(state.page),
+    10000
 );
 
 const dataProvider: { _load: any } & Table.Data.DataProvider = {

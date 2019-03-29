@@ -255,9 +255,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             return;
         }
 
-        if (this.state && R.isEmpty(state)) {
+        if (this.state && (R.isEmpty(state) || R.isNil(state.page))) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
+            console.log('onRefresh on exit');
             return;
         }
 
@@ -335,6 +336,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
         const dpState = this.dataProviderConfig.mapState(state);
 
+        console.log('loadData [state, dpState]', state, dpState);
+
         this.loading = true;
         this.cdr.detectChanges();
         return dataProvider.load(dpState).pipe(
@@ -348,7 +351,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 const sort = mpResult.sort;
                 const page = mpResult.paginator && mapPageState(mpResult.paginator);
 
-                this.state = omitUndefinedFileds({ ...state, page, sort, filters });
                 if (this.filterService && filters && filters.length > 0) {
                     // map filters back to filterService model
                     const objFiletrs = R.pipe(
@@ -357,8 +359,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     )(filters);
                     this.filterService.setValue(objFiletrs);
                 }
-
-                console.log('loaded [state, paginator]', this.state, mpResult.paginator);
 
                 this._paginator = mpResult.paginator;
                 this._dataProviderState = dpState;
@@ -370,13 +370,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     // sort, old page + sort, page + sort - only latest must be considered as valid onRefresh
                     this._freezeCount = 0;
                     // map paginator
-                    if (page) {
+                    if (page && (!state || !R.equals(page, state.page))) {
                         this._freezeCount++;
                     }
-                    if (sort) {
+                    if (sort && (!state || !R.equals(sort, state.sort))) {
                         this._freezeCount++;
                     }
                 }
+
+                this.state = omitUndefinedFileds({ ...state, page, sort, filters });
+                console.log(
+                    'loaded [state, paginator, freezeCount]',
+                    this.state,
+                    mpResult.paginator,
+                    this._freezeCount
+                );
             }),
             catchError(err => {
                 this.errorMessage = err;
@@ -411,11 +419,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     getColSortOrder(col: Table.ColumnBase) {
+        const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
         const sort = this.state && this.state.sort;
+        const tableSort = this.table && this.table.sort;
         if (col.sort && sort) {
-            const sortKey = typeof col.sort === 'string' ? col.sort : col.id;
             if (sortKey === sort.by) {
                 return sort.reverse ? ClrDatagridSortOrder.DESC : ClrDatagridSortOrder.ASC;
+            }
+        } else if (tableSort) {
+            // sort by default column if state doesn't have sort column
+            if (typeof tableSort === 'string') {
+                if (tableSort === col.id) {
+                    return ClrDatagridSortOrder.DESC;
+                }
+            } else if (tableSort.name === col.id) {
+                return tableSort.direction === 'asc' ? ClrDatagridSortOrder.ASC : ClrDatagridSortOrder.DESC;
             }
         }
 

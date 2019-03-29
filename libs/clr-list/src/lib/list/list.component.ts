@@ -52,15 +52,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
 
-    /**
-     * Row details template
-     */
-    @ContentChild(RowDetailDirective) rowDetail: RowDetailDirective | undefined;
-
-    /**
-     * Custom cells
-     */
-    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
+    // Filter props delegator
+    @Input() filterFields: ClrFormFields.FormField[];
 
     // Table props delegators
 
@@ -82,15 +75,23 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() dragEnabled = false;
     @Input() rowSelectable = false;
 
+    // tslint:disable-next-line:no-input-rename
+    @Input('rowDetail') rowDetailInput: RowDetailDirective | undefined;
+
+    /**
+     * Row details template
+     */
+    @ContentChild(RowDetailDirective) rowDetailTemplate: RowDetailDirective | undefined;
+
+    /**
+     * Custom cells
+     */
+    @ContentChildren(CustomCellDirective) customCellsContent: QueryList<CustomCellDirective>;
+
     /**
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
-
-    // Filter props delegator
-
-    @Input() filterFields: ClrFormFields.FormField[];
-
     @Output() filter = new EventEmitter<any>();
 
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
@@ -101,7 +102,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(
-        @Optional() @Inject(HLC_CLR_LIST_LABELS_CONFIG) labelsConfig?: ListLabelsConfig,
+        @Optional()
+        @Inject(HLC_CLR_LIST_LABELS_CONFIG)
+        labelsConfig?: ListLabelsConfig,
         @Optional()
         @SkipSelf()
         @Inject(HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER)
@@ -122,6 +125,10 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             this.customCellsContent ? this.customCellsContent.toArray() : [],
             (this.containerCustomCellsProvider && this.containerCustomCellsProvider.customCells) || []
         );
+    }
+
+    get rowDetail() {
+        return this.rowDetailInput || this.rowDetailTemplate;
     }
 
     setState(state: ClrDatagridStateInterface) {
