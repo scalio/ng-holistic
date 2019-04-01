@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GetAllRowsMixedStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetLoadListMixedStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -51,7 +51,7 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
-const getAllDecorator = new GetAllRowsMixedStorageDecorator(
+const getAllDecorator = new GetLoadListMixedStorageDecorator(
     'table-page',
     x => ({
         page: x.page,

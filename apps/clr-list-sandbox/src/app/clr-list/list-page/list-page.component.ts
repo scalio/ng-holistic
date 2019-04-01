@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
-import { GetAllRowsMixedStorageDecorator, HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetLoadListMixedStorageDecorator, HlcClrListComponent, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -99,7 +99,7 @@ const getAllDecorator = new GetAllLocalStorageDecorator(
 );
 */
 
-const getAllDecorator = new GetAllRowsMixedStorageDecorator(
+const getAllDecorator = new GetLoadListMixedStorageDecorator(
     'list-page',
     x => ({
         page: x.page,
