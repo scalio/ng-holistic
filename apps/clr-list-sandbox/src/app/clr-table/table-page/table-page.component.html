@@ -1,6 +1,7 @@
 <button class="btn" (click)="onAddRow()">Add Row</button>
 
 <hlc-clr-table
+    [useKeys]="true"
     [table]="table"
     [dataProvider]="dataProvider"
     [aggregateRow]="aggregateRow"

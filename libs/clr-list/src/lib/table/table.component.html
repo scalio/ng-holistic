@@ -9,6 +9,7 @@
     [class.datagrid-clickable]="rowSelectable"
     [class.datagrid-compact]="isCompact"
     (focus)="onFocus()"
+    (blur)="onBlur()"
     (clrDgSelectedChange)="onSelectedRowsChanged($event)"
     cdkDropList
     [cdkDropListDisabled]="!dragEnabled"
@@ -16,8 +17,7 @@
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
-    <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled" >
-    </clr-dg-column>
+    <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled"> </clr-dg-column>
 
     <ng-container *ngFor="let col of table?.cols; trackBy: trackByCol">
         <clr-dg-column
@@ -39,7 +39,7 @@
     </clr-dg-row>
 
     <clr-dg-row
-        #tableRow
+        #datagridRow
         *ngFor="let row of (rows | sort: sortFn); trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
@@ -55,12 +55,12 @@
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell class="datagrid-cell-handle" *ngIf="dragEnabled" >
+        <clr-dg-cell class="datagrid-cell-handle" *ngIf="dragEnabled">
             <clr-icon shape="drag-handle"></clr-icon>
         </clr-dg-cell>
 
         <clr-dg-cell
-            *ngFor="let cell of table?.cols; trackBy: trackByCol;"
+            *ngFor="let cell of table?.cols; trackBy: trackByCol"
             [ngClass]="getCellClass(cell, row)"
             (click)="onCellClick(cell, row)"
         >

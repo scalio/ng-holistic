@@ -172,6 +172,19 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() isCompact = false;
 
     /**
+     * Use hotkeys
+     */
+    @Input() set useKeys(val: boolean) {
+        this.keysManager.useKeys$.next(val);
+    }
+
+    get useKeys() {
+        return this.keysManager.useKeys$.getValue();
+    }
+
+    @Input() setFirstRowActiveOnFocus = true;
+
+    /**
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
@@ -212,22 +225,15 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
 
-        keysManager.activeRowChanged.subscribe(row => {
-            console.log('activeRowChanged', row);
-            this._activeRow = row;
-            this.cdr.markForCheck();
-        });
-
-        /*
-        keysManager.scrollIntoView.subscribe(row => {
-            const index = this.rows.indexOf(row);
-            const rowView = this.rowViews.find((_, i) => i === index);
-            if (rowView) {
-                const el = rowView['el'] as ElementRef;
-                el.nativeElement.scrollIntoView(false);
-            }
-        });
-        */
+        keysManager.activeRowChanged
+            .pipe(
+                filter(() => this.useKeys),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(row => {
+                this._activeRow = row;
+                this.cdr.markForCheck();
+            });
     }
 
     ngAfterViewInit() {
@@ -240,6 +246,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     ngOnDestroy() {
         this.destroy$.next();
+        this.keysManager.destroy();
     }
 
     get _rowDetail() {
@@ -615,6 +622,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     onFocus() {
-        this.keysManager.onFocus();
+        this.keysManager.focus$.next(true);
+        // TODO set timeout to not blink when user click particular row
+        if (this.setFirstRowActiveOnFocus && !this._activeRow) {
+            const firstRow = this.rows[0];
+            if (firstRow) {
+                this._activeRow = firstRow;
+                this.keysManager.onSetActive(0);
+            }
+        }
+    }
+
+    onBlur() {
+        this.keysManager.focus$.next(false);
     }
 }
