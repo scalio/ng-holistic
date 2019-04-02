@@ -2,6 +2,7 @@
     {{ errorMessage }}
 </hlc-clr-alert>
 <clr-datagrid
+    tabindex="0"
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
     [clrDgSelected]="selectedRows"
@@ -10,6 +11,7 @@
     [cdkDropListDisabled]="!dragEnabled"
     (cdkDropListDropped)="onDrop($event)"
     [class.datagrid-clickable]="rowSelectable"
+    (focus)="onFocus()"
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
@@ -36,6 +38,7 @@
     </clr-dg-row>
 
     <clr-dg-row
+        #tableRow
         *ngFor="let row of (rows | sort: sortFn); trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"

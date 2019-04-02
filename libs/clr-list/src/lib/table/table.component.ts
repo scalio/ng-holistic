@@ -12,9 +12,11 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList
+    QueryList,
+    ViewChildren,
+    ElementRef
 } from '@angular/core';
-import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
@@ -34,6 +36,7 @@ import {
 } from './table.config';
 import { Table, TableDescription } from './table.types';
 import { mapPageState, omitUndefinedFileds } from './table.utils';
+import { HlcTableKeysManagerService } from './utils/table-keys-manager';
 
 export interface TableCustomCellsProvider {
     customCells: CustomCellDirective[];
@@ -56,6 +59,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
     private _activeRow: Table.RowBase | undefined;
+    private _rows: Table.Row[];
+
     /**
      * FIX : Control unexpected behaviour
      * See following comments for this variable
@@ -126,7 +131,15 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     /**
      * Redux like integration with external store for rows
      */
-    @Input() rows: Table.Row[];
+    @Input() set rows(val: Table.Row[]) {
+        this._rows = val;
+        this.keysManager.onRowsChanged(val);
+    }
+
+    get rows() {
+        return this._rows;
+    }
+
     @Input() set paginator(val: Table.Data.Paginator | undefined) {
         this._paginator = val;
         const page = val && mapPageState(val);
@@ -166,8 +179,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     @Output() drop = new EventEmitter<Table.DropEvent>();
 
+    @ViewChildren('tableRow')
+    rowViews: QueryList<ClrDatagridRow>;
+
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        private readonly keysManager: HlcTableKeysManagerService,
         @Optional()
         @Inject(HLC_CLR_TABLE_CELL_MAP)
         cellMaps: TableCellMap[],
@@ -193,6 +210,21 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.upadteRow(row));
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
+
+        keysManager.activeRowChanged.subscribe(row => {
+            console.log('activeRowChanged', row);
+            this._activeRow = row;
+            this.cdr.markForCheck();
+        });
+
+        keysManager.scrollIntoView.subscribe(row => {
+            const index = this.rows.indexOf(row);
+            const rowView = this.rowViews.find((_, i) => i === index);
+            if (rowView) {
+                const el = rowView['el'] as ElementRef;
+                el.nativeElement.scrollIntoView(false);
+            }
+        });
     }
 
     get customCells() {
@@ -570,7 +602,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     onCellClick(cell: Table.ColumnBase, row: Table.Row) {
         if (this.rowSelectable) {
             this._activeRow = row;
+            this.keysManager.onSetActive(this.rows.indexOf(row));
         }
         this.cellClick.emit({ cell, row });
+    }
+
+    onFocus() {
+        this.keysManager.onFocus();
     }
 }

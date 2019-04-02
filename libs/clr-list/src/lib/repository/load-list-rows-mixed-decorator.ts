@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isEmpty } from 'ramda';
 import { interval } from 'rxjs';
 import { mapTo, tap } from 'rxjs/operators';
-import { CheckInitRequestFun, ILoadListDecorator, LoadListFunc } from './get-all-decorator';
+import { CheckInitRequestFun, ILoadListDecorator, LoadListFunc } from './load-list-decorator';
 import {
     IRepositoryStorage,
     MapResultToRequestFun,

@@ -2,7 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ClrDatagridModule, ClrIconModule, ClrLoadingModule } from '@clr/angular';
-import { HlcClrAlertModule } from '@ng-holistic/clr-common';
+import { HlcClrAlertModule, HlcHotKeysModule } from '@ng-holistic/clr-common';
 import { HlcClrSelectModule } from '@ng-holistic/clr-controls';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { CustomCellDirective } from './custom-cell.directive';
@@ -12,6 +12,7 @@ import { TableCellHostDirective } from './table-cell-host.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 import { HlcClrTableComponent } from './table.component';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
+import { HlcTableKeysManagerService } from './utils/table-keys-manager';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
         HlcClrSelectModule,
         ClrIconModule,
         HlcClrAlertModule,
-        DragDropModule
+        DragDropModule,
+        HlcHotKeysModule
     ],
     declarations: [
         HlcClrTableComponent,
@@ -33,7 +35,8 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
         ...cellComponents
     ],
     exports: [HlcClrTableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],
-    entryComponents: cellComponents
+    entryComponents: cellComponents,
+    providers: [HlcTableKeysManagerService]
 })
 export class HlcClrTableModule {
     static forRoot(cells?: TableCellMap): ModuleWithProviders {
@@ -49,7 +52,8 @@ export class HlcClrTableModule {
                     provide: HLC_CLR_TABLE_CELL_MAP,
                     useValue: cells,
                     multi: true
-                }
+                },
+                ...(HlcHotKeysModule.forRoot().providers || [])
             ]
         };
     }
