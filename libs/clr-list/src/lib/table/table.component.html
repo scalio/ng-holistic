@@ -6,12 +6,13 @@
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
     [clrDgSelected]="selectedRows"
+    [class.datagrid-clickable]="rowSelectable"
+    [class.datagrid-compact]="isCompact"
+    (focus)="onFocus()"
     (clrDgSelectedChange)="onSelectedRowsChanged($event)"
     cdkDropList
     [cdkDropListDisabled]="!dragEnabled"
     (cdkDropListDropped)="onDrop($event)"
-    [class.datagrid-clickable]="rowSelectable"
-    (focus)="onFocus()"
 >
     <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 

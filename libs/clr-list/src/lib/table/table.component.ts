@@ -1,5 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -13,8 +14,7 @@ import {
     Optional,
     Output,
     QueryList,
-    ViewChildren,
-    ElementRef
+    ViewChildren
 } from '@angular/core';
 import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
@@ -52,7 +52,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     styleUrls: ['./table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy {
+export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private _initState: ClrDatagridStateInterface | undefined;
@@ -169,6 +169,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() table: TableDescription | undefined;
 
     @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
+    @Input() isCompact = false;
 
     /**
      * Value will be already mapped by config.dataProvider.mapState
@@ -179,8 +180,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     @Output() drop = new EventEmitter<Table.DropEvent>();
 
-    @ViewChildren('tableRow')
-    rowViews: QueryList<ClrDatagridRow>;
+    @ViewChildren('datagridRow')
+    datagridRows: QueryList<ClrDatagridRow>;
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -217,6 +218,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             this.cdr.markForCheck();
         });
 
+        /*
         keysManager.scrollIntoView.subscribe(row => {
             const index = this.rows.indexOf(row);
             const rowView = this.rowViews.find((_, i) => i === index);
@@ -225,6 +227,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 el.nativeElement.scrollIntoView(false);
             }
         });
+        */
+    }
+
+    ngAfterViewInit() {
+        this.keysManager.setDatagridRows(this.datagridRows);
     }
 
     get customCells() {

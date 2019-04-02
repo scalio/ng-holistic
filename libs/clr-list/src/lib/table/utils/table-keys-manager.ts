@@ -1,5 +1,6 @@
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable, QueryList } from '@angular/core';
+import { ClrDatagridRow } from '@clr/angular';
 import { HlcHotKeysService } from '@ng-holistic/clr-common';
 import { Subject } from 'rxjs';
 import { Table } from '../table.types';
@@ -9,8 +10,13 @@ export class HlcTableKeysManagerService {
     private _keyManager: ActiveDescendantKeyManager<Table.Row>;
     private readonly _activeRowChanged = new Subject<Table.Row | undefined>();
     private readonly _scrollIntoView = new Subject<Table.Row>();
+    private _datagridRows: QueryList<ClrDatagridRow>;
 
     constructor(private readonly hotkeys: HlcHotKeysService) {}
+
+    setDatagridRows(datagridRows: QueryList<ClrDatagridRow>) {
+        this._datagridRows = datagridRows;
+    }
 
     get activeRowChanged() {
         return this._activeRowChanged.asObservable();
@@ -31,12 +37,22 @@ export class HlcTableKeysManagerService {
                 this._activeRowChanged.next(undefined);
             },
             scrollIntoView: () => {
-                this._scrollIntoView.next(row);
+                const index = rows.indexOf(row);
+                const datagridRow = this._datagridRows.find((_, i) => i === index);
+                if (datagridRow) {
+                    const el = datagridRow['el'] as ElementRef;
+                    if (el) {
+                        el.nativeElement.scrollIntoView(false);
+                    }
+                }
             }
         }));
+
+        const activeRow = this._keyManager && this._keyManager.activeItem;
         this._keyManager = new ActiveDescendantKeyManager(highlightable).withVerticalOrientation(true).withWrap(true);
-        this._keyManager.setActiveItem(-1);
-        // this._activeRowChanged.next(undefined);
+        const activeIndex = activeRow ? rows.findIndex(row => row.id === activeRow.id) : -1;
+        this._keyManager.setActiveItem(activeIndex);
+        this._activeRowChanged.next(rows[activeIndex]);
     }
 
     onFocus() {
