@@ -1,8 +1,16 @@
+@import "~@clr/ui/src/utils/dependencies.clarity";
+
 :host ::ng-deep {
-    .active-row {
-        background-color: lightblue;
-    }
     clr-datagrid {
         height: 95%;
+        .active-row {
+            background-color: $gray-light;
+        }
     }
+    clr-datagrid:focus {
+        .active-row {
+            background-color: $gray-light-midtone;
+        }
+    }
+
 }

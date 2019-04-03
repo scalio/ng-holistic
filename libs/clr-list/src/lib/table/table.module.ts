@@ -12,7 +12,6 @@ import { TableCellHostDirective } from './table-cell-host.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 import { HlcClrTableComponent } from './table.component';
 import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
-import { HlcTableKeysManagerService } from './utils/table-keys-manager';
 
 @NgModule({
     imports: [
@@ -35,8 +34,7 @@ import { HlcTableKeysManagerService } from './utils/table-keys-manager';
         ...cellComponents
     ],
     exports: [HlcClrTableComponent, CustomCellDirective, RowDetailDirective, ...cellComponents],
-    entryComponents: cellComponents,
-    providers: [HlcTableKeysManagerService]
+    entryComponents: cellComponents
 })
 export class HlcClrTableModule {
     static forRoot(cells?: TableCellMap): ModuleWithProviders {

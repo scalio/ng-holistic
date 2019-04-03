@@ -50,7 +50,8 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     selector: 'hlc-clr-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [HlcTableKeysManagerService]
 })
 export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
     private readonly cellMap: TableCellMap;
@@ -225,15 +226,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
 
-        keysManager.activeRowChanged
-            .pipe(
-                filter(() => this.useKeys),
-                takeUntil(this.destroy$)
-            )
-            .subscribe(row => {
-                this._activeRow = row;
-                this.cdr.markForCheck();
-            });
+        keysManager.activeRowChanged.pipe(takeUntil(this.destroy$)).subscribe(row => {
+            this._activeRow = row;
+            this.cdr.markForCheck();
+        });
+
+        keysManager.activePageChanged.pipe(takeUntil(this.destroy$)).subscribe(page => {
+            this.onPageChanged(page);
+        });
     }
 
     ngAfterViewInit() {
@@ -385,6 +385,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         console.log('loadData [state, dpState]', state, dpState);
 
         this.loading = true;
+        this.keysManager.loading = true;
         this.cdr.detectChanges();
         return dataProvider.load(dpState).pipe(
             takeUntil(this.destroy$),
@@ -425,6 +426,13 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 }
 
                 this.state = omitUndefinedFileds({ ...state, page, sort, filters });
+                if (this.paginator) {
+                    const pagesCount = Math.floor(
+                        this.paginator.length / this.paginator.pageSize +
+                            (this.paginator.length % this.paginator.pageSize === 0 ? 0 : 1)
+                    );
+                    this.keysManager.onPagesChanged(pagesCount, this.paginator.pageIndex);
+                }
                 console.log(
                     'loaded [state, paginator, freezeCount]',
                     this.state,
@@ -438,6 +446,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             }),
             finalize(() => {
                 this.loading = false;
+                this.keysManager.loading = false;
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
@@ -583,6 +592,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     //
+    onPageChanged(pageIndex: number) {
+        if (!this.paginator || pageIndex === (this.paginator && this.paginator.pageIndex)) {
+            return;
+        }
+        // everytime just reset to first page
+        const page = mapPageState({ ...this.paginator, pageIndex });
+        console.log('onPageChanged', pageIndex, page);
+        this.onRefresh({ ...this.state, page });
+        // after page size state changed onRefresh is invoked by datagrid with incorrect (staled) parameters
+        this._freezeInitialStateChange = undefined;
+    }
+
     onPageSizeChanged(size: number) {
         // everytime just reset to first page
         const state = R.assocPath(['page'], { size, from: 0, to: size - 1 }, this.state || {});

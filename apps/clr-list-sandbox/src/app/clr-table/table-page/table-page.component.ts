@@ -108,6 +108,7 @@ export class TablePageComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
+
         // reset decorator on init
         // getAllDecorator.reset();
     }
