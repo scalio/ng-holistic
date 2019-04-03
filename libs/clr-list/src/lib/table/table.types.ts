@@ -46,9 +46,11 @@ export namespace Table {
         title: string;
     }
 
+    // TODO : Rename RowEvent
     export interface CellClickEvent {
-        cell: ColumnBase;
+        cell?: ColumnBase;
         row: Row;
+        type: 'primary' | 'secondary';
     }
 
     export interface RowActionEvent {

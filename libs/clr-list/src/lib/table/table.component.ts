@@ -190,6 +190,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      */
     @Output() stateChanged = new EventEmitter<any>();
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
+    // TODO : rename rowEvent
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
     @Output() drop = new EventEmitter<Table.DropEvent>();
@@ -226,6 +227,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
 
+        // Key manager
+
         keysManager.activeRowChanged.pipe(takeUntil(this.destroy$)).subscribe(row => {
             this._activeRow = row;
             this.cdr.markForCheck();
@@ -233,6 +236,14 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
         keysManager.activePageChanged.pipe(takeUntil(this.destroy$)).subscribe(page => {
             this.onPageChanged(page);
+        });
+
+        keysManager.refresh.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.onRefresh(this.state, true);
+        });
+
+        keysManager.action.pipe(takeUntil(this.destroy$)).subscribe(type => {
+            this.cellClick.emit({ row: this._activeRow as any, type });
         });
     }
 
@@ -639,7 +650,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             this._activeRow = row;
             this.keysManager.onSetActive(this.rows.indexOf(row));
         }
-        this.cellClick.emit({ cell, row });
+        this.cellClick.emit({ cell, row, type: 'primary' });
     }
 
     onFocus() {

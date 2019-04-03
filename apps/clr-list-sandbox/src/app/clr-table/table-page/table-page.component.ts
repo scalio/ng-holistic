@@ -108,12 +108,15 @@ export class TablePageComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-
         // reset decorator on init
         // getAllDecorator.reset();
     }
 
     onAddRow() {
         this.tableComponent.addRow({ id: new Date().getTime().toString(), title: 'added', amount: 100 });
+    }
+
+    onRowEvent(event: any) {
+        console.log('+++', event);
     }
 }

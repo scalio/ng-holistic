@@ -18,6 +18,8 @@ export class HlcTableKeysManagerService {
 
     private readonly destroy$ = new Subject();
     private readonly stop$ = new Subject();
+    private readonly _refresh$ = new Subject();
+    private readonly _action$ = new Subject<'primary' | 'secondary'>();
 
     loading = false;
     useKeys$ = new BehaviorSubject(false);
@@ -28,11 +30,9 @@ export class HlcTableKeysManagerService {
     private _activePageChanged = new Subject<number>();
 
     constructor(private readonly hotkeys: HlcHotKeysService) {
-        console.log('333');
         combineLatest(this.useKeys$, this.focus$)
             .pipe(takeUntil(this.destroy$))
             .subscribe(([useKeys, focus]) => {
-                console.log('222', useKeys, focus);
                 if (useKeys && focus) {
                     this.startListenKeyEvents();
                 } else {
@@ -51,6 +51,14 @@ export class HlcTableKeysManagerService {
 
     get activePageChanged() {
         return this._activePageChanged.asObservable();
+    }
+
+    get refresh() {
+        return this._refresh$.asObservable();
+    }
+
+    get action() {
+        return this._action$.asObservable();
     }
 
     get scrollIntoView() {
@@ -133,7 +141,17 @@ export class HlcTableKeysManagerService {
             this._pagesKeyManager.setNextItemActive();
         });
 
-        this.getKeys('ctrl+r').subscribe(() => {});
+        this.getKeys('ctrl+r').subscribe(() => {
+            this._refresh$.next();
+        });
+
+        this.getKeys('enter').subscribe(() => {
+            this._action$.next('primary');
+        });
+
+        this.getKeys('space').subscribe(() => {
+            this._action$.next('secondary');
+        });
 
         this._isListenKeyEvents = true;
     }
@@ -147,6 +165,8 @@ export class HlcTableKeysManagerService {
         this.hotkeys.remove('ctrl+r');
         this.hotkeys.remove('down');
         this.hotkeys.remove('up');
+        this.hotkeys.remove('enter');
+        this.hotkeys.remove('break');
         this.stop$.next();
 
         this._isListenKeyEvents = false;

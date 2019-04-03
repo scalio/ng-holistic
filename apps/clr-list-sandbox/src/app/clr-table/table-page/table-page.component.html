@@ -6,6 +6,7 @@
     [dataProvider]="dataProvider"
     [aggregateRow]="aggregateRow"
     [rowSelectable]="true"
+    (cellClick)="onRowEvent($event)"
 >
     <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
 </hlc-clr-table>
