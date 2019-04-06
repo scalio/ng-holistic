@@ -11,6 +11,9 @@ export class HlcFilterKeysManagerService {
         hotkeysContainer.addKeys('ctrl+r', () => {
             this.refresh$.next();
         });
+        hotkeysContainer.addKeys('ctrl+enter', () => {
+            this.refresh$.next();
+        });
         hotkeysContainer.addKeys('ctrl+d', () => {
             this.reset$.next();
         });

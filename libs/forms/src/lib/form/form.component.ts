@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Inject,
@@ -11,6 +12,7 @@ import {
     OnInit,
     Optional,
     Output,
+    Renderer2,
     SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -38,6 +40,7 @@ import { initFormGroup } from './form-builder';
 export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
+    private _useKeys = true;
     /**
      * Initial value - value on form, right after form initialization
      */
@@ -61,6 +64,21 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         }
     }
 
+    @Input() set useKeys(val: boolean) {
+        if (val !== this._useKeys) {
+            this._useKeys = val;
+            if (val) {
+                this.startListenKeys();
+            } else {
+                this.stopListenKeys();
+            }
+        }
+    }
+
+    get useKeys() {
+        return this._useKeys;
+    }
+
     get customFields() {
         return this.customFieldsProvider && this.customFieldsProvider.customFields;
     }
@@ -73,6 +91,8 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     constructor(
         private readonly fb: FormBuilder,
         private readonly cdr: ChangeDetectorRef,
+        private readonly elementRef: ElementRef,
+        private readonly renderer: Renderer2,
         @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
         @Optional()
         @Inject(HLC_FORM_REBUILD_PROVIDER)
@@ -144,6 +164,9 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         // Allow value subscribers of a form to take initial actions
         this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
         this.cdr.detectChanges();
+        if (this.useKeys) {
+            this.startListenKeys();
+        }
     }
 
     ngOnDestroy() {
@@ -157,5 +180,17 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     resetValue() {
         this.formGroup.patchValue(this.initialValue);
         this.formGroup.updateValueAndValidity();
+    }
+
+    private startListenKeys() {
+        const selector = 'select, input, textarea';
+        const inputs = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(selector);
+        inputs.forEach(el => this.renderer.addClass(el, 'mousetrap'));
+    }
+
+    private stopListenKeys() {
+        const selector = 'select, input, textarea';
+        const inputs = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(selector);
+        inputs.forEach(el => this.renderer.removeClass(el, 'mousetrap'));
     }
 }

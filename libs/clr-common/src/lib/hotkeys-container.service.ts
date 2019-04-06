@@ -53,10 +53,6 @@ export class HlcHotkeysContainerService {
             return;
         }
 
-        this.litenedKeys.forEach(({ keys }) => {
-            this.removeKeys(keys);
-        });
-
         this.stop$.next();
         this._isListenKeyEvents = false;
     }
@@ -64,13 +60,10 @@ export class HlcHotkeysContainerService {
     getKeys(keys: string) {
         return this.hotkeys.add(keys).pipe(
             takeUntil(this.stop$),
+            takeUntil(this.destroy$),
             withLatestFrom(this.loading$),
             filter(([_, loading]) => !loading),
             map(([key]) => key)
         );
-    }
-
-    removeKeys(keys: string) {
-        this.hotkeys.remove(keys);
     }
 }

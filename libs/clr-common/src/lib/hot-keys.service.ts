@@ -11,7 +11,7 @@ export class HlcHotKeysService {
         return new Observable<KeyboardEvent>(subscriber => {
             const hotkeyHandler = new Hotkey(keys, event => {
                 if (subscriber.closed) {
-                    this.hotkeys.remove(keys as any);
+                    this.hotkeys.remove(hotkeyHandler);
                     return false;
                 } else {
                     subscriber.next(event);
@@ -21,13 +21,11 @@ export class HlcHotKeysService {
                     return prevent;
                 }
             });
-
             this.hotkeys.add(hotkeyHandler);
+            return () => {
+                this.hotkeys.remove(hotkeyHandler);
+            };
         });
-    }
-
-    remove(keys: string | string[]) {
-        this.hotkeys.remove(keys as any);
     }
 }
 

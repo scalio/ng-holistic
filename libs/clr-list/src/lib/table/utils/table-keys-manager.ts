@@ -1,10 +1,10 @@
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ElementRef, Injectable, QueryList } from '@angular/core';
 import { ClrDatagridRow } from '@clr/angular';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { Table } from '../table.types';
-import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 
 @Injectable()
 export class HlcTableKeysManagerService {
@@ -116,56 +116,6 @@ export class HlcTableKeysManagerService {
     onSetActive(index: number) {
         this._activeRowKeyManager.setActiveItem(index);
     }
-
-    /*
-    private startListenKeyEvents() {
-
-        this.getKeys('down').subscribe(() => {
-            this._activeRowKeyManager.setNextItemActive();
-            if (this._activeRowKeyManager.activeItem) {
-                this._activeRowKeyManager.activeItem.scrollIntoView();
-            }
-        });
-
-        this.getKeys('up').subscribe(() => {
-            this._activeRowKeyManager.setPreviousItemActive();
-            if (this._activeRowKeyManager.activeItem) {
-                this._activeRowKeyManager.activeItem.scrollIntoView();
-            }
-        });
-
-        this.getKeys('left').subscribe(() => {
-            this._pagesKeyManager.setPreviousItemActive();
-        });
-
-        this.getKeys('right').subscribe(() => {
-            this._pagesKeyManager.setNextItemActive();
-        });
-
-        this.getKeys('ctrl+r').subscribe(() => {
-            this._refresh$.next();
-        });
-
-        this.getKeys('enter').subscribe(() => {
-            this._action$.next('primary');
-        });
-
-        this.getKeys('space').subscribe(() => {
-            this._action$.next('secondary');
-        });
-    }
-
-    private stopListenKeyEvents() {
-        this.hotkeys.remove('left');
-        this.hotkeys.remove('right');
-        this.hotkeys.remove('ctrl+r');
-        this.hotkeys.remove('down');
-        this.hotkeys.remove('up');
-        this.hotkeys.remove('enter');
-        this.hotkeys.remove('break');
-        this.stop$.next();
-    }
-    */
 
     // page
     onPagesChanged(pagesCount: number, activePage: number) {

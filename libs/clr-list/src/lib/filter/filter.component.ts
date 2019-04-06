@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    ElementRef,
     EventEmitter,
     Inject,
     Input,
@@ -9,6 +10,7 @@ import {
     OnInit,
     Optional,
     Output,
+    Renderer2,
     ViewChild
 } from '@angular/core';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
@@ -54,7 +56,6 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
         this.hotkeysContainer.loading$.next(val);
     }
 
-
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
             return;
@@ -71,6 +72,8 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(
         filterKeysManager: HlcFilterKeysManagerService,
         private readonly hotkeysContainer: HlcHotkeysContainerService,
+        private readonly elementRef: ElementRef,
+        private readonly renderer: Renderer2,
         @Optional() private readonly filterService?: FilterService,
         @Optional() @Inject(HLC_CLR_FILTER_LABELS_CONFIG) labelsConfig?: FilterLabelsConfig
     ) {
@@ -91,6 +94,16 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.filterService) {
             this.filterService.setForm(this.form.formGroup);
         }
+
+        const all = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(
+            // tslint:disable-next-line:max-line-length
+            '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button'
+        );
+
+        all.forEach(el => {
+            this.renderer.listen(el, 'focus', () => this.onFocus());
+            this.renderer.listen(el, 'blur', () => this.onBlur());
+        });
     }
 
     ngOnDestroy() {
