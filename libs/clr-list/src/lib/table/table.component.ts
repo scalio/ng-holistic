@@ -14,8 +14,10 @@ import {
     Optional,
     Output,
     QueryList,
+    Renderer2,
     ViewChildren
 } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
@@ -201,6 +203,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     constructor(
         private readonly cdr: ChangeDetectorRef,
         private readonly keysManager: HlcTableKeysManagerService,
+        @Inject(DOCUMENT) private readonly document: any,
+        private readonly renderer: Renderer2,
         @Optional()
         @Inject(HLC_CLR_TABLE_CELL_MAP)
         cellMaps: TableCellMap[],
@@ -249,6 +253,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     ngAfterViewInit() {
         this.keysManager.setDatagridRows(this.datagridRows);
+        //  we cant setup tabindex on datagrid in template since don't have
+        // access to the rendered table element (separated from toolbox)
+        const datagridDiv = this.document.querySelector('div.datagrid');
+        this.renderer.setAttribute(datagridDiv, 'tabindex', '1');
+        this.renderer.listen(datagridDiv, 'focus', () => this.onFocus());
+        this.renderer.listen(datagridDiv, 'blur', () => this.onBlur());
     }
 
     get customCells() {
@@ -654,6 +664,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     onFocus() {
+        console.log('!!! focus');
         this.keysManager.focus$.next(true);
         // TODO set timeout to not blink when user click particular row
         if (this.setFirstRowActiveOnFocus && !this._activeRow) {

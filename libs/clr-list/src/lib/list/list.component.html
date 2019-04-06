@@ -10,6 +10,8 @@
     [hidePaginator]="hidePaginator"
     [disableSorting]="disableSorting"
     [rowSelectable]="rowSelectable"
+    [useKeys]="useKeys"
+    [setFirstRowActiveOnFocus]="setFirstRowActiveOnFocus"
     (stateChanged)="onTableStateChanged($event)"
     (rowAction)="rowAction.emit($event)"
     (cellClick)="cellClick.emit($event)"

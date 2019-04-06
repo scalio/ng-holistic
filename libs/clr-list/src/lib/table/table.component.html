@@ -2,20 +2,17 @@
     {{ errorMessage }}
 </hlc-clr-alert>
 <clr-datagrid
-    tabindex="0"
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
     [clrDgSelected]="selectedRows"
     [class.datagrid-clickable]="rowSelectable"
     [class.datagrid-compact]="isCompact"
-    (focus)="onFocus()"
-    (blur)="onBlur()"
     (clrDgSelectedChange)="onSelectedRowsChanged($event)"
     cdkDropList
     [cdkDropListDisabled]="!dragEnabled"
     (cdkDropListDropped)="onDrop($event)"
 >
-    <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
+    <clr-dg-action-bar tabindex="0"> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
     <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled"> </clr-dg-column>
 

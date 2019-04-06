@@ -1,5 +1,11 @@
 
-<hlc-clr-list [filterFields]="filterFields" [table]="table" [dataProvider]="dataProvider">
+<hlc-clr-list
+    [filterFields]="filterFields"
+    [table]="table"
+    [dataProvider]="dataProvider"
+    [useKeys]="true"
+    [rowSelectable]="true"
+>
     <button toolbox class="btn btn-sm btn-secondary" (click)="onUpdateRow()" style="float: right">Update row</button>
     <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} : {{ row['title'] }} </ng-template>
 </hlc-clr-list>

@@ -51,6 +51,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
+    @Input() useKeys = false;
+    @Input() setFirstRowActiveOnFocus = true;
+    @Input() rowSelectable = false;
 
     // Filter props delegator
     @Input() filterFields: ClrFormFields.FormField[];
@@ -73,7 +76,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
      * Enable darg & drop
      */
     @Input() dragEnabled = false;
-    @Input() rowSelectable = false;
 
     // tslint:disable-next-line:no-input-rename
     @Input('rowDetail') rowDetailInput: RowDetailDirective | undefined;
