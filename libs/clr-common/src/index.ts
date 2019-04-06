@@ -32,3 +32,4 @@ export * from './lib/pipes/phone.pipe';
 export * from './lib/side-nav/side-nav.component';
 export * from './lib/side-nav/side-nav.module';
 export * from './lib/hot-keys.service';
+export * from './lib/hotkeys-container.service';

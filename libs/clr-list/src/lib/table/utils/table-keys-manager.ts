@@ -1,11 +1,10 @@
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ElementRef, Injectable, QueryList } from '@angular/core';
 import { ClrDatagridRow } from '@clr/angular';
-import { HlcHotKeysService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Table } from '../table.types';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 
 @Injectable()
 export class HlcTableKeysManagerService {
@@ -14,31 +13,47 @@ export class HlcTableKeysManagerService {
     private readonly _activeRowChanged = new Subject<Table.Row | undefined>();
     private readonly _scrollIntoView = new Subject<Table.Row>();
     private _datagridRows: QueryList<ClrDatagridRow>;
-    private _isListenKeyEvents = false;
-
-    private readonly destroy$ = new Subject();
-    private readonly stop$ = new Subject();
     private readonly _refresh$ = new Subject();
     private readonly _action$ = new Subject<'primary' | 'secondary'>();
-
-    loading = false;
-    useKeys$ = new BehaviorSubject(false);
-    focus$ = new BehaviorSubject(false);
 
     // pages
     private _pagesKeyManager: ActiveDescendantKeyManager<any>;
     private _activePageChanged = new Subject<number>();
 
-    constructor(private readonly hotkeys: HlcHotKeysService) {
-        combineLatest(this.useKeys$, this.focus$)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(([useKeys, focus]) => {
-                if (useKeys && focus) {
-                    this.startListenKeyEvents();
-                } else {
-                    this.stopListenKeyEvents();
-                }
-            });
+    constructor(hotkeysContainer: HlcHotkeysContainerService) {
+        hotkeysContainer.addKeys('down', () => {
+            this._activeRowKeyManager.setNextItemActive();
+            if (this._activeRowKeyManager.activeItem) {
+                this._activeRowKeyManager.activeItem.scrollIntoView();
+            }
+        });
+
+        hotkeysContainer.addKeys('up', () => {
+            this._activeRowKeyManager.setPreviousItemActive();
+            if (this._activeRowKeyManager.activeItem) {
+                this._activeRowKeyManager.activeItem.scrollIntoView();
+            }
+        });
+
+        hotkeysContainer.addKeys('left', () => {
+            this._pagesKeyManager.setPreviousItemActive();
+        });
+
+        hotkeysContainer.addKeys('right', () => {
+            this._pagesKeyManager.setNextItemActive();
+        });
+
+        hotkeysContainer.addKeys('ctrl+r', () => {
+            this._refresh$.next();
+        });
+
+        hotkeysContainer.addKeys('enter', () => {
+            this._action$.next('primary');
+        });
+
+        hotkeysContainer.addKeys('space', () => {
+            this._action$.next('secondary');
+        });
     }
 
     setDatagridRows(datagridRows: QueryList<ClrDatagridRow>) {
@@ -66,7 +81,6 @@ export class HlcTableKeysManagerService {
     }
 
     onRowsChanged(rows: Table.Row[]) {
-        console.log('onRowsChanged', rows);
         if (!rows) {
             return;
         }
@@ -103,21 +117,8 @@ export class HlcTableKeysManagerService {
         this._activeRowKeyManager.setActiveItem(index);
     }
 
-    destroy() {
-        this.destroy$.next();
-    }
-
-    private getKeys(keys: string) {
-        return this.hotkeys.add(keys).pipe(
-            takeUntil(this.stop$),
-            filter(() => !this.loading)
-        );
-    }
-
+    /*
     private startListenKeyEvents() {
-        if (this._isListenKeyEvents) {
-            return;
-        }
 
         this.getKeys('down').subscribe(() => {
             this._activeRowKeyManager.setNextItemActive();
@@ -152,14 +153,9 @@ export class HlcTableKeysManagerService {
         this.getKeys('space').subscribe(() => {
             this._action$.next('secondary');
         });
-
-        this._isListenKeyEvents = true;
     }
 
     private stopListenKeyEvents() {
-        if (!this._isListenKeyEvents) {
-            return;
-        }
         this.hotkeys.remove('left');
         this.hotkeys.remove('right');
         this.hotkeys.remove('ctrl+r');
@@ -168,9 +164,8 @@ export class HlcTableKeysManagerService {
         this.hotkeys.remove('enter');
         this.hotkeys.remove('break');
         this.stop$.next();
-
-        this._isListenKeyEvents = false;
     }
+    */
 
     // page
     onPagesChanged(pagesCount: number, activePage: number) {

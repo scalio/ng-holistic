@@ -5,17 +5,22 @@ import {
     EventEmitter,
     Inject,
     Input,
+    OnDestroy,
     OnInit,
     Optional,
     Output,
     ViewChild
 } from '@angular/core';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields, ClrFormLayouts, HlcClrFormComponent } from '@ng-holistic/clr-forms';
 import { HlcFormComponent, HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
 import * as R from 'ramda';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { HlcClrFilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
 import { FilterService } from '../filter.service';
 import { defaultFilterLabelsConfig, FilterLabelsConfig, HLC_CLR_FILTER_LABELS_CONFIG } from './filter.config';
+import { HlcFilterKeysManagerService } from './utils/filter-keys-manager';
 
 @Component({
     selector: 'hlc-clr-filter',
@@ -26,11 +31,13 @@ import { defaultFilterLabelsConfig, FilterLabelsConfig, HLC_CLR_FILTER_LABELS_CO
         {
             provide: HLC_FORM_FIELD_WRAPPER,
             useValue: HlcClrFilterInputWrapperComponent
-        }
+        },
+        HlcFilterKeysManagerService
     ]
 })
-export class HlcClrFilterComponent implements OnInit, AfterViewInit {
-    _fields: ClrFormFields.FormField[];
+export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
+    private destroy$ = new Subject<any>();
+    private _fields: ClrFormFields.FormField[];
     group: ClrFormLayouts.FieldsLayout;
     labelsConfig: FilterLabelsConfig;
 
@@ -52,10 +59,20 @@ export class HlcClrFilterComponent implements OnInit, AfterViewInit {
     }
 
     constructor(
+        filterKeysManager: HlcFilterKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
         @Optional() private readonly filterService?: FilterService,
         @Optional() @Inject(HLC_CLR_FILTER_LABELS_CONFIG) labelsConfig?: FilterLabelsConfig
     ) {
         this.labelsConfig = labelsConfig || defaultFilterLabelsConfig;
+
+        filterKeysManager.refresh$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.onFilter();
+        });
+
+        filterKeysManager.reset$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.onReset();
+        });
     }
 
     ngOnInit() {}
@@ -64,6 +81,10 @@ export class HlcClrFilterComponent implements OnInit, AfterViewInit {
         if (this.filterService) {
             this.filterService.setForm(this.form.formGroup);
         }
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
     }
 
     get hasChanges() {
@@ -101,5 +122,13 @@ export class HlcClrFilterComponent implements OnInit, AfterViewInit {
 
     get value() {
         return this.form.formGroup.value;
+    }
+
+    onFocus() {
+        this.hotkeysContainer.focus$.next(true);
+    }
+
+    onBlur() {
+        this.hotkeysContainer.focus$.next(false);
     }
 }

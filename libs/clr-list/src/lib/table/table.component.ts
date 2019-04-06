@@ -19,6 +19,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
@@ -53,7 +54,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [HlcTableKeysManagerService]
+    providers: [HlcHotkeysContainerService, HlcTableKeysManagerService]
 })
 export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
     private readonly cellMap: TableCellMap;
@@ -178,11 +179,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Use hotkeys
      */
     @Input() set useKeys(val: boolean) {
-        this.keysManager.useKeys$.next(val);
+        this.hotkeysContainer.useKeys$.next(val);
     }
 
     get useKeys() {
-        return this.keysManager.useKeys$.getValue();
+        return this.hotkeysContainer.useKeys$.getValue();
     }
 
     @Input() setFirstRowActiveOnFocus = true;
@@ -203,6 +204,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     constructor(
         private readonly cdr: ChangeDetectorRef,
         private readonly keysManager: HlcTableKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
         @Inject(DOCUMENT) private readonly document: any,
         private readonly renderer: Renderer2,
         @Optional()
@@ -267,7 +269,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     ngOnDestroy() {
         this.destroy$.next();
-        this.keysManager.destroy();
+        this.hotkeysContainer.destroy$.next();
     }
 
     get _rowDetail() {
@@ -285,13 +287,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     // Drag & Drop
-
     onDrop(event: CdkDragDrop<Table.Row>) {
         this.drop.emit(event);
     }
 
     // selected
-
     onSelectedRowsChanged(event: any[]) {
         event = R.reject(R.isNil, event);
         if (R.equals(event, this.__selected)) {
@@ -406,7 +406,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         console.log('loadData [state, dpState]', state, dpState);
 
         this.loading = true;
-        this.keysManager.loading = true;
+        this.hotkeysContainer.loading$.next(true);
         this.cdr.detectChanges();
         return dataProvider.load(dpState).pipe(
             takeUntil(this.destroy$),
@@ -467,7 +467,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             }),
             finalize(() => {
                 this.loading = false;
-                this.keysManager.loading = false;
+                this.hotkeysContainer.loading$.next(false);
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
@@ -664,8 +664,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     onFocus() {
-        console.log('!!! focus');
-        this.keysManager.focus$.next(true);
+        this.hotkeysContainer.focus$.next(true);
         // TODO set timeout to not blink when user click particular row
         if (this.setFirstRowActiveOnFocus && !this._activeRow) {
             const firstRow = this.rows[0];
@@ -677,6 +676,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     onBlur() {
-        this.keysManager.focus$.next(false);
+        this.hotkeysContainer.focus$.next(false);
     }
 }

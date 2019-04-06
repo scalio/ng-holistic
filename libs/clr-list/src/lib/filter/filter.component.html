@@ -1,4 +1,4 @@
-<div class="flex-row flex-space-between">
+<div class="flex-row flex-space-between" tabindex="0" (focus)="onFocus()" (blur)="onBlur()">
     <div><hlc-clr-form [group]="group"></hlc-clr-form></div>
     <div>
         <button class="btn btn-primary" (click)="onFilter()">{{ labelsConfig.filter }}</button> <br />
