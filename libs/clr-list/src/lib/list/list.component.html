@@ -32,6 +32,8 @@
             <div><ng-content select="[toolbox]"></ng-content></div>
         </div>
         <hlc-clr-filter
+            [loading]="loading"
+            [useKeys]="useKeys"
             [fields]="filterFields"
             (filter)="onFilter($event)"
             [hidden]="!isFilterShown || hideFilter"

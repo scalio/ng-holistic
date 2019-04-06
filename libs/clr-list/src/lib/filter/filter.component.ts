@@ -32,6 +32,7 @@ import { HlcFilterKeysManagerService } from './utils/filter-keys-manager';
             provide: HLC_FORM_FIELD_WRAPPER,
             useValue: HlcClrFilterInputWrapperComponent
         },
+        HlcHotkeysContainerService,
         HlcFilterKeysManagerService
     ]
 })
@@ -44,6 +45,15 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     @Output() filter = new EventEmitter<any>();
 
     @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
+
+    @Input() set useKeys(val: boolean) {
+        this.hotkeysContainer.useKeys$.next(val);
+    }
+
+    @Input() set loading(val: boolean) {
+        this.hotkeysContainer.loading$.next(val);
+    }
+
 
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
