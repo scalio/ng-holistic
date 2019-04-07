@@ -15,7 +15,11 @@ import {
 } from '@angular/core';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields, ClrFormLayouts, HlcClrFormComponent } from '@ng-holistic/clr-forms';
-import { HlcFormComponent, HLC_FORM_FIELD_WRAPPER } from '@ng-holistic/forms';
+import {
+    HlcFormComponent,
+    HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR,
+    HLC_FORM_FIELD_WRAPPER
+} from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -96,8 +100,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         const all = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(
-            // tslint:disable-next-line:max-line-length
-            '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button'
+            HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR
         );
 
         all.forEach(el => {
@@ -148,10 +151,12 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     onFocus() {
+        console.log('filter:onFocus');
         this.hotkeysContainer.focus$.next(true);
     }
 
     onBlur() {
+        console.log('filter:onBlur');
         this.hotkeysContainer.focus$.next(false);
     }
 }

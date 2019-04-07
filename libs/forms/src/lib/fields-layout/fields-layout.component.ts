@@ -1,15 +1,15 @@
-import { DOCUMENT } from '@angular/common';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    ElementRef,
     Inject,
     InjectionToken,
     Input,
     OnInit,
     Optional,
-    Type,
-    Renderer2
+    Renderer2,
+    Type
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as R from 'ramda';
@@ -46,6 +46,10 @@ export interface FieldsLayoutConfig {
 
 export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('HLC_FIELDS_LAYOUT_CONFIG');
 
+export const HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR =
+    // tslint:disable-next-line:max-line-length
+    '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button';
+
 @Component({
     selector: 'hlc-fields-layout',
     templateUrl: './fields-layout.component.html',
@@ -64,7 +68,7 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider,
         @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER) private readonly customFieldsProvider: CustomFieldsProvider,
         @Optional() @Inject(HLC_FIELDS_LAYOUT_CONFIG) private readonly fieldsLayoutConfig: FieldsLayoutConfig,
-        @Inject(DOCUMENT) private readonly document: any,
+        private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2
     ) {
         this.fieldLayoutMap = R.mergeAll(fieldLayoutMaps);
@@ -87,9 +91,8 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         // Set focus on first input element on the form
         // Each generated element has hlc-form-input class if component
         // has many potentially focusable elements it could be defined explicilty by using hlc-element-focusable class
-        const firstInput: HTMLElement | null = this.document.querySelector(
-            // tslint:disable-next-line:max-line-length
-            '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button'
+        const firstInput: HTMLElement | null = (this.elementRef.nativeElement as HTMLElement).querySelector(
+            HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR
         );
         if (firstInput) {
             this.renderer.setAttribute(firstInput, 'autofocus', 'autofocus');
