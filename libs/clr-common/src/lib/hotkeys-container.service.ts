@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HlcHotKeysService } from '@ng-holistic/clr-common';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { HlcHotKeysService } from './hot-keys.service';
 
 export interface HotkeyAction {
     type: string;

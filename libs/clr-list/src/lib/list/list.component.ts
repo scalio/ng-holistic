@@ -23,7 +23,7 @@ import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { concat } from 'ramda';
 import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import { RowDetailDirective } from '../table/row-detail.directive';
@@ -127,14 +127,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
-        listKeysManager.focusedElement
-            .pipe(
-                distinctUntilChanged(),
-                takeUntil(this.destroy$)
-            )
-            .subscribe(elType => {
-                this.onSetFocusedElement(elType);
-            });
+        listKeysManager.focusedElement.pipe(takeUntil(this.destroy$)).subscribe(elType => {
+            this.onSetFocusedElement(elType);
+        });
     }
 
     ngAfterViewInit() {
@@ -144,7 +139,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         }
         // Suppose here list is single focusable root component on the page
         this.hotkeysContainer.focus$.next(true);
-        //this.hotkeysContainer.useKeys$.next(true);
     }
 
     ngOnDestroy() {
