@@ -19,7 +19,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout/fields-layout.component';
+import {
+    CustomFieldsProvider,
+    HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR,
+    HLC_FORM_CUSTOM_FIELDS_PROVIDER
+} from '../fields-layout/fields-layout.component';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { FormLayoutConfig, FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '../form-rebuild';
 import { IFormGroup } from '../models/form-layouts.types';
@@ -180,6 +184,21 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     resetValue() {
         this.formGroup.patchValue(this.initialValue);
         this.formGroup.updateValueAndValidity();
+    }
+
+    focusFirstInput() {
+        const firstInput = this.nativeElement.querySelector(HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR);
+        if (firstInput) {
+            (firstInput as HTMLElement).focus();
+        }
+    }
+
+    get hasFocusedElement() {
+        return !!this.nativeElement.querySelector('*:focus');
+    }
+
+    private get nativeElement() {
+        return this.elementRef.nativeElement as HTMLElement;
     }
 
     private startListenKeys() {

@@ -156,7 +156,11 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     onFocus() {
         console.log('filter:onFocus');
-        this.hotkeysContainer.focus$.next(true);
+        if (this.form.hasFocusedElement) {
+            this.hotkeysContainer.focus$.next(true);
+        } else {
+            this.form.focusFirstInput();
+        }
     }
 
     onBlur() {

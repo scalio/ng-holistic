@@ -9,6 +9,7 @@ import {
     forwardRef,
     Inject,
     Input,
+    OnDestroy,
     Optional,
     Output,
     QueryList,
@@ -19,6 +20,8 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { concat } from 'ramda';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import { RowDetailDirective } from '../table/row-detail.directive';
@@ -46,8 +49,9 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
         HlcHotkeysContainerService
     ]
 })
-export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit {
+export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy {
     labelsConfig: ListLabelsConfig;
+    private readonly destroy$ = new Subject();
 
     @Input() hideFilter = false;
     @Input() hidePaginator = false;
@@ -121,9 +125,14 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
-        listKeysManager.focusedElement.subscribe(elType => {
-            this.onSetFocusedElement(elType);
-        });
+        listKeysManager.focusedElement
+            .pipe(
+                distinctUntilChanged(),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(elType => {
+                this.onSetFocusedElement(elType);
+            });
     }
 
     ngAfterViewInit() {
@@ -133,6 +142,10 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         }
         this.hotkeysContainer.focus$.next(true);
         this.hotkeysContainer.useKeys$.next(true);
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
     }
 
     get customCells() {
