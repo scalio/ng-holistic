@@ -19,24 +19,27 @@
     (drop)="drop.emit($event)"
 >
     <ng-container *ngIf="filterFields" action-bar>
-        <!-- Toolbox & filter -->
-        <div class="flex-row flex-space-between">
-            <div *ngIf="!hideFilter">
-                <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
-                    <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
-                </button>
-                <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
-                    <clr-icon shape="angle" dir="up"></clr-icon>{{ labelsConfig.showFilter }}
-                </button>
+        <div tabindex="0" (focus)="filter.onFocus()" (blur)="filter.onBlur()">
+            <!-- Toolbox & filter -->
+            <div class="flex-row flex-space-between">
+                <div *ngIf="!hideFilter">
+                    <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
+                        <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
+                    </button>
+                    <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="!isFilterShown">
+                        <clr-icon shape="angle" dir="up"></clr-icon>{{ labelsConfig.showFilter }}
+                    </button>
+                </div>
+                <div><ng-content select="[toolbox]"></ng-content></div>
             </div>
-            <div><ng-content select="[toolbox]"></ng-content></div>
+            <hlc-clr-filter
+                #filter
+                [loading]="loading"
+                [useKeys]="useKeys"
+                [fields]="filterFields"
+                (filter)="onFilter($event)"
+                [hidden]="!isFilterShown || hideFilter"
+            ></hlc-clr-filter>
         </div>
-        <hlc-clr-filter
-            [loading]="loading"
-            [useKeys]="useKeys"
-            [fields]="filterFields"
-            (filter)="onFilter($event)"
-            [hidden]="!isFilterShown || hideFilter"
-        ></hlc-clr-filter>
     </ng-container>
 </hlc-clr-table>
