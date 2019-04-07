@@ -4,6 +4,7 @@ import {
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Inject,
@@ -15,6 +16,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { concat } from 'ramda';
 import { FilterService } from '../filter.service';
@@ -26,6 +28,7 @@ import {
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
+import { HlcListElementType, HlcListKeysManagerService } from '../utils/list-keys-manager';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
 
 @Component({
@@ -38,7 +41,9 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
             useExisting: forwardRef(() => HlcClrListComponent)
         },
-        FilterService
+        FilterService,
+        HlcListKeysManagerService,
+        HlcHotkeysContainerService
     ]
 })
 export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit {
@@ -104,6 +109,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(
+        private readonly elementRef: ElementRef,
+        listKeysManager: HlcListKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
         @Optional()
         @Inject(HLC_CLR_LIST_LABELS_CONFIG)
         labelsConfig?: ListLabelsConfig,
@@ -113,6 +121,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
+        listKeysManager.focusedElement.subscribe(elType => {
+            this.onSetFocusedElement(elType);
+        });
     }
 
     ngAfterViewInit() {
@@ -120,6 +131,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             // If there is no filters on init, loading still should be dispatched with empty filter
             this.setState({});
         }
+        this.hotkeysContainer.focus$.next(true);
+        this.hotkeysContainer.useKeys$.next(true);
     }
 
     get customCells() {
@@ -164,5 +177,25 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     get hasFilters() {
         return !!this.filterFields && this.filterFields.length > 0;
+    }
+
+    private onSetFocusedElement(elType: HlcListElementType) {
+        if (elType === HlcListElementType.ActionBar) {
+            return this.actionBarElement.focus();
+        } else {
+            return this.dataGridElement.focus();
+        }
+    }
+
+    private get actionBarElement() {
+        return this.nativeElement.querySelector('div.actionbar') as HTMLElement;
+    }
+
+    private get dataGridElement() {
+        return this.nativeElement.querySelector('div.datagrid') as HTMLElement;
+    }
+
+    private get nativeElement() {
+        return this.elementRef.nativeElement as HTMLElement;
     }
 }

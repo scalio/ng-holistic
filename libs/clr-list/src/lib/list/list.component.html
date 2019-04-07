@@ -19,7 +19,7 @@
     (drop)="drop.emit($event)"
 >
     <ng-container *ngIf="filterFields" action-bar>
-        <div tabindex="0" (focus)="filter.onFocus()" (blur)="filter.onBlur()">
+        <div class="actionbar" tabindex="0" (focus)="filter.onFocus()" (blur)="filter.onBlur()">
             <!-- Toolbox & filter -->
             <div class="flex-row flex-space-between">
                 <div *ngIf="!hideFilter">
