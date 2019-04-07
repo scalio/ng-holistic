@@ -14,7 +14,6 @@ export const enum HlcListElementType {
 @Injectable()
 export class HlcListKeysManagerService {
     readonly focusedElement = new Subject<HlcListElementType>();
-
     constructor(hotkeysContainer: HlcHotkeysContainerService) {
         hotkeysContainer.addKeys('ctrl+1', () => {
             this.focusedElement.next(HlcListElementType.ActionBar);

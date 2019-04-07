@@ -9,10 +9,12 @@ import {
     forwardRef,
     Inject,
     Input,
+    OnChanges,
     OnDestroy,
     Optional,
     Output,
     QueryList,
+    SimpleChanges,
     SkipSelf,
     ViewChild
 } from '@angular/core';
@@ -49,7 +51,7 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
         HlcHotkeysContainerService
     ]
 })
-export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy {
+export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy, OnChanges {
     labelsConfig: ListLabelsConfig;
     private readonly destroy$ = new Subject();
 
@@ -140,12 +142,19 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             // If there is no filters on init, loading still should be dispatched with empty filter
             this.setState({});
         }
+        // Suppose here list is single focusable root component on the page
         this.hotkeysContainer.focus$.next(true);
-        this.hotkeysContainer.useKeys$.next(true);
+        //this.hotkeysContainer.useKeys$.next(true);
     }
 
     ngOnDestroy() {
         this.destroy$.next();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['useKeys']) {
+            this.hotkeysContainer.useKeys$.next(this.useKeys);
+        }
     }
 
     get customCells() {
