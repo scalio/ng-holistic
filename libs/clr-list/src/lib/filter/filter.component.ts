@@ -99,14 +99,18 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
             this.filterService.setForm(this.form.formGroup);
         }
 
-        const all = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(
-            HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR
-        );
+        // when children component recieve focus filter component must be focused too
+        const all = this.nativeElement.querySelectorAll(HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR);
 
         all.forEach(el => {
             this.renderer.listen(el, 'focus', () => this.onFocus());
             this.renderer.listen(el, 'blur', () => this.onBlur());
         });
+
+        const childHasFocus = this.nativeElement.querySelector('*:focus');
+        if (childHasFocus) {
+            this.onFocus();
+        }
     }
 
     ngOnDestroy() {
@@ -158,5 +162,9 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     onBlur() {
         console.log('filter:onBlur');
         this.hotkeysContainer.focus$.next(false);
+    }
+
+    private get nativeElement() {
+        return this.elementRef.nativeElement as HTMLElement;
     }
 }

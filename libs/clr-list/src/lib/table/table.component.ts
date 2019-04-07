@@ -329,15 +329,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             return;
         }
 
-        /*
-        !!!
-        if (state && state.page && (this.state && !this.state.page)) {
-            // first time state.page recieved, usually after first load, just ignore
-            this.state = state;
-            return;
-        }
-        */
-
         const dataProvider = this.dataProvider;
         if (!dataProvider) {
             return;
