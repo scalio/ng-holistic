@@ -143,6 +143,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     ngOnDestroy() {
         this.destroy$.next();
+        this.hotkeysContainer.destroy$.next();
     }
 
     ngOnChanges(changes: SimpleChanges) {

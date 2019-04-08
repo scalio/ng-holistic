@@ -115,6 +115,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy() {
         this.destroy$.next();
+        this.hotkeysContainer.destroy$.next();
     }
 
     get hasChanges() {
