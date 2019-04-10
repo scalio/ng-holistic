@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { Subject } from 'rxjs';
+import { HlcHotkeysContainerService } from '../../../hotkeys-container.service';
 
 @Injectable()
-export class HlcFormKeysManagerService {
-    readonly save$ = new Subject();
+export class HlcModalKeysManagerService {
+    readonly ok$ = new Subject();
     readonly cancel$ = new Subject();
 
     constructor(hotkeysContainer: HlcHotkeysContainerService) {
         hotkeysContainer.addKeys('ctrl+enter', () => {
-            this.save$.next();
+            this.ok$.next();
         });
         hotkeysContainer.addKeys('ctrl+z', () => {
+            this.cancel$.next();
+        });
+        hotkeysContainer.addKeys('escape', () => {
             this.cancel$.next();
         });
     }

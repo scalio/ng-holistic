@@ -110,7 +110,11 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
     }
 
     onSave() {
-        console.log('onSave');
+        // Need this check here if onSave was invoked by hotkeys
+        const updateState = this.updateButtonState$.getValue();
+        if (!this.form || !this.form.valid || updateState === ClrLoadingState.LOADING) {
+            return;
+        }
         this.error = null;
         this.save.emit();
         if (this.dataAccess) {
