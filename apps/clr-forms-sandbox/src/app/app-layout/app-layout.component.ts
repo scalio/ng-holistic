@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AppConfigModalService } from '@apps/shared';
 import { ClrIfOpen } from '@clr/angular';
 import { HlcClrFormLayoutConfigService, HlcClrFormLayoutType } from '@ng-holistic/clr-forms';
 import { environment } from '../../environments/environment';
@@ -39,7 +40,8 @@ export class AppLayoutComponent implements OnInit {
 
     constructor(
         readonly cdr: ChangeDetectorRef,
-        private readonly formLayoutConfigService: HlcClrFormLayoutConfigService
+        private readonly formLayoutConfigService: HlcClrFormLayoutConfigService,
+        private readonly appConfigModalService: AppConfigModalService
     ) {}
 
     get viewOptionsValue() {
@@ -51,5 +53,9 @@ export class AppLayoutComponent implements OnInit {
     onViewChanged(formLayoutType: HlcClrFormLayoutType) {
         this.formLayoutConfigService.layoutType = formLayoutType;
         this.cdr.detectChanges();
+    }
+
+    onConfig() {
+        this.appConfigModalService.show();
     }
 }

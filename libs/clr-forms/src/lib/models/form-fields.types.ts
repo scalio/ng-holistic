@@ -1,4 +1,4 @@
-import { Mask, TypeaheadConfig } from '@ng-holistic/clr-controls';
+import { Mask, TypeaheadConfig, HlcClrOptionsViewType } from '@ng-holistic/clr-controls';
 import { FormFields } from '@ng-holistic/forms';
 import { Subject } from 'rxjs';
 
@@ -90,6 +90,7 @@ export namespace ClrFormFields {
         'OptionsField',
         any,
         {
+            viewType: FormFields.FormFieldProp<HlcClrOptionsViewType>;
             items: FormFields.FormFieldProp<any[]>;
         }
     >;
