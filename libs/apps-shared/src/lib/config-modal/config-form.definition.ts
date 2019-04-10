@@ -1,7 +1,15 @@
 import { HlcClrOptionsViewType } from '@ng-holistic/clr-controls';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import { ClrFormLayouts, HlcClrFormLayoutType } from '@ng-holistic/clr-forms';
+import { Subject } from 'rxjs';
 
-export const formLayout: ClrFormLayouts.ClrFormLayout = {
+export interface FormLayoutOptions {
+    useKeys: boolean;
+    formLayout: string;
+    useKeysChanged: Subject<boolean>;
+    formLayoutChanged: Subject<HlcClrFormLayoutType>;
+}
+
+export const formLayout = (opts: FormLayoutOptions): ClrFormLayouts.ClrFormLayout => ({
     kind: 'tabs',
     $content: [
         {
@@ -14,7 +22,11 @@ export const formLayout: ClrFormLayouts.ClrFormLayout = {
                         {
                             id: 'useKeys',
                             kind: 'ToggleField',
-                            label: 'Use Hotkeys'
+                            props: {
+                                label: 'Use Hotkeys',
+                                value: opts.useKeys,
+                                valueChange: opts.useKeysChanged
+                            }
                         }
                     ]
                 }
@@ -37,7 +49,9 @@ export const formLayout: ClrFormLayouts.ClrFormLayout = {
                                     { key: 'vertical', label: 'Vertical' },
                                     { key: 'horizontal', label: 'Horizontal' },
                                     { key: 'compact', label: 'Compact' }
-                                ]
+                                ],
+                                value: opts.formLayout,
+                                valueChange: opts.formLayoutChanged
                             }
                         }
                     ]
@@ -45,4 +59,4 @@ export const formLayout: ClrFormLayouts.ClrFormLayout = {
             ]
         }
     ]
-};
+});

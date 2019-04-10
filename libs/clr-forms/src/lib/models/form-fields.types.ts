@@ -83,6 +83,7 @@ export namespace ClrFormFields {
         boolean,
         {
             text?: string;
+            valueChange?: Subject<any>;
         }
     >;
 
@@ -92,6 +93,7 @@ export namespace ClrFormFields {
         {
             viewType: FormFields.FormFieldProp<HlcClrOptionsViewType>;
             items: FormFields.FormFieldProp<any[]>;
+            valueChange?: Subject<any>;
         }
     >;
 
@@ -100,6 +102,7 @@ export namespace ClrFormFields {
         any,
         {
             items: FormFields.FormFieldProp<any[]>;
+            valueChange?: Subject<any>;
         }
     >;
 
