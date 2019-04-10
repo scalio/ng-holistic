@@ -16,6 +16,7 @@ import {
     SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -44,7 +45,6 @@ import { initFormGroup } from './form-builder';
 export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, CustomFieldsProvider {
     private destroy$ = new Subject();
     private _tempVal: any;
-    private _useKeys = true;
     /**
      * Initial value - value on form, right after form initialization
      */
@@ -68,21 +68,6 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         }
     }
 
-    @Input() set useKeys(val: boolean) {
-        if (val !== this._useKeys) {
-            this._useKeys = val;
-            if (val) {
-                this.startListenKeys();
-            } else {
-                this.stopListenKeys();
-            }
-        }
-    }
-
-    get useKeys() {
-        return this._useKeys;
-    }
-
     get customFields() {
         return this.customFieldsProvider && this.customFieldsProvider.customFields;
     }
@@ -104,7 +89,9 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER)
         @Optional()
         @SkipSelf()
-        private readonly customFieldsProvider: CustomFieldsProvider | undefined
+        private readonly customFieldsProvider: CustomFieldsProvider | undefined,
+        @Optional()
+        private readonly hotkeysContainer?: HlcHotkeysContainerService
     ) {}
 
     ngOnInit() {}
@@ -168,8 +155,15 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         // Allow value subscribers of a form to take initial actions
         this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
         this.cdr.detectChanges();
-        if (this.useKeys) {
-            this.startListenKeys();
+
+        if (this.hotkeysContainer) {
+            this.hotkeysContainer.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(f => {
+                if (f) {
+                    this.startListenKeys();
+                } else {
+                    this.stopListenKeys();
+                }
+            });
         }
     }
 

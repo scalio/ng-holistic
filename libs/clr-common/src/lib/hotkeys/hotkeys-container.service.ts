@@ -1,8 +1,8 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { HlcHotKeysService } from './hotkeys.service';
 import { HlcHotkeysConfig, HLC_HOTKEYS_CONFIG } from './hotkeys.config';
+import { HlcHotKeysService } from './hotkeys.service';
 
 export interface HotkeyAction {
     type: string;
@@ -14,22 +14,26 @@ export class HlcHotkeysContainerService {
     private readonly stop$ = new Subject();
     // Make it readonly untill a while, dont allow separate components to use prticular useKey flag
     // Use hotkeys by default
-    private readonly useKeys$ = new BehaviorSubject(true);
+    private readonly _useKeys$ = new BehaviorSubject(true);
     readonly focus$ = new BehaviorSubject(false);
     readonly loading$ = new BehaviorSubject(false);
     readonly destroy$ = new Subject();
     private _isListenKeyEvents = false;
     private readonly litenedKeys: { keys: string; handler: () => void }[] = [];
 
+    get useKeys$() {
+        return this._useKeys$.asObservable();
+    }
+
     constructor(
         private readonly hotkeys: HlcHotKeysService,
         @Optional() @Inject(HLC_HOTKEYS_CONFIG) hotkeysConfig?: HlcHotkeysConfig
     ) {
         if (hotkeysConfig) {
-            hotkeysConfig.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(useKeys => this.useKeys$.next(useKeys));
+            hotkeysConfig.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(useKeys => this._useKeys$.next(useKeys));
         }
 
-        combineLatest(this.useKeys$, this.focus$)
+        combineLatest(this._useKeys$, this.focus$)
             .pipe(takeUntil(this.destroy$))
             .subscribe(([useKeys, focus]) => {
                 if (useKeys && focus) {
