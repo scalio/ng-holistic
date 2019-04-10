@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Injectable, ModuleWithProviders, NgModule } from '@angular/core';
-import { Hotkey, HotkeyModule, HotkeysService } from 'angular2-hotkeys';
+import { Injectable } from '@angular/core';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -26,23 +25,5 @@ export class HlcHotKeysService {
                 this.hotkeys.remove(hotkeyHandler);
             };
         });
-    }
-}
-
-/**
- * Facade for key bindings
- */
-
-@NgModule({
-    imports: [CommonModule, HotkeyModule],
-    exports: [HotkeyModule],
-    providers: [HlcHotKeysService]
-})
-export class HlcHotKeysModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: HlcHotKeysModule,
-            providers: HotkeyModule.forRoot().providers
-        };
     }
 }

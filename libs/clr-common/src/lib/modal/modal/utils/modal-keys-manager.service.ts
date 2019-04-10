@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HlcHotkeysContainerService } from '../../../hotkeys-container.service';
+import { HlcHotkeysContainerService } from '../../../hotkeys/hotkeys-container.service';
 
 @Injectable()
 export class HlcModalKeysManagerService {

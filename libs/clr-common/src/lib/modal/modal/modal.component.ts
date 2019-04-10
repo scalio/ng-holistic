@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormFooterDataAccess, HlcClrFormFooterComponent } from '../../form-footer/form-footer.component';
-import { HlcHotkeysContainerService } from '../../hotkeys-container.service';
+import { HlcHotkeysContainerService } from '../../hotkeys/hotkeys-container.service';
 import { hlcClrDefaultModalConfig, HlcClrModalConfig, HLC_CLR_MODAL_CONFIG } from './modal.config';
 import { HlcModalKeysManagerService } from './utils/modal-keys-manager.service';
 
@@ -66,7 +66,7 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
     ) {
         this.config = modalConfig || hlcClrDefaultModalConfig;
         hotkeysContainer.focus$.next(true);
-        hotkeysContainer.useKeys$.next(true);
+
         keysManager.cancel$.pipe(takeUntil(this.hotkeysContainer.destroy$)).subscribe(() => {
             if (this.formFooter) {
                 this.formFooter.onCancel();

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { HlcHotkeysContainerService } from '../hotkeys-container.service';
+import { HlcHotkeysContainerService } from '../hotkeys/hotkeys-container.service';
 import { HlcSideNavKeysManagerService } from './utils/side-nav-keys-manager';
 
 export interface SideNavChildItem {
@@ -27,20 +27,11 @@ export class HlcClrSideNavComponent implements OnInit, OnDestroy {
     collapsed: boolean;
     @Input() items: SideNavItem[];
 
-    @Input() set useKeys(val: boolean) {
-        this.hotkeysContainer.useKeys$.next(val);
-    }
-
-    get useKeys() {
-        return this.hotkeysContainer.useKeys$.getValue();
-    }
-
     constructor(
         private readonly hotkeysContainer: HlcHotkeysContainerService,
         sidenavKeysManager: HlcSideNavKeysManagerService,
         cdr: ChangeDetectorRef
     ) {
-        hotkeysContainer.useKeys$.next(true);
         hotkeysContainer.focus$.next(true);
         sidenavKeysManager.toggle$.pipe(takeUntil(this.hotkeysContainer.destroy$)).subscribe(() => {
             this.collapsed = !this.collapsed;

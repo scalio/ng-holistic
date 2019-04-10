@@ -54,12 +54,6 @@ export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit,
     @Input() id: any | undefined;
     @Input() group: FormLayoutConfig | undefined;
     @Input() value: any | undefined;
-    @Input() set useKeys(val: boolean) {
-        this.hotkeysContainer.useKeys$.next(val);
-    }
-    get useKeys() {
-        return this.hotkeysContainer.useKeys$.getValue();
-    }
 
     @Output() formValueChanged = new EventEmitter<any>();
 
@@ -76,9 +70,7 @@ export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit,
         @SkipSelf()
         private readonly customFieldsProvider: CustomFieldsProvider | undefined,
         private readonly hotkeysContainer: HlcHotkeysContainerService
-    ) {
-        this.hotkeysContainer.useKeys$.next(true);
-    }
+    ) {}
 
     get customFields() {
         return [
