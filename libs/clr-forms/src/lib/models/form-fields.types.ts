@@ -91,7 +91,7 @@ export namespace ClrFormFields {
         'OptionsField',
         any,
         {
-            viewType: FormFields.FormFieldProp<HlcClrOptionsViewType>;
+            viewType?: FormFields.FormFieldProp<HlcClrOptionsViewType>;
             items: FormFields.FormFieldProp<any[]>;
             valueChange?: Subject<any>;
         }

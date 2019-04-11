@@ -1,12 +1,13 @@
 import { LOCALE_ID } from '@angular/core';
+import { HlcHotkeysConfigService, HLC_HOTKEYS_CONFIG } from '@ng-holistic/clr-common';
 import { DateConfig, DATE_CONFIG } from '@ng-holistic/clr-controls';
 import { FileUploadConfig, HLC_CLR_FILE_UPLOAD_CONFIG } from '@ng-holistic/clr-file-upload';
 import {
+    HlcClrFormLayoutConfigService,
     InputContainerConfig,
     INPUT_CONTAINER_CONFIG,
     ValidationErrorsMapConfig,
-    VALIDATION_ERRORS_MAP_CONFIG,
-    HlcClrFormLayoutConfigService
+    VALIDATION_ERRORS_MAP_CONFIG
 } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
 
@@ -59,6 +60,8 @@ export class AppFileUploadConfig implements FileUploadConfig {
     }
 }
 
+export const hotkeysConfigService = new HlcHotkeysConfigService();
+
 export const hlcConfigProviders = [
     {
         provide: DATE_CONFIG,
@@ -82,5 +85,13 @@ export const hlcConfigProviders = [
     {
         provide: HLC_FIELDS_LAYOUT_CONFIG,
         useClass: HlcClrFormLayoutConfigService
+    },
+    {
+        provide: HlcHotkeysConfigService,
+        useValue: hotkeysConfigService
+    },
+    {
+        provide: HLC_HOTKEYS_CONFIG,
+        useValue: hotkeysConfigService
     }
 ];

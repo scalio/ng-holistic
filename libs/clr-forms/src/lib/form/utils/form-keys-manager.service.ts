@@ -11,7 +11,7 @@ export class HlcFormKeysManagerService {
         hotkeysContainer.addKeys('ctrl+enter', () => {
             this.save$.next();
         });
-        hotkeysContainer.addKeys('ctrl+z', () => {
+        hotkeysContainer.addKeys('ctrl+q', () => {
             this.cancel$.next();
         });
     }

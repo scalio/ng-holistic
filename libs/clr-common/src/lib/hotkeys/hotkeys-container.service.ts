@@ -30,7 +30,9 @@ export class HlcHotkeysContainerService {
         @Optional() @Inject(HLC_HOTKEYS_CONFIG) hotkeysConfig?: HlcHotkeysConfig
     ) {
         if (hotkeysConfig) {
-            hotkeysConfig.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(useKeys => this._useKeys$.next(useKeys));
+            hotkeysConfig.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(useKeys => {
+                this._useKeys$.next(useKeys);
+            });
         }
 
         combineLatest(this._useKeys$, this.focus$)
