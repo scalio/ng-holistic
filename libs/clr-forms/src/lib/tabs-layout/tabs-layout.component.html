@@ -37,6 +37,7 @@
     *ngFor="let tab of $content; let i = index"
     [attr.aria-hidden]="isTabActive(i) ? undefined : true"
     role="tabpanel"
+    [attr.aria-index]="i"
 >
     <!--- TODO : can't make it work with ngIf [ng-template #vc [ngIf]] is not working here -->
     <ng-container #vc> </ng-container>

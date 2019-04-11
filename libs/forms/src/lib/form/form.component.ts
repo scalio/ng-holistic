@@ -22,7 +22,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
     CustomFieldsProvider,
-    HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR,
+    focusFirstInput,
     HLC_FORM_CUSTOM_FIELDS_PROVIDER
 } from '../fields-layout/fields-layout.component';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
@@ -181,10 +181,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     }
 
     focusFirstInput() {
-        const firstInput = this.nativeElement.querySelector(HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR);
-        if (firstInput) {
-            (firstInput as HTMLElement).focus();
-        }
+        focusFirstInput(this.elementRef);
     }
 
     get hasFocusedElement() {

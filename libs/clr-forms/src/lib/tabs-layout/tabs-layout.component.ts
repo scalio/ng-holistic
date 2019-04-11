@@ -1,6 +1,8 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
+    ElementRef,
     Inject,
     Input,
     OnDestroy,
@@ -13,6 +15,7 @@ import {
 } from '@angular/core';
 import {
     ExtractFieldsFun,
+    focusFirstInput,
     FormGroupProvider,
     HLC_FORM_EXTRACT_FIELDS,
     HLC_FORM_GROUP_PROVIDER,
@@ -21,6 +24,7 @@ import {
 import * as R from 'ramda';
 import { merge, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { HlcFormKeysManagerService } from '../form/utils/form-keys-manager.service';
 import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig } from './tabs-layout.config';
 
 @Component({
@@ -54,9 +58,15 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(HLC_FORM_GROUP_PROVIDER) private readonly formGroupProvider: FormGroupProvider,
         @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
-        @Optional() @Inject(HLC_CLR_TABS_LAYOUT_CONFIG) public config?: TabsLayoutConfig
+        private readonly elementRef: ElementRef,
+        private readonly cdr: ChangeDetectorRef,
+        @Optional() @Inject(HLC_CLR_TABS_LAYOUT_CONFIG) public config?: TabsLayoutConfig,
+        @Optional() formKeysManager?: HlcFormKeysManagerService
     ) {
-        // this.config = config; // || defaultTabsLayoutConfig;
+        if (formKeysManager) {
+            formKeysManager.nextTab$.pipe(takeUntil(this.destroy$)).subscribe(() => this.onNextTab());
+            formKeysManager.pervTab$.pipe(takeUntil(this.destroy$)).subscribe(() => this.onPervTab());
+        }
     }
 
     ngOnInit() {
@@ -98,5 +108,37 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
             R.map(id => form.controls[id as string]),
             R.any(ctr => !!ctr.errors)
         )(tabFields);
+    }
+
+    // TODO: Move to key manager + focus by tab number
+    private onNextTab() {
+        if (this.activeTab + 1 < this.$content.length) {
+            this.activeTab++;
+        } else {
+            this.activeTab = 0;
+        }
+        this.cdr.markForCheck();
+        this.focusFirstInput();
+    }
+
+    private onPervTab() {
+        if (this.activeTab === 0) {
+            this.activeTab = this.$content.length - 1;
+        } else {
+            this.activeTab--;
+        }
+        this.cdr.markForCheck();
+        this.focusFirstInput();
+    }
+
+    private focusFirstInput() {
+        setTimeout(() => {
+            focusFirstInput(
+                this.elementRef,
+                `[aria-index="${this.activeTab}"] .hlc-form-input input, [aria-index="${
+                    this.activeTab
+                }"] .hlc-form-input select`
+            );
+        }, 0);
     }
 }

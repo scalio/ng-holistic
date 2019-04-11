@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 export class HlcFormKeysManagerService {
     readonly save$ = new Subject();
     readonly cancel$ = new Subject();
+    readonly nextTab$ = new Subject();
+    readonly pervTab$ = new Subject();
 
     constructor(hotkeysContainer: HlcHotkeysContainerService) {
         hotkeysContainer.addKeys('ctrl+enter', () => {
@@ -13,6 +15,12 @@ export class HlcFormKeysManagerService {
         });
         hotkeysContainer.addKeys('ctrl+q', () => {
             this.cancel$.next();
+        });
+        hotkeysContainer.addKeys('ctrl+right', () => {
+            this.nextTab$.next();
+        });
+        hotkeysContainer.addKeys('ctrl+left', () => {
+            this.pervTab$.next();
         });
     }
 }

@@ -46,9 +46,25 @@ export interface FieldsLayoutConfig {
 
 export const HLC_FIELDS_LAYOUT_CONFIG = new InjectionToken<FieldsLayoutConfig>('HLC_FIELDS_LAYOUT_CONFIG');
 
-export const HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR =
-    // tslint:disable-next-line:max-line-length
-    '.hlc-form-input .hlc-element-focusable, .hlc-form-input select, .hlc-form-input input, .hlc-form-input textarea, .hlc-form-input button';
+const inputElementSelectors = ['focusable', 'select', 'input', 'textarea', 'button'];
+
+const inputElementSelectorsWithSpecificity = (spec: string) => inputElementSelectors.map(m => `${spec} ${m}`);
+
+export const HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR = inputElementSelectorsWithSpecificity('.hlc-form-input');
+
+const getFirstInput = (elementRef: ElementRef, specificity?: string) => {
+    const nativeElement = elementRef.nativeElement;
+    specificity = specificity ? specificity + ' .hlc-form-input' : '.hlc-form-input';
+    const selector = inputElementSelectorsWithSpecificity(specificity);
+    return nativeElement.querySelector(selector) as HTMLElement;
+};
+
+export const focusFirstInput = (elementRef: ElementRef, specificity?: string) => {
+    const firstInput = getFirstInput(elementRef, specificity);
+    if (firstInput) {
+        (firstInput as HTMLElement).focus();
+    }
+};
 
 @Component({
     selector: 'hlc-fields-layout',
@@ -91,9 +107,8 @@ export class HlcFieldsLayoutComponent implements OnInit, AfterViewInit {
         // Set focus on first input element on the form
         // Each generated element has hlc-form-input class if component
         // has many potentially focusable elements it could be defined explicilty by using hlc-element-focusable class
-        const firstInput: HTMLElement | null = (this.elementRef.nativeElement as HTMLElement).querySelector(
-            HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR
-        );
+        const firstInput = getFirstInput(this.elementRef);
+
         if (firstInput) {
             this.renderer.setAttribute(firstInput, 'autofocus', 'autofocus');
             firstInput.focus();
