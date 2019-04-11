@@ -9,7 +9,8 @@ export class AppConfigModalService {
     show() {
         this.modalService.show({
             title: 'Configuration',
-            contentComponentType: ConfigFormComponent
+            contentComponentType: ConfigFormComponent,
+            hideFooter: true
         });
     }
 }

@@ -15,6 +15,7 @@ export interface ModalShowParams {
     contentComponentType: any;
     // default true
     hideOnClickOverlay?: boolean;
+    hideFooter?: boolean;
 }
 
 export interface ModalShowTemplateParams {
@@ -60,6 +61,7 @@ export class HlcClrModalService {
 
         instance.title = params.title;
         instance.contentComponentType = params.contentComponentType;
+        instance.hideFooter = params.hideFooter || false;
 
         const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? true : params.hideOnClickOverlay;
         if (hideOnClickOverlay) {
