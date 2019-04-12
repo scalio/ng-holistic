@@ -60,7 +60,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
-    @Input() useKeys = false;
     @Input() setFirstRowActiveOnFocus = true;
     @Input() rowSelectable = false;
 

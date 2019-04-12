@@ -10,11 +10,11 @@ export namespace Table {
     export interface ColumnBase {
         id: string;
         title: string;
-        /**
-         * Sort column id or true if sort id = column id
-         */
+        /** Sort column id or true if sort id = column id */
         sort?: string | boolean;
         cls?: string;
+        /** Allow wrap whitespace when cell generated / off by default */
+        whitespaceWrap?: boolean;
     }
 
     export interface Column extends ColumnBase {
