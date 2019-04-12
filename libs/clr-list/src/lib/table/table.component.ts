@@ -175,17 +175,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
     @Input() isCompact = false;
 
-    /**
-     * Use hotkeys
-     */
-    @Input() set useKeys(val: boolean) {
-        this.hotkeysContainer.useKeys$.next(val);
-    }
-
-    get useKeys() {
-        return this.hotkeysContainer.useKeys$.getValue();
-    }
-
     @Input() setFirstRowActiveOnFocus = true;
 
     /**

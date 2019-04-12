@@ -9,12 +9,10 @@ import {
     forwardRef,
     Inject,
     Input,
-    OnChanges,
     OnDestroy,
     Optional,
     Output,
     QueryList,
-    SimpleChanges,
     SkipSelf,
     ViewChild
 } from '@angular/core';
@@ -51,7 +49,7 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
         HlcHotkeysContainerService
     ]
 })
-export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy, OnChanges {
+export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy {
     labelsConfig: ListLabelsConfig;
     private readonly destroy$ = new Subject();
 
@@ -144,12 +142,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     ngOnDestroy() {
         this.destroy$.next();
         this.hotkeysContainer.destroy$.next();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['useKeys']) {
-            this.hotkeysContainer.useKeys$.next(this.useKeys);
-        }
     }
 
     get customCells() {

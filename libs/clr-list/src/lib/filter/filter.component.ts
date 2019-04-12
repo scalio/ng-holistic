@@ -52,14 +52,6 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
 
-    @Input() set useKeys(val: boolean) {
-        this.hotkeysContainer.useKeys$.next(val);
-    }
-
-    @Input() set loading(val: boolean) {
-        this.hotkeysContainer.loading$.next(val);
-    }
-
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
             return;

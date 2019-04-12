@@ -1,6 +1,5 @@
 <hlc-clr-table
     [rows]="rows"
-    [loading]="loading"
     [dataProvider]="dataProvider"
     [table]="table"
     [aggregateRow]="aggregateRow"
@@ -10,7 +9,6 @@
     [hidePaginator]="hidePaginator"
     [disableSorting]="disableSorting"
     [rowSelectable]="rowSelectable"
-    [useKeys]="useKeys"
     [setFirstRowActiveOnFocus]="setFirstRowActiveOnFocus"
     (stateChanged)="onTableStateChanged($event)"
     (rowAction)="rowAction.emit($event)"
@@ -34,8 +32,6 @@
             </div>
             <hlc-clr-filter
                 #filter
-                [loading]="loading"
-                [useKeys]="useKeys"
                 [fields]="filterFields"
                 (filter)="onFilter($event)"
                 [hidden]="!isFilterShown || hideFilter"
