@@ -12,11 +12,9 @@ import {
     OnInit,
     Optional,
     Output,
-    Renderer2,
     SkipSelf
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -81,7 +79,6 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         private readonly fb: FormBuilder,
         private readonly cdr: ChangeDetectorRef,
         private readonly elementRef: ElementRef,
-        private readonly renderer: Renderer2,
         @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
         @Optional()
         @Inject(HLC_FORM_REBUILD_PROVIDER)
@@ -89,9 +86,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         @Inject(HLC_FORM_CUSTOM_FIELDS_PROVIDER)
         @Optional()
         @SkipSelf()
-        private readonly customFieldsProvider: CustomFieldsProvider | undefined,
-        @Optional()
-        private readonly hotkeysContainer?: HlcHotkeysContainerService
+        private readonly customFieldsProvider: CustomFieldsProvider | undefined
     ) {}
 
     ngOnInit() {}
@@ -155,16 +150,6 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         // Allow value subscribers of a form to take initial actions
         this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
         this.cdr.detectChanges();
-
-        if (this.hotkeysContainer) {
-            this.hotkeysContainer.useKeys$.pipe(takeUntil(this.destroy$)).subscribe(f => {
-                if (f) {
-                    this.startListenKeys();
-                } else {
-                    this.stopListenKeys();
-                }
-            });
-        }
     }
 
     ngOnDestroy() {
@@ -190,17 +175,5 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
 
     private get nativeElement() {
         return this.elementRef.nativeElement as HTMLElement;
-    }
-
-    private startListenKeys() {
-        const selector = 'select, input, textarea';
-        const inputs = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(selector);
-        inputs.forEach(el => this.renderer.addClass(el, 'mousetrap'));
-    }
-
-    private stopListenKeys() {
-        const selector = 'select, input, textarea';
-        const inputs = (this.elementRef.nativeElement as HTMLElement).querySelectorAll(selector);
-        inputs.forEach(el => this.renderer.removeClass(el, 'mousetrap'));
     }
 }

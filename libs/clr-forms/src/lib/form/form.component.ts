@@ -21,11 +21,12 @@ import {
     CustomFieldDirective,
     CustomFieldsProvider,
     FormLayoutConfig,
+    getAllInputs,
     HlcFormComponent,
-    HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR,
     HLC_FORM_CUSTOM_FIELDS_PROVIDER,
     HLC_FORM_EXTRACT_FIELDS
 } from '@ng-holistic/forms';
+import { takeUntil } from 'rxjs/operators';
 import { HlcFormKeysManagerService } from './utils/form-keys-manager.service';
 import { flatGroup } from './utils/form-utils';
 
@@ -84,10 +85,18 @@ export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit,
     }
 
     ngAfterViewInit() {
-        // when children component recieve focus filter component must be focused too
-        const all = this.nativeElement.querySelectorAll(HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR);
+        this.hotkeysContainer.useKeys$.pipe(takeUntil(this.hotkeysContainer.destroy$)).subscribe(f => {
+            if (f) {
+                this.startListenKeys();
+            } else {
+                this.stopListenKeys();
+            }
+        });
 
-        all.forEach(el => {
+        // when children component recieve focus container form component must be focused too
+        const all = getAllInputs(this.elementRef);
+
+        all.forEach((el: any) => {
             this.renderer.listen(el, 'focus', () => this.hotkeysContainer.focus$.next(true));
             this.renderer.listen(el, 'blur', () => this.hotkeysContainer.focus$.next(false));
         });
@@ -104,5 +113,15 @@ export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit,
 
     private get nativeElement() {
         return this.elementRef.nativeElement as HTMLElement;
+    }
+
+    private startListenKeys() {
+        const inputs = getAllInputs(this.elementRef);
+        inputs.forEach(el => this.renderer.addClass(el, 'mousetrap'));
+    }
+
+    private stopListenKeys() {
+        const inputs = getAllInputs(this.elementRef);
+        inputs.forEach(el => this.renderer.removeClass(el, 'mousetrap'));
     }
 }

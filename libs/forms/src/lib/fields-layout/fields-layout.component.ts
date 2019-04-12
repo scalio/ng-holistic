@@ -50,13 +50,26 @@ const inputElementSelectors = ['focusable', 'select', 'input', 'textarea', 'butt
 
 const inputElementSelectorsWithSpecificity = (spec: string) => inputElementSelectors.map(m => `${spec} ${m}`);
 
-export const HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR = inputElementSelectorsWithSpecificity('.hlc-form-input');
+export const HLC_FIELDS_LAYOUT_FOCUSABLE_INPUTS_SELECTOR = inputElementSelectorsWithSpecificity('.hlc-form-input').join(
+    ','
+);
+
+const getInputsSelector = (specificity?: string) => {
+    specificity = specificity ? specificity + ' .hlc-form-input' : '.hlc-form-input';
+    return inputElementSelectorsWithSpecificity(specificity);
+};
+
 
 const getFirstInput = (elementRef: ElementRef, specificity?: string) => {
     const nativeElement = elementRef.nativeElement;
-    specificity = specificity ? specificity + ' .hlc-form-input' : '.hlc-form-input';
-    const selector = inputElementSelectorsWithSpecificity(specificity);
+    const selector = getInputsSelector(specificity);
     return nativeElement.querySelector(selector) as HTMLElement;
+};
+
+export const getAllInputs = (elementRef: ElementRef, specificity?: string) => {
+    const nativeElement = elementRef.nativeElement;
+    const selector = getInputsSelector(specificity);
+    return nativeElement.querySelectorAll(selector) as HTMLElement[];
 };
 
 export const focusFirstInput = (elementRef: ElementRef, specificity?: string) => {
