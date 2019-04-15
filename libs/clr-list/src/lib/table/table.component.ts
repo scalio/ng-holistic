@@ -6,6 +6,7 @@ import {
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     Inject,
     InjectionToken,
@@ -17,7 +18,6 @@ import {
     Renderer2,
     ViewChildren
 } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
 import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
@@ -194,7 +194,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         private readonly cdr: ChangeDetectorRef,
         private readonly keysManager: HlcTableKeysManagerService,
         private readonly hotkeysContainer: HlcHotkeysContainerService,
-        @Inject(DOCUMENT) private readonly document: any,
+        private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2,
         @Optional()
         @Inject(HLC_CLR_TABLE_CELL_MAP)
@@ -246,7 +246,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         this.keysManager.setDatagridRows(this.datagridRows);
         //  we cant setup tabindex on datagrid in template since don't have
         // access to the rendered table element (separated from toolbox)
-        const datagridDiv = this.document.querySelector('div.datagrid');
+        const datagridDiv = this.elementRef.nativeElement.querySelector('div.datagrid');
         this.renderer.setAttribute(datagridDiv, 'tabindex', '1');
         this.renderer.listen(datagridDiv, 'focus', () => this.onFocus());
         this.renderer.listen(datagridDiv, 'blur', () => this.onBlur());
