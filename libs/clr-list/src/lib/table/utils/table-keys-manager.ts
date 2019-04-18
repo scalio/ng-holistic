@@ -35,11 +35,11 @@ export class HlcTableKeysManagerService {
             }
         });
 
-        hotkeysContainer.addKeys('left', () => {
+        hotkeysContainer.addKeys('ctrl+left', () => {
             this._pagesKeyManager.setPreviousItemActive();
         });
 
-        hotkeysContainer.addKeys('right', () => {
+        hotkeysContainer.addKeys('ctrl+right', () => {
             this._pagesKeyManager.setNextItemActive();
         });
 
