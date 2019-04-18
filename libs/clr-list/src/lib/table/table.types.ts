@@ -15,6 +15,8 @@ export namespace Table {
         cls?: string;
         /** Allow wrap whitespace when cell generated / off by default */
         whitespaceWrap?: boolean;
+        /** Align content / start by default */
+        alignContent?: 'start' | 'center' | 'end';
     }
 
     export interface Column extends ColumnBase {

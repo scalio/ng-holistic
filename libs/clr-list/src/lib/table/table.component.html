@@ -120,7 +120,13 @@
 </clr-datagrid>
 
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
-    <div [style.white-space]="cell.whitespaceWrap ? undefined : 'nowrap'">
+    <!-- TODO : move to component, contentAlign is wrong -->
+    <div
+        [style.white-space]="cell.whitespaceWrap ? undefined : 'nowrap'"
+        [style.display]="cell.alignContent === 'center' ? 'flex' : undefined"
+        [style.justify-content]="cell.alignContent === 'center' ? 'center' : undefined"
+        [style.text-align]="cell.alignContent === 'end' ? 'right' : undefined"
+    >
         <!-- regular cell -->
         <ng-template [ngIf]="!cell.kind && !cell.customCell">
             <span>{{ getCellDisplayValue(cell, row) }}</span>
