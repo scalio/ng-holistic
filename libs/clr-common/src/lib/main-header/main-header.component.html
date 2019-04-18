@@ -1,11 +1,14 @@
 <header class="header-6">
-    <div class="branding">
+    <div #brandingRef><ng-content select="[branding]"> </ng-content></div>
+    <div class="branding" *ngIf="brandingRef.children.length === 0">
         <a class="nav-link" [href]="titleHref || 'javascript://;'">
             <img *ngIf="logo" class="img-responsive" [src]="logo" />
             <span *ngIf="title" class="title"> {{ title }} </span>
         </a>
     </div>
-    <div class="header-nav">
+
+    <div #navRef><ng-content select="[nav]"> </ng-content></div>
+    <div class="header-nav" *ngIf="navRef.children.length === 0">
         <a
             *ngFor="let navLink of navLinks; trackBy: trackByLink; let index = index"
             [href]="navLink.href || 'javascript://;'"
@@ -14,8 +17,7 @@
             >{{ navLink.title }}</a
         >
     </div>
-    <div class="header-actions">
-        <ng-content select="[actions]">
-        </ng-content>
-    </div>
+
+
+    <ng-content select="[actions]"> </ng-content>
 </header>
