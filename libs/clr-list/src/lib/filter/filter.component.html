@@ -1,8 +1,9 @@
 <div class="flex-row flex-space-between">
     <div><hlc-clr-form [group]="group"></hlc-clr-form></div>
+
     <div>
-        <button class="btn btn-primary" (click)="onFilter()">{{ labelsConfig.filter }}</button> <br />
-        <button class="btn btn-sm btn-link" (click)="onReset()" [disabled]="!hasChanges">
+        <button class="btn btn-primary btn-md btn-filter" (click)="onFilter()">{{ labelsConfig.filter }}</button> <br />
+        <button class="btn btn-sm btn-link btn-reset" (click)="onReset()" [disabled]="!hasChanges">
             {{ labelsConfig.reset }}
         </button>
     </div>
