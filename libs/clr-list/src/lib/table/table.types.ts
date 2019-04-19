@@ -10,11 +10,13 @@ export namespace Table {
     export interface ColumnBase {
         id: string;
         title: string;
-        /**
-         * Sort column id or true if sort id = column id
-         */
+        /** Sort column id or true if sort id = column id */
         sort?: string | boolean;
         cls?: string;
+        /** Allow wrap whitespace when cell generated / off by default */
+        whitespaceWrap?: boolean;
+        /** Align content / start by default */
+        alignContent?: 'start' | 'center' | 'end';
     }
 
     export interface Column extends ColumnBase {
@@ -46,9 +48,11 @@ export namespace Table {
         title: string;
     }
 
+    // TODO : Rename RowEvent
     export interface CellClickEvent {
-        cell: ColumnBase;
+        cell?: ColumnBase;
         row: Row;
+        type: 'primary' | 'secondary';
     }
 
     export interface RowActionEvent {

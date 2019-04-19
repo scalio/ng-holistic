@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GetAllRowsMixedStorageDecorator, Table, TableDescription } from '@ng-holistic/clr-list';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { GetLoadListMixedStorageDecorator, HlcClrTableComponent, Table, TableDescription } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -51,7 +51,7 @@ const genRows = (len: number): Table.Row[] =>
         amount: i * 100
     }));
 
-const getAllDecorator = new GetAllRowsMixedStorageDecorator(
+const getAllDecorator = new GetLoadListMixedStorageDecorator(
     'table-page',
     x => ({
         page: x.page,
@@ -103,10 +103,20 @@ export class TablePageComponent implements OnInit {
     dataProvider = dataProvider;
     aggregateRow = aggregateRow;
 
+    @ViewChild(HlcClrTableComponent) private tableComponent: HlcClrTableComponent;
+
     constructor() {}
 
     ngOnInit() {
         // reset decorator on init
         // getAllDecorator.reset();
+    }
+
+    onAddRow() {
+        this.tableComponent.addRow({ id: new Date().getTime().toString(), title: 'added', amount: 100 });
+    }
+
+    onRowEvent(event: any) {
+        console.log('+++', event);
     }
 }

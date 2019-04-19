@@ -25,7 +25,7 @@ export interface FormFooterConfig {
     labels: FormFooterLabels;
 }
 
-export const HLC_CLR_FORM_FOOTER_CONFIG = new InjectionToken<FormFooterConfig>('HLC_CLR_FORM_FOOTER_CONFIG');
+export const HLC_FORM_FOOTER_CONFIG = new InjectionToken<FormFooterConfig>('HLC_CLR_FORM_FOOTER_CONFIG');
 
 const defaultLabels: FormFooterLabels = {
     okLabel: 'Update',
@@ -39,6 +39,13 @@ export interface FormFooterDataAccess {
     updateSuccess$?: Subject<any>;
     update(data: any): Observable<any>;
 }
+
+export interface FormController {
+    save$: Observable<any>;
+    cancel$: Observable<any>;
+}
+
+export const HLC_FORM_CONTROLLER = new InjectionToken<FormController>('HLC_FORM_CONTROLLER');
 
 @Component({
     selector: 'hlc-clr-form-footer',
@@ -61,6 +68,7 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
             this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
                 this.cdr.markForCheck();
             });
+            this.startListenKeys();
         }
     }
 
@@ -79,7 +87,8 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
-        @Optional() @Inject(HLC_CLR_FORM_FOOTER_CONFIG) private readonly config: FormFooterConfig
+        @Optional() @Inject(HLC_FORM_FOOTER_CONFIG) private readonly config: FormFooterConfig,
+        @Optional() @Inject(HLC_FORM_CONTROLLER) private readonly formController?: FormController
     ) {}
 
     ngOnInit() {}
@@ -101,6 +110,11 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
     }
 
     onSave() {
+        // Need this check here if onSave was invoked by hotkeys
+        const updateState = this.updateButtonState$.getValue();
+        if (!this.form || !this.form.valid || updateState === ClrLoadingState.LOADING) {
+            return;
+        }
         this.error = null;
         this.save.emit();
         if (this.dataAccess) {
@@ -139,5 +153,12 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
 
     onResetError() {
         this.error = null;
+    }
+
+    private startListenKeys() {
+        if (this.formController) {
+            this.formController.save$.pipe(takeUntil(this.destroy$)).subscribe(() => this.onSave());
+            this.formController.cancel$.pipe(takeUntil(this.destroy$)).subscribe(() => this.onCancel());
+        }
     }
 }

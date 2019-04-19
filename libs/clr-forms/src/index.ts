@@ -1,6 +1,6 @@
 export * from './lib/fields-layout/fields-layout-map';
 export * from './lib/form-layout-config.service';
-export * from './lib/form/form-utils';
+export * from './lib/form/utils/form-utils';
 export * from './lib/form/form.component';
 export * from './lib/form/form.module';
 export * from './lib/group-layouts-map';

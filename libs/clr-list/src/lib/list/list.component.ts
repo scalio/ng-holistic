@@ -4,10 +4,12 @@ import {
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Inject,
     Input,
+    OnDestroy,
     Optional,
     Output,
     QueryList,
@@ -15,8 +17,11 @@ import {
     ViewChild
 } from '@angular/core';
 import { ClrDatagridStateInterface } from '@clr/angular';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { concat } from 'ramda';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import { RowDetailDirective } from '../table/row-detail.directive';
@@ -26,6 +31,7 @@ import {
     TableCustomCellsProvider
 } from '../table/table.component';
 import { Table, TableDescription } from '../table/table.types';
+import { HlcListElementType, HlcListKeysManagerService } from '../utils/list-keys-manager';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
 
 @Component({
@@ -38,11 +44,14 @@ import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig }
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
             useExisting: forwardRef(() => HlcClrListComponent)
         },
-        FilterService
+        FilterService,
+        HlcListKeysManagerService,
+        HlcHotkeysContainerService
     ]
 })
-export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit {
+export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewInit, OnDestroy {
     labelsConfig: ListLabelsConfig;
+    private readonly destroy$ = new Subject();
 
     @Input() hideFilter = false;
     @Input() hidePaginator = false;
@@ -51,6 +60,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() selectedRows: any[];
+    @Input() setFirstRowActiveOnFocus = true;
+    @Input() rowSelectable = false;
 
     // Filter props delegator
     @Input() filterFields: ClrFormFields.FormField[];
@@ -73,7 +84,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
      * Enable darg & drop
      */
     @Input() dragEnabled = false;
-    @Input() rowSelectable = false;
 
     // tslint:disable-next-line:no-input-rename
     @Input('rowDetail') rowDetailInput: RowDetailDirective | undefined;
@@ -102,6 +112,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
 
     constructor(
+        private readonly elementRef: ElementRef,
+        listKeysManager: HlcListKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
         @Optional()
         @Inject(HLC_CLR_LIST_LABELS_CONFIG)
         labelsConfig?: ListLabelsConfig,
@@ -111,6 +124,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly containerCustomCellsProvider?: TableCustomCellsProvider
     ) {
         this.labelsConfig = labelsConfig || defaultListLabelsConfig;
+        listKeysManager.focusedElement.pipe(takeUntil(this.destroy$)).subscribe(elType => {
+            this.onSetFocusedElement(elType);
+        });
     }
 
     ngAfterViewInit() {
@@ -118,6 +134,13 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             // If there is no filters on init, loading still should be dispatched with empty filter
             this.setState({});
         }
+        // Suppose here list is single focusable root component on the page
+        this.hotkeysContainer.focus$.next(true);
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.hotkeysContainer.destroy$.next();
     }
 
     get customCells() {
@@ -162,5 +185,25 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     get hasFilters() {
         return !!this.filterFields && this.filterFields.length > 0;
+    }
+
+    private onSetFocusedElement(elType: HlcListElementType) {
+        if (elType === HlcListElementType.ActionBar) {
+            return this.actionBarElement.focus();
+        } else {
+            return this.dataGridElement.focus();
+        }
+    }
+
+    private get actionBarElement() {
+        return this.nativeElement.querySelector('div.actionbar') as HTMLElement;
+    }
+
+    private get dataGridElement() {
+        return this.nativeElement.querySelector('div.datagrid') as HTMLElement;
+    }
+
+    private get nativeElement() {
+        return this.elementRef.nativeElement as HTMLElement;
     }
 }

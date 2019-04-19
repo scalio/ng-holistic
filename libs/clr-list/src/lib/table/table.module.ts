@@ -2,7 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ClrDatagridModule, ClrIconModule, ClrLoadingModule } from '@clr/angular';
-import { HlcClrAlertModule } from '@ng-holistic/clr-common';
+import { HlcClrAlertModule, HlcHotKeysModule } from '@ng-holistic/clr-common';
 import { HlcClrSelectModule } from '@ng-holistic/clr-controls';
 import { cellComponents, cellsMap } from '../cells/cells';
 import { CustomCellDirective } from './custom-cell.directive';
@@ -21,7 +21,8 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
         HlcClrSelectModule,
         ClrIconModule,
         HlcClrAlertModule,
-        DragDropModule
+        DragDropModule,
+        HlcHotKeysModule
     ],
     declarations: [
         HlcClrTableComponent,
@@ -49,7 +50,8 @@ export class HlcClrTableModule {
                     provide: HLC_CLR_TABLE_CELL_MAP,
                     useValue: cells,
                     multi: true
-                }
+                },
+                ...(HlcHotKeysModule.forRoot().providers || [])
             ]
         };
     }

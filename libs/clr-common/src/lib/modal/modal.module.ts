@@ -13,6 +13,7 @@ import { HlcClrModalHintDirective } from './modal-hint.directive';
 import { HlcClrModalService } from './modal.service';
 import { HlcClrModalComponent } from './modal/modal.component';
 import { HlcClrOverlayService } from './overlay.service';
+import { HlcHotKeysModule } from '../hotkeys/hotkeys.module';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { HlcClrOverlayService } from './overlay.service';
         ClrIconModule,
         HlcClrFormFooterModule,
         HlcClrFormErrorModule,
-        HlcClrAlertModule
+        HlcClrAlertModule,
+        HlcHotKeysModule
     ],
     declarations: [
         HlcClrModalComponent,

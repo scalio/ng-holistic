@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Inject,
@@ -17,7 +18,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CustomFieldsProvider, HLC_FORM_CUSTOM_FIELDS_PROVIDER } from '../fields-layout/fields-layout.component';
+import {
+    CustomFieldsProvider,
+    focusFirstInput,
+    HLC_FORM_CUSTOM_FIELDS_PROVIDER
+} from '../fields-layout/fields-layout.component';
 import { ExtractFieldsFun, HLC_FORM_EXTRACT_FIELDS } from '../form-extract-fields';
 import { FormLayoutConfig, FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '../form-rebuild';
 import { IFormGroup } from '../models/form-layouts.types';
@@ -73,6 +78,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     constructor(
         private readonly fb: FormBuilder,
         private readonly cdr: ChangeDetectorRef,
+        private readonly elementRef: ElementRef,
         @Inject(HLC_FORM_EXTRACT_FIELDS) private readonly extractFieldsFun: ExtractFieldsFun,
         @Optional()
         @Inject(HLC_FORM_REBUILD_PROVIDER)
@@ -157,5 +163,17 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     resetValue() {
         this.formGroup.patchValue(this.initialValue);
         this.formGroup.updateValueAndValidity();
+    }
+
+    focusFirstInput() {
+        focusFirstInput(this.elementRef);
+    }
+
+    get hasFocusedElement() {
+        return !!this.nativeElement.querySelector('*:focus');
+    }
+
+    private get nativeElement() {
+        return this.elementRef.nativeElement as HTMLElement;
     }
 }

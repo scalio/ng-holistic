@@ -1,10 +1,12 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     Inject,
     InjectionToken,
@@ -12,9 +14,12 @@ import {
     OnDestroy,
     Optional,
     Output,
-    QueryList
+    QueryList,
+    Renderer2,
+    ViewChildren
 } from '@angular/core';
-import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
@@ -34,6 +39,7 @@ import {
 } from './table.config';
 import { Table, TableDescription } from './table.types';
 import { mapPageState, omitUndefinedFileds } from './table.utils';
+import { HlcTableKeysManagerService } from './utils/table-keys-manager';
 
 export interface TableCustomCellsProvider {
     customCells: CustomCellDirective[];
@@ -47,15 +53,18 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     selector: 'hlc-clr-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [HlcHotkeysContainerService, HlcTableKeysManagerService]
 })
-export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy {
+export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
     private readonly cellMap: TableCellMap;
     private state: ClrDatagridStateInterface;
     private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
     private _activeRow: Table.RowBase | undefined;
+    private _rows: Table.Row[];
+
     /**
      * FIX : Control unexpected behaviour
      * See following comments for this variable
@@ -126,7 +135,15 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     /**
      * Redux like integration with external store for rows
      */
-    @Input() rows: Table.Row[];
+    @Input() set rows(val: Table.Row[]) {
+        this._rows = val;
+        this.keysManager.onRowsChanged(val);
+    }
+
+    get rows() {
+        return this._rows;
+    }
+
     @Input() set paginator(val: Table.Data.Paginator | undefined) {
         this._paginator = val;
         const page = val && mapPageState(val);
@@ -156,18 +173,29 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() table: TableDescription | undefined;
 
     @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
+    @Input() isCompact = false;
+
+    @Input() setFirstRowActiveOnFocus = true;
 
     /**
      * Value will be already mapped by config.dataProvider.mapState
      */
     @Output() stateChanged = new EventEmitter<any>();
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
+    // TODO : rename rowEvent
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
     @Output() drop = new EventEmitter<Table.DropEvent>();
 
+    @ViewChildren('datagridRow')
+    datagridRows: QueryList<ClrDatagridRow>;
+
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        private readonly keysManager: HlcTableKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
+        private readonly elementRef: ElementRef,
+        private readonly renderer: Renderer2,
         @Optional()
         @Inject(HLC_CLR_TABLE_CELL_MAP)
         cellMaps: TableCellMap[],
@@ -193,6 +221,35 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.upadteRow(row));
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
+
+        // Key manager
+
+        keysManager.activeRowChanged.pipe(takeUntil(this.destroy$)).subscribe(row => {
+            this._activeRow = row;
+            this.cdr.markForCheck();
+        });
+
+        keysManager.activePageChanged.pipe(takeUntil(this.destroy$)).subscribe(page => {
+            this.onPageChanged(page);
+        });
+
+        keysManager.refresh.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.onRefresh(this.state, true);
+        });
+
+        keysManager.action.pipe(takeUntil(this.destroy$)).subscribe(type => {
+            this.cellClick.emit({ row: this._activeRow as any, type });
+        });
+    }
+
+    ngAfterViewInit() {
+        this.keysManager.setDatagridRows(this.datagridRows);
+        //  we cant setup tabindex on datagrid in template since don't have
+        // access to the rendered table element (separated from toolbox)
+        const datagridDiv = this.elementRef.nativeElement.querySelector('div.datagrid');
+        this.renderer.setAttribute(datagridDiv, 'tabindex', '1');
+        this.renderer.listen(datagridDiv, 'focus', () => this.onFocus());
+        this.renderer.listen(datagridDiv, 'blur', () => this.onBlur());
     }
 
     get customCells() {
@@ -201,6 +258,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     ngOnDestroy() {
         this.destroy$.next();
+        this.hotkeysContainer.destroy$.next();
     }
 
     get _rowDetail() {
@@ -218,13 +276,11 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     // Drag & Drop
-
     onDrop(event: CdkDragDrop<Table.Row>) {
         this.drop.emit(event);
     }
 
     // selected
-
     onSelectedRowsChanged(event: any[]) {
         event = R.reject(R.isNil, event);
         if (R.equals(event, this.__selected)) {
@@ -261,15 +317,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             console.log('onRefresh on exit');
             return;
         }
-
-        /*
-        !!!
-        if (state && state.page && (this.state && !this.state.page)) {
-            // first time state.page recieved, usually after first load, just ignore
-            this.state = state;
-            return;
-        }
-        */
 
         const dataProvider = this.dataProvider;
         if (!dataProvider) {
@@ -339,6 +386,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         console.log('loadData [state, dpState]', state, dpState);
 
         this.loading = true;
+        this.hotkeysContainer.loading$.next(true);
         this.cdr.detectChanges();
         return dataProvider.load(dpState).pipe(
             takeUntil(this.destroy$),
@@ -379,6 +427,13 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                 }
 
                 this.state = omitUndefinedFileds({ ...state, page, sort, filters });
+                if (this.paginator) {
+                    const pagesCount = Math.floor(
+                        this.paginator.length / this.paginator.pageSize +
+                            (this.paginator.length % this.paginator.pageSize === 0 ? 0 : 1)
+                    );
+                    this.keysManager.onPagesChanged(pagesCount, this.paginator.pageIndex);
+                }
                 console.log(
                     'loaded [state, paginator, freezeCount]',
                     this.state,
@@ -392,6 +447,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             }),
             finalize(() => {
                 this.loading = false;
+                this.hotkeysContainer.loading$.next(false);
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
@@ -537,6 +593,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     //
+    onPageChanged(pageIndex: number) {
+        if (!this.paginator || pageIndex === (this.paginator && this.paginator.pageIndex)) {
+            return;
+        }
+        // everytime just reset to first page
+        const page = mapPageState({ ...this.paginator, pageIndex });
+        console.log('onPageChanged', pageIndex, page);
+        this.onRefresh({ ...this.state, page });
+        // after page size state changed onRefresh is invoked by datagrid with incorrect (staled) parameters
+        this._freezeInitialStateChange = undefined;
+    }
+
     onPageSizeChanged(size: number) {
         // everytime just reset to first page
         const state = R.assocPath(['page'], { size, from: 0, to: size - 1 }, this.state || {});
@@ -570,7 +638,24 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     onCellClick(cell: Table.ColumnBase, row: Table.Row) {
         if (this.rowSelectable) {
             this._activeRow = row;
+            this.keysManager.onSetActive(this.rows.indexOf(row));
         }
-        this.cellClick.emit({ cell, row });
+        this.cellClick.emit({ cell, row, type: 'primary' });
+    }
+
+    onFocus() {
+        this.hotkeysContainer.focus$.next(true);
+        // TODO set timeout to not blink when user click particular row
+        if (this.setFirstRowActiveOnFocus && !this._activeRow) {
+            const firstRow = this.rows[0];
+            if (firstRow) {
+                this._activeRow = firstRow;
+                this.keysManager.onSetActive(0);
+            }
+        }
+    }
+
+    onBlur() {
+        this.hotkeysContainer.focus$.next(false);
     }
 }

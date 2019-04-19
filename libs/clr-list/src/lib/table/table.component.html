@@ -5,16 +5,16 @@
     [clrDgLoading]="loading"
     (clrDgRefresh)="onRefresh($event)"
     [clrDgSelected]="selectedRows"
+    [class.datagrid-clickable]="rowSelectable"
+    [class.datagrid-compact]="isCompact"
     (clrDgSelectedChange)="onSelectedRowsChanged($event)"
     cdkDropList
     [cdkDropListDisabled]="!dragEnabled"
     (cdkDropListDropped)="onDrop($event)"
-    [class.datagrid-clickable]="rowSelectable"
 >
-    <clr-dg-action-bar> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
+    <clr-dg-action-bar tabindex="0"> <ng-content select="[action-bar]"></ng-content> </clr-dg-action-bar>
 
-    <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled" >
-    </clr-dg-column>
+    <clr-dg-column class="datagrid-column-handle" *ngIf="dragEnabled"> </clr-dg-column>
 
     <ng-container *ngFor="let col of table?.cols; trackBy: trackByCol">
         <clr-dg-column
@@ -36,6 +36,7 @@
     </clr-dg-row>
 
     <clr-dg-row
+        #datagridRow
         *ngFor="let row of (rows | sort: sortFn); trackBy: trackByRow"
         [class.active-row]="isRowActive(row)"
         [clrDgItem]="row.id"
@@ -51,12 +52,12 @@
             </button>
         </clr-dg-action-overflow>
 
-        <clr-dg-cell class="datagrid-cell-handle" *ngIf="dragEnabled" >
+        <clr-dg-cell class="datagrid-cell-handle" *ngIf="dragEnabled">
             <clr-icon shape="drag-handle"></clr-icon>
         </clr-dg-cell>
 
         <clr-dg-cell
-            *ngFor="let cell of table?.cols; trackBy: trackByCol;"
+            *ngFor="let cell of table?.cols; trackBy: trackByCol"
             [ngClass]="getCellClass(cell, row)"
             (click)="onCellClick(cell, row)"
         >
@@ -119,28 +120,36 @@
 </clr-datagrid>
 
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
-    <!-- regular cell -->
-    <ng-template [ngIf]="!cell.kind && !cell.customCell">
-        <span>{{ getCellDisplayValue(cell, row) }}</span>
-    </ng-template>
-    <!-- custom cell -->
-    <ng-template [ngIf]="cell.customCell">
-        <ng-container
-            [hlcTableCustomCellHost]="cell"
-            [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
-            [hlcTableCustomCellHostRow]="row"
-            [hlcTableCustomCellHostParentRow]="parentRow"
-        >
-        </ng-container>
-    </ng-template>
-    <!-- map cell -->
-    <ng-template [ngIf]="cell.kind">
-        <ng-container
-            [hlcTableCellHost]="cell"
-            [hlcTableCellHostComponentType]="getCellComponentType(cell)"
-            [hlcTableCellHostRow]="row"
-            [hlcTableCellHostParentRow]="parentRow"
-        >
-        </ng-container>
-    </ng-template>
+    <!-- TODO : move to component, contentAlign is wrong -->
+    <div
+        [style.white-space]="cell.whitespaceWrap ? undefined : 'nowrap'"
+        [style.display]="cell.alignContent === 'center' ? 'flex' : undefined"
+        [style.justify-content]="cell.alignContent === 'center' ? 'center' : undefined"
+        [style.text-align]="cell.alignContent === 'end' ? 'right' : undefined"
+    >
+        <!-- regular cell -->
+        <ng-template [ngIf]="!cell.kind && !cell.customCell">
+            <span>{{ getCellDisplayValue(cell, row) }}</span>
+        </ng-template>
+        <!-- custom cell -->
+        <ng-template [ngIf]="cell.customCell">
+            <ng-container
+                [hlcTableCustomCellHost]="cell"
+                [hlcTableCustomCellHostDirective]="getCustomCellDirective(cell)"
+                [hlcTableCustomCellHostRow]="row"
+                [hlcTableCustomCellHostParentRow]="parentRow"
+            >
+            </ng-container>
+        </ng-template>
+        <!-- map cell -->
+        <ng-template [ngIf]="cell.kind">
+            <ng-container
+                [hlcTableCellHost]="cell"
+                [hlcTableCellHostComponentType]="getCellComponentType(cell)"
+                [hlcTableCellHostRow]="row"
+                [hlcTableCellHostParentRow]="parentRow"
+            >
+            </ng-container>
+        </ng-template>
+    </div>
 </ng-template>

@@ -6,18 +6,6 @@
         [activeNavLinkIndex]="activeNavLinkIndex"
         title="NG-HOLISTIC / CLR-FORMS"
     >
-        <clr-signpost actions>
-            <a class="nav-link nav-icon"> <clr-icon shape="cog" clrSignpostTrigger></clr-icon> </a>
-            <clr-signpost-content clrPosition="bottom-left" *clrIfOpen>
-                <label style="color: black">Form Layouts</label>
-                <br>
-                <hlc-clr-options
-                    viewType="buttons"
-                    [items]="viewOptions"
-                    [value]="viewOptionsValue"
-                    (valueChange)="onViewChanged($event)"
-                ></hlc-clr-options>
-            </clr-signpost-content>
-        </clr-signpost>
+        <a actions class="nav-link nav-icon" (click)="onConfig()"> <clr-icon shape="cog"></clr-icon> </a>
     </hlc-main-header>
 </hlc-main-layout>

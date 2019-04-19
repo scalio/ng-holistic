@@ -10,6 +10,12 @@
     display: none;
 }
 
+:host ::ng-deep clr-datagrid {
+    .datagrid-action-bar {
+        margin-top: 0px;
+    }
+}
+
 .footer-separator-line {
     content: '';
     display: inline-block;

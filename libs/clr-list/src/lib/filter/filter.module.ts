@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { clrFieldsLayoutMap, HlcClrFormModule, clrGroupLayoutsMap } from '@ng-holistic/clr-forms';
+import { clrFieldsLayoutMap, clrGroupLayoutsMap, HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_MAP, HLC_GROUPS_LAYOUT } from '@ng-holistic/forms';
 import { HlcClrFilterInputWrapperComponent } from '../filter-input-wrapper/filter-input-wrapper.component';
 import { HlcClrFilterInputWrapperModule } from '../filter-input-wrapper/filter-input-wrapper.module';

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { HlcHotKeysModule } from '@ng-holistic/clr-common';
 import {
     FieldsLayoutMap,
     GroupsLayoutMap,
@@ -67,7 +68,8 @@ export class HlcClrFormModule {
                 {
                     provide: HLC_FORM_FIELD_WRAPPER,
                     useValue: inputContainer || HlcClrInputContainerComponent
-                }
+                },
+                ...(HlcHotKeysModule.forRoot().providers || [])
             ]
         };
     }

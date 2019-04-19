@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.50",
+    "version": "0.0.52",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -85,6 +85,7 @@
         "@clr/ui": "^1.1.0",
         "@nrwl/nx": "7.6.1",
         "@webcomponents/custom-elements": "^1.2.1",
+        "angular2-hotkeys": "^2.1.4",
         "core-js": "^2.6.5",
         "date-fns": "^2.0.0-alpha.25",
         "lib": "^4.0.0",

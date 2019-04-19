@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ClrIconModule, ClrNavigationModule, ClrVerticalNavModule } from '@clr/angular';
+import { HlcHotKeysModule } from '../hotkeys/hotkeys.module';
 import { HlcClrSideNavComponent } from './side-nav.component';
 
 @NgModule({
@@ -12,7 +13,8 @@ import { HlcClrSideNavComponent } from './side-nav.component';
         ClrIconModule,
         ClrVerticalNavModule,
         RouterModule,
-        ClrNavigationModule
+        ClrNavigationModule,
+        HlcHotKeysModule
     ],
     declarations: [HlcClrSideNavComponent],
     exports: [HlcClrSideNavComponent]

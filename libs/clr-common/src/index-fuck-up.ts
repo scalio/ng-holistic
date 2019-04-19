@@ -19,6 +19,10 @@ export * from './lib/form-error/form-error.component';
 export * from './lib/form-error/form-error.module';
 export * from './lib/form-footer/form-footer.component';
 export * from './lib/form-footer/form-footer.module';
+export * from './lib/hotkeys/hotkeys-container.service';
+export * from './lib/hotkeys/hotkeys.config';
+export * from './lib/hotkeys/hotkeys.module';
+export * from './lib/hotkeys/hotkeys.service';
 /*
 export * from './lib/side-nav/side-nav.component';
 export * from './lib/side-nav/side-nav.module';

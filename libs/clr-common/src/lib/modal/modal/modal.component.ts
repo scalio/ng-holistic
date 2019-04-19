@@ -5,14 +5,19 @@ import {
     EventEmitter,
     Inject,
     Input,
+    OnDestroy,
     OnInit,
     Optional,
-    TemplateRef
+    TemplateRef,
+    ViewChild
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { FormFooterDataAccess } from '../../form-footer/form-footer.component';
-import { hlcClrDefaultModalConfig, HLC_CLR_MODAL_CONFIG, HlcClrModalConfig } from './modal.config';
+import { takeUntil } from 'rxjs/operators';
+import { FormFooterDataAccess, HlcClrFormFooterComponent } from '../../form-footer/form-footer.component';
+import { HlcHotkeysContainerService } from '../../hotkeys/hotkeys-container.service';
+import { hlcClrDefaultModalConfig, HlcClrModalConfig, HLC_CLR_MODAL_CONFIG } from './modal.config';
+import { HlcModalKeysManagerService } from './utils/modal-keys-manager.service';
 
 export interface FormProvider {
     form: FormGroup;
@@ -24,9 +29,10 @@ export interface FormProvider {
     selector: 'hlc-clr-modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [HlcHotkeysContainerService, HlcModalKeysManagerService]
 })
-export class HlcClrModalComponent implements OnInit {
+export class HlcClrModalComponent implements OnInit, OnDestroy {
     error: string | undefined;
     @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
     @Input() title: string;
@@ -44,6 +50,8 @@ export class HlcClrModalComponent implements OnInit {
     @Input() disableOk: boolean;
     @Input() hideCancel: boolean;
 
+    @ViewChild(HlcClrFormFooterComponent) formFooter: HlcClrFormFooterComponent | undefined;
+
     ok = new EventEmitter<void>();
     cancel = new EventEmitter<void>();
 
@@ -52,12 +60,34 @@ export class HlcClrModalComponent implements OnInit {
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
+        keysManager: HlcModalKeysManagerService,
+        private readonly hotkeysContainer: HlcHotkeysContainerService,
         @Optional() @Inject(HLC_CLR_MODAL_CONFIG) modalConfig?: HlcClrModalConfig
     ) {
         this.config = modalConfig || hlcClrDefaultModalConfig;
+        hotkeysContainer.focus$.next(true);
+
+        keysManager.cancel$.pipe(takeUntil(this.hotkeysContainer.destroy$)).subscribe(() => {
+            if (this.formFooter) {
+                this.formFooter.onCancel();
+            } else {
+                this.onCancel();
+            }
+        });
+        keysManager.ok$.pipe(takeUntil(this.hotkeysContainer.destroy$)).subscribe(() => {
+            if (this.formFooter) {
+                this.formFooter.onSave();
+            } else {
+                this.onOk();
+            }
+        });
     }
 
     ngOnInit() {}
+
+    ngOnDestroy() {
+        this.hotkeysContainer.destroy$.next();
+    }
 
     onOk() {
         this.ok.emit();
