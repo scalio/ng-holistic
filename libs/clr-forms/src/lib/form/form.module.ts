@@ -30,6 +30,7 @@ import { HlcClrFormComponent } from './form.component';
         HlcClrTabsLayoutModule,
         GroupLayoutModule,
         HlcClrInputContainerModule,
+        HlcHotKeysModule,
         ...clrFieldsLayoutModules
     ],
     declarations: [HlcClrFormComponent],
