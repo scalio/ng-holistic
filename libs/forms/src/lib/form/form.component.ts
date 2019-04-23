@@ -45,6 +45,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     private _tempVal: any;
     /**
      * Initial value - value on form, right after form initialization
+     * TODO : Sync with Footer originalValue
      */
     initialValue: any;
     group: IFormGroup<any> | undefined;
