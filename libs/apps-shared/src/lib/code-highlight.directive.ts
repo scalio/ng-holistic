@@ -3,7 +3,7 @@
  * This software is released under MIT license.
  * The full license information can be found in LICENSE in the root directory of this project.
  */
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import {
     AfterViewInit,
     Directive,
@@ -12,7 +12,8 @@ import {
     Input,
     PLATFORM_ID,
     Renderer2,
-    ViewContainerRef
+    ViewContainerRef,
+    NgModule
 } from '@angular/core';
 
 declare var Prism: any;
@@ -62,3 +63,11 @@ export class HlcCodeHighlightDirective implements AfterViewInit {
         return this._highlight;
     }
 }
+
+
+@NgModule({
+    imports: [CommonModule],
+    declarations: [HlcCodeHighlightDirective],
+    exports: [HlcCodeHighlightDirective]
+})
+export class HlcCodeHighlightModule {}

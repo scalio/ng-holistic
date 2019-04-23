@@ -1,16 +1,20 @@
-<div class="clr-row">
-    <div class="clr-col-8">
-        <hlc-clr-form [group]="group" #clrForm>
-            <hlc-clr-form-footer
-                form-footer
-                (save)="onSave(clrForm.form.formGroup.value)"
-                [form]="clrForm.form.formGroup"
-                [dataAccess]="dataAccess"
-            ></hlc-clr-form-footer>
-        </hlc-clr-form>
+<hlc-sbx-render-def-code-example>
+    <div class="clr-row" render>
+        <div class="clr-col-8">
+            <hlc-clr-form [group]="group" #clrForm>
+                <hlc-clr-form-footer
+                    form-footer
+                    (save)="onSave(clrForm.form.formGroup.value)"
+                    [form]="clrForm.form.formGroup"
+                    [dataAccess]="dataAccess"
+                ></hlc-clr-form-footer>
+            </hlc-clr-form>
+        </div>
+        <div class="clr-col-4">
+            <h3>Form value</h3>
+            {{ clrForm.form.formGroup?.value | json }}
+        </div>
     </div>
-    <div class="clr-col-4">
-        <h3>Form value</h3>
-        {{ clrForm.form.formGroup?.value | json }}
-    </div>
-</div>
+    <div definition>{{ definition }}</div>
+    <div code>{{ code }}</div>
+</hlc-sbx-render-def-code-example>
