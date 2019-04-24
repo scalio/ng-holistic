@@ -306,32 +306,6 @@ const group: ClrFormLayouts.ClrFormLayout = {
 };
 `;
 
-const code = `
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { HlcClrFormModule } from '@ng-holistic/clr-forms';
-import { group } from './form-definition.ts';
-
-@Component({
-    selector: 'hlc-form-page',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
-})
-export class FormPageComponent {
-    group = group;
-}
-
-@NgModule({
-    declarations: [FormPageComponent],
-    imports: [
-        CommonModule,
-        HlcClrFormModule,
-    ],
-    exports: []
-})
-export class FormPageModule {}
-
-`;
-
 @Component({
     selector: 'hlc-form-page',
     templateUrl: './form-page.component.html',
@@ -341,7 +315,6 @@ export class FormPageModule {}
 export class FormPageComponent implements AfterViewInit {
     group = group;
     definition = definition;
-    code = code;
 
     @ViewChild(HlcFormComponent) form: HlcFormComponent;
 
