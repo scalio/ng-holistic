@@ -307,7 +307,11 @@ const group: ClrFormLayouts.ClrFormLayout = {
 `;
 
 const code = `
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { group } from './form-definition.ts';
+
 @Component({
     selector: 'hlc-form-page',
     template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
@@ -315,6 +319,17 @@ import { group } from './form-definition.ts';
 export class FormPageComponent {
     group = group;
 }
+
+@NgModule({
+    declarations: [FormPageComponent],
+    imports: [
+        CommonModule,
+        HlcClrFormModule,
+    ],
+    exports: []
+})
+export class FormPageModule {}
+
 `;
 
 @Component({
