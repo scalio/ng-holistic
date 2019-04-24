@@ -36,6 +36,115 @@ const rebuildGroup = (
     } as any;
 };
 
+const definition = `
+import * as R from 'ramda';
+
+export const rebuildGroup = (
+    { tabsCount, groupsCount, fieldsCount }: { tabsCount: number; fieldsCount: number; groupsCount: number },
+    _: any
+) => (__: FormGroup): ClrFormLayouts.ClrFormLayout => {
+    return {
+        kind: 'tabs',
+        $content: R.range(0, tabsCount).map(t => ({
+            kind: 'tab',
+            title: \`Tab $\{t\}\`,
+            $content: R.range(0, groupsCount).map(i => ({
+                kind: 'group',
+                title: \`Group $\{i\}\`,
+                $content: [
+                    {
+                        kind: 'fields',
+                        fields: R.range(0, fieldsCount).map(
+                            k =>
+                                ({
+                                    id: \`$\{t\}.$\{i\}.$text.$\{k\}\`,
+                                    kind: 'TextField' as 'TextField',
+                                    label: \`Field $\{t\} $\{i\} $\{k\}\`,
+                                    validators: [Validators.required]
+                                } as FormFields.Field)
+                        )
+                    }
+                ]
+            }))
+        }))
+    } as any;
+};`;
+
+const code = `
+    import { CommonModule } from '@angular/common';
+    import { NgModule } from '@angular/core';
+    import { HlcClrFormModule, FormRebuidProvider, HLC_FORM_REBUILD_PROVIDER } from '@ng-holistic/clr-forms';
+    import { rebuildGroup } from './form-definition.ts';
+
+    const template = \`
+        <button (click)="onAddTab()">add tab</button> <button (click)="onAddGroup()">add group</button>
+        <button (click)="onAddField()">add field</button>
+        <hlc-clr-form [group]="group" #clrForm></hlc-clr-form>
+    \';
+
+    @Component({
+        selector: 'hlc-form-page',
+        template: template,
+        providers: [
+            {
+                provide: HLC_FORM_REBUILD_PROVIDER,
+                useExisting: forwardRef(() => FormDynaPageComponent)
+            }
+        ]
+    })
+    export class FormPageComponent {
+        rebuildForm$ = new Subject<any>();
+
+        tabsCount = 1;
+        groupsCount = 1;
+        filedsCount = 1;
+
+        group = rebuildGroup(
+            { tabsCount: this.tabsCount, groupsCount: this.groupsCount, fieldsCount: this.filedsCount },
+            null
+        );
+
+        rebuildFormLayoutConfig(data: any, val: any) {
+            return rebuildGroup(data, val);
+        }
+
+        onAddTab() {
+            this.rebuildForm$.next({
+                tabsCount: ++this.tabsCount,
+                fieldsCount: this.filedsCount,
+                groupsCount: this.groupsCount
+            });
+        }
+
+        onAddGroup() {
+            this.rebuildForm$.next({
+                tabsCount: this.tabsCount,
+                fieldsCount: this.filedsCount,
+                groupsCount: ++this.groupsCount
+            });
+        }
+
+        onAddField() {
+            this.rebuildForm$.next({
+                tabsCount: this.tabsCount,
+                fieldsCount: ++this.filedsCount,
+                groupsCount: this.groupsCount
+            });
+        }
+
+    }
+
+    @NgModule({
+        declarations: [FormPageComponent],
+        imports: [
+            CommonModule,
+            HlcClrFormModule,
+        ],
+        exports: []
+    })
+    export class FormPageModule {}
+`;
+
 @Component({
     selector: 'hlc-form-dyna-page',
     templateUrl: './form-dyna-page.component.html',
@@ -49,6 +158,9 @@ const rebuildGroup = (
     ]
 })
 export class FormDynaPageComponent implements FormRebuidProvider, AfterViewInit {
+    definition = definition;
+    code = code;
+
     rebuildForm$ = new Subject<any>();
 
     tabsCount = 1;
