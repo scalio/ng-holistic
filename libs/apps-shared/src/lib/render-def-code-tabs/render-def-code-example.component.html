@@ -18,10 +18,12 @@
         <clr-tab-content *clrIfActive>
             <pre>
                 <code hlc-code-highlight="ts">
-                    {{code}}
-                    <!--
+                    <span #ref>
                         <ng-content select="[code]"></ng-content>
-                    -->
+                    </span>
+                    <ng-template [ngIf]="ref.children.length === 0">
+                        {{code}}
+                    </ng-template>
                 </code>
             </pre>
         </clr-tab-content>
