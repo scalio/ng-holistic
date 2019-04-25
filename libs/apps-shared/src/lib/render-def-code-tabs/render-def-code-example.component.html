@@ -21,7 +21,7 @@
                     <div #ref>
                         <ng-content select="[code]"></ng-content>
                     </div>
-                    <ng-template [ngIf]="ref.children.length === 0">
+                    <ng-template [ngIf]="useDefaultCode">
                         {{code}}
                     </ng-template>
                 </code>

@@ -82,13 +82,18 @@ export const group = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
 `;
 
 const code = `
+import { CommonModule } from '@angular/common';
+import { HlcClrModalModule, HlcClrModalService } from '@ng-holistic/clr-common';
+import { HlcClrFormModule, HlcClrFormComponent } from '@ng-holistic/clr-forms';
+import { NgModule, ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+
 @Component({
     selector: 'hlc-form-in-modal',
     template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormInModalComponent {
-    group = recalcFormGroup;
+    group = group;
 
     @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
 
@@ -119,6 +124,17 @@ export class FormInModalPageComponent {
         });
     }
 }
+
+
+///
+@NgModule({
+    declarations: [FormInModalPageComponent, FormInModalComponent],
+    imports: [CommonModule, HlcClrModalModule, HlcClrFormModule],
+    exports: [FormInModalPageComponent],
+    entryComponents: [FormInModalComponent]
+})
+export class FormInModalPageModule {}
+
 `;
 
 @Component({

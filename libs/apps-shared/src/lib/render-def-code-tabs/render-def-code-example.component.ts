@@ -33,6 +33,7 @@ export class FormPageModule {}
 })
 export class HlcSbxRenderDefCodeComponent implements OnInit {
     @Input() html: string;
+    @Input() useDefaultCode = true;
 
     get code() {
         return code(this.html);
