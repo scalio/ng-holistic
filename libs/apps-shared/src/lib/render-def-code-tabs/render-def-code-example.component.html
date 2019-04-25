@@ -7,8 +7,8 @@
         <button clrTabLink>Definition</button>
         <clr-tab-content *clrIfActive>
             <pre>
-                <code hlc-code-highlight="ts">
-                        <ng-content select="[definition]"></ng-content>
+                <code hlc-code-highlight="ts" marginTop="-70px">
+                    <ng-content select="[definition]"></ng-content>
                 </code>
             </pre>
         </clr-tab-content>
@@ -17,10 +17,10 @@
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
             <pre>
-                <code hlc-code-highlight="ts">
-                    <span #ref>
+                <code hlc-code-highlight="ts" [marginTop]="ref.children.length === 0 ? '-170px' : '-100px'">
+                    <div #ref>
                         <ng-content select="[code]"></ng-content>
-                    </span>
+                    </div>
                     <ng-template [ngIf]="ref.children.length === 0">
                         {{code}}
                     </ng-template>

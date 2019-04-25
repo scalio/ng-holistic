@@ -100,7 +100,6 @@ export const group: ClrFormLayouts.ClrFormLayout = {
 `;
 
 const code = `
-
     import { CommonModule } from '@angular/common';
     import { NgModule } from '@angular/core';
     import { HlcClrFormModule } from '@ng-holistic/clr-forms';

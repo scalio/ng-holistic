@@ -3,17 +3,17 @@
  * This software is released under MIT license.
  * The full license information can be found in LICENSE in the root directory of this project.
  */
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
     AfterViewInit,
     Directive,
     ElementRef,
     Inject,
     Input,
+    NgModule,
     PLATFORM_ID,
     Renderer2,
-    ViewContainerRef,
-    NgModule
+    ViewContainerRef
 } from '@angular/core';
 
 declare var Prism: any;
@@ -23,6 +23,8 @@ declare var Prism: any;
 // tslint:disable-next-line:directive-class-suffix
 export class HlcCodeHighlightDirective implements AfterViewInit {
     private _highlight = '';
+
+    @Input() marginTop: string;
 
     // Had to use renderer because I wanted to add to existing classes on the code block
     // Didn't want to override them completely
@@ -44,9 +46,16 @@ export class HlcCodeHighlightDirective implements AfterViewInit {
                 this.viewContainer.element.nativeElement.innerText,
                 Prism.languages[this._highlight]
             );
+            this.renderer.setProperty(this.viewContainer.element.nativeElement, 'innerText', '');
             const elClass = 'language-' + this._highlight;
-            this.renderer.addClass(this._el.nativeElement, elClass);
-            this.viewContainer.element.nativeElement.innerHTML = html;
+            const div = this.renderer.createElement('div');
+            this.renderer.addClass(div, elClass);
+            this.renderer.setProperty(div, 'innerHTML', html);
+            this.renderer.appendChild(this.viewContainer.element.nativeElement, div);
+
+            if (this.marginTop) {
+                this.renderer.setStyle(div, 'margin-top', this.marginTop);
+            }
         }
     }
 
@@ -54,8 +63,6 @@ export class HlcCodeHighlightDirective implements AfterViewInit {
     set highlight(val: string) {
         if (val && val.trim() !== '') {
             this._highlight = val;
-            // const elClass = 'language-' + this._highlight;
-            // this.renderer.addClass(this._el.nativeElement, elClass);
         }
     }
 
@@ -63,7 +70,6 @@ export class HlcCodeHighlightDirective implements AfterViewInit {
         return this._highlight;
     }
 }
-
 
 @NgModule({
     imports: [CommonModule],
