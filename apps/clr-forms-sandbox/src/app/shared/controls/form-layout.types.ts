@@ -24,7 +24,11 @@ export namespace FormLayouts {
         accept?: FormFields.FormFieldProp<string>;
     }> {}
 
-    type FormField = RichTextField | ImageUploadField | DocumentUploadField;
+    export interface NgSelectField extends ClrFormFields.BaseField<'NgSelectField', string, {
+        accept?: FormFields.FormFieldProp<string>;
+    }> {}
+
+    type FormField = RichTextField | ImageUploadField | DocumentUploadField | NgSelectField;
 
     export type FormLayout = ClrFormLayouts.ClrFormLayout<FormField>;
 }

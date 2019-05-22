@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { hlcConfigProviders } from './hlc.config';
 import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
+import { NgSelectModule, NgSelectComponent } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,12 +29,14 @@ import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
             RichTextField: HlcClrRichTextComponent,
             ImageUploadField: HlcClrImageUploadComponent,
             FileUploadField: HlcClrFileUploadComponent,
-            DocumentUploadField: HlcClrDocumentUploadComponent
+            DocumentUploadField: HlcClrDocumentUploadComponent,
+            NgSelectField: NgSelectComponent
         }),
         HlcClrRichTextModule,
         HlcClrImageUploadModule,
         HlcClrFileUploadModule,
-        HlcClrDocumentUploadModule
+        HlcClrDocumentUploadModule,
+        NgSelectModule
     ],
     bootstrap: [AppComponent],
     entryComponents: [HlcClrRichTextComponent, HlcClrImageUploadComponent, HlcClrDocumentUploadComponent],
