@@ -1,12 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormFooterDataAccess } from '@ng-holistic/clr-common';
 import { TextMask } from '@ng-holistic/clr-controls';
-import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { HlcFormComponent } from '@ng-holistic/forms';
 import { throwError, timer } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
+import { FormLayouts } from '../../shared';
 
-const group: ClrFormLayouts.ClrFormLayout = {
+const group: FormLayouts.FormLayout = {
     kind: 'fields',
     fields: [
         {
@@ -15,6 +15,14 @@ const group: ClrFormLayouts.ClrFormLayout = {
             props: {
                 label: 'Text',
                 placeholder: 'Type something'
+            }
+        },
+        {
+            id: 'ng-select',
+            kind: 'NgSelectField',
+            props: {
+                label: 'NgSelect',
+                items: [{ key: 'one', label: 'one' }]
             }
         },
         {

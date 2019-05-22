@@ -15,7 +15,7 @@ import { DictMapper, DictMapperService } from '../list-items.config';
         }
     ]
 })
-export class HlcClrSelectComponent implements OnInit, OnInit, ControlValueAccessor {
+export class HlcClrSelectComponent implements OnInit, ControlValueAccessor {
     _items: any[] | undefined;
     _value: any | undefined;
     /**

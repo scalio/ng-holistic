@@ -13,6 +13,14 @@ const group: FormLayouts.FormLayout = {
     kind: 'fields',
     fields: [
         {
+            id: 'ng-select',
+            kind: 'NgSelectField',
+            props: {
+                label: 'Select',
+                items: [{ key: 'one', label: 'one' }]
+            }
+        },
+        {
             id: 'docUpload',
             kind: 'DocumentUploadField',
             props: {
