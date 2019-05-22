@@ -777,6 +777,29 @@
                     }
                 }
             }
+        },
+        "ng-select": {
+            "root": "libs/ng-select",
+            "sourceRoot": "libs/ng-select/src",
+            "projectType": "library",
+            "prefix": "ng-holistic",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/ng-select/tsconfig.lib.json", "libs/ng-select/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/builders:jest",
+                    "options": {
+                        "jestConfig": "libs/ng-select/jest.config.js",
+                        "tsConfig": "libs/ng-select/tsconfig.spec.json"
+                    }
+                }
+            },
+            "schematics": {}
         }
     },
     "cli": {

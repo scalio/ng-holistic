@@ -1,70 +1,37 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "importHelpers": true,
-    "module": "es2015",
-    "target": "es5",
-    "skipLibCheck": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@text-mask-core": [
-        "text-mask-core/text-mask-core"
-      ],
-      "@apps/shared": [
-        "libs/apps-shared/src/index.ts"
-      ],
-      "@ng-holistic/forms": [
-        "libs/forms/src/index.ts"
-      ],
-      "@ng-holistic/clr-forms": [
-        "libs/clr-forms/src/index.ts"
-      ],
-      "@ng-holistic/clr-controls": [
-        "libs/clr-controls/src/index.ts"
-      ],
-      "@ng-holistic/clr-layout": [
-        "libs/clr-layout/src/index.ts"
-      ],
-      "@ng-holistic/clr-file-upload": [
-        "libs/clr-file-upload/src/index.ts"
-      ],
-      "@ng-holistic/clr-common": [
-        "libs/clr-common/src/index.ts"
-      ],
-      "@ng-holistic/clr-list": [
-        "libs/clr-list/src/index.ts"
-      ],
-      "@ng-holistic/clr-wizard": [
-        "libs/clr-wizard/src/index.ts"
-      ],
-      "@ng-holistic/apps-shared": [
-        "libs/apps-shared/src/index.ts"
-      ],
-      "@ng-holistic/typeahead": [
-        "libs/typeahead/src/index.ts"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "tmp",
-    "src/test.ts"
-  ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "importHelpers": true,
+        "module": "es2015",
+        "target": "es5",
+        "skipLibCheck": true,
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["es2017", "dom"],
+        "baseUrl": ".",
+        "paths": {
+            "@text-mask-core": ["text-mask-core/text-mask-core"],
+            "@apps/shared": ["libs/apps-shared/src/index.ts"],
+            "@ng-holistic/forms": ["libs/forms/src/index.ts"],
+            "@ng-holistic/clr-forms": ["libs/clr-forms/src/index.ts"],
+            "@ng-holistic/clr-controls": ["libs/clr-controls/src/index.ts"],
+            "@ng-holistic/clr-layout": ["libs/clr-layout/src/index.ts"],
+            "@ng-holistic/clr-file-upload": ["libs/clr-file-upload/src/index.ts"],
+            "@ng-holistic/clr-common": ["libs/clr-common/src/index.ts"],
+            "@ng-holistic/clr-list": ["libs/clr-list/src/index.ts"],
+            "@ng-holistic/clr-wizard": ["libs/clr-wizard/src/index.ts"],
+            "@ng-holistic/apps-shared": ["libs/apps-shared/src/index.ts"],
+            "@ng-holistic/typeahead": ["libs/typeahead/src/index.ts"],
+            "@ng-holistic/ng-select": ["libs/ng-select/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "dist", "tmp", "src/test.ts"]
 }

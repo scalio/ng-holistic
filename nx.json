@@ -1,60 +1,63 @@
 {
-  "npmScope": "ng-holistic",
-  "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": "*",
-    "tsconfig.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
-  },
-  "projects": {
-    "clr-forms-sandbox": {
-      "tags": []
+    "npmScope": "ng-holistic",
+    "implicitDependencies": {
+        "angular.json": "*",
+        "package.json": "*",
+        "tsconfig.json": "*",
+        "tslint.json": "*",
+        "nx.json": "*"
     },
-    "forms": {
-      "tags": []
-    },
-    "clr-controls": {
-      "tags": []
-    },
-    "clr-forms": {
-      "tags": []
-    },
-    "clr-file-upload": {
-      "tags": []
-    },
-    "clr-common": {
-      "tags": []
-    },
-    "clr-common-fuck-up": {
-        "tags": []
-    },
-    "clr-common-sandbox": {
-      "tags": []
-    },
-    "clr-common-sandbox-e2e": {
-      "tags": []
-    },
-    "clr-list": {
-      "tags": []
-    },
-    "clr-list-sandbox": {
-      "tags": []
-    },
-    "clr-list-sandbox-e2e": {
-      "tags": []
-    },
-    "clr-wizard": {
-      "tags": []
-    },
-    "hlc-home-app": {
-      "tags": []
-    },
-    "apps-shared": {
-      "tags": []
-    },
-    "typeahead": {
-      "tags": []
+    "projects": {
+        "clr-forms-sandbox": {
+            "tags": []
+        },
+        "forms": {
+            "tags": []
+        },
+        "clr-controls": {
+            "tags": []
+        },
+        "clr-forms": {
+            "tags": []
+        },
+        "clr-file-upload": {
+            "tags": []
+        },
+        "clr-common": {
+            "tags": []
+        },
+        "clr-common-fuck-up": {
+            "tags": []
+        },
+        "clr-common-sandbox": {
+            "tags": []
+        },
+        "clr-common-sandbox-e2e": {
+            "tags": []
+        },
+        "clr-list": {
+            "tags": []
+        },
+        "clr-list-sandbox": {
+            "tags": []
+        },
+        "clr-list-sandbox-e2e": {
+            "tags": []
+        },
+        "clr-wizard": {
+            "tags": []
+        },
+        "hlc-home-app": {
+            "tags": []
+        },
+        "apps-shared": {
+            "tags": []
+        },
+        "typeahead": {
+            "tags": []
+        },
+        "ng-select": {
+            "tags": []
+        }
     }
-  }
 }
