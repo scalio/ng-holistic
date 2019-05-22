@@ -1,17 +1,17 @@
 import {
     Component,
-    forwardRef,
-    Input,
-    OnInit,
-    InjectionToken,
-    Inject,
-    Optional,
-    Output,
     EventEmitter,
-    OnDestroy
+    forwardRef,
+    Inject,
+    InjectionToken,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Subject, Observable } from 'rxjs';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export interface HlcNgSelectConfig {
@@ -37,6 +37,9 @@ export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     @Input() items?: any[];
     @Input() placeholder?: string;
     @Input() typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
+    @Input() notFoundText?: string;
+    @Input() bindValue?: string;
+    @Input() bindLabel?: string;
 
     @Input() value: any;
 
@@ -65,16 +68,15 @@ export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAcce
         this.destroy$.next();
     }
 
-    get bindValue() {
-        return this.config && this.config.bindValue;
+    get _bindValue() {
+        return this.bindValue !== undefined ? this.bindValue : this.config && this.config.bindValue;
     }
 
-    get bindLabel() {
-        return this.config && this.config.bindLabel;
+    get _bindLabel() {
+        return this.bindLabel !== undefined ? this.bindLabel : this.config && this.config.bindLabel;
     }
 
     onModelChange(val: string) {
-        console.log('+++', val);
         this.value = val;
         this.valueChange.emit(val);
         this.propagateChange(val);

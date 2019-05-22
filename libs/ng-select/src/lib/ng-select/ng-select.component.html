@@ -2,8 +2,9 @@
     [items]="items"
     [typeahead]="typeahead$"
     [placeholder]="placeholder"
-    [bindValue]="bindValue"
-    [bindLabel]="bindLabel"
+    [bindValue]="_bindValue"
+    [bindLabel]="_bindLabel"
+    [notFoundText]="notFoundText"
     [ngModel]="value"
     (ngModelChange)="onModelChange($event)"
 >
