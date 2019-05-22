@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { HlcFormComponent } from '@ng-holistic/forms';
-import { timer } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { timer, concat, of } from 'rxjs';
+import { mapTo, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { FormLayouts } from '../../shared';
 
 const uploadFileFun = (file: File) =>
@@ -16,8 +16,24 @@ const group: FormLayouts.FormLayout = {
             id: 'ng-select',
             kind: 'NgSelectField',
             props: {
+                placeholder: 'Select one...',
                 label: 'Select',
-                items: [{ key: 'one', label: 'one' }]
+                typeaheadFun: term$ =>
+                    concat(
+                        of([]), // default items
+                        term$.pipe(
+                            debounceTime(200),
+                            distinctUntilChanged(),
+                            switchMap(term =>
+                                of(
+                                    [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }].filter(
+                                        item => !term || item.label.startsWith(term)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                // items: [{ key: 'one', label: 'one' }, { key: 'two', label: 'two' }]
             }
         },
         {

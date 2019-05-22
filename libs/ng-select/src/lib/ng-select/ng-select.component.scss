@@ -22,5 +22,13 @@
                 */
             }
         }
+
+        .ng-dropdown-panel.ng-select-top {
+            border-radius: 0;
+        }
+
+        .ng-dropdown-panel.ng-select-bottom {
+            border-radius: 0;
+        }
     }
 }

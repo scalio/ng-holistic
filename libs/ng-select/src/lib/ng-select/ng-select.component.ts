@@ -7,10 +7,12 @@ import {
     Inject,
     Optional,
     Output,
-    EventEmitter
+    EventEmitter,
+    OnDestroy
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export interface HlcNgSelectConfig {
     bindValue: string;
@@ -31,21 +33,37 @@ export const HLC_NG_SELECT_CONFIG = new InjectionToken<HlcNgSelectConfig>('HLC_N
         }
     ]
 })
-export class HlcNgSelectComponent implements OnInit, ControlValueAccessor {
+export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAccessor {
     @Input() items?: any[];
     @Input() placeholder?: string;
-    @Input() typeahead?: Subject<string>;
+    @Input() typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
 
     @Input() value: any;
+
+    readonly typeahead$ = new Subject<string>();
 
     @Output()
     valueChange = new EventEmitter<any | null>();
 
-    propagateChange = (_: any) => {};
+    private readonly destroy$ = new Subject();
+
+    private propagateChange = (_: any) => {};
 
     constructor(@Inject(HLC_NG_SELECT_CONFIG) @Optional() private readonly config: HlcNgSelectConfig) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        if (this.typeaheadFun) {
+            this.typeaheadFun(this.typeahead$)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(items => {
+                    this.items = items;
+                });
+        }
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+    }
 
     get bindValue() {
         return this.config && this.config.bindValue;

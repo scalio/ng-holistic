@@ -1,6 +1,7 @@
 import { RemoveFileFun, UploadFileFun } from '@ng-holistic/clr-file-upload';
 import { ClrFormFields, ClrFormLayouts } from '@ng-holistic/clr-forms';
 import { FormFields } from '@ng-holistic/forms';
+import { Observable } from 'rxjs';
 
 export namespace FormLayouts {
     export interface RichTextField
@@ -20,15 +21,25 @@ export namespace FormLayouts {
             }
         > {}
 
-    export interface DocumentUploadField extends ClrFormFields.BaseField<'DocumentUploadField', string, {
-        accept?: FormFields.FormFieldProp<string>;
-    }> {}
+    export interface DocumentUploadField
+        extends ClrFormFields.BaseField<
+            'DocumentUploadField',
+            string,
+            {
+                accept?: FormFields.FormFieldProp<string>;
+            }
+        > {}
 
-    export interface NgSelectField extends ClrFormFields.BaseField<'NgSelectField', string, {
-        bindValue?: string,
-        bindLabel?: string,
-        items?: FormFields.FormFieldProp<any>;
-    }> {}
+    export interface NgSelectField
+        extends ClrFormFields.BaseField<
+            'NgSelectField',
+            string,
+            {
+                placeholder?: FormFields.FormFieldProp<any>;
+                items?: FormFields.FormFieldProp<any>;
+                typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
+            }
+        > {}
 
     type FormField = RichTextField | ImageUploadField | DocumentUploadField | NgSelectField;
 
