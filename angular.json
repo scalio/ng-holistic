@@ -784,6 +784,13 @@
             "projectType": "library",
             "prefix": "ng-holistic",
             "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "libs/ng-select/tsconfig.lib.json",
+                        "project": "libs/ng-select/ng-package.json"
+                    }
+                },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
