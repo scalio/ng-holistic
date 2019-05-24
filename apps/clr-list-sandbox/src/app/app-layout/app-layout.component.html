@@ -1,8 +1,13 @@
 <hlc-main-layout [sideNavItems]="sideNavItems" [contentTemplate]="content">
     <hlc-main-header
         main-header
-        title="NG-HOLISTIC / CLR-LIST"></hlc-main-header>
-    <ng-template #content>
-        <router-outlet></router-outlet>
-    </ng-template>
+        [navLinks]="navLinks"
+        [activeNavLinkIndex]="activeNavLinkIndex"
+        title="NG-HOLISTIC / CLR-LIST"
+    >
+        <div actions class="header-actions">
+            <a class="nav-link nav-icon" (click)="onConfig()"> <clr-icon shape="cog"></clr-icon> </a>
+        </div>
+    </hlc-main-header>
+    <ng-template #content> <router-outlet></router-outlet> </ng-template>
 </hlc-main-layout>

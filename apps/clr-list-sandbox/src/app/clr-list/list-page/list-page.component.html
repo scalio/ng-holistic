@@ -1,10 +1,17 @@
-
-<hlc-clr-list
-    [filterFields]="filterFields"
-    [table]="table"
-    [dataProvider]="dataProvider"
-    [rowSelectable]="true"
->
-    <button toolbox class="btn btn-sm btn-secondary" (click)="onUpdateRow()" style="float: right">Update row</button>
-    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} : {{ row['title'] }} </ng-template>
-</hlc-clr-list>
+<hlc-sbx-render-def-code-example [useDefaultCode]="false">
+    <div render style="margin-top: 5px;">
+        <hlc-clr-list
+            [filterFields]="filterFields"
+            [table]="table"
+            [dataProvider]="dataProvider"
+            [rowSelectable]="true"
+        >
+            <button toolbox class="btn btn-sm btn-secondary" (click)="onUpdateRow()" style="float: right">
+                Update row
+            </button>
+            <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} : {{ row['title'] }} </ng-template>
+        </hlc-clr-list>
+    </div>
+    <ng-container definition>{{ definition }}</ng-container>
+    <ng-container code>{{ code }}</ng-container>
+</hlc-sbx-render-def-code-example>

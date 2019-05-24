@@ -28,14 +28,14 @@ export class AppLayoutComponent implements OnInit {
         },
         {
             title: 'Lists',
-            href: environment.appUrls.forms
+            href: environment.appUrls.lists
         },
         {
             title: 'Common',
             href: environment.appUrls.common
         }
     ];
-    readonly titleHref = environment.appUrls.home;
+    readonly titleHref = environment.appUrls.forms;
     readonly activeNavLinkIndex = 0;
 
     constructor(

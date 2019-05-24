@@ -1,4 +1,13 @@
 <hlc-main-layout [sideNavItems]="sideNavItems" [contentTemplate]="content">
-    <hlc-main-header main-header title="NG-HOLISTIC / CLR-COMMON"></hlc-main-header>
+    <hlc-main-header
+        main-header
+        [navLinks]="navLinks"
+        [activeNavLinkIndex]="activeNavLinkIndex"
+        title="NG-HOLISTIC / CLR-COMMON"
+    >
+        <div actions class="header-actions">
+            <a class="nav-link nav-icon" (click)="onConfig()"> <clr-icon shape="cog"></clr-icon> </a>
+        </div>
+    </hlc-main-header>
     <ng-template #content> </ng-template>
 </hlc-main-layout>

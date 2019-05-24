@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     appUrls: {
-        home: 'http://ng-holistic.com',
+        home: 'http://www.ng-holistic.com',
         lists: 'http://lists.ng-holistic.com',
         forms: 'http://forms.ng-holistic.com',
         common: 'http://common.ng-holistic.com'
