@@ -1,7 +1,22 @@
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    max-height: 100%;
+}
+
 :host ::ng-deep {
     pre {
         max-height: initial;
         border: initial;
         // margin-top: -100px;
+    }
+    ul[role='tablist'] {
+        flex: 0 1 auto;
+    }
+
+    section[role='tabpanel'] {
+        flex: 1 1 auto;
+        overflow: hidden;
     }
 }
