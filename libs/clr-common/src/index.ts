@@ -35,3 +35,5 @@ export * from './lib/pipes/number.pipe';
 export * from './lib/pipes/phone.pipe';
 export * from './lib/side-nav/side-nav.component';
 export * from './lib/side-nav/side-nav.module';
+export * from './lib/box/box.component';
+export * from './lib/box/box.module';

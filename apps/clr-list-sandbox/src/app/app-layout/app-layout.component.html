@@ -1,5 +1,8 @@
-<hlc-main-layout [sideNavItems]="sideNavItems">
+<hlc-main-layout [sideNavItems]="sideNavItems" [contentTemplate]="content">
     <hlc-main-header
         main-header
         title="NG-HOLISTIC / CLR-LIST"></hlc-main-header>
+    <ng-template #content>
+        <router-outlet></router-outlet>
+    </ng-template>
 </hlc-main-layout>
