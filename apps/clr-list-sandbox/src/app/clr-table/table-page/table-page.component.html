@@ -1,14 +1,16 @@
-<hlc-box>
-    <button box-header class="btn" (click)="onAddRow()">Add Row</button>
-
-    <hlc-clr-table
-        box-content
-        [table]="table"
-        [dataProvider]="dataProvider"
-        [aggregateRow]="aggregateRow"
-        [rowSelectable]="true"
-        (cellClick)="onRowEvent($event)"
-    >
-        <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
-    </hlc-clr-table>
-</hlc-box>
+<hlc-sbx-render-def-code-example>
+    <hlc-box render>
+        <button box-header class="btn" style="margin-top: 10px" (click)="onAddRow()">Add Row</button>
+        <hlc-clr-table
+            box-content
+            [table]="table"
+            [dataProvider]="dataProvider"
+            [aggregateRow]="aggregateRow"
+            [rowSelectable]="true"
+            (cellClick)="onRowEvent($event)"
+        >
+            <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
+        </hlc-clr-table>
+    </hlc-box>
+    <ng-container definition>{{ definition }}</ng-container>
+</hlc-sbx-render-def-code-example>
