@@ -17,7 +17,7 @@
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
             <pre>
-                <code hlc-code-highlight="ts" [marginTop]="ref.children.length === 0 ? '-170px' : '-100px'">
+                <code hlc-code-highlight="ts" [marginTop]="'-100px'">
                     <div #ref>
                         <ng-content select="[code]"></ng-content>
                     </div>

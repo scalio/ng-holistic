@@ -1,4 +1,4 @@
-<hlc-sbx-render-def-code-example>
+<hlc-sbx-render-def-code-example [useDefaultCode]="false">
     <hlc-box render>
         <button box-header class="btn" style="margin-top: 10px" (click)="onAddRow()">Add Row</button>
         <hlc-clr-table
@@ -13,4 +13,5 @@
         </hlc-clr-table>
     </hlc-box>
     <ng-container definition>{{ definition }}</ng-container>
+    <ng-container code>{{ code }}</ng-container>
 </hlc-sbx-render-def-code-example>
