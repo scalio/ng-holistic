@@ -18,14 +18,6 @@ const group: FormLayouts.FormLayout = {
             }
         },
         {
-            id: 'ng-select',
-            kind: 'NgSelectField',
-            props: {
-                label: 'NgSelect',
-                items: [{ key: 'one', label: 'one' }]
-            }
-        },
-        {
             id: 'num',
             kind: 'MaskField',
             props: {
