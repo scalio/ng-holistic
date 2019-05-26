@@ -5,13 +5,19 @@
     max-height: 100%;
 }
 
+.box-content {
+    max-height: initial;
+    height: 100%;
+}
+
+
 :host ::ng-deep {
+
     pre {
-        max-height: initial;
         border: initial;
         height: 100%;
-        // margin-top: -100px;
     }
+
     ul[role='tablist'] {
         flex: 0 1 auto;
     }
