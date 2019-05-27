@@ -1,4 +1,4 @@
-<clr-tabs class="box">
+<clr-tabs>
     <clr-tab>
         <button clrTabLink>Rendered UI</button>
         <clr-tab-content *clrIfActive>
@@ -21,7 +21,7 @@
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
             <pre class="box-content">
-                <code hlc-code-highlight="ts" [marginTop]="'-100px'">
+                <code hlc-code-highlight="ts" [marginTop]="useDefaultCode ? '-160px' : '-70px'">
                     <div #ref>
                         <ng-content select="[code]"></ng-content>
                     </div>
