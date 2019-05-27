@@ -2,15 +2,13 @@
     <clr-tab>
         <button clrTabLink>Rendered UI</button>
         <clr-tab-content *clrIfActive>
-            <div class="box-content">
-                <ng-content select="[render]"></ng-content>
-            </div>
+            <ng-content select="[render]"></ng-content>
         </clr-tab-content>
     </clr-tab>
     <clr-tab>
         <button clrTabLink>Definition</button>
         <clr-tab-content *clrIfActive>
-            <pre class="box-content">
+            <pre>
                 <code hlc-code-highlight="ts" marginTop="-70px">
                     <ng-content select="[definition]"></ng-content>
                 </code>
@@ -20,7 +18,7 @@
     <clr-tab>
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
-            <pre class="box-content">
+            <pre>
                 <code hlc-code-highlight="ts" [marginTop]="useDefaultCode ? '-160px' : '-70px'">
                     <div #ref>
                         <ng-content select="[code]"></ng-content>

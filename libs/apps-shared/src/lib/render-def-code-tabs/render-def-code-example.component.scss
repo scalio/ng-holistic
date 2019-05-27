@@ -1,15 +1,1 @@
 
-:host {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-:host ::ng-deep {
-    section[role='tabpanel'] {
-        display: grid;
-        height: 100vh;
-        overflow: auto;
-    }
-}
