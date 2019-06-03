@@ -111,7 +111,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     get hasChanges() {
-        return this.form.hasChanges;
+        return this.form && this.form.hasChanges;
     }
 
     onFilter() {
@@ -140,7 +140,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     get form(): HlcFormComponent {
-        return this.clrForm.form;
+        return this.clrForm && this.clrForm.form;
     }
 
     get value() {
