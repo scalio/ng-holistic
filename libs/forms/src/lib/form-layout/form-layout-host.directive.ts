@@ -111,9 +111,9 @@ export class HlcGroupLayoutHostDirective implements OnInit, OnDestroy {
 
         const crfs = R.addIndex(R.chain)((child: IFormGroup<any>, index) => {
             return this.init(vc[index], child);
-        }, $content || []);
+        }, $content || []) as unknown as any[];
 
-        return [...crfs, componentRef] as any;
+        return [...crfs, componentRef];
     }
 
     ngOnDestroy() {
