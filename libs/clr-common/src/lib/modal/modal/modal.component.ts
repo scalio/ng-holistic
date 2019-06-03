@@ -50,7 +50,7 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
     @Input() disableOk: boolean;
     @Input() hideCancel: boolean;
 
-    @ViewChild(HlcClrFormFooterComponent) formFooter: HlcClrFormFooterComponent | undefined;
+    @ViewChild(HlcClrFormFooterComponent, { static: false }) formFooter: HlcClrFormFooterComponent | undefined;
 
     ok = new EventEmitter<void>();
     cancel = new EventEmitter<void>();

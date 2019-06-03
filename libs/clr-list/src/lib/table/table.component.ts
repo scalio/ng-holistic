@@ -125,7 +125,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     /**
      * Row details template
      */
-    @ContentChild(RowDetailDirective) rowDetailContent: RowDetailDirective | undefined;
+    //@ts-ignore
+    @ContentChild(RowDetailDirective, { static: false }) rowDetailContent: RowDetailDirective | undefined;
 
     /**
      * Custom cells

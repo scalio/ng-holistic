@@ -46,7 +46,8 @@ export class HlcAsideDirective implements OnInit, OnDestroy {
     @Output()
     backdropClicked = new EventEmitter();
 
-    @ContentChild(TemplateRef)
+    //@ts-ignore
+    @ContentChild(TemplateRef, { static: false })
     content: TemplateRef<any>;
 
     ngOnInit() {

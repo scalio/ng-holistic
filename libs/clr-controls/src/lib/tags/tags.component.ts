@@ -42,7 +42,8 @@ export class HlcClrTagsComponent implements ControlValueAccessor {
     @Output()
     addNew = new EventEmitter<string>();
 
-    @ViewChild(HlcClrTypeaheadComponent)
+    //@ts-ignore
+    @ViewChild(HlcClrTypeaheadComponent, { static: false })
     typeahead: HlcClrTypeaheadComponent;
 
     propagateChange = (_: any) => {};

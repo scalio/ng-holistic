@@ -33,7 +33,9 @@ import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig } from './tabs-layout.conf
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabLayoutComponent {
-    @ViewChild('vc', { read: ViewContainerRef })
+
+    //@ts-ignore
+    @ViewChild('vc', { read: ViewContainerRef, static: false })
     vc: ViewContainerRef;
 
     constructor() {}

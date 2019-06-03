@@ -9,7 +9,8 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild, ViewContainerRef 
 export class HlcClrGroupLayoutComponent {
     @Input() title: string;
 
-    @ViewChild('vc', { read: ViewContainerRef })
+    //@ts-ignore
+    @ViewChild('vc', { read: ViewContainerRef, static: false })
     vc: ViewContainerRef;
 
     constructor() {}
