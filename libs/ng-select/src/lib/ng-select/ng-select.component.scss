@@ -2,14 +2,23 @@
     .ng-select {
         min-width: 7rem;
         .ng-select-container {
+            height: 1rem;
+            min-height: 1rem;
             box-shadow: none !important;
             border: 0;
             border-bottom: 1px solid #9a9a9a;
             border-radius: 0;
+            background-color: transparent;
             & :focus {
                 border-bottom-color: #0095d3;
             }
             .ng-value-container {
+                padding: 0;
+                margin: 0;
+                .ng-input {
+                    padding: 0;
+                    margin: 0;
+                }
                 .ng-input > input {
                     padding: 0;
                     margin: 0;

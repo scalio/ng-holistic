@@ -18,6 +18,7 @@ You may want to add this field to you layout definition type
                 placeholder?: FormFields.FormFieldProp<any>;
                 items?: FormFields.FormFieldProp<any>;
                 typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
+                multiple?: boolean;
             }
         > {}
 ```

@@ -18,6 +18,7 @@ const group: FormLayouts.FormLayout = {
             props: {
                 placeholder: 'Select one...',
                 label: 'Select',
+                multiple: true,
                 typeaheadFun: term$ =>
                     concat(
                         of([]), // default items

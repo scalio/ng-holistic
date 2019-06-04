@@ -38,6 +38,7 @@ export namespace FormLayouts {
                 placeholder?: FormFields.FormFieldProp<any>;
                 items?: FormFields.FormFieldProp<any>;
                 typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
+                multiple?: boolean;
             }
         > {}
 

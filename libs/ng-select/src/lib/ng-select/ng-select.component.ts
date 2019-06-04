@@ -40,6 +40,7 @@ export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     @Input() notFoundText?: string;
     @Input() bindValue?: string;
     @Input() bindLabel?: string;
+    @Input() multiple = false;
 
     @Input() value: any;
 
