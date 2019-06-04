@@ -50,7 +50,8 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Output() filter = new EventEmitter<any>();
 
-    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
+    // @ts-ignore
+    @ViewChild(HlcClrFormComponent, { static: false }) clrForm: HlcClrFormComponent;
 
     @Input() set fields(val: ClrFormFields.FormField[]) {
         if (val === this._fields) {
@@ -111,7 +112,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     get hasChanges() {
-        return this.form.hasChanges;
+        return this.form && this.form.hasChanges;
     }
 
     onFilter() {
@@ -140,7 +141,7 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     get form(): HlcFormComponent {
-        return this.clrForm.form;
+        return this.clrForm && this.clrForm.form;
     }
 
     get value() {

@@ -1,7 +1,9 @@
 <clr-tabs>
     <clr-tab>
         <button clrTabLink>Rendered UI</button>
-        <clr-tab-content *clrIfActive> <ng-content select="[render]"></ng-content> </clr-tab-content>
+        <clr-tab-content *clrIfActive>
+            <ng-content select="[render]"></ng-content>
+        </clr-tab-content>
     </clr-tab>
     <clr-tab>
         <button clrTabLink>Definition</button>
@@ -17,7 +19,7 @@
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
             <pre>
-                <code hlc-code-highlight="ts" [marginTop]="ref.children.length === 0 ? '-170px' : '-100px'">
+                <code hlc-code-highlight="ts" [marginTop]="useDefaultCode ? '-160px' : '-70px'">
                     <div #ref>
                         <ng-content select="[code]"></ng-content>
                     </div>

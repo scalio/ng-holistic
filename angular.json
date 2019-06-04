@@ -436,6 +436,7 @@
                         "tsConfig": "libs/clr-list/tsconfig.lib.json",
                         "project": "libs/clr-list/ng-package.json"
                     }
+
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
@@ -477,11 +478,14 @@
                         "styles": [
                             "apps/clr-list-sandbox/src/styles.scss",
                             "node_modules/@clr/ui/clr-ui.min.css",
-                            "node_modules/@clr/icons/clr-icons.min.css"
+                            "node_modules/@clr/icons/clr-icons.min.css",
+                            "node_modules/prismjs/themes/prism-solarizedlight.css"
                         ],
                         "scripts": [
                             "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-                            "node_modules/@clr/icons/clr-icons.min.js"
+                            "node_modules/@clr/icons/clr-icons.min.js",
+                            "node_modules/prismjs/prism.js",
+                            "node_modules/prismjs/components/prism-typescript.min.js"
                         ]
                     },
                     "configurations": {
@@ -784,6 +788,13 @@
             "projectType": "library",
             "prefix": "ng-holistic",
             "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "libs/ng-select/tsconfig.lib.json",
+                        "project": "libs/ng-select/ng-package.json"
+                    }
+                },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {

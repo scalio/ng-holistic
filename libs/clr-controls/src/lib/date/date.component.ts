@@ -41,7 +41,8 @@ export class HlcClrDateComponent implements OnInit, OnInit, ControlValueAccessor
     @Input()
     readonly: boolean;
 
-    @ViewChild('input')
+    //@ts-ignore
+    @ViewChild('input', { static: false })
     input: ElementRef<any>;
 
     @Output()

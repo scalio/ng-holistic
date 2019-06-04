@@ -33,7 +33,7 @@ export class ValidationErrorsComponent {
         const err = R.propOr(undefined, validationName, this.container.validatorsErrorsMap);
 
         if (err) {
-            return err as string;
+            return err as unknown as  string;
         }
 
         const validation = this.validationErrorsMapConfig && this.validationErrorsMapConfig[validationName];

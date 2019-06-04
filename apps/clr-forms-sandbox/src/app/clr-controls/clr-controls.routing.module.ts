@@ -8,6 +8,8 @@ import {
     HlcClrTextComponent,
     HlcClrTextModule
 } from '@ng-holistic/clr-controls';
+import { NgSelectPageComponent } from './ng-select-page/ng-select-page.component';
+import { NgSelectPageModule } from './ng-select-page/ng-select-page.module';
 import { PairsListPageComponent } from './pairs-list/pairs-list-page.component';
 import { PairsListPageModule } from './pairs-list/pairs-list-page.module';
 import { SelectPageComponent } from './select-page/select-page.component';
@@ -43,6 +45,10 @@ export const routes: Routes = [
     {
         path: 'tags',
         component: TypeaheadPageComponent
+    },
+    {
+        path: 'ng-select',
+        component: NgSelectPageComponent
     }
 ];
 
@@ -54,7 +60,8 @@ export const routes: Routes = [
         HlcClrDateModule,
         PairsListPageModule,
         SelectPageModule,
-        TypeaheadPageModule
+        TypeaheadPageModule,
+        NgSelectPageModule
     ],
     exports: [RouterModule],
     entryComponents: []

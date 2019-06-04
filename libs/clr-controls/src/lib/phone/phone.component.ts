@@ -34,7 +34,8 @@ export class HlcClrPhoneComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder: string | undefined;
     @Input() readonly: boolean | undefined;
 
-    @ViewChild('numInput') numberInput: ElementRef<any>;
+    //@ts-ignore
+    @ViewChild('numInput', { static: false }) numberInput: ElementRef<any>;
     @Output() valueChange = new EventEmitter<string>();
 
     propagateChange = (_: any) => {};

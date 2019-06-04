@@ -5,7 +5,8 @@
     <div class="content-container">
         <hlc-side-nav [items]="sideNavItems"></hlc-side-nav>
         <div class="content-area">
-            <router-outlet></router-outlet>
+            <!-- Using ng-content here broke layout somehow -->
+            <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
         </div>
     </div>
 </clr-main-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { SideNavItem } from '../side-nav/side-nav.types';
 
 @Component({
@@ -9,6 +9,7 @@ import { SideNavItem } from '../side-nav/side-nav.types';
 })
 export class HlcClrMainLayoutComponent implements OnInit {
     @Input() sideNavItems: SideNavItem[] | undefined;
+    @Input() contentTemplate: TemplateRef<any>;
 
     constructor() {}
 

@@ -68,7 +68,7 @@ export class HlcClrFilterInputWrapperComponent implements OnInit, OnDestroy {
         const err = R.propOr(undefined, validationName, this.validatorsErrorsMap);
 
         if (err) {
-            return err as string;
+            return err as unknown as string;
         }
 
         const validation = this.validationErrorsMapConfig && this.validationErrorsMapConfig[validationName];

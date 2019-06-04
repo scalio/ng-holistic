@@ -1,25 +1,24 @@
 # NgSelect
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+Simple wrapper around [ng-select](https://github.com/ng-select/ng-select), intended to align look and feel plus some common behavior for ng-holistic.
 
-## Code scaffolding
+use with
+`@import "~@ng-select/ng-select/themes/default.theme.css";`
 
-Run `ng generate component component-name --project ng-select` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-select`.
+Requires `ng-select` as peer dependency
 
-> Note: Don't forget to add `--project ng-select` or else it will be added to the default project in your `angular.json` file.
+You may want to add this field to you layout definition type
 
-## Build
-
-Run `ng build ng-select` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build ng-select`, go to the dist folder `cd dist/ng-select` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test ng-select` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+    export interface NgSelectField
+        extends ClrFormFields.BaseField<
+            'NgSelectField',
+            string,
+            {
+                placeholder?: FormFields.FormFieldProp<any>;
+                items?: FormFields.FormFieldProp<any>;
+                typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
+                multiple?: boolean;
+            }
+        > {}
+```

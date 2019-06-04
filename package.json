@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.53",
+    "version": "0.0.54",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -20,6 +20,7 @@
         "build:clr-file-upload": "npm run build:clr-common-fuck-up && ng build clr-file-upload --ts-config=tsconfig.build.json",
         "build:typeahead": "ng build typeahead --ts-config=tsconfig.build.json",
         "build:clr-forms": "npm run build:clr-common-fuck-up && npm run build:forms && npm run build:clr-controls && ng build clr-forms --ts-config=tsconfig.build.json",
+        "build:ng-select": "ng build ng-select",
         "build:clr-list": "npm run build:clr-common-fuck-up && npm run build:clr-forms && ng build clr-list --ts-config=tsconfig.build.json",
         "build:clr-wizard": "npm run build:clr-forms && ng build clr-wizard --ts-config=tsconfig.build.json",
         "build:forms": "ng build forms",
@@ -83,6 +84,7 @@
         "@clr/angular": "^1.1.3",
         "@clr/icons": "^1.1.3",
         "@clr/ui": "^1.1.3",
+        "@ng-select/ng-select": "^2.20.0",
         "@nrwl/nx": "7.8.6",
         "@webcomponents/custom-elements": "^1.2.1",
         "angular2-hotkeys": "^2.1.4",

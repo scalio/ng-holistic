@@ -58,7 +58,8 @@ export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit,
 
     @Output() formValueChanged = new EventEmitter<any>();
 
-    @ViewChild(HlcFormComponent) form: HlcFormComponent;
+    //@ts-ignore
+    @ViewChild(HlcFormComponent, { static: false }) form: HlcFormComponent;
 
     @ContentChildren(CustomFieldDirective)
     contentCustomFields: QueryList<CustomFieldDirective>;

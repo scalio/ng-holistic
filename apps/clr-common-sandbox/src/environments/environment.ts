@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false
+    production: false,
+    appUrls: {
+        home: 'https://ng-holistic.com',
+        lists: 'https://lists.ng-holistic.com',
+        forms: 'https://forms.ng-holistic.com',
+        common: 'https://common.ng-holistic.com'
+    }
 };
 
 /*

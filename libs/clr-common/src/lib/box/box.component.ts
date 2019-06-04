@@ -6,4 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./box.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FmBoxComponent {}
+export class HlcBoxComponent {}

@@ -91,7 +91,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     /**
      * Row details template
      */
-    @ContentChild(RowDetailDirective) rowDetailTemplate: RowDetailDirective | undefined;
+    //@ts-ignore
+    @ContentChild(RowDetailDirective, { static: false }) rowDetailTemplate: RowDetailDirective | undefined;
 
     /**
      * Custom cells
@@ -109,7 +110,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
     @Output() drop = new EventEmitter<Table.DropEvent>();
 
-    @ViewChild(HlcClrTableComponent) tableComponent: HlcClrTableComponent;
+    //@ts-ignore
+    @ViewChild(HlcClrTableComponent, { static: false }) tableComponent: HlcClrTableComponent;
 
     constructor(
         private readonly elementRef: ElementRef,

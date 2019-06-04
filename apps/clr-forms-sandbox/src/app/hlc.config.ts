@@ -10,6 +10,7 @@ import {
     VALIDATION_ERRORS_MAP_CONFIG
 } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
+import { HLC_NG_SELECT_CONFIG } from '@ng-holistic/ng-select';
 
 export function getInputContainerConfig(localeId: string): InputContainerConfig {
     /**
@@ -93,5 +94,12 @@ export const hlcConfigProviders = [
     {
         provide: HLC_HOTKEYS_CONFIG,
         useValue: hotkeysConfigService
+    },
+    {
+        provide: HLC_NG_SELECT_CONFIG,
+        useValue: {
+            bindValue: 'key',
+            bindLabel: 'label'
+        }
     }
 ];
