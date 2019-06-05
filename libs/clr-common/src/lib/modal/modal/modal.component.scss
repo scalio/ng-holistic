@@ -2,3 +2,15 @@
     position: initial !important;
     padding: 0px;
 }
+
+.fixed-height {
+
+    .modal-content {
+        min-height: 500px;
+    }
+
+    .modal-body {
+        min-height: 350px;
+    }
+
+}

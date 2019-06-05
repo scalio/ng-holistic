@@ -1,9 +1,13 @@
 :host ::ng-deep {
-    .ng-select {
-        min-width: 7rem;
+    .ng-select.one-row {
         .ng-select-container {
             height: 1rem;
             min-height: 1rem;
+        }
+    }
+    .ng-select {
+        min-width: 7rem;
+        .ng-select-container {
             box-shadow: none !important;
             border: 0;
             border-bottom: 1px solid #9a9a9a;
@@ -27,7 +31,6 @@
                     margin-top: -5px;
                 }
             }
-
         }
 
         .ng-dropdown-panel.ng-select-top {

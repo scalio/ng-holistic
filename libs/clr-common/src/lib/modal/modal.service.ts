@@ -39,7 +39,7 @@ export interface ModalShowFormParams extends ModalShowParams {
 export interface ShowModalResult<T> {
     instance$: Observable<T>;
     modalInstance: HlcClrModalComponent;
-    ok: Observable<void>;
+    ok: Observable<any>;
 }
 
 /**

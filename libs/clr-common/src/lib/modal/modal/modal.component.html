@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal" [class.fixed-height]="fixedHeight">
     <div class="modal-dialog" [ngClass]="modalSize" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,12 +21,12 @@
                     #footer
                     [okLabel] = "okLabel"
                     [cancelLabel] = "cancelLabel"
-                    [form]="formProvider.form"
-                    [dataAccess]="formProvider.dataAccess"
+                    [form]="formProvider?.form"
+                    [dataAccess]="formProvider?.dataAccess"
                     (cancel)="onCancel()"
                     (dataAccessError)="onDataAccessError($event)"
                     [displayError]="false"
-                    [allowOkWhenFormPristine]="formProvider.allowOkWhenFormPristine"
+                    [allowOkWhenFormPristine]="formProvider?.allowOkWhenFormPristine"
                 >
                 </hlc-clr-form-footer>
                 <ng-template #simpleFooter>

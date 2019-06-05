@@ -126,12 +126,12 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
                     takeUntil(this.destroy$)
                 )
                 .subscribe(
-                    _ => {
+                    res => {
                         this.updateButtonState$.next(ClrLoadingState.SUCCESS);
                         this.form.reset(this.form.value);
                         this.originalValue = this.form.value;
                         if (this.dataAccess && this.dataAccess.updateSuccess$) {
-                            this.dataAccess.updateSuccess$.next(this.form.value);
+                            this.dataAccess.updateSuccess$.next(res);
                         }
                     },
                     err => {

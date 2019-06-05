@@ -41,6 +41,10 @@ export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     @Input() bindValue?: string;
     @Input() bindLabel?: string;
     @Input() multiple = false;
+    @Input() appendTo: string;
+    @Input() searchable = true;
+    @Input() dropdownPosition: 'top';
+    @Input() oneRow = false;
 
     @Input() value: any;
 

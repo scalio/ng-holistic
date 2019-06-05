@@ -42,6 +42,7 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
     @Input() okText: string;
     @Input() cancelText: string;
     @Input() hideFooter = false;
+    @Input() fixedHeight = false;
     /**
      * Expect content has form, in this case will be used form-footer component
      */

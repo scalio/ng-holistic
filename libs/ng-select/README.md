@@ -19,6 +19,10 @@ You may want to add this field to you layout definition type
                 items?: FormFields.FormFieldProp<any>;
                 typeaheadFun?: (term$: Observable<string>) => Observable<any[]>;
                 multiple?: boolean;
+                appendTo?: string;
+                searchable?: boolean;
+                dropdownPosition?: 'top';
+                oneRow?: boolean;
             }
         > {}
 ```
