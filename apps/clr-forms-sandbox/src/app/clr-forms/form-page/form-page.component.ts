@@ -71,6 +71,11 @@ const group: FormLayouts.FormLayout = {
             label: 'Date Range'
         },
         {
+            id: 'moth-year',
+            kind: 'MonthYearSelectField',
+            label: 'Moth Year'
+        },
+        {
             id: 'select',
             kind: 'SelectField',
             props: {

@@ -1,4 +1,4 @@
-import { Mask, TypeaheadConfig, HlcClrOptionsViewType } from '@ng-holistic/clr-controls';
+import { Mask, TypeaheadConfig, HlcClrOptionsViewType, MonthYearSelectValue } from '@ng-holistic/clr-controls';
 import { FormFields } from '@ng-holistic/forms';
 import { Subject } from 'rxjs';
 
@@ -162,6 +162,15 @@ export namespace ClrFormFields {
         }
     >;
 
+    export type MonthYearSelectField = BaseField<
+        'MonthYearSelectField',
+        MonthYearSelectValue,
+        {
+            fromYear?: FormFields.FormFieldProp<number | null>;
+            toYear?: FormFields.FormFieldProp<number | null>;
+        }
+    >;
+
     export type FormField =
         | TextField
         | SelectField
@@ -180,5 +189,6 @@ export namespace ClrFormFields {
         | PairsListField
         | TypeaheadField
         | TagsField
-        | DisplayField;
+        | DisplayField
+        | MonthYearSelectField;
 }

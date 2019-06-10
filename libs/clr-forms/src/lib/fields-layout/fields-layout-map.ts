@@ -32,7 +32,9 @@ import {
     HlcClrToggleComponent,
     HlcClrToggleModule,
     HlcClrTypeaheadComponent,
-    HlcClrTypeaheadModule
+    HlcClrTypeaheadModule,
+    HlcClrMonthYearSelectModule,
+    HlcClrMonthYearSelectComponent
 } from '@ng-holistic/clr-controls';
 
 /**
@@ -55,7 +57,8 @@ export const clrFieldsLayoutMap = {
     TypeaheadField: HlcClrTypeaheadComponent,
     TagsField: HlcClrTagsComponent,
     MultiSelectField: HlcClrMultiSelectComponent,
-    DisplayField: HlcClrDisplayComponent
+    DisplayField: HlcClrDisplayComponent,
+    MonthYearSelectField: HlcClrMonthYearSelectComponent
 };
 
 export const clrFieldsLayoutComponents = [
@@ -75,7 +78,8 @@ export const clrFieldsLayoutComponents = [
     HlcClrTypeaheadComponent,
     HlcClrTagsComponent,
     HlcClrMultiSelectComponent,
-    HlcClrDisplayComponent
+    HlcClrDisplayComponent,
+    HlcClrMonthYearSelectComponent
 ];
 
 export const clrFieldsLayoutModules = [
@@ -95,5 +99,6 @@ export const clrFieldsLayoutModules = [
     HlcClrTypeaheadModule,
     HlcClrTagsModule,
     HlcClrMultiSelectModule,
-    HlcClrDisplayModule
+    HlcClrDisplayModule,
+    HlcClrMonthYearSelectModule
 ];
