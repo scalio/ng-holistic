@@ -15,6 +15,7 @@ export * from './lib/mask/mask.component';
 export * from './lib/mask/mask.module';
 export * from './lib/mask/mask.types';
 export * from './lib/mask/mask.utils';
+export * from './lib/month-year-select/month-year-rqeuired.validator';
 export * from './lib/month-year-select/month-year-select.component';
 export * from './lib/month-year-select/month-year-select.module';
 export * from './lib/multi-select/multi-select.component';

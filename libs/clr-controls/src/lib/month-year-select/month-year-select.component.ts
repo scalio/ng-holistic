@@ -68,11 +68,11 @@ export class HlcClrMonthYearSelectComponent implements OnInit, ControlValueAcces
     }
 
     onYearChange(year: number) {
-        this.onValueChanged(R.assoc('year', year, this.value || {}));
+        this.onValueChanged(R.assoc('year', year, this.value || {}) as any);
     }
 
     onMonthChange(month: number) {
-        this.onValueChanged(R.assoc('month', month, this.value || {}));
+        this.onValueChanged(R.assoc('month', month, this.value || {}) as any);
     }
 
     private onValueChanged(val: MonthYearSelectValue) {
