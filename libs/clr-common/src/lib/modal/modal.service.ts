@@ -1,8 +1,8 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { isNil } from 'ramda';
-import { Observable, of, Subject } from 'rxjs';
-import { flatMap, map, shareReplay, take, takeUntil } from 'rxjs/operators';
+import { merge, Observable, of, Subject } from 'rxjs';
+import { flatMap, map, mapTo, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { AlertType } from '../common.types';
 import { FormFooterDataAccess } from '../form-footer/form-footer.component';
 import { HlcClrAlertModalComponent } from './alert-modal/alert-modal.component';
@@ -40,6 +40,14 @@ export interface ShowModalResult<T> {
     instance$: Observable<T>;
     modalInstance: HlcClrModalComponent;
     ok: Observable<any>;
+    cancel: Observable<any>;
+}
+
+export interface ConfirmParams {
+    okText?: string;
+    cancelText?: string;
+    // Will emit both ok (true) and cancel (false) events
+    emitOkCancel?: boolean;
 }
 
 /**
@@ -75,7 +83,8 @@ export class HlcClrModalService {
         const result = {
             instance$: instance.contentInstance$.pipe(shareReplay(1)) as Observable<T>,
             modalInstance: instance,
-            ok: instance.ok.asObservable()
+            ok: instance.ok.asObservable(),
+            cancel: instance.cancel.asObservable()
         };
 
         result.ok
@@ -112,7 +121,8 @@ export class HlcClrModalService {
         const result = {
             instance$: instance.contentInstance$.pipe(shareReplay(1)) as Observable<T>,
             modalInstance: instance,
-            ok: instance.ok.asObservable()
+            ok: instance.ok.asObservable(),
+            cancel: instance.cancel.asObservable()
         };
 
         result.ok
@@ -189,11 +199,20 @@ export class HlcClrModalService {
         this.overlayService.hide();
     }
 
-    confirm(title: string, message: string) {
-        const { instance$, ok } = this.show<HlcClrConfirmModalComponent>({
+    confirm(title: string, message: string, confirmParams?: ConfirmParams) {
+        const { instance$, ok, cancel, modalInstance } = this.show<HlcClrConfirmModalComponent>({
             title: title,
             contentComponentType: HlcClrConfirmModalComponent
         });
+
+        if (confirmParams) {
+            if (confirmParams.okText) {
+                modalInstance.okText = confirmParams.okText;
+            }
+            if (confirmParams.cancelText) {
+                modalInstance.cancelText = confirmParams.cancelText;
+            }
+        }
 
         instance$
             .pipe(
@@ -204,7 +223,11 @@ export class HlcClrModalService {
                 inst.message = message;
             });
 
-        return ok;
+        if (confirmParams && confirmParams.emitOkCancel) {
+            return merge(ok.pipe(mapTo(true)), cancel.pipe(mapTo(false)));
+        } else {
+            return ok;
+        }
     }
 
     alert(title: string, message: string, alertType: AlertType) {
@@ -212,7 +235,6 @@ export class HlcClrModalService {
             title: title,
             contentComponentType: HlcClrAlertModalComponent
         });
-
         modalInstance.hideCancel = true;
 
         instance$

@@ -110,6 +110,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
     @Output() drop = new EventEmitter<Table.DropEvent>();
 
+    @Output() isFilterShownChange = new EventEmitter<boolean>();
+
     //@ts-ignore
     @ViewChild(HlcClrTableComponent, { static: false }) tableComponent: HlcClrTableComponent;
 
@@ -183,6 +185,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     onToggleFilter() {
         this.isFilterShown = !this.isFilterShown;
+        this.isFilterShownChange.emit(this.isFilterShown);
     }
 
     get hasFilters() {
