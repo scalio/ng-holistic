@@ -1,0 +1,86 @@
+<h2>TableDefinition</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>cols</td>
+            <td>(Table.Column | Table.CustomColumn | Table.MapColumns.Column)[]</td>
+            <td>List of the columns definitions see bellow.</td>
+        </tr>
+        <tr>
+            <td>rowActions (optional)</td>
+            <td>Table.RowAction[] | ((row: Table.Row) => Table.RowAction[])</td>
+            <td>
+                List of actions associated with each row. UI will have additional first column with buttons, clicking by
+                which will show dropdown with these actions.
+            </td>
+        </tr>
+        <tr>
+            <td>details (optional)</td>
+            <td>TableDetails</td>
+            <td>This property provides interafce to populate children rows of the parent row.</td>
+        </tr>
+        <tr>
+            <td>sort (optional)</td>
+            <td>string | Table.SortColumn</td>
+            <td>Default sort column either id or reference to the column definition itself.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Table.Column</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>id</td>
+            <td>string</td>
+            <td>
+                Column identifier, when row provided to the table from json object, value from the object[id] property
+                will be provided for this column.
+            </td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>Column title</td>
+        </tr>
+        <tr>
+            <td>sort (optional)</td>
+            <td>string | boolean</td>
+            <td>
+                Define column as sortable. When column sortable it will have underline under the title to flag it as
+                sortable. When user click this column, table will be reloaded with appropriate sort parameter. If this
+                property is `true` then sort parameter will have value of column's `id` property. If this property is
+                `string` then sort parameter will have exact this value.
+            </td>
+        </tr>
+        <tr>
+            <td>cls (optional)</td>
+            <td>string</td>
+            <td>Class to apply on content of the column value.</td>
+        </tr>
+        <tr>
+            <td>whitespaceWrap (optional)</td>
+            <td>boolean</td>
+            <td>Allow wrap whitespace on cell content, off by default.</td>
+        </tr>
+        <tr>
+            <td>alignContent (optional)</td>
+            <td>'start' | 'center' | 'end'</td>
+            <td>How to align text content inside the cell.</td>
+        </tr>
+    </tbody>
+</table>

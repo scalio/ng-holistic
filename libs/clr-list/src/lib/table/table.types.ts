@@ -101,16 +101,19 @@ export namespace Table.MapColumns {
     export type Column = LinkColumn | ImgColumn;
 }
 
+
+export interface TableDetails {
+    /*
+    Subset of root cols (by id), if cols not in the subset they will be ignored
+    */
+    cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+    rows: (parentRow: Table.Row) => any[];
+}
+
 export interface TableDescription {
     cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
     rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
-    details?: {
-        /*
-        Subset of root cols (by id), if cols not in the subset they will be ignored
-        */
-        cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
-        rows: (parentRow: Table.Row) => any[];
-    };
+    details?: TableDetails;
     sort?: string | Table.SortColumn;
 }
 
@@ -137,6 +140,6 @@ export namespace Table.Data {
         rows: Table.Row[];
         paginator?: Paginator;
         sort?: Sort;
-        filters: { property: string, value: any }[];
+        filters?: { property: string, value: any }[];
     }
 }
