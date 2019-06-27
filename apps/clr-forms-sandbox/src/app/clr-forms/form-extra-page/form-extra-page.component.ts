@@ -123,7 +123,7 @@ export class FormExtraPageComponent implements AfterViewInit {
     definition = definition;
     group = group;
 
-    @ViewChild(HlcFormComponent) form: HlcFormComponent;
+    @ViewChild(HlcFormComponent, { static: false }) form: HlcFormComponent;
 
     constructor(readonly cdr: ChangeDetectorRef) {}
 

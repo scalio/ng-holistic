@@ -332,7 +332,8 @@ export class ListPageComponent implements OnInit {
     definition = definition;
     code = code;
 
-    @ViewChild(HlcClrListComponent) private list: HlcClrListComponent;
+    // @ts-ignore
+    @ViewChild(HlcClrListComponent, { static: false }) private list: HlcClrListComponent;
 
     constructor() {}
 

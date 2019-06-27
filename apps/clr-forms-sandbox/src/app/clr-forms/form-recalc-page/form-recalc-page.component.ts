@@ -128,7 +128,7 @@ export class FormRecalcPageComponent implements AfterViewInit {
     group = recalcFormGroup;
     definition = definition;
 
-    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
+    @ViewChild(HlcClrFormComponent, { static: false }) clrForm: HlcClrFormComponent;
 
     constructor(private readonly cdr: ChangeDetectorRef) {}
 

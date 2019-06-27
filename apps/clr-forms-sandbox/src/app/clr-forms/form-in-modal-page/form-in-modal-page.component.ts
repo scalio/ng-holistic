@@ -17,7 +17,7 @@ import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component'
 export class FormInModalComponent {
     group = recalcFormGroup;
 
-    @ViewChild(HlcClrFormComponent) clrForm: HlcClrFormComponent;
+    @ViewChild(HlcClrFormComponent, { static: false }) clrForm: HlcClrFormComponent;
 
     get form$() {
         return this.clrForm.form.formCreated;

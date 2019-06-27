@@ -4,14 +4,14 @@
             <hlc-clr-form [group]="group" #clrForm>
                 <hlc-clr-form-footer
                     form-footer
-                    (save)="onSave(clrForm.form.formGroup.value)"
-                    [form]="clrForm.form.formGroup"
+                    (save)="onSave(clrForm.form?.formGroup.value)"
+                    [form]="clrForm.form?.formGroup"
                     [dataAccess]="dataAccess"
                 ></hlc-clr-form-footer>
             </hlc-clr-form>
         </div>
         <div class="clr-col-4">
-            <hlc-sbx-form-value [value]="clrForm.form.formGroup?.value"></hlc-sbx-form-value>
+            <hlc-sbx-form-value [value]="clrForm.form?.formGroup?.value"></hlc-sbx-form-value>
         </div>
     </div>
     <ng-container definition>{{ definition }}</ng-container>

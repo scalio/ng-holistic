@@ -321,7 +321,7 @@ export class FormPageComponent implements AfterViewInit {
     group = group;
     definition = definition;
 
-    @ViewChild(HlcFormComponent) form: HlcFormComponent;
+    @ViewChild(HlcFormComponent, { static: false }) form: HlcFormComponent;
 
     readonly dataAccess: FormFooterDataAccess = {
         update(_: any) {

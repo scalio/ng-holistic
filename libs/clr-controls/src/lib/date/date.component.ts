@@ -111,7 +111,9 @@ export class HlcClrDateComponent implements OnInit, OnInit, ControlValueAccessor
 
     //
     resetValue() {
-        this.input.nativeElement.value = '';
+        if (this.input) {
+            this.input.nativeElement.value = '';
+        }
     }
 
     private formatToDomainStr = (date: Date) => this.dateConvertService.formatToDomainStr(date);

@@ -61,7 +61,7 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
     @Output() uploadClick = new EventEmitter();
     @Output() previewClick = new EventEmitter();
 
-    @ViewChild(HlcClrFileUploadComponent) fileUploadComponent: HlcClrFileUploadComponent;
+    @ViewChild(HlcClrFileUploadComponent, { static: false }) fileUploadComponent: HlcClrFileUploadComponent;
     processing = false;
 
     propagateChange = (_: any) => {};

@@ -37,7 +37,7 @@ export class HlcClrRichTextComponent implements OnInit, ControlValueAccessor {
     @Input()
     readonly: boolean;
 
-    @ViewChild(QuillEditorComponent) editor: QuillEditorComponent;
+    @ViewChild(QuillEditorComponent, { static: false }) editor: QuillEditorComponent;
 
     readonly modules: any;
     propagateChange = (_: any) => {};

@@ -238,7 +238,8 @@ export class TablePageComponent implements OnInit {
     definition = definition;
     code = code;
 
-    @ViewChild(HlcClrTableComponent) private tableComponent: HlcClrTableComponent;
+    // @ts-ignore
+    @ViewChild(HlcClrTableComponent, { static: false }) private tableComponent: HlcClrTableComponent;
 
     constructor() {}
 
