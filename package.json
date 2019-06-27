@@ -103,7 +103,6 @@
         "rxjs": "~6.4.0",
         "zone.js": "^0.9.1",
         "@nrwl/angular": "8.1.0"
-
     },
     "devDependencies": {
         "@angular/compiler-cli": "8.0.0",
