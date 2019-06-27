@@ -31,7 +31,7 @@ const paginatorItems: PaginatorItems = {
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled', useHash: true }),
+        RouterModule.forRoot([], { initialNavigation: 'enabled', useHash: true, anchorScrolling: 'enabled' }),
         AppRoutingModule,
         HlcClrTableModule.forRoot(),
         HlcClrFilterModule.forRoot()

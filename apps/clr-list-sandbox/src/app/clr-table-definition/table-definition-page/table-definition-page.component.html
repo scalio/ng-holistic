@@ -15,15 +15,19 @@
         </tr>
         <tr>
             <td class="left">rowActions (optional)</td>
-            <td class="left">Table.RowAction[] | ((row: Table.Row) => Table.RowAction[])</td>
+            <td class="left"><a [routerLink]="['.']" fragment="Table_RowAction">Table.RowAction</a>[] | ((row: Table.Row) => Table.RowAction[])</td>
             <td class="left">
-                List of actions associated with each row. UI will have additional first column with buttons, clicking by
-                which will show dropdown with these actions.
+                <img style="height:100px;" src="assets/row-action.png" />
+                Define list of actions associated with each row. Each row will have additional dropdown button component with provided actions.
+                Instead of static array you could provide controller function which will take currently
+                generated row and return array of the actions for each particular row, if this function will return
+                empty array dropdown button won't be shown for the row. See <a [routerLink]="['/clr-table','table-row-actions']">example</a>.
+                This property intended to be used in conjuction with <a [routerLink]="['table']" fragment="rowAction">rowAction event</a>
             </td>
         </tr>
         <tr>
             <td class="left">details (optional)</td>
-            <td class="left">TableDetails</td>
+            <td class="left"><a [routerLink]="['.']" fragment="Table_RowAction"></a>TableDetails</td>
             <td class="left">This property provides interafce to populate children rows of the parent row.</td>
         </tr>
         <tr>
@@ -159,7 +163,9 @@ arbitrary predifined components. By default there is defined 2 custom mapped col
         <tr>
             <td class="left">kind</td>
             <td class="left">'LinkColumn'</td>
-            <td class="left">The flag which signal library: for content of this column should be generated link component</td>
+            <td class="left">
+                The flag which signal library: for content of this column should be generated link component
+            </td>
         </tr>
         <tr>
             <td class="left">props</td>
@@ -209,7 +215,9 @@ arbitrary predifined components. By default there is defined 2 custom mapped col
         <tr>
             <td class="left">kind</td>
             <td class="left">'ImgColumn'</td>
-            <td class="left">The flag which signal library: for content of this column should be generated image component</td>
+            <td class="left">
+                The flag which signal library: for content of this column should be generated image component
+            </td>
         </tr>
         <tr>
             <td class="left">props</td>
@@ -277,3 +285,51 @@ For this
         {{ code_col_def_4 }}
     </code>
 </pre>
+
+<h2 id="Table_RowAction">Table.RowAction</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id</td>
+            <td class="left">any</td>
+            <td class="left">Action id, this property could be used on event handling</td>
+        </tr>
+        <tr>
+            <td class="left">title</td>
+            <td class="left">string</td>
+            <td class="left">Title of the action, it will be show on the dropdown item.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="Table_TableDetails">TableDetails</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">cols</td>
+            <td class="left">Table.Column | Table.CustomColumn | Table.MapColumns.Column</td>
+            <td class="left">Subset of root cols (by id), if cols not in the subset they will be ignored.</td>
+        </tr>
+        <tr>
+            <td class="left">rows</td>
+            <td class="left">(parentRow: Table.Row) => any[]</td>
+            <td class="left">Function which given parent row should return array of children rows. Then children rows will be generated as sub rows of the parent.</td>
+        </tr>
+    </tbody>
+</table>
