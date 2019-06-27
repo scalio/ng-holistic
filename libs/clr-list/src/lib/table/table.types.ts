@@ -12,14 +12,14 @@ export namespace Table {
         title: string;
         /** Sort column id or true if sort id = column id */
         sort?: string | boolean;
+    }
+
+    export interface Column extends ColumnBase {
         cls?: string;
         /** Allow wrap whitespace when cell generated / off by default */
         whitespaceWrap?: boolean;
         /** Align content / start by default */
         alignContent?: 'start' | 'center' | 'end';
-    }
-
-    export interface Column extends ColumnBase {
         /**
          * Format column value
          * Returns formatted to display represenation value or ColumnFormat
@@ -110,8 +110,8 @@ export interface TableDetails {
     rows: (parentRow: Table.Row) => any[];
 }
 
-export interface TableDescription {
-    cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+export interface TableDescription<TMapColumns = Table.MapColumns.Column> {
+    cols: (Table.Column | Table.CustomColumn | TMapColumns)[];
     rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
     details?: TableDetails;
     sort?: string | Table.SortColumn;

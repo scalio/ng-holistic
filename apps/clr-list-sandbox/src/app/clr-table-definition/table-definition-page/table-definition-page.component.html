@@ -10,7 +10,7 @@
     <tbody>
         <tr>
             <td>cols</td>
-            <td>(Table.Column | Table.CustomColumn | Table.MapColumns.Column)[]</td>
+            <td>(Table.Column | Table.CustomColumn | TMapColumns)[]</td>
             <td>List of the columns definitions see bellow.</td>
         </tr>
         <tr>
@@ -81,6 +81,80 @@
             <td>alignContent (optional)</td>
             <td>'start' | 'center' | 'end'</td>
             <td>How to align text content inside the cell.</td>
+        </tr>
+        <tr>
+            <td>format (optional)</td>
+            <td>(val: any, row: any) => string | ColumnFormat</td>
+            <td>
+                Returns mapped value given original value and the row. You could return `ColumnFormat` which contains
+                not only mapped value itself but also class applied to the cell content.
+                <pre>
+                    interface ColumnFormat
+                        val?: string;
+                        cls?: string;
+
+                </pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Table.CustomColumn</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>id, title, sort, cls</td>
+            <td>-</td>
+            <td>The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td>customCell</td>
+            <td>true</td>
+            <td>
+                Flag column as custom. You must provide for this column some html template.
+                Define colum
+                <pre>
+                        id: 'custom',
+                        title: 'Status',
+                        sort: true,
+                        customCell: true
+                </pre>
+                And then in template
+                <pre>
+                        &#x3C;ng-template hlcClrCustomCell=&#x22;custom&#x22; let-row=&#x22;row&#x22; let-val&#x3E; &#x3C;app-status [status]=&#x22;val&#x22;&#x3E;&#x3C;/app-status&#x3E; &#x3C;/ng-template&#x3E;
+                </pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2>TMapColumns</h2>
+TMapColumns is the generic parameter which passed TableDefinition class and has default value of Table.MapColumns.Column.
+This column definition provides interface to insert into the cell arbitrary predifined components.
+By default there is defined 2 customly mapped columns `LinkColumn |  ImgColumn`
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>id, title, sort, cls</td>
+            <td>-</td>
+            <td>The same as in Table.Column</td>
         </tr>
     </tbody>
 </table>

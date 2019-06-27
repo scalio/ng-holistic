@@ -57,6 +57,7 @@ export class HlcClrWizardComponent implements OnInit, OnDestroy, CustomFieldsPro
     @Output() openChanged = new EventEmitter<boolean>();
     @Output() formsChanged = new EventEmitter<{ [key: string]: FormGroup }>();
 
+    // @ts-ignore
     @ViewChild('wizard', { static: false }) wizard: ClrWizard;
     @ViewChildren('form') forms: QueryList<HlcClrFormComponent>;
     @ContentChildren(HlcClrWizardCustomPageDirective) customPages: QueryList<HlcClrWizardCustomPageDirective>;
