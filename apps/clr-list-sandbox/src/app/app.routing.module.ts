@@ -19,33 +19,21 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'clr-table-definition',
-        component: TableDefinitionPageComponent
-    },
-    {
         path: '',
         component: AppLayoutComponent,
         children: [
+            {
+                path: 'clr-table-definition',
+                component: TableDefinitionPageComponent
+            },
             {
                 path: 'clr-filter',
                 children: clrFilterRoutes
-            }
-        ]
-    },
-    {
-        path: '',
-        component: AppLayoutComponent,
-        children: [
+            },
             {
                 path: 'clr-table',
                 children: clrTableRoutes
-            }
-        ]
-    },
-    {
-        path: '',
-        component: AppLayoutComponent,
-        children: [
+            },
             {
                 path: 'clr-list',
                 children: clrListRoutes

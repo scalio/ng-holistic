@@ -9,27 +9,27 @@
     </thead>
     <tbody>
         <tr>
-            <td>cols</td>
-            <td>(Table.Column | Table.CustomColumn | TMapColumns)[]</td>
-            <td>List of the columns definitions see bellow.</td>
+            <td class="left">cols</td>
+            <td class="left">(Table.Column | Table.CustomColumn | TMapColumns)[]</td>
+            <td class="left">List of the columns definitions see bellow.</td>
         </tr>
         <tr>
-            <td>rowActions (optional)</td>
-            <td>Table.RowAction[] | ((row: Table.Row) => Table.RowAction[])</td>
-            <td>
+            <td class="left">rowActions (optional)</td>
+            <td class="left">Table.RowAction[] | ((row: Table.Row) => Table.RowAction[])</td>
+            <td class="left">
                 List of actions associated with each row. UI will have additional first column with buttons, clicking by
                 which will show dropdown with these actions.
             </td>
         </tr>
         <tr>
-            <td>details (optional)</td>
-            <td>TableDetails</td>
-            <td>This property provides interafce to populate children rows of the parent row.</td>
+            <td class="left">details (optional)</td>
+            <td class="left">TableDetails</td>
+            <td class="left">This property provides interafce to populate children rows of the parent row.</td>
         </tr>
         <tr>
-            <td>sort (optional)</td>
-            <td>string | Table.SortColumn</td>
-            <td>Default sort column either id or reference to the column definition itself.</td>
+            <td class="left">sort (optional)</td>
+            <td class="left">string | Table.SortColumn</td>
+            <td class="left">Default sort column either id or reference to the column definition itself.</td>
         </tr>
     </tbody>
 </table>
@@ -45,22 +45,22 @@
     </thead>
     <tbody>
         <tr>
-            <td>id</td>
-            <td>string</td>
-            <td>
+            <td class="left">id</td>
+            <td class="left">string</td>
+            <td class="left">
                 Column identifier, when row provided to the table from json object, value from the object[id] property
                 will be provided for this column.
             </td>
         </tr>
         <tr>
-            <td>title</td>
-            <td>string</td>
-            <td>Column title</td>
+            <td class="left">title</td>
+            <td class="left">string</td>
+            <td class="left">Column title</td>
         </tr>
         <tr>
-            <td>sort (optional)</td>
-            <td>string | boolean</td>
-            <td>
+            <td class="left">sort (optional)</td>
+            <td class="left">string | boolean</td>
+            <td class="left">
                 Define column as sortable. When column sortable it will have underline under the title to flag it as
                 sortable. When user click this column, table will be reloaded with appropriate sort parameter. If this
                 property is `true` then sort parameter will have value of column's `id` property. If this property is
@@ -68,31 +68,30 @@
             </td>
         </tr>
         <tr>
-            <td>cls (optional)</td>
-            <td>string</td>
-            <td>Class to apply on content of the column value.</td>
+            <td class="left">cls (optional)</td>
+            <td class="left">string</td>
+            <td class="left">Class to apply on content of the column value.</td>
         </tr>
         <tr>
-            <td>whitespaceWrap (optional)</td>
-            <td>boolean</td>
-            <td>Allow wrap whitespace on cell content, off by default.</td>
+            <td class="left">whitespaceWrap (optional)</td>
+            <td class="left">boolean</td>
+            <td class="left">Allow wrap whitespace on cell content, off by default.</td>
         </tr>
         <tr>
-            <td>alignContent (optional)</td>
-            <td>'start' | 'center' | 'end'</td>
-            <td>How to align text content inside the cell.</td>
+            <td class="left">alignContent (optional)</td>
+            <td class="left">'start' | 'center' | 'end'</td>
+            <td class="left">How to align text content inside the cell.</td>
         </tr>
         <tr>
-            <td>format (optional)</td>
-            <td>(val: any, row: any) => string | ColumnFormat</td>
-            <td>
+            <td class="left">format (optional)</td>
+            <td class="left">(val: any, row: any) => string | ColumnFormat</td>
+            <td class="left">
                 Returns mapped value given original value and the row. You could return `ColumnFormat` which contains
                 not only mapped value itself but also class applied to the cell content.
                 <pre>
-                    interface ColumnFormat
-                        val?: string;
-                        cls?: string;
-
+                    <code hlc-code-highlight="ts">
+                        {{column_format}}
+                    </code>
                 </pre>
             </td>
         </tr>
@@ -110,37 +109,38 @@
     </thead>
     <tbody>
         <tr>
-            <td>id, title, sort, cls</td>
-            <td>-</td>
-            <td>The same as in Table.Column</td>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
         </tr>
         <tr>
-            <td>customCell</td>
-            <td>true</td>
-            <td>
+            <td class="left">customCell</td>
+            <td class="left">true</td>
+            <td class="left">
                 Flag column as custom. You must provide for this column some html template.
-                Define colum
+                <p>First define colum</p>
                 <pre>
-                        id: 'custom',
-                        title: 'Status',
-                        sort: true,
-                        customCell: true
+                    <code hlc-code-highlight="ts">
+                        {{custom_column}}
+                    </code>
                 </pre>
-                And then in template
+                <p>And then in template</p>
                 <pre>
-                        &#x3C;ng-template hlcClrCustomCell=&#x22;custom&#x22; let-row=&#x22;row&#x22; let-val&#x3E; &#x3C;app-status [status]=&#x22;val&#x22;&#x3E;&#x3C;/app-status&#x3E; &#x3C;/ng-template&#x3E;
+                    <code hlc-code-highlight="html">
+                        {{custom_column_template}}
+                    </code>
                 </pre>
             </td>
         </tr>
     </tbody>
 </table>
 
-
 <h2>TMapColumns</h2>
-TMapColumns is the generic parameter which passed TableDefinition class and has default value of Table.MapColumns.Column.
-This column definition provides interface to insert into the cell arbitrary predifined components.
-By default there is defined 2 customly mapped columns `LinkColumn |  ImgColumn`
+TMapColumns is the generic parameter which passed TableDefinition class and has default value of
+`Table.MapColumns.Column = LinkColumn | ImgColumn;` This column definition provides interface to insert into the cell
+arbitrary predifined components. By default there is defined 2 custom mapped columns `LinkColumn | ImgColumn`.
 
+<h3>LinkColumn</h3>
 
 <table class="table">
     <thead>
@@ -152,9 +152,128 @@ By default there is defined 2 customly mapped columns `LinkColumn |  ImgColumn`
     </thead>
     <tbody>
         <tr>
-            <td>id, title, sort, cls</td>
-            <td>-</td>
-            <td>The same as in Table.Column</td>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td class="left">kind</td>
+            <td class="left">'LinkColumn'</td>
+            <td class="left">The flag which signal library: for content of this column should be generated link component</td>
+        </tr>
+        <tr>
+            <td class="left">props</td>
+            <td class="left">-</td>
+            <td class="left">Values to initilize properties of the link component</td>
+        </tr>
+        <tr>
+            <td class="left">props.title</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The text of the link. Also it could be a function which given col value and row returns appropriate
+                title.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.link (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The url for the link. Also it could be a function which given col value and row returns appropriate
+                title.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.clicked (optional)</td>
+            <td class="left">Subject</td>
+            <td class="left">On each link click subject will recieve new event.</td>
         </tr>
     </tbody>
 </table>
+
+<h3>ImgColumn</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td class="left">kind</td>
+            <td class="left">'ImgColumn'</td>
+            <td class="left">The flag which signal library: for content of this column should be generated image component</td>
+        </tr>
+        <tr>
+            <td class="left">props</td>
+            <td class="left">-</td>
+            <td class="left">Values to initilize properties of the image component</td>
+        </tr>
+        <tr>
+            <td class="left">props.src</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The path to the image. Also it could be a function which given col value and row returns appropriate
+                src.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.width (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The width of the image (example '100px'). Also it could be a function which given col value and row
+                returns appropriate width.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.height (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The heigth of the image (example '100px'). Also it could be a function which given col value and row
+                returns appropriate height.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
+    you could extend predefined set of `TMapColumns` and then use their definitions inside any table definition.
+</p>
+
+For this
+
+<h5>1. Include this component in configuration of table library.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_1 }}
+    </code>
+</pre>
+
+<h5>2. Define column type definition for this component.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_2 }}
+    </code>
+</pre>
+
+<h5>3. Extend default TableDefinition interface with custom column map definition for you app.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_3 }}
+    </code>
+</pre>
+
+<h5>4. Now you can use AppCustomColumn in any table definition of your application alongside with default ones.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_4 }}
+    </code>
+</pre>
