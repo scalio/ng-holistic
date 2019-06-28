@@ -82,6 +82,13 @@ const tableDefiniiton: AppTableDefinition = [
 ]
 `;
 
+const sort_column = `
+    export interface SortColumn {
+        name: string;
+        direction: 'asc' | 'desc';
+    }
+`;
+
 @Component({
     selector: 'hlc-clr-sandbox-table-definition-page',
     templateUrl: './table-definition-page.component.html',
@@ -96,4 +103,5 @@ export class TableDefinitionPageComponent {
     code_col_def_2 = code_col_def_2;
     code_col_def_3 = code_col_def_3;
     code_col_def_4 = code_col_def_4;
+    sort_column = sort_column;
 }

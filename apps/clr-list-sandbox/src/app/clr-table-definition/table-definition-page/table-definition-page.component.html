@@ -10,35 +10,63 @@
     <tbody>
         <tr>
             <td class="left">cols</td>
-            <td class="left">(Table.Column | Table.CustomColumn | TMapColumns)[]</td>
-            <td class="left">List of the columns definitions see bellow.</td>
+            <td class="left">
+                (<a [routerLink]="['.']" fragment="Table_Column" (click)="Table_Column.scrollIntoView()"
+                    >Table.Column</a
+                >
+                |
+                <a [routerLink]="['.']" fragment="Table_CustomColumn" (click)="Table_CustomColumn.scrollIntoView()"
+                    >Table.CustomColumn</a
+                >
+                |
+                <a [routerLink]="['.']" fragment="Table_TMapColumns" (click)="Table_TMapColumns.scrollIntoView()"
+                    >TMapColumns</a
+                >)[]
+            </td>
+            <td class="left">List of the columns definitions see bellow. See <a [routerLink]="['/clr-table', 'table']">example</a>.</td>
         </tr>
         <tr>
             <td class="left">rowActions (optional)</td>
-            <td class="left"><a [routerLink]="['.']" fragment="Table_RowAction">Table.RowAction</a>[] | ((row: Table.Row) => Table.RowAction[])</td>
             <td class="left">
-                <img style="height:100px;" src="assets/row-action.png" />
-                Define list of actions associated with each row. Each row will have additional dropdown button component with provided actions.
-                Instead of static array you could provide controller function which will take currently
-                generated row and return array of the actions for each particular row, if this function will return
-                empty array dropdown button won't be shown for the row. See <a [routerLink]="['/clr-table','table-row-actions']">example</a>.
-                This property intended to be used in conjuction with <a [routerLink]="['table']" fragment="rowAction">rowAction event</a>
+                <a [routerLink]="['.']" fragment="Table_RowAction" (click)="Table_RowAction.scrollIntoView()"
+                    >Table.RowAction</a
+                >[] | ((row: Table.Row) => Table.RowAction[])
+            </td>
+            <td class="left">
+                <img style="height:100px;" src="assets/row-action.png" /> Define list of actions associated with each
+                row. Each row will have additional dropdown button component with provided actions. Instead of static
+                array you could provide controller function which will take currently generated row and return array of
+                the actions for each particular row, if this function will return empty array dropdown button won't be
+                shown for the row. See <a [routerLink]="['/clr-table', 'table-row-actions']">example</a>. This property
+                intended to be used in conjuction with
+                <a [routerLink]="['table']" fragment="rowAction">rowAction event</a>
             </td>
         </tr>
         <tr>
             <td class="left">details (optional)</td>
-            <td class="left"><a [routerLink]="['.']" fragment="Table_RowAction"></a>TableDetails</td>
-            <td class="left">This property provides interafce to populate children rows of the parent row.</td>
+            <td class="left"><a [routerLink]="['.']" (click)="Table_Details.scrollIntoView()">TableDetails</a></td>
+            <td class="left">
+                <img style="height:100px;" src="assets/row-expand.png" /> This property provides interafce to populate
+                children rows of the parent row. See <a [routerLink]="['/clr-table', 'table-expand-row']">example</a>.
+            </td>
         </tr>
         <tr>
             <td class="left">sort (optional)</td>
             <td class="left">string | Table.SortColumn</td>
-            <td class="left">Default sort column either id or reference to the column definition itself.</td>
+            <td class="left">
+                Default sort column id (ascending order). With Table.SortColumn you could define not only column but
+                also order.
+                <pre>
+                    <code hlc-code-highlight="ts">
+                        {{sort_column}}
+                    </code>
+                </pre>
+            </td>
         </tr>
     </tbody>
 </table>
 
-<h2>Table.Column</h2>
+<h2 id="Table_Column" #Table_Column>Table.Column</h2>
 <table class="table">
     <thead>
         <tr>
@@ -102,7 +130,7 @@
     </tbody>
 </table>
 
-<h2>Table.CustomColumn</h2>
+<h2 id="Table_CustomColumn" #Table_CustomColumn>Table.CustomColumn</h2>
 <table class="table">
     <thead>
         <tr>
@@ -139,7 +167,7 @@
     </tbody>
 </table>
 
-<h2>TMapColumns</h2>
+<h2 id="Table_TMapColumns" #Table_TMapColumns>TMapColumns</h2>
 TMapColumns is the generic parameter which passed TableDefinition class and has default value of
 `Table.MapColumns.Column = LinkColumn | ImgColumn;` This column definition provides interface to insert into the cell
 arbitrary predifined components. By default there is defined 2 custom mapped columns `LinkColumn | ImgColumn`.
@@ -286,7 +314,7 @@ For this
     </code>
 </pre>
 
-<h2 id="Table_RowAction">Table.RowAction</h2>
+<h2 id="Table_RowAction" #Table_RowAction>Table.RowAction</h2>
 
 <table class="table">
     <thead>
@@ -310,7 +338,7 @@ For this
     </tbody>
 </table>
 
-<h2 id="Table_TableDetails">TableDetails</h2>
+<h2 id="Table_Details" #Table_Details>TableDetails</h2>
 
 <table class="table">
     <thead>
@@ -329,7 +357,10 @@ For this
         <tr>
             <td class="left">rows</td>
             <td class="left">(parentRow: Table.Row) => any[]</td>
-            <td class="left">Function which given parent row should return array of children rows. Then children rows will be generated as sub rows of the parent.</td>
+            <td class="left">
+                Function which given parent row should return array of children rows. Then children rows will be
+                generated as sub rows of the parent.
+            </td>
         </tr>
     </tbody>
 </table>
