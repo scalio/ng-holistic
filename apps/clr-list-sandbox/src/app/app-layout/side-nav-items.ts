@@ -4,7 +4,12 @@ export default [
     {
         title: 'Table documentation',
         icon: 'view-list',
-        path: ['/clr-table-definition']
+        children: [
+            {
+                title: 'Table Definition',
+                path: ['/docs', 'table-definition']
+            }
+        ]
     },
     {
         title: 'Clr Filter Example',

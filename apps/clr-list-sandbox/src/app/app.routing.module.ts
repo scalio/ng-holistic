@@ -6,11 +6,10 @@ import { ClrFilterModule } from './clr-filter/clr-filter.module';
 import { routes as clrFilterRoutes } from './clr-filter/clr-filter.routing.module';
 import { ClrListModule } from './clr-list/clr-list.module';
 import { routes as clrListRoutes } from './clr-list/clr-list.routing.module';
-// tslint:disable-next-line:max-line-length
-import { TableDefinitionPageComponent } from './clr-table-definition/table-definition-page/table-definition-page.component';
 import { ClrTableModule } from './clr-table/clr-table.module';
 import { routes as clrTableRoutes } from './clr-table/clr-table.routing.module';
-import { TableDefinitionPageModule } from './clr-table-definition/table-definition-page/table-definition-page.module';
+import { DocumentationModule } from './documentation/documentation.module';
+import { routes as docsRoutes } from './documentation/documentation.routing.module';
 
 export const routes: Routes = [
     {
@@ -23,8 +22,8 @@ export const routes: Routes = [
         component: AppLayoutComponent,
         children: [
             {
-                path: 'clr-table-definition',
-                component: TableDefinitionPageComponent
+                path: 'docs',
+                children: docsRoutes
             },
             {
                 path: 'clr-filter',
@@ -49,7 +48,7 @@ export const routes: Routes = [
         ClrTableModule,
         ClrFilterModule,
         ClrListModule,
-        TableDefinitionPageModule
+        DocumentationModule
     ],
     exports: [RouterModule]
 })
