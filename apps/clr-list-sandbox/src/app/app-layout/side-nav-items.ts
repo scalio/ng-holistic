@@ -2,12 +2,12 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
-        title: 'Table definition',
+        title: 'Table documentation',
         icon: 'view-list',
         path: ['/clr-table-definition']
     },
     {
-        title: 'Clr Filter',
+        title: 'Clr Filter Example',
         icon: 'filter',
         children: [
             {
@@ -17,7 +17,7 @@ export default [
         ]
     },
     {
-        title: 'Clr Table',
+        title: 'Clr Table Example',
         icon: 'view-list',
         children: [
             {
@@ -47,7 +47,7 @@ export default [
         ]
     },
     {
-        title: 'Clr List',
+        title: 'Clr List Example',
         icon: 'list',
         children: [
             {

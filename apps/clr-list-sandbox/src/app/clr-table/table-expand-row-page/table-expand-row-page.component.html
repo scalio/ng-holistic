@@ -1,9 +1,9 @@
-<hlc-clr-table [table]="table" [dataProvider]="dataProvider" [aggregateRow]="aggregateRow">
-    <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
-    <!--
-    <ng-template hlcClrExpandRow="getRowDetails" let-detail>
-        {{ detail.info }}
-    </ng-template>
-    -->
-
-</hlc-clr-table>
+<hlc-sbx-render-def-code-example [useDefaultCode]="false">
+    <hlc-box render>
+        <hlc-clr-table box-content [table]="table" [dataProvider]="dataProvider" [aggregateRow]="aggregateRow">
+            <ng-template hlcClrCustomCell="custom" let-row="row"> {{ row['id'] }} </ng-template>
+        </hlc-clr-table>
+    </hlc-box>
+    <ng-container definition>{{ definition }}</ng-container>
+    <ng-container code>{{ code }}</ng-container>
+</hlc-sbx-render-def-code-example>
