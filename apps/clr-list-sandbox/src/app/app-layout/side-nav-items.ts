@@ -6,6 +6,10 @@ export default [
         icon: 'view-list',
         children: [
             {
+                title: 'Table',
+                path: ['/docs', 'table']
+            },
+            {
                 title: 'Table Definition',
                 path: ['/docs', 'table-definition']
             }
