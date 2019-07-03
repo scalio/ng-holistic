@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { equals } from 'ramda';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
     CustomFieldsProvider,
@@ -71,8 +71,10 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         return this.customFieldsProvider && this.customFieldsProvider.customFields;
     }
 
-    @Output() formCreated = new EventEmitter<FormGroup>();
     @Output() formValueChanged = new EventEmitter<any>();
+
+    // This must be cold in order, event subscrier scubscribes after component created it sill get emitted event
+    formCreated = new BehaviorSubject<FormGroup | null>(null);
 
     formGroup: FormGroup;
 
@@ -135,7 +137,7 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
         }
 
         this.initialValue = this.formGroup.value;
-        this.formCreated.emit(this.formGroup);
+        this.formCreated.next(this.formGroup);
         this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => this.formValueChanged.emit(val));
     }
 

@@ -12,14 +12,14 @@ export namespace Table {
         title: string;
         /** Sort column id or true if sort id = column id */
         sort?: string | boolean;
+    }
+
+    export interface Column extends ColumnBase {
         cls?: string;
         /** Allow wrap whitespace when cell generated / off by default */
         whitespaceWrap?: boolean;
         /** Align content / start by default */
         alignContent?: 'start' | 'center' | 'end';
-    }
-
-    export interface Column extends ColumnBase {
         /**
          * Format column value
          * Returns formatted to display represenation value or ColumnFormat
@@ -101,16 +101,19 @@ export namespace Table.MapColumns {
     export type Column = LinkColumn | ImgColumn;
 }
 
-export interface TableDescription {
-    cols: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+
+export interface TableDetails {
+    /*
+    Subset of root cols (by id), if cols not in the subset they will be ignored
+    */
+    cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+    rows: (parentRow: Table.Row) => any[];
+}
+
+export interface TableDescription<TMapColumns = Table.MapColumns.Column> {
+    cols: (Table.Column | Table.CustomColumn | TMapColumns)[];
     rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
-    details?: {
-        /*
-        Subset of root cols (by id), if cols not in the subset they will be ignored
-        */
-        cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
-        rows: (parentRow: Table.Row) => any[];
-    };
+    details?: TableDetails;
     sort?: string | Table.SortColumn;
 }
 
@@ -137,6 +140,6 @@ export namespace Table.Data {
         rows: Table.Row[];
         paginator?: Paginator;
         sort?: Sort;
-        filters: { property: string, value: any }[];
+        filters?: { property: string, value: any }[];
     }
 }
