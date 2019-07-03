@@ -83,6 +83,7 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
 
     @Output() save = new EventEmitter();
     @Output() cancel = new EventEmitter();
+    @Output() dataAccessSuccess = new EventEmitter<any>();
     @Output() dataAccessError = new EventEmitter<string>();
 
     constructor(
@@ -130,6 +131,7 @@ export class HlcClrFormFooterComponent implements OnInit, OnDestroy {
                         this.updateButtonState$.next(ClrLoadingState.SUCCESS);
                         this.form.reset(this.form.value);
                         this.originalValue = this.form.value;
+                        this.dataAccessSuccess.next(res);
                         if (this.dataAccess && this.dataAccess.updateSuccess$) {
                             this.dataAccess.updateSuccess$.next(res);
                         }

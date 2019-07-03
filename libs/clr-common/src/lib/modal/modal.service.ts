@@ -2,7 +2,7 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { isNil } from 'ramda';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { flatMap, map, mapTo, shareReplay, take, takeUntil } from 'rxjs/operators';
+import { filter, flatMap, mapTo, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { AlertType } from '../common.types';
 import { FormFooterDataAccess } from '../form-footer/form-footer.component';
 import { HlcClrAlertModalComponent } from './alert-modal/alert-modal.component';
@@ -34,6 +34,8 @@ export interface ModalShowFormParams extends ModalShowParams {
     closeOnOk?: boolean;
     // default false, since we dont wont user lost entered data when ocasionally click on background
     hideOnClickOverlay?: boolean;
+    // Will emit both ok (value from form) and cancel (null) events
+    emitOkCancel?: boolean;
 }
 
 export interface ShowModalResult<T> {
@@ -72,8 +74,11 @@ export class HlcClrModalService {
         instance.hideFooter = params.hideFooter || false;
 
         const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? true : params.hideOnClickOverlay;
+
+        const cancelOnBackdrop$ = new Subject();
         if (hideOnClickOverlay) {
             backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
+                cancelOnBackdrop$.next();
                 this.hide();
             });
         }
@@ -84,7 +89,7 @@ export class HlcClrModalService {
             instance$: instance.contentInstance$.pipe(shareReplay(1)) as Observable<T>,
             modalInstance: instance,
             ok: instance.ok.asObservable(),
-            cancel: instance.cancel.asObservable()
+            cancel: merge(instance.cancel.asObservable(), cancelOnBackdrop$)
         };
 
         result.ok
@@ -110,6 +115,7 @@ export class HlcClrModalService {
         instance.hideFooter = params.hideFooter;
 
         const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? true : params.hideOnClickOverlay;
+
         if (hideOnClickOverlay) {
             backdropClick.pipe(takeUntil(this.hide$)).subscribe(() => {
                 this.hide();
@@ -138,28 +144,30 @@ export class HlcClrModalService {
     showForm<T>(params: ModalShowFormParams): ShowModalResult<T> {
         const result = this.show<T>(params);
 
-        // ok after update success
-        const res$ = result.instance$.pipe(
+        // initialize modal instance with formProvider
+        const initInst$ = result.instance$.pipe(
             flatMap((inst: any) => {
                 // form could be observable
-                const form: FormGroup | Observable<FormGroup> = inst[params.componentFormField as any];
+                const form: FormGroup | Observable<FormGroup | null> = inst[params.componentFormField as any];
                 return form instanceof Observable ? form : of(form);
             }),
+            // form obsrevable is cold stream and at the beggining has null (unitialized) form,
+            // just wait till form will be initilaized
+            filter(f => !!f),
             take(1),
-            map(form => this.initForm(result, form, params)),
-            shareReplay(1),
-            takeUntil(this.hide$)
+            shareReplay(1)
         );
 
-        const hideOnClickOverlay = isNil(params.hideOnClickOverlay) ? false : params.hideOnClickOverlay;
+        initInst$.subscribe(form => {
+            if (form) {
+                // Set formProvider and other form properties from config
+                this.initForm(result, form, params);
+            }
+        });
 
-        if (hideOnClickOverlay) {
-            res$.subscribe(() => {
-                result.modalInstance.detectChanges();
-            });
+        if (params.emitOkCancel) {
+            result.ok = merge(result.ok, result.cancel.pipe(mapTo(null)));
         }
-
-        result.ok = res$.pipe(flatMap(x => x));
 
         if (params.closeOnOk !== false) {
             result.ok = result.ok.pipe(take(1));
@@ -174,7 +182,8 @@ export class HlcClrModalService {
         const updateSuccess$ = new Subject<any>();
         const dataAccess = params.dataAccess.updateSuccess$
             ? params.dataAccess
-            : {
+            : // setup default update success
+              {
                   update: params.dataAccess.update,
                   updateSuccess$
               };
@@ -185,13 +194,12 @@ export class HlcClrModalService {
             allowOkWhenFormPristine: params.allowOkWhenFormPristine
         };
 
+        // initialize modal instance form provider it will be used when user click ok button
         result.modalInstance.formProvider = formProvider;
 
         if (params.value) {
             form.patchValue(params.value);
         }
-
-        return dataAccess.updateSuccess$ as Observable<any>;
     }
 
     hide() {

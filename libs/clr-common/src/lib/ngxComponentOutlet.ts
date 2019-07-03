@@ -23,7 +23,8 @@ import {
     OnDestroy,
     SimpleChanges,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    AfterViewInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -88,7 +89,7 @@ import { Subject } from 'rxjs';
 // tslint:disable-next-line:directive-selector
 @Directive({ selector: '[ngxComponentOutlet]' })
 // tslint:disable-next-line:directive-class-suffix
-export class NgxComponentOutlet implements OnChanges, OnDestroy {
+export class NgxComponentOutlet implements OnChanges, OnDestroy, AfterViewInit {
     // TODO(issue/24571): remove '!'.
     @Input('ngxComponentOutlet') ngComponentOutlet!: Type<any>;
     // TODO(issue/24571): remove '!'.
@@ -136,7 +137,11 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
                 elInjector,
                 this.ngComponentOutletContent
             );
+        }
+    }
 
+    ngAfterViewInit() {
+        if (this._componentRef) {
             this.create$.next(this._componentRef.instance);
         }
     }

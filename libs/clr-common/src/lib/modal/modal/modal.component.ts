@@ -9,7 +9,8 @@ import {
     OnInit,
     Optional,
     TemplateRef,
-    ViewChild
+    ViewChild,
+    Output
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -54,8 +55,10 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
     //@ts-ignore
     @ViewChild(HlcClrFormFooterComponent, { static: false }) formFooter: HlcClrFormFooterComponent | undefined;
 
-    ok = new EventEmitter<void>();
-    cancel = new EventEmitter<void>();
+    // Will emit event when ok clicked, if formProvider defined on component
+    // it will emit event after update was successfully executed
+    @Output() ok = new EventEmitter<any>();
+    @Output() cancel = new EventEmitter<void>();
 
     readonly config: HlcClrModalConfig;
     readonly contentInstance$ = new Subject();
@@ -97,6 +100,10 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
 
     onCancel() {
         this.cancel.emit();
+    }
+
+    onDataAccessSuccess(res: any) {
+        this.ok.emit(res);
     }
 
     onDataAccessError(err: string) {
