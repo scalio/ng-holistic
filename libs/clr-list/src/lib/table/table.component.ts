@@ -83,8 +83,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() rowSelectable = false;
 
-    @Input() filter: any;
-
     /**
      * Enable darg & drop
      */
@@ -183,7 +181,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      */
     @Output() stateChanged = new EventEmitter<any>();
     @Output() rowAction = new EventEmitter<Table.RowActionEvent>();
-    // TODO : rename rowEvent
+    // TODO : rename rowClick
     @Output() cellClick = new EventEmitter<Table.CellClickEvent>();
 
     @Output() drop = new EventEmitter<Table.DropEvent>();
