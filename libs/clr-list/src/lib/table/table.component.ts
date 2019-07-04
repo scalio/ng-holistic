@@ -16,9 +16,10 @@ import {
     Output,
     QueryList,
     Renderer2,
-    ViewChildren
+    ViewChildren,
+    ViewChild
 } from '@angular/core';
-import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface, ClrDatagrid } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
@@ -188,6 +189,8 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     @ViewChildren('datagridRow')
     datagridRows: QueryList<ClrDatagridRow>;
+
+    @ViewChild(ClrDatagrid, { static: false }) clrDatagrid: ClrDatagrid;
 
     constructor(
         private readonly cdr: ChangeDetectorRef,
@@ -447,6 +450,9 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             finalize(() => {
                 this.loading = false;
                 this.hotkeysContainer.loading$.next(false);
+                // Fix hardly reproducibley bug
+                // Sometimes grid just doesn't update itself correctly after load new data
+                setTimeout(() => this.clrDatagrid.resize(), 0);
                 try {
                     // on destroy component, grid invokes clrDgRefresh (
                     this.cdr.detectChanges();
