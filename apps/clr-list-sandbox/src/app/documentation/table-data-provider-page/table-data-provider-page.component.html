@@ -1,0 +1,29 @@
+<h1>Table.Data.DataProvider</h1>
+
+<p>
+    This interface is used by <a>lists</a> and <a>tables</a> in order to load data. The interface define single
+    <a>load</a> method.
+</p>
+
+<h2>Load</h2>
+
+<pre>
+    <code hlc-code-highlight="ts">
+        {{load_signature}}
+    </code>
+</pre>
+
+
+<h3>State argument</h3>
+
+Data structure which contains all required information to load list which may
+include sort order, pagination and filters.
+The shape of these data is not explicitly defined here,
+how they will be mapped to real request parameters is depends on application
+which implements this interface.  See <a>TableDataProviderConfig.mapState method</a> for more explanation.
+
+
+<h3>Return result</h3>
+Observable stream which should return loaded data, the shape of these data is not explicitly defined here,
+how they will be mapped to list component models is defined in <a>TableDataProviderConfig.mapResult method</a>.
+

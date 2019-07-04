@@ -10,6 +10,14 @@ export default [
                 path: ['/docs', 'table']
             },
             {
+                title: 'Table Data Provider',
+                path: ['/docs', 'table-data-provider']
+            },
+            {
+                title: 'Table Data Provider Config',
+                path: ['/docs', 'table-data-provider-config']
+            },
+            {
                 title: 'Table Definition',
                 path: ['/docs', 'table-definition']
             }

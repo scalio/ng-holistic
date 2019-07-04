@@ -1,0 +1,87 @@
+<h1>TableDataProviderConfig</h1>
+
+<h2>Abstract</h2>
+
+<p>Common front end application usually has 3 different model types:</p>
+<ul>
+    <li>
+        Data transfer models - objects what used to pass / recieved data form / to server. These models is not
+        controlled by front end application and should be mapped to application domain model as soon these data recieved
+        from http request.
+    </li>
+    <li>Application domain models - objects used to represent data inside the application.</li>
+    <li>Component models - interfaces used by UI components in order to represent data inside them.</li>
+</ul>
+
+<p>
+    The data transfer models must be separated from application domain models since in case of any breaking changes on
+    bakend API we could jsut change mappings from dto to application models and no changes will be propagated to the
+    rest of the application.
+</p>
+
+<p>
+    The application models must be separated from component models since we want to manipulate data inside the
+    application in most convinient way and also we don't always control UI component models. For example we would have
+    our data for lists normalized inside the application and then display them in UI list component as denormalized one.
+</p>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{interface_definition}}
+    </code>
+</pre>
+
+<p>
+    As suggested above we should always convert dto models to application models as soon as we get them from http
+    requests, so dto models is no concerns further apllication implementation.
+</p>
+
+<p>
+    The TableDataProviderConfig provides a confiuralbe way to convert application models to <a>hlc-clr-table</a> and
+    <a>hlc-clr-list</a> UI component models.
+</p>
+
+<h2>mapState</h2>
+
+<code hlc-code-highlight="ts"> {{ map_state_definition }} </code>
+
+<p>
+    Provides mapper which should convert current list / table "state" which contains all properties required to request
+    relevant data for active UI component state such as sort column, filters, pagination to the application model
+    structure which used to request data from the server, this application model then could be converted to the request
+    dto model.
+</p>
+
+<h3>state argument</h3>
+
+Since underlying table / list implementation use clarity data grid this argument has
+<a href="https://clarity.design/documentation/datagrid/server-driven" target="_blank">ClrDatagridStateInterface</a> type
+which fully describes list / table state model containing such parameters as sort column, filters and pagination.
+
+<h3>return value</h3>
+
+The appllication model used to describe list requests inside the application.
+
+<h2>mapResult</h2>
+
+<code hlc-code-highlight="ts"> {{ map_result_definition }} </code>
+
+<p>
+    Provides mapper which should convert result from request (this result already has application model format) to the
+    list / table UI component model format.
+</p>
+
+<h3>result argument</h3>
+
+<p>This is result in application domain model format specific for the application.</p>
+
+<h3>result value</h3>
+
+<p>The converted result value must have component model Table.Data.Result type</p>
+
+<pre>
+    <code hlc-code-highlight="ts"> {{ table_data_result_definition }} </code>
+</pre>
+
+<p>
+    List / table components will render UI based on the data from this structure.
+</p>
