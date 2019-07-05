@@ -343,7 +343,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                         R.map(([property, value]) => ({ property, value }))
                     )
                 ),
-                map(filters => ({ ...state, filters }))
+                map(filters => ({ ...state, filters } as any))
             );
         }
 

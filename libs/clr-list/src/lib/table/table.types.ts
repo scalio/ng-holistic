@@ -39,6 +39,10 @@ export namespace Table {
         [key: string]: any;
     }
 
+    // For each column defined on the table you could provide aggregation function.
+    // This interface is the Map object `columnId : aggregationFunction for the column`
+    // The aggregation function takes as a first param all values from all
+    // visible rows for this column and as second additional rows all visible rows.
     export interface AggregateRow {
         [colId: string]: (vals: any[], rows?: Row[]) => any;
     }

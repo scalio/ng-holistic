@@ -10,7 +10,7 @@
     <tbody>
         <tr>
             <td class="left">dataProvider</td>
-            <td class="left"><a [routerLink]="['.']" fragment="data_provider">Table.Data.DataProvider</a></td>
+            <td class="left"><a [routerLink]="['..', 'table-data-provider']">Table.Data.DataProvider</a></td>
             <td class="left">Provides interface to load data to the table.</td>
         </tr>
         <tr>
@@ -33,10 +33,12 @@
         </tr>
         <tr>
             <td class="left">aggregateRow</td>
-            <td class="left"><a [routerLink]="['.']" segment="table_ggregate_row">Table.AggregateRow</a></td>
+            <td class="left"><a [routerLink]="['.']" fragment="table_ggregate_row">Table.AggregateRow</a></td>
             <td class="left">
                 <img style="height:100px;" src="assets/aggregate-row.png" /> Display row with aggregated data from other
                 rows. Data will be aggregated only for visible rows.
+                <br>
+                <a href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts" target="_blank">Example</a>
             </td>
         </tr>
         <tr>
@@ -58,7 +60,7 @@
             <td class="left">boolean (default false)</td>
             <td class="left">
                 Allow rows to be drag / dropped, see related
-                <a [routerLink]="['.']" fragment="drop_event">drop event</a>. TODO : Example
+                <a [routerLink]="['.']" fragment="drop_event">drop event</a>. <br> <a href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts" target="_blank">Example</a>
             </td>
         </tr>
         <tr>
@@ -148,11 +150,32 @@
             </td>
             <td class="left">
                 <pre>
-                        <code hlc-code-highlight="html">
-                            {{custom_cell}}
-                        </code>
-                    </pre>
+                    <code hlc-code-highlight="html">
+                        {{custom_cell}}
+                    </code>
+                </pre>
             </td>
         </tr>
     </tbody>
 </table>
+
+<h2 id="table_aggregate_row">Table aggregate row</h2>
+
+<p>
+    Provides interface to define aggregation row on the table. The aggregated row will be shown first in the list and
+    include aggregation data only from currently visible rows.
+</p>
+
+<p>
+    For each column defined on the table you could provide aggregation function. This interface is the Map object
+    `columnId : aggregationFunction for the column`. The aggregation function takes as a first param all values from all
+    visible rows for this column and as second additional rows all visible rows.
+</p>
+
+<pre>
+    <code hlc-code-highlight="ts">
+        {{table_aggregate_row}}
+    </code>
+</pre>
+
+<a href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts" target="_blank">Example</a>

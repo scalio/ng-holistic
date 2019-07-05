@@ -14,6 +14,12 @@ const row_detail = `
 </hlc-clr-table>
 `;
 
+const table_aggregate_row = `
+interface AggregateRow {
+    [colId: string]: (vals: any[], rows?: Row[]) => any;
+}
+`;
+
 
 @Component({
     selector: 'hlc-clr-sandbox-table-page',
@@ -24,4 +30,5 @@ const row_detail = `
 export class TablePageComponent {
     row_detail = row_detail;
     custom_cell = custom_cell;
+    table_aggregate_row = table_aggregate_row;
 }
