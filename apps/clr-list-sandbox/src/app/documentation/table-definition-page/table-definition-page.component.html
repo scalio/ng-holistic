@@ -1,4 +1,9 @@
 <h2>TableDefinition</h2>
+
+<hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/app.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
 <table class="table">
     <thead>
         <tr>
@@ -23,7 +28,13 @@
                     >TMapColumns</a
                 >)[]
             </td>
-            <td class="left">List of the columns definitions see bellow. See <a [routerLink]="['/clr-table', 'table']">example</a>.</td>
+            <td class="left">
+                List of the columns definitions see bellow.
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/app.component.ts"
+                    >Example
+                </hlc-sbx-example-link-button>
+            </td>
         </tr>
         <tr>
             <td class="left">rowActions (optional)</td>
@@ -33,21 +44,34 @@
                 >[] | ((row: Table.Row) => Table.RowAction[])
             </td>
             <td class="left">
-                <img style="height:100px;" src="assets/images/row-action.png" /> Define list of actions associated with each
-                row. Each row will have additional dropdown button component with provided actions. Instead of static
-                array you could provide controller function which will take currently generated row and return array of
-                the actions for each particular row, if this function will return empty array dropdown button won't be
-                shown for the row. See <a [routerLink]="['/clr-table', 'table-row-actions']">example</a>. This property
-                intended to be used in conjuction with
+                <img style="height:100px;" align="right" src="assets/images/row-action.png" /> Define list of actions
+                associated with each row. Each row will have additional dropdown button component with provided actions.
+                Instead of static array you could provide controller function which will take currently generated row
+                and return array of the actions for each particular row, if this function will return empty array
+                dropdown button won't be shown for the row.. This property intended to be used in conjuction with
                 <a [routerLink]="['table']" fragment="rowAction">rowAction event</a>
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-row-actions?file=src/app/planets-table.component.ts"
+                    >Example
+                </hlc-sbx-example-link-button>
             </td>
         </tr>
         <tr>
             <td class="left">details (optional)</td>
             <td class="left"><a [routerLink]="['.']" (click)="Table_Details.scrollIntoView()">TableDetails</a></td>
             <td class="left">
-                <img style="height:100px;" src="assets/images/row-expand.png" /> This property provides interafce to populate
-                children rows of the parent row. See <a [routerLink]="['/clr-table', 'table-expand-row']">example</a>.
+                <img style="height:100px;" align="right" src="assets/images/row-expand.png" /> This property provides
+                interafce to populate children rows of the parent row.
+                <hlc-sbx-example-link-button
+                    title="Example (Columns)"
+                    href="https://stackblitz.com/edit/hlc-clr-list-expand-row?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+                <hlc-sbx-example-link-button
+                    title="Example (Cards)"
+                    href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
             </td>
         </tr>
         <tr>
@@ -55,12 +79,11 @@
             <td class="left">string | Table.SortColumn</td>
             <td class="left">
                 Default sort column id (ascending order). With Table.SortColumn you could define not only column but
-                also order.
-                <pre>
-                    <code hlc-code-highlight="ts">
-                        {{sort_column}}
-                    </code>
-                </pre>
+                also order. <code hlc-code-highlight="ts"> {{ sort_column }} </code>
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-sort?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
             </td>
         </tr>
     </tbody>
@@ -364,7 +387,3 @@ For this
         </tr>
     </tbody>
 </table>
-
-<h2>Example</h2>
-<iframe width="100%" height="100%" src="https://stackblitz.com/edit/hlc-clr-list-basic?embed=1&file=src/app/table.component.ts">
-</iframe>

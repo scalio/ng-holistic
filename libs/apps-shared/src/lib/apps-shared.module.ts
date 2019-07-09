@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HlcCodeHighlightDirective, HlcCodeHighlightModule } from './code-highlight.directive';
 import { HlcCodeRenderExampleComponent } from './code-render-example/code-render-example.component';
 import { AppConfigModule } from './config-modal/config-modal.module';
+import { HlcSbxExampleLinkButtonModule } from './example-link-button/example-link-button.module';
 import { HlcFormValueModule } from './form-value/form-value.module';
 import { HlcPrettyJsonModule } from './pretty-json.pipe';
 import { HlcSbxRenderDefCodeModule } from './render-def-code-tabs/render-def-code-example.module';
@@ -14,7 +15,8 @@ import { HlcSbxRenderDefCodeModule } from './render-def-code-tabs/render-def-cod
         HlcSbxRenderDefCodeModule,
         HlcCodeHighlightModule,
         HlcPrettyJsonModule,
-        HlcFormValueModule
+        HlcFormValueModule,
+        HlcSbxExampleLinkButtonModule
     ],
     declarations: [HlcCodeRenderExampleComponent],
     exports: [
@@ -23,7 +25,8 @@ import { HlcSbxRenderDefCodeModule } from './render-def-code-tabs/render-def-cod
         HlcSbxRenderDefCodeModule,
         HlcCodeHighlightModule,
         HlcPrettyJsonModule,
-        HlcFormValueModule
+        HlcFormValueModule,
+        HlcSbxExampleLinkButtonModule
     ]
 })
 export class AppsSharedModule {}

@@ -5,7 +5,7 @@
 <p>Common front end application usually has 3 different model types:</p>
 <ul>
     <li>
-        Data transfer models - objects what used to pass / recieved data form / to server. These models is not
+        Data transfer models - objects what used to pass / received data form / to server. These models is not
         controlled by front end application and should be mapped to application domain model as soon these data recieved
         from http request.
     </li>
@@ -15,15 +15,22 @@
 
 <p>
     The data transfer models must be separated from application domain models since in case of any breaking changes on
-    bakend API we could jsut change mappings from dto to application models and no changes will be propagated to the
+    backend API we could jsut change mappings from dto to application models and no changes will be propagated to the
     rest of the application.
 </p>
 
 <p>
     The application models must be separated from component models since we want to manipulate data inside the
-    application in most convinient way and also we don't always control UI component models. For example we would have
+    application in most convenient way and also we don't always control UI component models. For example we would have
     our data for lists normalized inside the application and then display them in UI list component as denormalized one.
 </p>
+
+<hlc-sbx-example-link-button
+    href="https://stackblitz.com/edit/hlc-clr-list-data-provider?file=src/app/app.module.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
+
 <pre>
     <code hlc-code-highlight="ts">
         {{interface_definition}}
@@ -32,11 +39,11 @@
 
 <p>
     As suggested above we should always convert dto models to application models as soon as we get them from http
-    requests, so dto models is no concerns further apllication implementation.
+    requests, so dto models is no concerns further application implementation.
 </p>
 
 <p>
-    The TableDataProviderConfig provides a confiuralbe way to convert application models to <a>hlc-clr-table</a> and
+    The TableDataProviderConfig provides a configurable way to convert application models to <a>hlc-clr-table</a> and
     <a>hlc-clr-list</a> UI component models.
 </p>
 
@@ -86,6 +93,3 @@ The appllication model used to describe list requests inside the application.
     List / table components will render UI based on the data from this structure.
 </p>
 
-<h2>Example</h2>
-<iframe width="100%" height="100%" src="https://stackblitz.com/edit/hlc-clr-list-data-provider?embed=1&file=src/app/app.module.ts">
-</iframe>

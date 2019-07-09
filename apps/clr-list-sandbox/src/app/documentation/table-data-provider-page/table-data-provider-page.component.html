@@ -5,6 +5,12 @@
     <a>load</a> method.
 </p>
 
+<hlc-sbx-example-link-button
+    href="https://stackblitz.com/edit/hlc-clr-list-data-provider-simple?file=src/app/planets-table.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
+
 <h2>Load</h2>
 
 <pre>
@@ -26,7 +32,3 @@ which implements this interface.  See <a [routerLink]="['..', 'table-data-provid
 <h3>Return result</h3>
 Observable stream which should return loaded data, the shape of these data is not explicitly defined here,
 how they will be mapped to list component models is defined in <a [routerLink]="['..', 'table-data-provider-config']" fragment="map_result">TableDataProviderConfig.mapResult method</a>.
-
-<h2>Example</h2>
-<iframe width="100%" height="100%" src="https://stackblitz.com/edit/hlc-clr-list-data-provider-simple?embed=1&file=src/app/planets-table.component.ts">
-</iframe>
