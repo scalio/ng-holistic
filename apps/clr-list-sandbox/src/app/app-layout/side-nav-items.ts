@@ -10,16 +10,28 @@ export default [
                 path: ['/docs', 'table']
             },
             {
-                title: 'Table Data Provider',
-                path: ['/docs', 'table-data-provider']
+                title: 'Data Provider',
+                path: ['/docs', 'data-provider']
             },
             {
-                title: 'Table Data Provider Config',
-                path: ['/docs', 'table-data-provider-config']
+                title: 'Data Provider Config',
+                path: ['/docs', 'data-provider-config']
             },
             {
                 title: 'Table Definition',
                 path: ['/docs', 'table-definition']
+            },
+            {
+                title: 'Column Definition',
+                path: ['/docs', 'column-definition']
+            },
+            {
+                title: 'Custom Column Definition',
+                path: ['/docs', 'custom-column-definition']
+            },
+            {
+                title: 'Configure Column Definition Map',
+                path: ['/docs', 'configure-column-definition-map']
             }
         ]
     },

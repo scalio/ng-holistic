@@ -1,0 +1,69 @@
+<h2 id="Table_Column" #Table_Column>Table.Column</h2>
+
+<hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/table.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id</td>
+            <td class="left">string</td>
+            <td class="left">
+                Column identifier, when row provided to the table from json object, value from the object[id] property
+                will be provided for this column.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">title</td>
+            <td class="left">string</td>
+            <td class="left">Column title</td>
+        </tr>
+        <tr>
+            <td class="left">sort (optional)</td>
+            <td class="left">string | boolean</td>
+            <td class="left">
+                Define column as sortable. When column sortable it will have underline under the title to flag it as
+                sortable. When user click this column, table will be reloaded with appropriate sort parameter. If this
+                property is `true` then sort parameter will have value of column's `id` property. If this property is
+                `string` then sort parameter will have exact this value.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">cls (optional)</td>
+            <td class="left">string</td>
+            <td class="left">Class to apply on content of the column value.</td>
+        </tr>
+        <tr>
+            <td class="left">whitespaceWrap (optional)</td>
+            <td class="left">boolean</td>
+            <td class="left">Allow wrap whitespace on cell content, off by default.</td>
+        </tr>
+        <tr>
+            <td class="left">alignContent (optional)</td>
+            <td class="left">'start' | 'center' | 'end'</td>
+            <td class="left">How to align text content inside the cell.</td>
+        </tr>
+        <tr>
+            <td class="left">format (optional)</td>
+            <td class="left">(val: any, row: any) => string | ColumnFormat</td>
+            <td class="left">
+                Returns mapped value given original value and the row. You could return `ColumnFormat` which contains
+                not only mapped value itself but also class applied to the cell content.
+                <pre>
+                    <code hlc-code-highlight="ts">
+                        {{column_format}}
+                    </code>
+                </pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

@@ -1,0 +1,36 @@
+<h2 id="Table_CustomColumn">Table.CustomColumn</h2>
+<hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-custom-column?embed=1&file=src/app/table.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td class="left">customCell</td>
+            <td class="left">true</td>
+            <td class="left">
+                Flag column as custom. You must provide for this column some html template.
+                <p>First define colum</p>
+                <code hlc-code-highlight="ts">
+                    {{custom_column}}
+                </code>
+                <p>And then in template</p>
+                <code hlc-code-highlight="html">
+                    {{custom_column_template}}
+                </code>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
