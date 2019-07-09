@@ -1,0 +1,11 @@
+// clr-input-border
+.clr-input-border {
+    padding: 0 $clr-button-horizontal-padding;
+    border: $clr-default-borderwidth solid $clr-form-field-border-color;
+
+    &:not([readonly]):not([disabled]) {
+        &:focus {
+            @include include-outline-style-form-fields($clr-outline-color, $clr-outline-blur, $clr-outline-spread);
+        }
+    }
+}

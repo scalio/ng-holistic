@@ -14,7 +14,7 @@ import { routes as docsRoutes } from './documentation/documentation.routing.modu
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/clr-table/table',
+        redirectTo: '/docs/table',
         pathMatch: 'full'
     },
     {

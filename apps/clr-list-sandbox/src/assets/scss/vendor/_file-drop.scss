@@ -1,0 +1,68 @@
+// file-drop
+.file-drop {
+    background: $gray-lighter;
+    border: dashed 1px $gray-lighter;
+
+    input[type = 'file'] {
+        display: none;
+    }
+}
+
+// file-drop-over
+.file-drop.over {
+    background: $gray-lighter !important;
+    border-color: $gray-dark-midtone;
+}
+
+// file-drop selected
+.file-drop__selected {
+    margin-bottom: ($clr-grid-gutter-width / 4);
+}
+
+// file-drop content
+.content {
+    .file-drop & {
+        flex-direction: column;
+        height: auto !important;
+        padding: $clr-grid-gutter-width 0;
+        text-align: center;
+    }
+}
+
+// file-drop title
+.file-drop__title {
+    margin-bottom: 0;
+}
+
+// file-drop separator
+.file-drop__separator {
+    position: relative;
+    margin: ($clr-grid-gutter-width / 4) auto;
+    padding-bottom: ($clr-grid-gutter-width / 4);
+    color: $clr-h5-color;
+    font-weight: 500;
+    font-size: $clr-typography-smalltext;
+
+    span {
+        position: relative;
+        z-index: map-get($clr-layers, alert);
+        padding: 0 ($clr-grid-gutter-width / 3);
+
+        &:before,
+        &:after {
+            @include layer(10px, auto, auto, auto);
+            display: block;
+            width: ($clr-grid-gutter-width / 1.5);
+            border-top: 1px solid $clr-h5-color;
+            content: '';
+        }
+
+        &:before {
+            right: 100%;
+        }
+
+        &:after {
+            left: 100%;
+        }
+    }
+}

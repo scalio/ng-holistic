@@ -1,0 +1,113 @@
+// input-group
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap; // For form validation feedback
+    align-items: stretch;
+    width: 100%;
+
+    .clr-input {
+        position: relative; // For focus state's z-index
+        flex: 1 1 auto;
+        width: 1%;
+        padding: 0 $clr-forms-baseline;
+
+        &:focus {
+            z-index: 3;
+        }
+    }
+}
+
+// input-group-prepend & append
+.input-group-prepend,
+.input-group-append {
+    display: flex;
+
+    .btn {
+        position: relative;
+        z-index: 2;
+    }
+
+    .btn + .btn,
+    .btn + .input-group-text,
+    .input-group-text + .input-group-text,
+    .input-group-text + .btn {
+        margin-left: -$clr-global-borderwidth;
+    }
+}
+
+// input-group-prepend
+.input-group-prepend {
+    margin-right: -$clr-global-borderwidth;
+}
+
+// input-group-append
+.input-group-append {
+    margin-left: -$clr-global-borderwidth;
+}
+
+// input-group-text
+.input-group-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0 $clr-button-horizontal-padding;
+    color: $clr-forms-label-color;
+    font-weight: 400;
+    font-size: $clr-typography-regulartext;
+    white-space: nowrap;
+    text-align: center;
+    background-color: $clr-forms-select-hover-background;
+}
+
+/*
+ * Input Group with borders
+ */
+// input-group-borders
+.input-group-borders {
+    .clr-input {
+        &:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+}
+
+// .input-group-text-borders
+.input-group-text {
+    .input-group-borders & {
+        border: $clr-global-borderwidth solid $clr-forms-border-color;
+        border-radius: $clr-global-borderradius;
+    }
+}
+
+// rounded corners on left
+.input-group-borders > {
+    .input-group-prepend > .btn,
+    .input-group-prepend > .input-group-text,
+    .input-group-append:not(:last-child) > .btn,
+    .input-group-append:not(:last-child) > .input-group-text,
+    .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+    .input-group-append:last-child > .input-group-text:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+// rounded corners on right
+.input-group-borders > {
+    .input-group-append > .btn,
+    .input-group-append > .input-group-text,
+    .input-group-prepend:not(:first-child) > .btn,
+    .input-group-prepend:not(:first-child) > .input-group-text,
+    .input-group-prepend:first-child > .btn:not(:first-child),
+    .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

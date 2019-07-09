@@ -1,0 +1,35 @@
+// clr-control-label
+.clr-control-label {
+    padding-top: ($clr-button-height - $clr-forms-baseline * 3) / 2;
+    padding-bottom: ($clr-button-height - $clr-forms-baseline * 3) / 2;
+    overflow: hidden;
+    font-weight: 600;
+    font-size: $clr-typography-mediumtext;
+    text-overflow: ellipsis;
+}
+
+// clr-control-label-compact
+.clr-control-label {
+    .clr-form-compact & {
+        margin-top: 0;
+    }
+}
+
+/*
+ * Labels Sizing
+ */
+// clr-control-label-sm
+.clr-control-label {
+    .clr-form-control-sm & {
+        padding-top: ($clr-button-height-sm - $clr-forms-baseline * 3) / 2;
+        padding-bottom: ($clr-button-height-sm - $clr-forms-baseline * 3) / 2;
+    }
+}
+
+// clr-control-label-lg
+.clr-control-label {
+    .clr-form-control-lg & {
+        padding-top: ($clr-button-height-lg - $clr-forms-baseline * 3) / 2;
+        padding-bottom: ($clr-button-height-lg - $clr-forms-baseline * 3) / 2;
+    }
+}

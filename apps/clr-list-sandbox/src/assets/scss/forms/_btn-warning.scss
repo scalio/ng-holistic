@@ -1,0 +1,46 @@
+$clr-warning-button-properties-map: (
+    warning:
+    (
+        background-color: $clr-btn-warning-bg-color,
+        border-color: $clr-btn-warning-bg-color,
+        color: $clr-btn-warning-color,
+        hover-background-color: $clr-btn-warning-hover-bg-color,
+        hover-color: $clr-btn-warning-hover-color,
+        active-box-shadow-color: $clr-btn-warning-box-shadow-color,
+        active-box-shadow-width-top: 2px,
+        disabled-color: $clr-btn-warning-disabled-color,
+        disabled-background-color: $clr-btn-warning-disabled-bg-color,
+        disabled-border-color: $clr-btn-warning-disabled-bg-color,
+        checked-background-color: $clr-btn-warning-checked-bg-color,
+        checked-color: $clr-btn-warning-color
+    ),
+    warning-outline:
+    (
+        background-color: transparent,
+        border-color: $clr-btn-warning-outline-border-color,
+        color: $clr-btn-warning-outline-color,
+        hover-background-color: $clr-btn-warning-outline-hover-bg-color,
+        hover-color: $clr-btn-warning-outline-hover-color,
+        active-box-shadow-color: $clr-btn-warning-outline-box-shadow-color,
+        active-box-shadow-width-top: 1px,
+        disabled-color: $clr-btn-warning-outline-disabled-color,
+        disabled-background-color: transparent,
+        disabled-border-color: $clr-btn-warning-outline-disabled-color,
+        checked-background-color: $clr-btn-warning-outline-checked-bg-color,
+        checked-color: $clr-btn-warning-outline-checked-color
+    ),
+);
+
+// btn-warning
+.btn.btn-warning,
+.btn-warning .btn {
+    @include populateButtonProperties(warning, $clr-warning-button-properties-map);
+}
+
+// btn-warning-outline
+.btn.btn-warning-outline,
+.btn.btn-outline-warning,
+.btn-warning-outline .btn,
+.btn-outline-warning .btn {
+    @include populateButtonProperties(warning-outline, $clr-warning-button-properties-map);
+}

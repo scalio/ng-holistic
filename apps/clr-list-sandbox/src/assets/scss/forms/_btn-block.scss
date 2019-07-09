@@ -1,0 +1,6 @@
+// btn-block
+.btn-block {
+    & + & {
+        margin-top: 0.5rem;
+    }
+}

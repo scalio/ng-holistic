@@ -1,0 +1,21 @@
+// date-container
+.date-container {
+    margin-right: 10px;
+}
+
+// datepicker
+.datepicker {
+    &:focus {
+        outline: 0 none;
+    }
+}
+
+// date-input
+.date-input {
+    @extend .clr-input;
+}
+
+// calendar-btn
+.calendar-btn {
+    font-weight: 400;
+}

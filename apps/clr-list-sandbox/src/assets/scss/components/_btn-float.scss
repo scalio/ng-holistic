@@ -1,0 +1,22 @@
+// btn-float
+.btn-float {
+    height: auto;
+    padding: 0;
+    line-height: 1;
+    text-align: center;
+    border: none;
+    border-radius: $clr-radius-round;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+        @include layer-fixed(auto, 15px, 15px, auto, 1);
+        font-size: 2rem;
+        box-shadow: 0 1px 15px rgba($gray-dark, 0.175);
+    }
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+        font-size: 1.25rem;
+    }
+
+    .svg-inline--fa {
+        vertical-align: top;
+    }
+}

@@ -1,0 +1,79 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+@import '~@angular/cdk/a11y-prebuilt.css';
+
+
+// Clarity
+//
+// pre variable and theme dependencies
+@import 'maps/layers'; // import here to overwrite
+@import '~@clr/ui/src/utils/dependencies.clarity';
+
+// custom variables
+@import 'variables/colors';
+@import 'variables/clarity';
+
+// Bootstrap's dependencies
+@import '~@clr/ui/src/utils/bootstrap/media';
+@import '~@clr/ui/src/utils/bootstrap/utilities';
+@import '~@clr/ui/src/utils/bootstrap/images';
+@import '~@clr/ui/src/utils/bootstrap/list-group';
+@import '~@clr/ui/src/utils/bootstrap/close';
+@import '~@clr/ui/src/utils/bootstrap/responsive-embed';
+
+// scss maps
+@import '~@clr/ui/src/utils/maps.clarity';
+@import 'maps/components';
+@import 'maps/typography';
+
+// clarity components
+@import '~@clr/ui/src/utils/reboot.clarity';
+@import '~@clr/ui/src/popover/common/popover.clarity';
+@import '~@clr/ui/src/image/icons.clarity';
+@import '~@clr/ui/src/image/images.clarity';
+@import '~@clr/ui/src/typography/typography.clarity';
+@import '~@clr/ui/src/typography/code.clarity';
+@import '~@clr/ui/src/button/buttons.clarity';
+@import '~@clr/ui/src/button/button-group/button-group.clarity';
+@import '~@clr/ui/src/utils/close.clarity';
+@import '~@clr/ui/src/emphasis/alert/alert.clarity';
+@import '~@clr/ui/src/layout/card.clarity';
+@import '~@clr/ui/src/popover/dropdown/dropdown.clarity';
+@import '~@clr/ui/src/emphasis/labels.clarity';
+@import '~@clr/ui/src/layout/grid/grid.clarity';
+@import '~@clr/ui/src/typography/lists.clarity';
+@import '~@clr/ui/src/layout/login.clarity';
+@import '~@clr/ui/src/layout/main-container/layout.clarity';
+@import '~@clr/ui/src/modal/modal.clarity';
+@import '~@clr/ui/src/layout/nav/header.clarity';
+@import '~@clr/ui/src/layout/nav/nav.clarity';
+@import '~@clr/ui/src/layout/nav/subnav.clarity';
+@import '~@clr/ui/src/layout/nav/sidenav.clarity';
+@import '~@clr/ui/src/layout/vertical-nav/vertical-nav.clarity';
+@import '~@clr/ui/src/layout/nav/responsive-nav.clarity';
+@import '~@clr/ui/src/progress/progress-bars/progress-bars.clarity';
+@import '~@clr/ui/src/progress/spinner/spinner.clarity';
+@import '~@clr/ui/src/data/tables.clarity';
+@import '~@clr/ui/src/popover/tooltip/tooltips.clarity';
+@import '~@clr/ui/src/forms/styles/mixins.forms';
+@import '~@clr/ui/src/forms/styles/containers.clarity';
+@import '~@clr/ui/src/forms/styles/form.clarity';
+@import '~@clr/ui/src/forms/styles/checkbox.clarity';
+@import '~@clr/ui/src/forms/styles/file.clarity';
+@import '~@clr/ui/src/forms/styles/input.clarity';
+@import '~@clr/ui/src/forms/styles/input-group.clarity';
+@import '~@clr/ui/src/forms/styles/radio.clarity';
+@import '~@clr/ui/src/forms/styles/select.clarity';
+@import '~@clr/ui/src/forms/styles/textarea.clarity';
+@import '~@clr/ui/src/forms/styles/toggles.clarity';
+@import '~@clr/ui/src/forms/datepicker/datepicker.clarity';
+@import '~@clr/ui/src/data/stack-view/stack-view.clarity';
+@import '~@clr/ui/src/data/tree-view/tree-view.clarity';
+@import '~@clr/ui/src/data/datagrid/datagrid.clarity';
+@import '~@clr/ui/src/utils/animations/animations.clarity';
+@import '~@clr/ui/src/utils/focus-trap/focus-trap.clarity';
+@import '~@clr/ui/src/layout/tabs/tabs.clarity';
+@import '~@clr/ui/src/wizard/wizard.clarity';
+@import '~@clr/ui/src/typography/fonts.clarity';
+@import '~@clr/ui/src/popover/signpost/signposts.clarity';
+@import '~@clr/ui/src/utils/drag-and-drop/drag-and-drop.clarity';
+

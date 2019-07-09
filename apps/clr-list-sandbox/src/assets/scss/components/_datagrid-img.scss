@@ -1,0 +1,12 @@
+// datagrid-img
+.datagrid-img {
+    display: block;
+    max-width: 70px;
+    max-height: 40px;
+    overflow: hidden;
+
+    > img {
+        display: block;
+        width: 100%;
+    }
+}

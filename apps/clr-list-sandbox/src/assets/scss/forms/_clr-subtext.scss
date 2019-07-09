@@ -1,0 +1,8 @@
+// clr-subtext
+.clr-subtext {
+    .clr-form-compact & {
+        margin-top: 0;
+        padding-top: ($clr-button-height - $clr-forms-baseline * 2) / 2;
+        padding-bottom: ($clr-button-height - $clr-forms-baseline * 2) / 2;
+    }
+}

@@ -33,7 +33,7 @@
                 >[] | ((row: Table.Row) => Table.RowAction[])
             </td>
             <td class="left">
-                <img style="height:100px;" src="assets/row-action.png" /> Define list of actions associated with each
+                <img style="height:100px;" src="assets/images/row-action.png" /> Define list of actions associated with each
                 row. Each row will have additional dropdown button component with provided actions. Instead of static
                 array you could provide controller function which will take currently generated row and return array of
                 the actions for each particular row, if this function will return empty array dropdown button won't be
@@ -46,7 +46,7 @@
             <td class="left">details (optional)</td>
             <td class="left"><a [routerLink]="['.']" (click)="Table_Details.scrollIntoView()">TableDetails</a></td>
             <td class="left">
-                <img style="height:100px;" src="assets/row-expand.png" /> This property provides interafce to populate
+                <img style="height:100px;" src="assets/images/row-expand.png" /> This property provides interafce to populate
                 children rows of the parent row. See <a [routerLink]="['/clr-table', 'table-expand-row']">example</a>.
             </td>
         </tr>

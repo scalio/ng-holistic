@@ -1,0 +1,44 @@
+// page-header
+.page-header {
+    max-width: 1100px;
+    margin: auto;
+    padding: 2rem 1rem 1rem;
+}
+
+// page-header wrap
+.page-header__wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+// page-header title
+.page-header__title {
+    flex-grow: 1;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+// page-header state
+.page-header__state {
+    flex-shrink: 0;
+    min-width: 170px;
+    margin-right: 1rem;
+}
+
+// page-header switch
+.page-header__switch {
+    margin-top: 0.75rem;
+    text-align: right;
+}
+
+// page-header search
+.page-header__search {
+    margin-top: 0.75rem;
+
+    .clr-form-control {
+        margin: 0;
+    }
+}

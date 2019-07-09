@@ -1,0 +1,23 @@
+// clr-checkbox
+.clr-checkbox-wrapper {
+    input[type = 'checkbox'] {
+        & + label:before,
+        & + label:after {
+            top: ($clr-button-height - $clr-forms-baseline * 3) / 2;
+            transition: all 0.3s ease 0s;
+        }
+
+        &:focus + label:before {
+            @include include-outline-style-form-fields($clr-outline-color, $clr-outline-blur, $clr-outline-spread);
+        }
+    }
+}
+
+
+// checkbox label
+.clr-control-label {
+    .clr-checkbox-wrapper & {
+        font-size: $clr-typography-regulartext;
+        line-height: $clr-forms-baseline * 3;
+    }
+}

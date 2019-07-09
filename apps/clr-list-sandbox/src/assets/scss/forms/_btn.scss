@@ -1,0 +1,26 @@
+// button
+button:focus {outline: 0!important;}
+
+// btn
+.btn {
+    position: relative;
+    font-size: $clr-typography-regulartext;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    outline: 0 none !important;
+    transition: all 0.3s ease 0s;
+
+    &:not(.btn-block) + & {
+        margin-left: 0.5rem;
+    }
+    // disabled button
+    &.disabled,
+    &:disabled {
+        opacity: $clr-forms-disabled-opacity !important;
+    }
+}
+
+// btn-sm
+.btn.btn-sm {
+    font-size: $clr-typography-xsmalltext;
+}

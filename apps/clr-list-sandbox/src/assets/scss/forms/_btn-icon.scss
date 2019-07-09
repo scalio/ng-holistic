@@ -1,0 +1,26 @@
+// btn-icon
+.btn-icon,
+.btn-icon > .btn {
+    font-size: $clr-typography-mediumtext;
+
+    .svg-inline--fa {
+        color: inherit;
+    }
+}
+
+/*
+ * Buttons Sizing
+ */
+// btn-icon-sm
+.btn-icon {
+    &.btn-sm:not(.btn-link) & {
+        font-size: $clr-typography-xsmalltext;
+    }
+}
+
+// btn-icon-lg
+.btn-icon {
+    &.btn-lg:not(.btn-link) & {
+        font-size: $clr-h3-size;
+    }
+}

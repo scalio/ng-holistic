@@ -1,0 +1,6 @@
+// btn-group
+.btn-group {
+    .btn:not(.btn-block) + .btn {
+        margin: 0;
+    }
+}

@@ -1,0 +1,18 @@
+// label
+.label,
+a.label {
+    height: 1rem;
+    font-size: $clr-typography-xsmalltext;
+
+    clr-icon {
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-right: 4px;
+        transform: translate3d(0rem, -1 * $clr-rem-1px, 0);
+    }
+}
+
+// clickable label
+.label.clickable {
+    cursor: pointer;
+}

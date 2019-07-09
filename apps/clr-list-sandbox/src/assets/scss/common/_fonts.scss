@@ -1,0 +1,130 @@
+//== Avenir Next LT Pro Font
+@font-face {
+    font-weight: 100;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Thin'),
+        local('AvenirNextLTProThin'),
+        url('/assets/fonts/AvenirNextLTPro-Thin.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Thin.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Thin.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Thin.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Thin.svg#AvenirNextLTPro-Thin') format('svg');
+}
+
+@font-face {
+    font-weight: 200;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Ultralight'),
+        local('AvenirNextLTProUltralight'),
+        url('/assets/fonts/AvenirNextLTPro-Ultralight.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Ultralight.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Ultralight.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Ultralight.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Ultralight.svg#AvenirNextLTPro-Ultralight') format('svg');
+}
+
+@font-face {
+    font-weight: 300;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Light'),
+        local('AvenirNextLTProLight'),
+        url('/assets/fonts/AvenirNextLTPro-Light.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Light.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Light.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Light.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Light.svg#AvenirNextLTPro-Light') format('svg');
+}
+
+@font-face {
+    font-weight: 400;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Regular'),
+        local('AvenirNextLTProRegular'),
+        url('/assets/fonts/AvenirNextLTPro-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Regular.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Regular.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Regular.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Regular.svg#AvenirNextLTPro-Regular') format('svg');
+}
+
+@font-face {
+    font-weight: 400;
+    font-family: 'Avenir Next LT Pro';
+    font-style: italic;
+    src: local('Avenir Next LT Pro Italic'),
+        local('AvenirNextLTProItalic'),
+        url('/assets/fonts/AvenirNextLTPro-Italic.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Italic.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Italic.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Italic.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Italic.svg#AvenirNextLTPro-Italic') format('svg');
+}
+
+@font-face {
+    font-weight: 500;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Medium'),
+        local('AvenirNextLTProMedium'),
+        url('/assets/fonts/AvenirNextLTPro-Medium.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Medium.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Medium.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Medium.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Medium.svg#AvenirNextLTPro-Medium') format('svg');
+}
+
+@font-face {
+    font-weight: 500;
+    font-family: 'Avenir Next LT Pro';
+    font-style: italic;
+    src: local('Avenir Next LT Pro Medium Italic'),
+        local('AvenirNextLTProMediumItalic'),
+        url('/assets/fonts/AvenirNextLTPro-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-MediumItalic.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-MediumItalic.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-MediumItalic.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-MediumItalic.svg#AvenirNextLTPro-MediumItalic') format('svg');
+}
+
+@font-face {
+    font-weight: 600;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Demi'),
+        local('AvenirNextLTProDemi'),
+        url('/assets/fonts/AvenirNextLTPro-Demi.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Demi.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Demi.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Demi.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Demi.svg#AvenirNextLTPro-Demi') format('svg');
+}
+
+@font-face {
+    font-weight: 700;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Bold'),
+        local('AvenirNextLTProBold'),
+        url('/assets/fonts/AvenirNextLTPro-Bold.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Bold.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Bold.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Bold.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Bold.svg#AvenirNextLTPro-Bold') format('svg');
+}
+
+@font-face {
+    font-weight: 800;
+    font-family: 'Avenir Next LT Pro';
+    font-style: normal;
+    src: local('Avenir Next LT Pro Heavy'),
+        local('AvenirNextLTProHeavy'),
+        url('/assets/fonts/AvenirNextLTPro-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/AvenirNextLTPro-Heavy.woff2') format('woff2'),
+        url('/assets/fonts/AvenirNextLTPro-Heavy.woff') format('woff'),
+        url('/assets/fonts/AvenirNextLTPro-Heavy.ttf') format('truetype'),
+        url('/assets/fonts/AvenirNextLTPro-Heavy.svg#AvenirNextLTPro-Heavy') format('svg');
+}

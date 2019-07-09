@@ -35,7 +35,7 @@
             <td class="left">aggregateRow</td>
             <td class="left"><a [routerLink]="['.']" fragment="table_ggregate_row">Table.AggregateRow</a></td>
             <td class="left">
-                <img style="height:100px;" src="assets/aggregate-row.png" /> Display row with aggregated data from other
+                <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with aggregated data from other
                 rows. Data will be aggregated only for visible rows.
                 <br>
                 <a href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts" target="_blank">Example</a>
@@ -50,7 +50,7 @@
             <td class="left">rowSelectable</td>
             <td class="left">boolean (default false)</td>
             <td class="left">
-                <img style="height:100px;" src="assets/active-row.png" /> If this property set to true, then when some
+                <img align="right" style="height:100px;" src="assets/images/active-row.png" /> If this property set to true, then when some
                 row clicked it will be highlighted as active. Usefull when open some item to display / edit in modal or
                 sidepanel, this way it is clear for user which item from table is shown.
             </td>
@@ -67,11 +67,11 @@
             <td class="left">selectedRows</td>
             <td class="left">(number | string)[] (default undefined)</td>
             <td class="left">
-                <img style="height:100px;" src="assets/select-rows.png" /> The list of the selected rows ids. If this
+                <img align="right"  style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected rows ids. If this
                 value is undefined UI won't allow user select rows in the list, if this value is array (even empty), UI
                 will display checkboxes which will allow user to select rows in the list. See related
-                <a [routerLink]="['.']" fragment="selected_rows_changed">selectedRowsChanged event</a>. See
-                <a [routerLink]="['clr-table', 'table-select-rows']">selected rows example</a>.
+                <a [routerLink]="['.']" fragment="selected_rows_changed">selectedRowsChanged event</a>. <br>
+                <a href="https://stackblitz.com/edit/hlc-clr-list-selected-rows" target="_blank">Example</a>.
             </td>
         </tr>
     </tbody>
@@ -93,8 +93,8 @@
             <td class="left">
                 Will emit event when user click some item in row actions list. See related
                 <a [routerLink]="['..', 'table-definition']" fragment="row_actions_property">
-                    rowActions property on table defintion object </a
-                >.
+                    rowActions property on table defintion object</a>.
+                <a href="https://stackblitz.com/edit/hlc-clr-list-row-actions" target="_blank">Example</a>.
             </td>
         </tr>
         <tr>
@@ -108,6 +108,7 @@
             <td class="left">
                 Will emit event when user dragged and dropped row. See related
                 <a [routerLink]="['.']" segment="drag_enabled_property">dragEnabled property</a>.
+                <a href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts" target="_blank">Example</a>.
             </td>
         </tr>
     </tbody>

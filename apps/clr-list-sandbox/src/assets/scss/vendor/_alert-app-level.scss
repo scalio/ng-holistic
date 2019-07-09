@@ -1,0 +1,5 @@
+// alert-app-level
+.alert-app-level {
+    @include layer-fixed(0, 0, auto, 0, map-get($clr-layers, alert));
+    margin: 0;
+}

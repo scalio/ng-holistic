@@ -1,0 +1,17 @@
+$clr-large-button-appearance-map: (
+    large:
+    (
+        line-height: calc(#{$clr-button-height-lg} - 1px),
+        letter-spacing: 0.05em,
+        font-size: $clr-typography-largetext,
+        font-weight: 500,
+        height: $clr-button-height-lg,
+        padding: $clr-button-padding
+    )
+);
+
+// btn-lg
+.btn.btn-lg,
+.btn-lg .btn {
+    @include clr-getStylesFromMap($clr-large-button-appearance-map, large);
+}

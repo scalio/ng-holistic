@@ -1,0 +1,86 @@
+$clr-flat-button-properties-map: (
+    default-flat:
+    (
+        background-color: transparent,
+        border-color: transparent,
+        color: $gray-darkest,
+        hover-background-color: transparent,
+        hover-color: $black,
+        active-box-shadow-color: transparent,
+        active-box-shadow-width-top: 0,
+        disabled-background-color: transparent,
+        disabled-border-color: transparent,
+        disabled-color: $clr-form-disabled-color,
+        checked-background-color: transparent,
+        checked-color: $black
+    ),
+    success-flat:
+    (
+        background-color: transparent,
+        border-color: transparent,
+        color: $clr-btn-success-outline-color,
+        hover-background-color: transparent,
+        hover-color: $clr-btn-success-outline-hover-color,
+        active-box-shadow-color: transparent,
+        active-box-shadow-width-top: 0,
+        disabled-background-color: transparent,
+        disabled-border-color: transparent,
+        disabled-color: $clr-btn-success-outline-disabled-color,
+        checked-background-color: $clr-btn-success-outline-border-color,
+        checked-color: $clr-btn-success-outline-checked-color
+    ),
+    danger-flat:
+    (
+        background-color: transparent,
+        border-color: transparent,
+        color: $clr-btn-danger-outline-color,
+        hover-background-color: transparent,
+        hover-color: $clr-btn-danger-outline-hover-color,
+        active-box-shadow-color: transparent,
+        active-box-shadow-width-top: 0,
+        disabled-background-color: transparent,
+        disabled-border-color: transparent,
+        disabled-color: $clr-btn-danger-outline-disabled-color,
+        checked-background-color: $clr-btn-danger-outline-checked-bg-color,
+        checked-color: $clr-btn-danger-outline-checked-color
+    ),
+    warning-flat:
+    (
+        background-color: transparent,
+        border-color: transparent,
+        color: $clr-btn-warning-outline-color,
+        hover-background-color: transparent,
+        hover-color: $clr-btn-warning-outline-hover-color,
+        active-box-shadow-color: transparent,
+        active-box-shadow-width-top: 0,
+        disabled-background-color: transparent,
+        disabled-border-color: transparent,
+        disabled-color: $clr-btn-warning-outline-disabled-color,
+        checked-background-color: $clr-btn-warning-outline-checked-bg-color,
+        checked-color: $clr-btn-warning-outline-checked-color
+    ),
+);
+
+// btn-default-flat
+.btn-default-flat,
+.btn-flat-default {
+    @include populateButtonProperties(default-flat, $clr-flat-button-properties-map);
+}
+
+// btn-success-flat
+.btn-success-flat,
+.btn-flat-success {
+    @include populateButtonProperties(success-flat, $clr-flat-button-properties-map);
+}
+
+// btn-danger-flat
+.btn-danger-flat,
+.btn-flat-danger {
+    @include populateButtonProperties(danger-flat, $clr-flat-button-properties-map);
+}
+
+// btn-warning-flat
+.btn-warning-flat,
+.btn-flat-warning {
+    @include populateButtonProperties(warning-flat, $clr-flat-button-properties-map);
+}

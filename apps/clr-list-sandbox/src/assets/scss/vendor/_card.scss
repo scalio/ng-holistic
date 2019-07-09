@@ -1,0 +1,28 @@
+// card
+.card {
+    margin-top: 0;
+    margin-bottom: $clr-grid-gutter-width;
+}
+
+// clickable card
+.card {
+    &.clickable {
+        transition: all 0.3s ease 0s;
+
+        &:hover {
+            transform: translateY(0);
+            transition: all 0.3s ease 0s;
+        }
+    }
+}
+
+// card-media-image
+.card-media-image {
+    .card-media-block & {
+        width: 5rem;
+        max-width: 5rem;
+        height: 5rem;
+        max-height: 5rem;
+        border-radius: $clr-global-borderradius;
+    }
+}

@@ -1,0 +1,19 @@
+// clr-radio
+.clr-radio-wrapper {
+    input[type = 'radio'] {
+        & + label:before,
+        & + label:after {
+            top: ($clr-button-height - $clr-forms-baseline * 3) / 2;
+            transition: all 0.3s ease 0s;
+        }
+    }
+}
+
+
+// checkbox label
+.clr-control-label {
+    .clr-radio-wrapper & {
+        font-size: $clr-typography-regulartext;
+        line-height: $clr-forms-baseline * 3;
+    }
+}

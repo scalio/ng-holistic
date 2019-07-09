@@ -1,0 +1,39 @@
+// clr-form
+.clr-form {
+    padding: 0;
+}
+
+// clr-form-control
+.clr-form-control {
+    align-items: stretch;
+    margin-top: 0;
+    margin-bottom: $clr-forms-baseline * 4;
+
+    .clr-form-compact & {
+        margin-top: 0;
+        margin-bottom: $clr-forms-baseline * 2;
+    }
+
+    .clr-form-control {
+        margin: 0;
+    }
+}
+
+// clr-form-disabled
+.clr-form-disabled,
+.clr-form-readonly {
+    @extend .clr-form-control-disabled;
+}
+
+// clr-control-container
+.clr-control-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+
+    .clr-form-compact & {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+}

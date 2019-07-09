@@ -1,0 +1,29 @@
+// time-container
+.time-container {
+    display: inline-flex;
+    margin-top: 10px;
+
+    @media (min-width: map-get($grid-breakpoints, 'lg')) {
+        margin: 0;
+    }
+
+    > *:first-child {
+        .clr-select-wrapper {
+            select {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+
+    > *:last-child {
+        margin-left: -1px;
+
+        .clr-select-wrapper {
+            select {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}
