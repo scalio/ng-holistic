@@ -13,6 +13,8 @@ import { TablePageComponent } from './table-page/table-page.component';
 import { TablePageModule } from './table-page/table-page.module';
 // tslint:disable-next-line:max-line-length
 import { TableCustomColumnDefinitionPageComponent } from './table-custom-column-definition-page/table-custom-column-definition-page.component';
+// tslint:disable-next-line:max-line-length
+import { TableCustomColumnMapsDefinitionPageComponent } from './table-custom-column-maps-definition-page/table-custom-column-maps-definition-page.component';
 
 export const routes: Routes = [
     {
@@ -41,7 +43,7 @@ export const routes: Routes = [
     },
     {
         path: 'configure-column-definition-map',
-        component: TableDefinitionPageComponent
+        component: TableCustomColumnMapsDefinitionPageComponent
     }
 ];
 

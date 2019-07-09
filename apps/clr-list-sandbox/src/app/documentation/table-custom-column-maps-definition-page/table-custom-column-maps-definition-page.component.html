@@ -1,0 +1,152 @@
+<h2 id="Table_TMapColumns" #Table_TMapColumns>TMapColumns</h2>
+
+<p>
+    If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
+    you could use configurable map for custom columns.    
+    `TMapColumns` is the generic parameter which passed TableDefinition class and has default value of
+    `Table.MapColumns.Column = LinkColumn | ImgColumn;` This column definition provides interface to insert into the
+    cell arbitrary predefined components. By default there is defined 2 custom mapped columns `LinkColumn | ImgColumn`.
+    You could extend predefined set of `TMapColumns` and then use their definitions inside any table definition.
+</p>
+
+<hlc-sbx-example-link-button
+    href="https://stackblitz.com/edit/hlc-clr-list-custom-column-maps?file=src%2Fapp%2Ftable.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
+<h3>LinkColumn</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td class="left">kind</td>
+            <td class="left">'LinkColumn'</td>
+            <td class="left">
+                The flag which signal library: for content of this column should be generated link component
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props</td>
+            <td class="left">-</td>
+            <td class="left">Values to initialize properties of the link component</td>
+        </tr>
+        <tr>
+            <td class="left">props.title</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The text of the link. Also it could be a function which given col value and row returns appropriate
+                title.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.link (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The url for the link. Also it could be a function which given col value and row returns appropriate
+                title.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.clicked (optional)</td>
+            <td class="left">Subject</td>
+            <td class="left">On each link click subject will receive new event.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>ImgColumn</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">id, title, sort, cls</td>
+            <td class="left">-</td>
+            <td class="left">The same as in Table.Column</td>
+        </tr>
+        <tr>
+            <td class="left">kind</td>
+            <td class="left">'ImgColumn'</td>
+            <td class="left">
+                The flag which signal library: for content of this column should be generated image component
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props</td>
+            <td class="left">-</td>
+            <td class="left">Values to initialize properties of the image component</td>
+        </tr>
+        <tr>
+            <td class="left">props.src</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The path to the image. Also it could be a function which given col value and row returns appropriate
+                src.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.width (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The width of the image (example '100px'). Also it could be a function which given col value and row
+                returns appropriate width.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">props.height (optional)</td>
+            <td class="left">string | (val: any, row: any) => string</td>
+            <td class="left">
+                The heigth of the image (example '100px'). Also it could be a function which given col value and row
+                returns appropriate height.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Add arbitrary component to custom columns map</h3>
+
+<h5>1. Include this component in configuration of table library.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_1 }}
+    </code>
+</pre>
+
+<h5>2. Define column type definition for this component.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_2 }}
+    </code>
+</pre>
+
+<h5>3. Extend default TableDefinition interface with custom column map definition for you app.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_3 }}
+    </code>
+</pre>
+
+<h5>4. Now you can use AppCustomColumn in any table definition of your application alongside with default ones.</h5>
+<pre>
+    <code hlc-code-highlight="ts">
+        {{ code_col_def_4 }}
+    </code>
+</pre>
