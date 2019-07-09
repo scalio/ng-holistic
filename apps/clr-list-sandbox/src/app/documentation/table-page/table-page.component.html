@@ -77,7 +77,9 @@
                 rows ids. If this value is undefined UI won't allow user select rows in the list, if this value is array
                 (even empty), UI will display checkboxes which will allow user to select rows in the list. See related
                 <a [routerLink]="['.']" fragment="selected_rows_changed"> selectedRowsChanged event </a> .
-                <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-selected-rows">
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
+                >
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
@@ -100,10 +102,11 @@
             <td class="left">
                 Will emit event when user click some item in row actions list. See related
                 <a [routerLink]="['..', 'table-definition']" fragment="row_actions_property">
-                    rowActions property on table defintion object
+                    rowActions property on table definition object
                 </a>
                 .
-                <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-row-actions"
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-row-actions?embed=1&file=src/app/planets-table.component.ts"
                     >Example
                 </hlc-sbx-example-link-button>
             </td>
@@ -144,9 +147,12 @@
                 Template with hlcClrRowDetail attribute which will be generated for row deatial if root row have any.
                 See related
                 <a [routerLink]="['..', 'table-definition']" fragment="row_details_property">
-                    rowDetails property on table definiton object
-                </a>
-                . See <a [routerLink]="['/clr-table', 'table-expand-row-card']">example</a> .
+                    rowDetails property on table definitions object</a
+                >.
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
             </td>
             <td class="left">
                 <pre>
@@ -157,10 +163,13 @@
         <tr>
             <td class="left">hlcClrCustomCell</td>
             <td class="left">
-                Template with hlcClrRowDetail attribute which will be generated for row deatial if root row have any.
-                See related
-                <a [routerLink]="['..', 'table-definition']" fragment="custom_cell"> Table.CustomColumn type </a> . See
-                <a [routerLink]="['/clr-table', 'table']">example</a> .
+                Template with hlcClrRowDetail attribute which will be generated for row detail if root row have any. See
+                related
+                <a [routerLink]="['..', 'table-definition']" fragment="custom_cell"> Table.CustomColumn type</a>.
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
             </td>
             <td class="left">
                 <pre>
