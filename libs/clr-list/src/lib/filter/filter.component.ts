@@ -149,7 +149,6 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     onFocus() {
-        console.log('filter:onFocus');
         if (this.form.hasFocusedElement) {
             this.hotkeysContainer.focus$.next(true);
         } else {
@@ -158,7 +157,6 @@ export class HlcClrFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     onBlur() {
-        console.log('filter:onBlur');
         this.hotkeysContainer.focus$.next(false);
     }
 

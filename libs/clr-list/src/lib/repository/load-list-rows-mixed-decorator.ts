@@ -31,13 +31,6 @@ export class GetLoadListMixedDecorator<TState, TResult> implements ILoadListDeco
             const storedResult = this.stateStorage.getRequest();
             const rowsNotExpired = this.rowsStorage.getRequest();
 
-            console.log(
-                'GetLoadListMixedDecorator::decorate [storedResult, rowsNotExpired, state]',
-                storedResult,
-                rowsNotExpired,
-                state
-            );
-
             let initialState: any;
             if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
                 if (storedResult) {
@@ -47,12 +40,11 @@ export class GetLoadListMixedDecorator<TState, TResult> implements ILoadListDeco
             }
 
             if (storedResult && rowsNotExpired && (initialState || R.equals(storedResult.meta.requestState, state))) {
-                console.log('GetLoadListMixedDecorator storedResult match or initalState, return from cache');
                 // There has to be interval, in order to datagrid behave uniformally with http request results
                 return interval(0).pipe(mapTo(storedResult.meta.result));
             }
 
-            // use initial state insted of request in case requested state is initial
+            // use initial state instead of request in case requested state is initial
             return fn(initialState || state).pipe(
                 tap(result => {
                     this.stateStorage.setRequest(state, { requestState: state, result }, result);

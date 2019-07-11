@@ -23,12 +23,10 @@ import { IFormGroup } from '../models/form-layouts.types';
 import { setComponentProperties } from '../set-component-properties';
 
 const disableControls = (controls: AbstractControl[]) => {
-    // console.log('disbale controls', controls);
     controls.forEach(control => control.disable());
 };
 
 const enableControls = (controls: AbstractControl[]) => {
-    // console.log('enable controls', controls);
     controls.forEach(control => control.enable());
 };
 
@@ -77,7 +75,6 @@ export class HlcGroupLayoutHostDirective implements OnInit, OnDestroy {
 
     init(container: ViewContainerRef, group: IFormGroup<any>): ComponentRef<any>[] {
         if (!container) {
-            console.log('Group exists but container not found !', group);
             return [];
         }
         const groupLayoutType = this.groupsLayoutMap[group.kind];

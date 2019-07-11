@@ -298,17 +298,13 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * force = true, will request data load even if request state is not changed
      */
     onRefresh(state: ClrDatagridStateInterface, force = false) {
-        console.log('onRefresh [state, force]', state, force);
-
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
-            console.log('_freezeInitialStateChange ignore onRferesh');
             this._freezeInitialStateChange = false;
             return;
         }
 
         if (this._freezeCount && this._freezeCount > 0) {
-            console.log('_freezeCount ignore onRferesh');
             this._freezeCount--;
             return;
         }
@@ -316,7 +312,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         if (this.state && (R.isEmpty(state) || R.isNil(state.page))) {
             // when datagrid is destroyed it invokes clrDgRefresh (sick !) with empty object
             // just ignore
-            console.log('onRefresh on exit');
             return;
         }
 
@@ -349,9 +344,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
         state$
             .pipe(
-                tap(st => {
-                    console.log('check state [state, this.sate, equals]', st, this.state, R.equals(this.state, st));
-                }),
                 // ignore if there is no changes on state
                 filter(st => force || !R.equals(this.state, st)),
                 tap(st => this.stateChanged.emit(st)),
@@ -384,9 +376,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     loadData(dataProvider: Table.Data.DataProvider, state: ClrDatagridStateInterface) {
         const dpState = this.dataProviderConfig.mapState(state);
-
-        console.log('loadData [state, dpState]', state, dpState);
-
         this.loading = true;
         this.hotkeysContainer.loading$.next(true);
         this.cdr.detectChanges();
@@ -436,12 +425,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     );
                     this.keysManager.onPagesChanged(pagesCount, this.paginator.pageIndex);
                 }
-                console.log(
-                    'loaded [state, paginator, freezeCount]',
-                    this.state,
-                    mpResult.paginator,
-                    this._freezeCount
-                );
             }),
             catchError(err => {
                 this.errorMessage = err;
@@ -604,7 +587,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         }
         // everytime just reset to first page
         const page = mapPageState({ ...this.paginator, pageIndex });
-        console.log('onPageChanged', pageIndex, page);
         this.onRefresh({ ...this.state, page });
         // after page size state changed onRefresh is invoked by datagrid with incorrect (staled) parameters
         this._freezeInitialStateChange = undefined;

@@ -26,8 +26,6 @@ export class GetLoadListRowsDecorator<TState, TResult> implements ILoadListDecor
         return state => {
             const storedResult = this.storage.getRequest();
 
-            console.log('GetLoadListRowsDecorator::decorate [storedResult, state]', storedResult, state);
-
             let initialState: any;
             if (!state || isEmpty(state) || (this.checkInitState && this.checkInitState(state))) {
                 if (storedResult) {
@@ -37,7 +35,6 @@ export class GetLoadListRowsDecorator<TState, TResult> implements ILoadListDecor
             }
 
             if (storedResult && (initialState || R.equals(storedResult.meta.requestState, state))) {
-                console.log('GetLoadListRowsDecorator storedResult match or initalState, return from cache');
                 // There has to be interval, in order to datagrid behave uniformally with http request results
                 return interval(0).pipe(mapTo(storedResult.meta.result));
             }

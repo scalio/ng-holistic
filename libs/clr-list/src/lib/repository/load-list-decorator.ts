@@ -41,15 +41,9 @@ export class GetLoadListDecorator<TState, TResult> implements ILoadListDecorator
     decorate(fn: LoadListFunc<TState, TResult>): LoadListFunc<TState, TResult> {
         return request => {
             const storedRequest = this.storage.getRequest();
-            console.log('LoadListDecorator::decorate [storedRequest, request]', storedRequest, request);
             let initialRequest: any;
             if (!request || isEmpty(request) || (this.checkInitRequest && this.checkInitRequest(request))) {
                 if (storedRequest) {
-                    console.log(
-                        'LoadListDecorator stored request found and rqeuest is initial [storedRequest, request]',
-                        storedRequest,
-                        request
-                    );
                     initialRequest = storedRequest.request;
                     // lets reset pageIndex, initial request always should starts with 1st page
                     initialRequest = this.resetPageIndex(initialRequest);
@@ -58,7 +52,6 @@ export class GetLoadListDecorator<TState, TResult> implements ILoadListDecorator
 
             // use initial request instead of active request
             const indeedRequest = initialRequest || request;
-            console.log('LoadListDecorator [indeedRequest]', indeedRequest);
             return fn(indeedRequest).pipe(tap(result => this.storage.setRequest(indeedRequest, null, result)));
         };
     }

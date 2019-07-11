@@ -71,7 +71,6 @@ describe('form-layout', () => {
         it('must render empty layout', () => {
             // div
             expect(fixture.nativeElement instanceof HTMLDivElement).toEqual(true);
-            console.log(fixture.nativeElement.outerHTML);
             expect(fixture.nativeElement['children']['length']).toEqual(0);
         });
     });
