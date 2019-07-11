@@ -16,10 +16,10 @@ import {
     Output,
     QueryList,
     Renderer2,
-    ViewChildren,
-    ViewChild
+    ViewChild,
+    ViewChildren
 } from '@angular/core';
-import { ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface, ClrDatagrid } from '@clr/angular';
+import { ClrDatagrid, ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
 import { of, Subject, throwError } from 'rxjs';
@@ -485,12 +485,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     }
 
     getCellClass(cell: Table.Column, row: Table.Row) {
-        if (cell.format) {
-            const fmt = cell.format(row[cell.id], row);
-            if (!fmt) {
-                return '';
-            }
-            return typeof fmt === 'string' ? undefined : fmt.cls;
+        if (typeof cell.cls === 'string') {
+            return cell.cls;
+        } else if (typeof cell.cls === 'function') {
+            return cell.cls(row[cell.id], row);
         } else {
             return undefined;
         }

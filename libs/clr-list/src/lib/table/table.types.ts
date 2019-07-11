@@ -14,17 +14,19 @@ export namespace Table {
         sort?: string | boolean;
     }
 
+    export type ClsFun = (val: any, row: Row) => string | undefined;
+
     export interface Column extends ColumnBase {
-        cls?: string;
-        /** Allow wrap whitespace when cell generated / off by default */
+        cls?: string | ClsFun;
+        /** Obsolete ! Allow wrap whitespace when cell generated / off by default */
         whitespaceWrap?: boolean;
-        /** Align content / start by default */
+        /** Obsolete ! Align content / start by default */
         alignContent?: 'start' | 'center' | 'end';
         /**
          * Format column value
          * Returns formatted to display represenation value or ColumnFormat
          */
-        format?: (val: any, row: any) => string | ColumnFormat;
+        format?: (val: any, row: any) => string;
     }
 
     export interface CustomColumn extends ColumnBase {

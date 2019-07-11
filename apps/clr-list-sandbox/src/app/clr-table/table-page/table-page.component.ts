@@ -10,12 +10,14 @@ const table: TableDescription = {
         {
             id: 'title',
             title: 'Title',
-            sort: true
+            sort: true,
+            cls: 'title'
         },
         {
             id: 'amount',
             title: 'Amount',
-            sort: false
+            sort: false,
+            cls: val => val > 1000 ? 'highlight' : undefined
         },
         {
             id: 'capTitle',
