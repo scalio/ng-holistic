@@ -11,7 +11,7 @@ import { SortPipe } from './sort.pipe';
 import { TableCellHostDirective } from './table-cell-host.directive';
 import { TableCustomCellHostDirective } from './table-custom-cell-host.directive';
 import { HlcClrTableComponent } from './table.component';
-import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
+import { HLC_CLR_TABLE_CELL_MAP, TableCellMap, HLC_CLR_TABLE_CELL_FORMAT_MAP } from './table.config';
 
 @NgModule({
     imports: [
@@ -37,7 +37,13 @@ import { HLC_CLR_TABLE_CELL_MAP, TableCellMap } from './table.config';
     entryComponents: cellComponents
 })
 export class HlcClrTableModule {
-    static forRoot(cells?: TableCellMap): ModuleWithProviders {
+    static forRoot({
+        cells,
+        cellFormatMaps
+    }: {
+        cells?: TableCellMap;
+        cellFormatMaps?: TableCellMap;
+    } = {}): ModuleWithProviders {
         return {
             ngModule: HlcClrTableModule,
             providers: [
@@ -49,6 +55,11 @@ export class HlcClrTableModule {
                 {
                     provide: HLC_CLR_TABLE_CELL_MAP,
                     useValue: cells,
+                    multi: true
+                },
+                {
+                    provide: HLC_CLR_TABLE_CELL_FORMAT_MAP,
+                    useValue: cellFormatMaps,
                     multi: true
                 },
                 ...(HlcHotKeysModule.forRoot().providers || [])

@@ -2,11 +2,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
 
 export namespace Table {
-    export interface ColumnFormat {
-        val?: string;
-        cls?: string;
-    }
-
     export interface ColumnBase {
         id: string;
         title: string;
@@ -14,10 +9,10 @@ export namespace Table {
         sort?: string | boolean;
     }
 
-    export type ClsFun = (val: any, row: Row) => string | undefined;
+    export type FormatFun = (val: any, row: Row) => string | undefined | null;
 
     export interface Column extends ColumnBase {
-        cls?: string | ClsFun;
+        cls?: string | FormatFun;
         /** Obsolete ! Allow wrap whitespace when cell generated / off by default */
         whitespaceWrap?: boolean;
         /** Obsolete ! Align content / start by default */
@@ -25,8 +20,9 @@ export namespace Table {
         /**
          * Format column value
          * Returns formatted to display represenation value or ColumnFormat
+         * If it is a string it will get corresponding formatter from HLC_CLR_TABLE_CELL_FORMAT_MAP provider
          */
-        format?: (val: any, row: any) => string;
+        format?: FormatFun | string;
     }
 
     export interface CustomColumn extends ColumnBase {
@@ -107,7 +103,6 @@ export namespace Table.MapColumns {
     export type Column = LinkColumn | ImgColumn;
 }
 
-
 export interface TableDetails {
     /*
     Subset of root cols (by id), if cols not in the subset they will be ignored
@@ -146,6 +141,6 @@ export namespace Table.Data {
         rows: Table.Row[];
         paginator?: Paginator;
         sort?: Sort;
-        filters?: { property: string, value: any }[];
+        filters?: { property: string; value: any }[];
     }
 }

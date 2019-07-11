@@ -27,9 +27,13 @@ export interface TableCellMap {
 
 export const HLC_CLR_TABLE_CELL_MAP = new InjectionToken<TableCellMap>('HLC_CLR_TABLE_CELL_MAP');
 
+export interface TableCellFormatMap {
+    [key: string]: Table.FormatFun;
+}
+
+export const HLC_CLR_TABLE_CELL_FORMAT_MAP = new InjectionToken<TableCellFormatMap>('HLC_CLR_TABLE_CELL_FORMAT_MAP');
 
 export interface PaginatorItems {
-    // defaultItemKey: any;
     /**
      * Paginator items in format defined by `controls DictMapperService`
      */

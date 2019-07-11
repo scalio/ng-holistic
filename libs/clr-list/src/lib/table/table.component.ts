@@ -31,10 +31,12 @@ import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
 import {
     defaultTableDataProviderConfig,
+    HLC_CLR_TABLE_CELL_FORMAT_MAP,
     HLC_CLR_TABLE_CELL_MAP,
     HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
     HLC_CLR_TABLE_PAGINATOR_ITEMS,
     PaginatorItems,
+    TableCellFormatMap,
     TableCellMap,
     TableDataProviderConfig
 } from './table.config';
@@ -59,6 +61,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
 })
 export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
     private readonly cellMap: TableCellMap;
+    private readonly cellFormatMap: TableCellFormatMap;
     private state: ClrDatagridStateInterface;
     private _initState: ClrDatagridStateInterface | undefined;
     private _dataProviderState: any;
@@ -202,6 +205,9 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         @Inject(HLC_CLR_TABLE_CELL_MAP)
         cellMaps: TableCellMap[],
         @Optional()
+        @Inject(HLC_CLR_TABLE_CELL_FORMAT_MAP)
+        cellFormatMaps: TableCellFormatMap[],
+        @Optional()
         @Inject(HLC_CLR_TABLE_DATA_PROVIDER_CONFIG)
         dataProviderConfig?: TableDataProviderConfig,
         @Optional()
@@ -217,6 +223,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     ) {
         this.dataProviderConfig = dataProviderConfig || defaultTableDataProviderConfig;
         this.cellMap = cellMaps ? R.mergeAll(cellMaps) : {};
+        this.cellFormatMap = cellFormatMaps ? R.mergeAll(cellFormatMaps) : {};
 
         if (rowsManagerService) {
             rowsManagerService.addRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.addRow(row));
@@ -496,11 +503,15 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     getCellDisplayValue(cell: Table.Column, row: Table.Row) {
         if (cell.format) {
-            const fmt = cell.format(row[cell.id], row);
+            const format = typeof cell.format === 'string' ? this.cellFormatMap[cell.format] : cell.format;
+            if (!format) {
+                console.warn('Table cell formatter not found', cell);
+            }
+            const fmt = format(row[cell.id], row);
             if (!fmt) {
                 return '';
             }
-            return typeof fmt === 'string' ? fmt : fmt.val || '';
+            return fmt;
         } else {
             return row[cell.id];
         }
@@ -576,6 +587,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     trackByDetail(i: number) {
         return i;
+    }
+
+    trackByAction(_: any, rowAction: Table.RowAction) {
+        return rowAction.id;
     }
 
     //

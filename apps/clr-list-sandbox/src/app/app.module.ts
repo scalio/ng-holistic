@@ -1,11 +1,14 @@
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {
     HlcClrFilterModule,
     HlcClrTableModule,
+    HLC_CLR_TABLE_CELL_FORMAT_MAP,
     HLC_CLR_TABLE_PAGINATOR_ITEMS,
-    PaginatorItems
+    PaginatorItems,
+    TableCellFormatMap
 } from '@ng-holistic/clr-list';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -27,10 +30,15 @@ const paginatorItems: PaginatorItems = {
     ]
 };
 
+export const getTableCellFormatMap = (decimalPipe: DecimalPipe): TableCellFormatMap => ({
+    number: x => decimalPipe.transform(x)
+});
+
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
+        CommonModule,
         RouterModule.forRoot([], { initialNavigation: 'enabled', useHash: true, anchorScrolling: 'enabled' }),
         AppRoutingModule,
         HlcClrTableModule.forRoot(),
@@ -40,6 +48,13 @@ const paginatorItems: PaginatorItems = {
         {
             provide: HLC_CLR_TABLE_PAGINATOR_ITEMS,
             useValue: paginatorItems
+        },
+        DecimalPipe,
+        {
+            provide: HLC_CLR_TABLE_CELL_FORMAT_MAP,
+            useFactory: getTableCellFormatMap,
+            deps: [DecimalPipe],
+            multi: true
         }
     ],
     bootstrap: [AppComponent]

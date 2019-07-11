@@ -17,6 +17,7 @@ const table: TableDescription = {
             id: 'amount',
             title: 'Amount',
             sort: false,
+            format: 'number',
             cls: val => val > 1000 ? 'highlight' : undefined
         },
         {

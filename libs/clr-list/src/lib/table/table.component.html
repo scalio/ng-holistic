@@ -65,12 +65,12 @@
 
         <!-- Details -->
 
-        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table.details; else detailsCard">
+        <ng-container ngProjectAs="clr-dg-row-detail" *ngIf="table?.details; else detailsCard">
             <ng-container *ngFor="let detail of getDetailsRows(row); trackBy: trackByDetailsRow">
                 <clr-dg-row-detail *clrIfExpanded>
                     <!-- Details in columns -->
-                    <ng-container *ngIf="table.details.cols; else detailsCard">
-                        <clr-dg-cell *ngFor="let cell of table.cols; trackBy: trackByCol">
+                    <ng-container *ngIf="table?.details?.cols; else detailsCard">
+                        <clr-dg-cell *ngFor="let cell of table?.cols; trackBy: trackByCol">
                             <ng-container *ngIf="getDetailsCol(cell.id) as detailsCell">
                                 <ng-container
                                     *ngTemplateOutlet="
@@ -84,7 +84,7 @@
                     <!-- Details in card -->
                     <ng-template #detailsCard>
                         <ng-container
-                            *ngTemplateOutlet="_rowDetail.templateRef; context: { $implicit: detail, parentRow: row }"
+                            *ngTemplateOutlet="_rowDetail?.templateRef; context: { $implicit: detail, parentRow: row }"
                         ></ng-container>
                     </ng-template>
                 </clr-dg-row-detail>
@@ -94,24 +94,24 @@
 
     <!-- Paginator -->
 
-    <clr-dg-footer *ngIf="paginator" [hidden]="disablePaginator">
+    <clr-dg-footer *ngIf="paginator" [hidden]="hidePaginator">
         <hlc-clr-select
             *ngIf="paginatorItems"
             #paginatorSelect
             class="page-size-selector"
             [naked]="true"
             [disallowEmpty]="true"
-            [value]="paginator.pageSize"
+            [value]="paginator?.pageSize"
             (valueChange)="onPageSizeChanged($event)"
-            [items]="paginatorItems.items"
+            [items]="paginatorItems?.items"
         ></hlc-clr-select>
         <div *ngIf="paginatorItems" class="footer-separator-line"></div>
-        <span> {{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator.length }} </span>
+        <span> {{ pagination?.firstItem + 1 }} - {{ pagination?.lastItem + 1 }} / {{ paginator?.length }} </span>
         <clr-dg-pagination
             #pagination
-            [clrDgPageSize]="paginator.pageSize"
-            [clrDgPage]="paginator.pageIndex"
-            [clrDgTotalItems]="paginator.length"
+            [clrDgPageSize]="paginator?.pageSize"
+            [clrDgPage]="paginator?.pageIndex"
+            [clrDgTotalItems]="paginator?.length"
         >
         </clr-dg-pagination>
     </clr-dg-footer>
