@@ -30,8 +30,15 @@
         </ng-template>
     </ng-container>
 
-    <clr-dg-row *ngIf="aggregateRow && rows?.length > 0" class="aggregate-row" [clrDgItem]="null">
-        <clr-dg-cell *ngFor="let col of table?.cols; trackBy: trackByCol">{{ getAggrColValue(col) }}</clr-dg-cell>
+    <clr-dg-row *ngIf="getAggrRow(aggregateRow) as aggrRow" class="aggregate-row" [clrDgItem]="null">
+        <clr-dg-cell
+            *ngFor="let col of table?.cols; trackBy: trackByCol"
+            [ngClass]="aggrRow[col.id] && getCellClass(col, aggrRow)"
+        >
+            <ng-container *ngIf="aggrRow[col.id]">
+                <ng-container *ngTemplateOutlet="rowCell; context: { cell: col, row: aggrRow }"></ng-container>
+            </ng-container>
+        </clr-dg-cell>
     </clr-dg-row>
 
     <clr-dg-row
@@ -121,6 +128,7 @@
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
     <!-- TODO : move to component, contentAlign is wrong -->
     <div
+        aggrRow
         [style.white-space]="cell.whitespaceWrap ? undefined : 'nowrap'"
         [style.display]="cell.alignContent === 'center' ? 'flex' : undefined"
         [style.justify-content]="cell.alignContent === 'center' ? 'center' : undefined"

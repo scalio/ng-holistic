@@ -31,7 +31,7 @@ const paginatorItems: PaginatorItems = {
 };
 
 export const getTableCellFormatMap = (decimalPipe: DecimalPipe): TableCellFormatMap => ({
-    number: x => decimalPipe.transform(x)
+    number: x => ({ val: decimalPipe.transform(x), cls: 'number-cell' })
 });
 
 @NgModule({

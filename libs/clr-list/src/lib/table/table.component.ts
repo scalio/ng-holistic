@@ -284,6 +284,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         return this.aggregateRow[col.id](vals, this.rows) || '';
     }
 
+    getAggrRow() {
+        if (!this.aggregateRow || !this.rows) {
+            return undefined;
+        }
+
+        return R.pipe(
+            R.toPairs,
+            R.map(([col, fn]) => [col, (fn as any)(R.pluck(col, this.rows), this.rows)]),
+            R.fromPairs
+        )(this.aggregateRow);
+    }
+
     // Drag & Drop
     onDrop(event: CdkDragDrop<Table.Row>) {
         this.drop.emit(event);
@@ -491,27 +503,48 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         return ClrDatagridSortOrder.UNSORTED;
     }
 
-    getCellClass(cell: Table.Column, row: Table.Row) {
-        if (typeof cell.cls === 'string') {
-            return cell.cls;
-        } else if (typeof cell.cls === 'function') {
-            return cell.cls(row[cell.id], row);
-        } else {
-            return undefined;
+    private getCellFormatResult(cell: Table.Column, row: Table.Row): Table.FormatResult {
+        const format = typeof cell.format === 'string' ? this.cellFormatMap[cell.format] : cell.format;
+        if (!format) {
+            return {};
         }
+        const formatResult = format(row[cell.id], row);
+        if (!formatResult) {
+            return {};
+        }
+        // if format result is the string, consider it value
+        if (typeof formatResult === 'string') {
+            return { val: formatResult };
+        } else {
+            return formatResult;
+        }
+    }
+
+    getCellClass(cell: Table.Column, row: Table.Row) {
+        let res;
+        if (typeof cell.cls === 'string') {
+            res = cell.cls;
+        } else if (typeof cell.cls === 'function') {
+            res = cell.cls(row[cell.id], row);
+        }
+
+        // we can mix classes from cls and format result
+        const { cls } = this.getCellFormatResult(cell, row);
+
+        if (cls) {
+            res = (res ? res + ' ' : '') + cls;
+        }
+
+        return res;
     }
 
     getCellDisplayValue(cell: Table.Column, row: Table.Row) {
         if (cell.format) {
-            const format = typeof cell.format === 'string' ? this.cellFormatMap[cell.format] : cell.format;
-            if (!format) {
+            const { val } = this.getCellFormatResult(cell, row);
+            if (!val) {
                 console.warn('Table cell formatter not found', cell);
             }
-            const fmt = format(row[cell.id], row);
-            if (!fmt) {
-                return '';
-            }
-            return fmt;
+            return val;
         } else {
             return row[cell.id];
         }

@@ -2,6 +2,11 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
 
 export namespace Table {
+
+    export interface FormatResult { 
+        val?: string | null; 
+        cls?: string | null; 
+    } 
     export interface ColumnBase {
         id: string;
         title: string;
@@ -9,7 +14,7 @@ export namespace Table {
         sort?: string | boolean;
     }
 
-    export type FormatFun = (val: any, row: Row) => string | undefined | null;
+    export type FormatFun = (val: any, row: Row) => string | FormatResult | undefined | null;
 
     export interface Column extends ColumnBase {
         cls?: string | FormatFun;
