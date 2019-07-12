@@ -2,7 +2,12 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
-        title: 'Table documentation',
+        title: 'FAQ',
+        icon: 'help',
+        path: '/faq'
+    },
+    {
+        title: 'Documentation',
         icon: 'view-list',
         children: [
             {

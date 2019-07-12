@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Table, TableDescription } from '@ng-holistic/clr-list';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { HlcClrTableComponent, Table, TableDescription } from '@ng-holistic/clr-list';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -67,7 +67,6 @@ const dataProvider: Table.Data.DataProvider = {
         return timer(0).pipe(mapTo({ rows }));
     }
 };
-
 
 const definition = `
 import { Table, TableDescription } from '@ng-holistic/clr-list';
@@ -157,6 +156,7 @@ export class TableRowActionsPageComponent implements OnInit {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableRowActionsPageComponent implements OnInit {
+    @ViewChild(HlcClrTableComponent, { static: false }) listComponent: HlcClrTableComponent;
 
     definition = definition;
     code = code;
@@ -168,7 +168,10 @@ export class TableRowActionsPageComponent implements OnInit {
 
     ngOnInit() {}
 
-    onRowAction(rowAction: Table.RowAction) {
-        console.log('onRowAction', rowAction);
+    onRowAction(evt: Table.RowActionEvent) {
+        console.log('onRowAction', evt);
+        if (evt.action.id === 'remove') {
+            this.listComponent.removeRow(evt.row);
+        }
     }
 }

@@ -10,6 +10,8 @@ import { ClrTableModule } from './clr-table/clr-table.module';
 import { routes as clrTableRoutes } from './clr-table/clr-table.routing.module';
 import { DocumentationModule } from './documentation/documentation.module';
 import { routes as docsRoutes } from './documentation/documentation.routing.module';
+import { FaqPageComponent } from './faq/faq-page/faq-page.component';
+import { FaqPageModule } from './faq/faq-page/faq-page.module';
 
 export const routes: Routes = [
     {
@@ -21,6 +23,10 @@ export const routes: Routes = [
         path: '',
         component: AppLayoutComponent,
         children: [
+            {
+                path: 'faq',
+                component: FaqPageComponent
+            },
             {
                 path: 'docs',
                 children: docsRoutes
@@ -48,7 +54,8 @@ export const routes: Routes = [
         ClrTableModule,
         ClrFilterModule,
         ClrListModule,
-        DocumentationModule
+        DocumentationModule,
+        FaqPageModule
     ],
     exports: [RouterModule]
 })

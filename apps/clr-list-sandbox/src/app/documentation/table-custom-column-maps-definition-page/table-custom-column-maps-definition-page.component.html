@@ -1,4 +1,4 @@
-<h2 id="Table_TMapColumns" #Table_TMapColumns>TMapColumns</h2>
+<h2>Custom columns definition map</h2>
 
 <p>
     If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
@@ -120,33 +120,3 @@
         </tr>
     </tbody>
 </table>
-
-<h3>Add arbitrary component to custom columns map</h3>
-
-<h5>1. Include this component in configuration of table library.</h5>
-<pre>
-    <code hlc-code-highlight="ts">
-        {{ code_col_def_1 }}
-    </code>
-</pre>
-
-<h5>2. Define column type definition for this component.</h5>
-<pre>
-    <code hlc-code-highlight="ts">
-        {{ code_col_def_2 }}
-    </code>
-</pre>
-
-<h5>3. Extend default TableDefinition interface with custom column map definition for you app.</h5>
-<pre>
-    <code hlc-code-highlight="ts">
-        {{ code_col_def_3 }}
-    </code>
-</pre>
-
-<h5>4. Now you can use AppCustomColumn in any table definition of your application alongside with default ones.</h5>
-<pre>
-    <code hlc-code-highlight="ts">
-        {{ code_col_def_4 }}
-    </code>
-</pre>
