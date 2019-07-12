@@ -1,4 +1,4 @@
-<h2 id="Table_Column" #Table_Column>Table.Column</h2>
+<h2>Table.Column</h2>
 
 <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-column?file=src/app/table.component.ts"
     >Example
@@ -28,42 +28,86 @@
         </tr>
         <tr>
             <td class="left">sort (optional)</td>
-            <td class="left">string | boolean</td>
+            <td class="left">string | boolean (default false)</td>
             <td class="left">
-                Define column as sortable. When column sortable it will have underline under the title to flag it as
-                sortable. When user click this column, table will be reloaded with appropriate sort parameter. If this
-                property is `true` then sort parameter will have value of column's `id` property. If this property is
-                `string` then sort parameter will have exact this value.
+                <ul>
+                    Define column as sortable
+                </ul>
+                <li>When column sortable it will have underline under the title, to mark column as sortable</li>
+                <li>When user click this column, table will be reloaded with appropriate sort parameter</li>
+                <li>
+                    The sort field in <a href="#">data provider state argument</a> will have name equal to the column id
+                </li>
+                <li>
+                    If this value is a string, column considered sortable and sort field in data provider will have one
+                    value instead of column id
+                </li>
             </td>
         </tr>
         <tr>
             <td class="left">cls (optional)</td>
             <td class="left">string</td>
-            <td class="left">Class to apply on content of the column value.</td>
-        </tr>
-        <tr>
-            <td class="left">whitespaceWrap (optional)</td>
-            <td class="left">boolean</td>
-            <td class="left">Allow wrap whitespace on cell content, off by default.</td>
-        </tr>
-        <tr>
-            <td class="left">alignContent (optional)</td>
-            <td class="left">'start' | 'center' | 'end'</td>
-            <td class="left">How to align text content inside the cell.</td>
+            <td class="left">
+                <ul>
+                    Class to apply on content of the column value
+                    <li>It could be just a sting - name of the class</li>
+                    <li>
+                        It could be function which will set class of cell content based on condition
+                        <ul>
+                            <li>
+                                conditional function has cell value as a first param and optional second param - row
+                                itself
+                            </li>
+                            <li>
+                                result of the function must be either class to apply to the cell content or undefined to
+                                apply nothing
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        if you return object with `cls: 'class name'` from 'format' method it will be joined to this
+                        value
+                    </li>
+                </ul>
+            </td>
         </tr>
         <tr>
             <td class="left">format (optional)</td>
-            <td class="left">(val: any, row: any) => string | ColumnFormat</td>
+            <td class="left">(val: any, row: any) => string | FormatFun</td>
             <td class="left">
-                Returns mapped value given original value and the row. You could return `ColumnFormat` which contains
-                not only mapped value itself but also class applied to the cell content.
-                <pre>
-                    <code hlc-code-highlight="ts">
-                        {{column_format}}
-                    </code>
-                </pre>
+                <ul>
+                    function or
+                    <a href="#">reference name from default formatters map</a>
+                    used format cell value to displayed string
+                    <li>
+                        the function first arg is the cell value and second optional is the row object itself
+                    </li>
+                    <li>function could return simple string object, it will be considered value to display</li>
+                    <li>
+                        function could also return ` val: 'val', cls: 'cls' ` object. It will be considered : `val` as a
+                        formatted value to display and `cls` is a class to apply to cell content
+                    </li>
+                    <li>
+                        it is recommended to use <a href="#">default formatters map</a> instead of defining formatter
+                        function for each table. Use <a href="#">HLC_CLR_TABLE_CELL_FORMAT_MAP provider</a> to define
+                        map of default formatters which could be used across the application simple by using reference
+                        name.
+                    </li>
+                </ul>
             </td>
         </tr>
     </tbody>
 </table>
 
+<h2>Default formatters</h2>
+
+<hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-column?file=src/app/app.module.ts"
+    >Example
+</hlc-sbx-example-link-button>
+
+<p>
+    You could provide default formatters for table definitions across the application. If a lot of cells in various
+    tables use the same formatter it is a good idea to configure this formatter for whole application and then reference
+    it in table cell format definitions by providing reference name. Configure formatters maps via
+    HLC_CLR_TABLE_CELL_FORMAT_MAP provider, see example.
+</p>

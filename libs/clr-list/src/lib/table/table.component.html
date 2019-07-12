@@ -30,7 +30,7 @@
         </ng-template>
     </ng-container>
 
-    <clr-dg-row *ngIf="getAggrRow(aggregateRow) as aggrRow" class="aggregate-row" [clrDgItem]="null">
+    <clr-dg-row *ngIf="getAggrRow() as aggrRow" class="aggregate-row" [clrDgItem]="null">
         <clr-dg-cell
             *ngFor="let col of table?.cols; trackBy: trackByCol"
             [ngClass]="aggrRow[col.id] && getCellClass(col, aggrRow)"
