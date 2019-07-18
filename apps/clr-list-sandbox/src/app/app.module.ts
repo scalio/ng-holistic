@@ -1,4 +1,4 @@
-import { DecimalPipe, CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -39,7 +39,13 @@ export const getTableCellFormatMap = (decimalPipe: DecimalPipe): TableCellFormat
     imports: [
         BrowserModule,
         CommonModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled', useHash: true, anchorScrolling: 'enabled' }),
+        RouterModule.forRoot([], {
+            useHash: true,
+            initialNavigation: 'enabled',
+            anchorScrolling: 'enabled',
+            onSameUrlNavigation: 'reload',
+            scrollPositionRestoration: 'enabled'
+        }),
         AppRoutingModule,
         HlcClrTableModule.forRoot(),
         HlcClrFilterModule.forRoot()

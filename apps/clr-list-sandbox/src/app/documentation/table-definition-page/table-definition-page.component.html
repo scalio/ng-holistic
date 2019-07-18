@@ -16,17 +16,9 @@
         <tr>
             <td class="left">cols</td>
             <td class="left">
-                (<a [routerLink]="['.']" fragment="Table_Column"
-                    >Table.Column</a
-                >
-                |
-                <a [routerLink]="['.']" fragment="Table_CustomColumn"
-                    >Table.CustomColumn</a
-                >
-                |
-                <a [routerLink]="['.']" fragment="Table_TMapColumns"
-                    >TMapColumns</a
-                >)[]
+                (<a [routerLink]="['..', 'column-definition']">Table.Column</a> |
+                <a [routerLink]="['..', 'custom-column-definition']">Table.CustomColumn</a> |
+                <a [routerLink]="['..', 'configure-column-definition-map']">TMapColumns</a>)[]
             </td>
             <td class="left">
                 List of the columns definitions see bellow.
@@ -39,9 +31,8 @@
         <tr>
             <td class="left">rowActions (optional)</td>
             <td class="left">
-                <a [routerLink]="['.']" fragment="Table_RowAction" (click)="Table_RowAction.scrollIntoView()"
-                    >Table.RowAction</a
-                >[] | ((row: Table.Row) => Table.RowAction[])
+                <a [routerLink]="['.']" fragment="table-row-action">Table.RowAction</a>[] | ((row: Table.Row) =>
+                Table.RowAction[])
             </td>
             <td class="left">
                 <img style="height:100px;" align="right" src="assets/images/row-action.png" /> Define list of actions
@@ -49,7 +40,7 @@
                 Instead of static array you could provide controller function which will take currently generated row
                 and return array of the actions for each particular row, if this function will return empty array
                 dropdown button won't be shown for the row.. This property intended to be used in conjuction with
-                <a [routerLink]="['table']" fragment="rowAction">rowAction event</a>
+                <a [routerLink]="['..', 'table']" fragment="row-action">rowAction</a>  event
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-row-actions?file=src/app/planets-table.component.ts"
                     >Example
@@ -89,7 +80,7 @@
     </tbody>
 </table>
 
-<h2 id="Table_RowAction" #Table_RowAction>Table.RowAction</h2>
+<h2 id="table-row-action">Table.RowAction</h2>
 
 <table class="table">
     <thead>

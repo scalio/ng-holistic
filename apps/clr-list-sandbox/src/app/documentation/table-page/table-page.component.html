@@ -10,7 +10,7 @@
     <tbody>
         <tr>
             <td class="left">dataProvider</td>
-            <td class="left"><a [routerLink]="['..', 'table-data-provider']">Table.Data.DataProvider</a></td>
+            <td class="left"><a [routerLink]="['..', 'data-provider']">Table.Data.DataProvider</a></td>
             <td class="left">Provides interface to load data to the table.</td>
         </tr>
         <tr>
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td class="left">aggregateRow</td>
-            <td class="left"><a [routerLink]="['.']" fragment="table_ggregate_row"> Table.AggregateRow </a></td>
+            <td class="left"><a routerLink="." fragment="table_aggregate_row"> Table.AggregateRow </a></td>
             <td class="left">
                 <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
                 aggregated data from other rows. Data will be aggregated only for visible rows.
@@ -57,12 +57,12 @@
                 display / edit in modal or sidepanel, this way it is clear for user which item from table is shown.
             </td>
         </tr>
-        <tr>
+        <tr id="drag-enabled">
             <td class="left">dragEnabled</td>
             <td class="left">boolean (default false)</td>
             <td class="left">
                 Allow rows to be drag / dropped, see related
-                <a [routerLink]="['.']" fragment="drop_event"> drop event </a> .
+                <a [routerLink]="['.']" fragment="drop-event"> drop event </a>
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts"
                 >
@@ -76,7 +76,7 @@
                 <img align="right" style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected
                 rows ids. If this value is undefined UI won't allow user select rows in the list, if this value is array
                 (even empty), UI will display checkboxes which will allow user to select rows in the list. See related
-                <a [routerLink]="['.']" fragment="selected_rows_changed"> selectedRowsChanged event </a> .
+                <a [routerLink]="['.']" fragment="selected-rows-changed">selectedRowsChanged</a> event 
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
                 >
@@ -101,10 +101,8 @@
             <td class="left"><a [routerLink]="['.']" segment="row_action_event"> Table.RowActionEvent </a></td>
             <td class="left">
                 Will emit event when user click some item in row actions list. See related
-                <a [routerLink]="['..', 'table-definition']" fragment="row_actions_property">
-                    rowActions property on table definition object
-                </a>
-                .
+                <a [routerLink]="['..', 'table-definition']" fragment="row-action">rowActions </a> property on table
+                definition object
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-row-actions?embed=1&file=src/app/planets-table.component.ts"
                     >Example
@@ -121,7 +119,7 @@
             <td class="left"><a [routerLink]="['.']" segment="drop_event"> Table.DropEvent </a></td>
             <td class="left">
                 Will emit event when user dragged and dropped row. See related
-                <a [routerLink]="['.']" segment="drag_enabled_property"> dragEnabled property </a> .
+                <a [routerLink]="['.']" segment="drag-enabled"> dragEnabled</a> property
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts"
                 >
@@ -146,9 +144,8 @@
             <td class="left">
                 Template with hlcClrRowDetail attribute which will be generated for row deatial if root row have any.
                 See related
-                <a [routerLink]="['..', 'table-definition']" fragment="row_details_property">
-                    rowDetails property on table definitions object</a
-                >.
+                <a [routerLink]="['..', 'table-definition']" fragment="row_details_property">rowDetails</a> property on
+                table definitions object.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
                 >
@@ -164,8 +161,7 @@
             <td class="left">hlcClrCustomCell</td>
             <td class="left">
                 Template with hlcClrRowDetail attribute which will be generated for row detail if root row have any. See
-                related
-                <a [routerLink]="['..', 'table-definition']" fragment="custom_cell"> Table.CustomColumn type</a>.
+                related <a [routerLink]="['..', 'custom-column-definition']"> Table.CustomColumn</a> type.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
                 >

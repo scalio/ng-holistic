@@ -36,7 +36,9 @@
                 <li>When column sortable it will have underline under the title, to mark column as sortable</li>
                 <li>When user click this column, table will be reloaded with appropriate sort parameter</li>
                 <li>
-                    The sort field in <a href="#">data provider state argument</a> will have name equal to the column id
+                    The sort field in data provider
+                    <a [routerLink]="['..', 'data-provider']" fragment="map-state">mapState</a> argument will have name
+                    equal to the column id
                 </li>
                 <li>
                     If this value is a string, column considered sortable and sort field in data provider will have one
@@ -76,12 +78,10 @@
             <td class="left">(val: any, row: any) => string | FormatFun</td>
             <td class="left">
                 <ul>
-                    function or
-                    <a href="#">reference name from default formatters map</a>
+                    function or reference name from configured
+                    <a [routerLink]="['..', 'configured-column-formatters-map']">formatters map</a>
                     used format cell value to displayed string
-                    <li>
-                        the function first arg is the cell value and second optional is the row object itself
-                    </li>
+                    <li>the function first arg is the cell value and second optional is the row object itself</li>
                     <li>function could return simple string object, it will be considered value to display</li>
                     <li>
                         function could also return ` val: 'val', cls: 'cls' ` object. It will be considered : `val` as a
