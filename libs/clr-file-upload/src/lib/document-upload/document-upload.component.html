@@ -6,6 +6,8 @@
     (uploadFile)="onUploadFile($event)"
     [processing]="processing"
     [allowPreview]="false"
+    [allowUpload]="!readonly"
+    [allowRemove]="!readonly"
 >
     <hlc-clr-file-upload
         emptyImage
@@ -15,6 +17,7 @@
         [uploadFileFun]="uploadFileFun && _uploadFileFun"
         [removeFileFun]="removeFileFun && _removeFileFun"
         [accept]="accept"
+        [readonly]="readonly"
         (filesChanged)="onFilesChanged($event)"
         #fileUpload
     >

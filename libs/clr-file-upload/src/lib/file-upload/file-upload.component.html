@@ -10,42 +10,49 @@
 
 <ul class="list-unstyled list-compact">
     <li *ngFor="let file of files; trackBy: trackByFile; let i = index">
-        <!-- file with error -->
-        <div class="btn-group btn-link btn-sm" *ngIf="getFileError(file) as error; else noError">
-            <ng-container *ngIf="!isFileUploaded(file)">
-                <button class="btn btn-file-name">{{ getFileName(file) }}</button>
-                <button class="btn btn-icon" type="button" (click)="onRetryUpload(file)">
-                    <clr-icon shape="upload"></clr-icon>
-                </button>
-                <button class="btn btn-icon" type="button" (click)="onRemoveCachedFile(file)">
-                    <clr-icon shape="trash"></clr-icon>
-                </button>
-            </ng-container>
-            <ng-container *ngIf="isFileUploaded(file)">
-                <button class="btn" (click)="onDownload(file)">{{ getFileName(file) }}</button>
-                <button class="btn btn-icon" type="button" (click)="onRemoveFile(file)">
-                    <clr-icon shape="trash"></clr-icon>
-                </button>
-            </ng-container>
-            <a *ngIf="error" href="javascript://" role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
-                <clr-icon shape="exclamation-circle" style="color: red" size="24"></clr-icon>
-                <span class="tooltip-content">{{ error }}</span>
-            </a>
-        </div>
-
-        <!-- file with no errors -->
-        <ng-template #noError>
-            <div class="btn-group btn-link btn-sm">
-                <ng-container *ngIf="isFileUploading(file) || isFileRemoving(file)">
-                    <button class="btn btn-file-namefile">{{ getFileName(file) }}</button>
-                    <button class="btn btn-icon"><span class="spinner spinner-inline"></span></button>
+        <ng-container *ngIf="!readonly; else readonlyItem">
+            <!-- file with error -->
+            <div class="btn-group btn-link btn-sm" *ngIf="getFileError(file) as error; else noError">
+                <ng-container *ngIf="!isFileUploaded(file)">
+                    <button class="btn btn-file-name">{{ getFileName(file) }}</button>
+                    <button class="btn btn-icon" type="button" (click)="onRetryUpload(file)">
+                        <clr-icon shape="upload"></clr-icon>
+                    </button>
+                    <button class="btn btn-icon" type="button" (click)="onRemoveCachedFile(file)">
+                        <clr-icon shape="trash"></clr-icon>
+                    </button>
                 </ng-container>
-                <ng-container *ngIf="isFileUploaded(file) && !isFileRemoving(file)">
+                <ng-container *ngIf="isFileUploaded(file)">
                     <button class="btn" (click)="onDownload(file)">{{ getFileName(file) }}</button>
                     <button class="btn btn-icon" type="button" (click)="onRemoveFile(file)">
                         <clr-icon shape="trash"></clr-icon>
                     </button>
                 </ng-container>
+                <a *ngIf="error" href="javascript://" role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
+                    <clr-icon shape="exclamation-circle" style="color: red" size="24"></clr-icon>
+                    <span class="tooltip-content">{{ error }}</span>
+                </a>
+            </div>
+
+            <!-- file with no errors -->
+            <ng-template #noError>
+                <div class="btn-group btn-link btn-sm">
+                    <ng-container *ngIf="isFileUploading(file) || isFileRemoving(file)">
+                        <button class="btn btn-file-namefile">{{ getFileName(file) }}</button>
+                        <button class="btn btn-icon"><span class="spinner spinner-inline"></span></button>
+                    </ng-container>
+                    <ng-container *ngIf="isFileUploaded(file) && !isFileRemoving(file)">
+                        <button class="btn" (click)="onDownload(file)">{{ getFileName(file) }}</button>
+                        <button class="btn btn-icon" type="button" (click)="onRemoveFile(file)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+        <ng-template #readonlyItem>
+            <div class="btn-group btn-link btn-sm">
+                <button class="btn" (click)="onDownload(file)">{{ getFileName(file) }}</button>
             </div>
         </ng-template>
     </li>

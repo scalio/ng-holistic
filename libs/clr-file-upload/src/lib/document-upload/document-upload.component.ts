@@ -55,6 +55,7 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
     @Input() height: number;
     @Input() width: number;
     @Input() value: string | File | null;
+    @Input() readonly: boolean;
 
     @Output() click = new EventEmitter();
     @Output() removeClick = new EventEmitter();
