@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "../../dist/out-tsc/libs/clr-common-fuck-up",
+        "outDir": "../../dist/out-tsc/libs/clr-common-for-libs",
         "target": "es2015",
         "module": "es2015",
         "moduleResolution": "node",
