@@ -282,7 +282,7 @@
                 }
             }
         },
-        "clr-common-fuck-up": {
+        "clr-common-for-libs": {
             "root": "libs/clr-common",
             "sourceRoot": "libs/clr-common/src",
             "projectType": "library",
@@ -291,8 +291,8 @@
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
-                        "tsConfig": "libs/clr-common/tsconfig-fuck-up.lib.json",
-                        "project": "libs/clr-common/ng-package-fuck-up.json"
+                        "tsConfig": "libs/clr-common/tsconfig-for-libs.lib.json",
+                        "project": "libs/clr-common/ng-package-for-libs.json"
                     }
                 }
             }
