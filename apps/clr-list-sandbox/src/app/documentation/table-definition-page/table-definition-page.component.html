@@ -40,7 +40,7 @@
                 Instead of static array you could provide controller function which will take currently generated row
                 and return array of the actions for each particular row, if this function will return empty array
                 dropdown button won't be shown for the row.. This property intended to be used in conjuction with
-                <a [routerLink]="['..', 'table']" fragment="row-action">rowAction</a>  event
+                <a [routerLink]="['..', 'table']" fragment="row-action">rowAction</a> event.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-row-actions?file=src/app/planets-table.component.ts"
                     >Example
@@ -70,11 +70,12 @@
             <td class="left">string | Table.SortColumn</td>
             <td class="left">
                 Default sort column id (ascending order). With Table.SortColumn you could define not only column but
-                also order. <code hlc-code-highlight="ts"> {{ sort_column }} </code>
+                also order.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-sort?file=src/app/planets-table.component.ts"
                 >
                 </hlc-sbx-example-link-button>
+                <clr-code-snippet [clrCode]="sort_column"></clr-code-snippet>
             </td>
         </tr>
     </tbody>
@@ -94,7 +95,7 @@
         <tr>
             <td class="left">id</td>
             <td class="left">any</td>
-            <td class="left">Action id, this property could be used on event handling</td>
+            <td class="left">Action id, this property could be used on event handling.</td>
         </tr>
         <tr>
             <td class="left">title</td>
@@ -117,7 +118,11 @@
     <tbody>
         <tr>
             <td class="left">cols</td>
-            <td class="left">Table.Column | Table.CustomColumn | Table.MapColumns.Column</td>
+            <td class="left">
+                (<a [routerLink]="['..', 'column-definition']">Table.Column</a> |
+                <a [routerLink]="['..', 'custom-column-definition']">Table.CustomColumn</a> |
+                <a [routerLink]="['..', 'configure-column-definition-map']">TMapColumns</a>)[]
+            </td>
             <td class="left">Subset of root cols (by id), if cols not in the subset they will be ignored.</td>
         </tr>
         <tr>

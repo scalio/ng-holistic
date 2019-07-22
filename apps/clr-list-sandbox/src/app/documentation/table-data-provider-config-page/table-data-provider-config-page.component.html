@@ -25,17 +25,11 @@
     our data for lists normalized inside the application and then display them in UI list component as denormalized one.
 </p>
 
-<hlc-sbx-example-link-button
-    href="https://stackblitz.com/edit/hlc-clr-list-data-provider?file=src/app/app.module.ts"
+<hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-data-provider?file=src/app/app.module.ts"
     >Example
 </hlc-sbx-example-link-button>
 
-
-<pre>
-    <code hlc-code-highlight="ts">
-        {{interface_definition}}
-    </code>
-</pre>
+<clr-code-snippet [clrCode]="interface_definition"></clr-code-snippet>
 
 <p>
     As suggested above we should always convert dto models to application models as soon as we get them from http
@@ -85,11 +79,6 @@ The appllication model used to describe list requests inside the application.
 
 <p>The converted result value must have component model Table.Data.Result type</p>
 
-<pre>
-    <code hlc-code-highlight="ts"> {{ table_data_result_definition }} </code>
-</pre>
+<clr-code-snippet [clrCode]="table_data_result_definition"></clr-code-snippet>
 
-<p>
-    List / table components will render UI based on the data from this structure.
-</p>
-
+<p>List / table components will render UI based on the data from this structure.</p>

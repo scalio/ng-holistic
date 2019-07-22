@@ -18,6 +18,8 @@ import {
 
 declare var Prism: any;
 
+// tslint:disable
+
 // tslint:disable-next-line:directive-selector
 @Directive({ selector: 'code[hlc-code-highlight]' })
 // tslint:disable-next-line:directive-class-suffix

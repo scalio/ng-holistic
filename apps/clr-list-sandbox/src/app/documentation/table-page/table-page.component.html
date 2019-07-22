@@ -38,6 +38,7 @@
                 <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
                 aggregated data from other rows. Data will be aggregated only for visible rows.
                 <hlc-sbx-example-link-button
+                    [linkLike]="true"
                     href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
                 >
                 </hlc-sbx-example-link-button>
@@ -76,7 +77,7 @@
                 <img align="right" style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected
                 rows ids. If this value is undefined UI won't allow user select rows in the list, if this value is array
                 (even empty), UI will display checkboxes which will allow user to select rows in the list. See related
-                <a [routerLink]="['.']" fragment="selected-rows-changed">selectedRowsChanged</a> event 
+                <a [routerLink]="['.']" fragment="selected-rows-changed">selectedRowsChanged</a> event
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
                 >
@@ -151,11 +152,7 @@
                 >
                 </hlc-sbx-example-link-button>
             </td>
-            <td class="left">
-                <pre>
-                    <code hlc-code-highlight="html">{{row_detail}}</code>
-                </pre>
-            </td>
+            <td class="left"><clr-code-snippet [clrCode]="row_detail" language="html"></clr-code-snippet></td>
         </tr>
         <tr>
             <td class="left">hlcClrCustomCell</td>
@@ -167,11 +164,7 @@
                 >
                 </hlc-sbx-example-link-button>
             </td>
-            <td class="left">
-                <pre>
-                    <code hlc-code-highlight="html">{{custom_cell}}</code>
-                </pre>
-            </td>
+            <td class="left"><clr-code-snippet [clrCode]="custom_cell" language="html"></clr-code-snippet></td>
         </tr>
     </tbody>
 </table>
@@ -180,20 +173,15 @@
 
 <p>
     Provides interface to define aggregation row on the table. The aggregated row will be shown first in the list and
-    include aggregation data only from currently visible rows.
+    include aggregation data only from currently visible rows. For each column defined on the table you could provide
+    aggregation function. This interface is the Map object `columnId : aggregationFunction for the column`. The
+    aggregation function takes as a first param all values from all visible rows for this column and as second
+    additional rows all visible rows.
+
+    <hlc-sbx-example-link-button
+        href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
+        >Example
+    </hlc-sbx-example-link-button>
 </p>
 
-<hlc-sbx-example-link-button
-    href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
-    >Example
-</hlc-sbx-example-link-button>
-
-<p>
-    For each column defined on the table you could provide aggregation function. This interface is the Map object
-    `columnId : aggregationFunction for the column`. The aggregation function takes as a first param all values from all
-    visible rows for this column and as second additional rows all visible rows.
-</p>
-
-<pre>
-    <code hlc-code-highlight="ts">{{table_aggregate_row}}</code>
-</pre>
+<clr-code-snippet [clrCode]="table_aggregate_row"></clr-code-snippet>

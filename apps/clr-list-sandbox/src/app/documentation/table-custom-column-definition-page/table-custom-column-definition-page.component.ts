@@ -16,7 +16,7 @@ const custom_column = `
 }`;
 
 const custom_column_template = `
-<ng-template hlcClrCustomCell="custom" let-row="row" let-val [status]="val"></ng-template>
+<ng-template hlcClrCustomCell="custom" let-row="row" let-val"><app-status [status]="val"></apps-status></ng-template>
 `;
 
 const code_col_def_1 = `

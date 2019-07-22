@@ -11,6 +11,8 @@ export class HlcSbxExampleLinkButtonComponent implements OnInit {
     @Input() title = 'Example';
     @Input() href: string;
 
+    @Input() linkLike = true;
+
     constructor() {}
 
     ngOnInit() {}

@@ -1,1 +1,6 @@
-<button class="btn btn-info btn-sm" (click)="onClick()">{{ title }}</button>
+<button 
+    [class.btn-link]="linkLike"
+    [class.btn-block]="!linkLike"
+    class="btn btn-info btn-sm" 
+    (click)="onClick()"
+>{{ title }}</button>
