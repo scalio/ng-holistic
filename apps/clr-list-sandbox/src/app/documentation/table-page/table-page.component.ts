@@ -20,7 +20,6 @@ interface AggregateRow {
 }
 `;
 
-
 @Component({
     selector: 'hlc-clr-sandbox-table-page',
     templateUrl: './table-page.component.html',
@@ -31,4 +30,5 @@ export class TablePageComponent {
     row_detail = row_detail;
     custom_cell = custom_cell;
     table_aggregate_row = table_aggregate_row;
+
 }

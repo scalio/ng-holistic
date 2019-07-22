@@ -1,4 +1,4 @@
-<h2>Table.Column</h2>
+<h1>Table.Column</h1>
 
 <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-column?file=src/app/table.component.ts"
     >Example
@@ -37,8 +37,8 @@
                 <li>When user click this column, table will be reloaded with appropriate sort parameter</li>
                 <li>
                     The sort field in data provider
-                    <a [routerLink]="['..', 'data-provider']" fragment="map-state">mapState</a> argument will have name
-                    equal to the column id
+                    <a [routerLink]="['..', 'data-provider-config']" fragment="map_state">mapState</a> argument will
+                    have name equal to the column id
                 </li>
                 <li>
                     If this value is a string, column considered sortable and sort field in data provider will have one
@@ -67,20 +67,20 @@
                         </ul>
                     </li>
                     <li>
-                        if you return object with `cls: 'class name'` from 'format' method it will be joined to this
-                        value
+                        if you return object with `cls: 'class name'` from
+                        <a routerLink="." fragment="format_property">format</a> property it will be joined to this value
                     </li>
                 </ul>
             </td>
         </tr>
-        <tr>
+        <tr id="format_property">
             <td class="left">format (optional)</td>
             <td class="left">(val: any, row: any) => string | FormatFun</td>
             <td class="left">
                 <ul>
                     function or reference name from configured
-                    <a [routerLink]="['..', 'configured-column-formatters-map']">formatters map</a>
-                    used format cell value to displayed string
+                    <a routerLink="." fragment="default_formatters">default formatters</a>
+                    map used to format cell value to displayed string
                     <li>the function first arg is the cell value and second optional is the row object itself</li>
                     <li>function could return simple string object, it will be considered value to display</li>
                     <li>
@@ -88,10 +88,11 @@
                         formatted value to display and `cls` is a class to apply to cell content
                     </li>
                     <li>
-                        it is recommended to use <a href="#">default formatters map</a> instead of defining formatter
-                        function for each table. Use <a href="#">HLC_CLR_TABLE_CELL_FORMAT_MAP provider</a> to define
-                        map of default formatters which could be used across the application simple by using reference
-                        name.
+                        it is recommended to use
+                        <a routerLink="." fragment="default_formatters">default formatters</a> map instead of defining
+                        formatter function for each table. Use <a href="#">HLC_CLR_TABLE_CELL_FORMAT_MAP provider</a> to
+                        define map of default formatters which could be used across the application simple by using
+                        reference name.
                     </li>
                 </ul>
             </td>
@@ -99,7 +100,7 @@
     </tbody>
 </table>
 
-<h2>Default formatters</h2>
+<h2 id="default_formatters">Default formatters</h2>
 
 <p>
     You could provide default formatters for table definitions across the application. If a lot of cells in various

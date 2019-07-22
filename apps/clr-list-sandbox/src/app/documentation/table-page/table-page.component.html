@@ -1,3 +1,8 @@
+<h1>Table</h1>
+<p>
+    Table component renders table UI representation by definition provided in <a [routerLink]="['..', 'table-definition']">table definition</a>.
+</p>
+
 <h2>Table properties</h2>
 <table class="table">
     <thead>
@@ -28,12 +33,12 @@
             <td class="left">boolean (default false)</td>
             <td class="left">
                 Disable sorting for all columns even if they marked as
-                <a [routerLink]="['table-definition']" segment="sort_column"> sortable </a>
+                <a [routerLink]="['..', 'table-definition']" fragment="sort_column"> sortable</a>.
             </td>
         </tr>
         <tr>
             <td class="left">aggregateRow</td>
-            <td class="left"><a routerLink="." fragment="table_aggregate_row"> Table.AggregateRow </a></td>
+            <td class="left"><a routerLink="." fragment="aggregate_row"> Table.AggregateRow </a></td>
             <td class="left">
                 <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
                 aggregated data from other rows. Data will be aggregated only for visible rows.
@@ -58,26 +63,26 @@
                 display / edit in modal or sidepanel, this way it is clear for user which item from table is shown.
             </td>
         </tr>
-        <tr id="drag-enabled">
+        <tr id="drag_enabled">
             <td class="left">dragEnabled</td>
             <td class="left">boolean (default false)</td>
             <td class="left">
                 Allow rows to be drag / dropped, see related
-                <a [routerLink]="['.']" fragment="drop-event"> drop event </a>
+                <a [routerLink]="['.']" fragment="drop_event"> drop event</a>.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts"
                 >
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr>
+        <tr id="selected_rows">
             <td class="left">selectedRows</td>
             <td class="left">(number | string)[] (default undefined)</td>
             <td class="left">
                 <img align="right" style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected
                 rows ids. If this value is undefined UI won't allow user select rows in the list, if this value is array
                 (even empty), UI will display checkboxes which will allow user to select rows in the list. See related
-                <a [routerLink]="['.']" fragment="selected-rows-changed">selectedRowsChanged</a> event
+                <a [routerLink]="['.']" fragment="selected_rows_changed">selectedRowsChanged</a> event
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
                 >
@@ -97,12 +102,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr id="row-action">
             <td class="left">rowAction</td>
-            <td class="left"><a [routerLink]="['.']" segment="row_action_event"> Table.RowActionEvent </a></td>
+            <td class="left"><a [routerLink]="['.']" fragment="row_action_event"> Table.RowActionEvent </a></td>
             <td class="left">
                 Will emit event when user click some item in row actions list. See related
-                <a [routerLink]="['..', 'table-definition']" fragment="row-action">rowActions </a> property on table
+                <a [routerLink]="['..', 'table-definition']" fragment="row_actions">rowActions </a> property on table
                 definition object
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-row-actions?embed=1&file=src/app/planets-table.component.ts"
@@ -115,14 +120,26 @@
             <td class="left"><a [routerLink]="['.']" segment="cell_click_event"> Table.CellClickEvent </a></td>
             <td class="left">Will emit event when user click on some row.</td>
         </tr>
-        <tr>
+        <tr id="drop_event">
             <td class="left">drop</td>
             <td class="left"><a [routerLink]="['.']" segment="drop_event"> Table.DropEvent </a></td>
             <td class="left">
                 Will emit event when user dragged and dropped row. See related
-                <a [routerLink]="['.']" segment="drag-enabled"> dragEnabled</a> property
+                <a [routerLink]="['.']" fragment="drag_enabled"> dragEnabled</a> property.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+            </td>
+        </tr>
+        <tr id="selected_rows_changed">
+            <td class="left">selectedRowsCahnged</td>
+            <td class="left">Table.Row[]</td>
+            <td class="left">
+                Will emit event when user select / unselect rows from selected list.
+                <a [routerLink]="['.']" fragment="selected_rows"> selectedRows</a> property.
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
                 >
                 </hlc-sbx-example-link-button>
             </td>
@@ -145,7 +162,7 @@
             <td class="left">
                 Template with hlcClrRowDetail attribute which will be generated for row deatial if root row have any.
                 See related
-                <a [routerLink]="['..', 'table-definition']" fragment="row_details_property">rowDetails</a> property on
+                <a [routerLink]="['..', 'table-definition']" fragment="row_details_property">details</a> property on
                 table definitions object.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-expand-row-card?file=src/app/planets-table.component.ts"
@@ -169,7 +186,7 @@
     </tbody>
 </table>
 
-<h2 id="table_aggregate_row">Table aggregate row</h2>
+<h2 id="aggregate_row">Table aggregate row</h2>
 
 <p>
     Provides interface to define aggregation row on the table. The aggregated row will be shown first in the list and

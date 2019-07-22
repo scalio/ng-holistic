@@ -1,4 +1,15 @@
-<h2>TableDefinition</h2>
+<h1>TableDefinition</h1>
+
+<p>Provides definition of the table including following capabilities</p>
+<ul>
+    <li>Define columns</li>
+    <li>Define default sort column</li>
+    <li>Define row actions for rows</li>
+    <li>Deine aggregation row (TBD)</li>    
+    <li>Deine selectable rows mode (TBD)</li>    
+    <li>Define expandable children rows section for rows</li>    
+    <li>Deine drag and drop mode (TBD)</li>    
+</ul>
 
 <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/table.component.ts"
     >Example
@@ -28,7 +39,7 @@
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr>
+        <tr id="row_actions">
             <td class="left">rowActions (optional)</td>
             <td class="left">
                 <a [routerLink]="['.']" fragment="table-row-action">Table.RowAction</a>[] | ((row: Table.Row) =>
@@ -49,7 +60,7 @@
         </tr>
         <tr>
             <td class="left">details (optional)</td>
-            <td class="left"><a [routerLink]="['.']" (click)="Table_Details.scrollIntoView()">TableDetails</a></td>
+            <td class="left"><a [routerLink]="['.']" fragment="table_details">TableDetails</a></td>
             <td class="left">
                 <img style="height:100px;" align="right" src="assets/images/row-expand.png" /> This property provides
                 interafce to populate children rows of the parent row.
@@ -65,7 +76,7 @@
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr>
+        <tr id="sort_column">
             <td class="left">sort (optional)</td>
             <td class="left">string | Table.SortColumn</td>
             <td class="left">
@@ -105,7 +116,7 @@
     </tbody>
 </table>
 
-<h2 id="Table_Details" #Table_Details>TableDetails</h2>
+<h2 id="table_details">TableDetails</h2>
 
 <table class="table">
     <thead>

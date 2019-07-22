@@ -40,11 +40,10 @@ export const getTableCellFormatMap = (decimalPipe: DecimalPipe): TableCellFormat
         BrowserModule,
         CommonModule,
         RouterModule.forRoot([], {
+            enableTracing: true,
             useHash: true,
-            initialNavigation: 'enabled',
-            anchorScrolling: 'enabled',
-            onSameUrlNavigation: 'reload',
-            scrollPositionRestoration: 'enabled'
+            scrollPositionRestoration: 'enabled',
+            onSameUrlNavigation: 'reload'
         }),
         AppRoutingModule,
         HlcClrTableModule.forRoot(),
