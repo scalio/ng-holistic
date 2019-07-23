@@ -12,17 +12,29 @@ import { DocumentationModule } from './documentation/documentation.module';
 import { routes as docsRoutes } from './documentation/documentation.routing.module';
 import { FaqPageComponent } from './faq/faq-page/faq-page.component';
 import { FaqPageModule } from './faq/faq-page/faq-page.module';
+import { HomePageComponent } from './home-page/home-page.component';
+import { DduxPageComponent } from './ddux-page/ddux-page.component';
+import { DduxPageModule } from './ddux-page/ddux-page.module';
+import { HomePageModule } from './home-page/home-page.module';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/docs/table',
+        redirectTo: '/home',
         pathMatch: 'full'
     },
     {
         path: '',
         component: AppLayoutComponent,
         children: [
+            {
+                path: 'home',
+                component: HomePageComponent
+            },
+            {
+                path: 'ddux',
+                component: DduxPageComponent
+            },
             {
                 path: 'faq',
                 component: FaqPageComponent
@@ -55,7 +67,9 @@ export const routes: Routes = [
         ClrFilterModule,
         ClrListModule,
         DocumentationModule,
-        FaqPageModule
+        FaqPageModule,
+        DduxPageModule,
+        HomePageModule
     ],
     exports: [RouterModule]
 })

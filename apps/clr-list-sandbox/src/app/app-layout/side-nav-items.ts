@@ -2,6 +2,16 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
+        title: 'Home',
+        icon: 'home',
+        path: '/home'
+    },
+    {
+        title: 'Domain Driven UX',
+        icon: 'organization',
+        path: '/ddux'
+    },
+    {
         title: 'FAQ',
         icon: 'help',
         path: '/faq'

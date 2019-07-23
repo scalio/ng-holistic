@@ -1,0 +1,90 @@
+<h1>Domain Driven UX</h1>
+
+<a href="https://en.wikipedia.org/wiki/Domain-driven_design" target="_blank">Domain Driven Design</a> is wiledly used
+approach to software development. You could consider this library as an attempt to use the same principles to define
+user interfaces inside frontend data driven applications. Domain expert could describe customer invoicess list in
+following terms
+
+<table class="table table-compact left">
+    <thead>
+        <th>Column title</th>
+        <th>Type</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Customer Name</td>
+            <td>Customer</td>
+        </tr>
+        <tr>
+            <td>Order Number</td>
+            <td>OrderNumber</td>
+        </tr>
+        <tr>
+            <td>Order Date</td>
+            <td>ShortDate</td>
+        </tr>
+        <tr>
+            <td>Card Number</td>
+            <td>CardNumber</td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td>Amount</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td>Amount</td>
+        </tr>
+        <tr>
+            <td>Currency</td>
+            <td>Currency</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Here each type has associated component to render inside the table cell, so we could define table as</p>
+
+<clr-code-snippet [clrCode]="tableDef"> </clr-code-snippet>
+
+<p>
+    We define here data binding and in which format displayed value should be generated, the actual UX rendering is the
+    concern of the holistic library.
+</p>
+
+<ul>
+    Few subtle points worth to mention here
+    <li>
+        'kind' property mark column as containing cutom component inside, you must
+        <a [routerLink]="['/docs', 'configure-column-definition-map']">configure</a> these on app start.
+    </li>
+    <li>
+        There is
+        <a [routerLink]="['/docs', 'configure-column-definition-map']" fragment="implict_value_binding"
+            >implicit value binding</a
+        >
+        here between row data and component value.
+    </li>
+    <li>To load data inside the table use <a [routerLink]="['/docs', 'data-provider']">DataProvider</a> interface.</li>
+</ul>
+
+<h3>Why use custom component for seemingly string values ?</h3>
+
+When customer name is displayed inside table cell it could be just a string, if so we don't need some custom
+component to render it
+<ul>
+    but what if customer name
+    <li>Has link to the customer profile to open</li>
+    <li>Has some popup to show with additional info</li>
+    <li>
+        Format name value, such as cappitalise first letters (it could be achived also via
+        <a [routerLink]="['/docs', 'column-definition']" fragment="format_property">formatters</a>)
+    </li>
+</ul>
+
+If you create some custom component for this case and
+<a [routerLink]="['/docs', 'configure-column-definition-map']">configure</a> it to be used in table definitions then you
+could use it in any table inside application by simple reference it inside table definition.

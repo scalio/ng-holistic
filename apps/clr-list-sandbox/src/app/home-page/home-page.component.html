@@ -1,0 +1,45 @@
+<h1>HOME</h1>
+
+<h2>Reasoning</h2>
+
+<p>
+    The purpose of this library is allow developers to create components (data lists in particular) not by implementing
+    them with html, styles and code but by describing (defining) them. Then it is concern of the UX librariry to
+    generate these components, this way we effectively separate core (business) logic of the application from the UI
+    impelmentation.
+</p>
+
+<h2>Tables and lists</h2>
+
+<p>With help of this library you define (describe) the data list representation with following features</p>
+<ul>
+    <li>
+        Define columns
+        <ul>
+            <li>Define title of the column</li>
+            <li>Define data binding to the rows values</li>
+            <li>Define if columns sortable</li>
+            <li>Provide column value formatter</li>
+            <li>Define classes to apply to the columns</li>
+            <li>Provide interface to generate custom components inside the columns</li>
+        </ul>
+    </li>
+    <li>Define filters</li>
+    <li>Define default sort column</li>
+    <li>Define row actions for rows</li>
+    <li>Deine aggregation row</li>
+    <li>Deine selectable rows mode</li>
+    <li>Define expandable children rows section for rows</li>
+    <li>Deine drag and drop mode</li>
+</ul>
+
+<h2>Benefits</h2>
+
+<p>
+    The major benefits from using this library could achive large data driven applications with a lot of tables and
+    lists. Using this library you could easily and reliable describe desired table representations without concern how
+    these data will be rendered. Library provides strict set of API (aka description DSL) to render UI components, this
+    allows large teams to stay sync on how to create and use data lists inside application, no need to copy / paste html
+    css code when create new components or invent some base classes which abstracts common list implementation for the
+    application.
+</p>
