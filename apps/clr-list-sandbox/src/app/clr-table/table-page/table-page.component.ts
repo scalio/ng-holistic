@@ -4,6 +4,10 @@ import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
+const aggregateRow: Table.AggregateRow = {
+    amount: R.sum
+};
+
 const table: TableDescription = {
     sort: 'title',
     cols: [
@@ -44,7 +48,8 @@ const table: TableDescription = {
             customCell: true,
             title: 'Custom'
         }
-    ]
+    ],
+    aggregateRow
 };
 
 const genRows = (len: number): Table.Row[] =>
@@ -89,10 +94,6 @@ const dataProvider: { _load: any } & Table.Data.DataProvider = {
         const decorated = getAllDecorator.decorate(this._load);
         return decorated(state);
     }
-};
-
-const aggregateRow: Table.AggregateRow = {
-    amount: R.sum
 };
 
 const definition = `
@@ -236,7 +237,6 @@ export class TablePageModule {}
 export class TablePageComponent implements OnInit {
     table = table;
     dataProvider = dataProvider;
-    aggregateRow = aggregateRow;
 
     definition = definition;
     code = code;

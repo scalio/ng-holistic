@@ -5,10 +5,10 @@
     <li>Define columns</li>
     <li>Define default sort column</li>
     <li>Define row actions for rows</li>
-    <li>Deine aggregation row (TBD)</li>    
-    <li>Deine selectable rows mode (TBD)</li>    
+    <li>Define aggregation row</li>    
+    <li>Define selectable rows mode</li>    
     <li>Define expandable children rows section for rows</li>    
-    <li>Deine drag and drop mode (TBD)</li>    
+    <li>Deine drag and drop mode</li>    
 </ul>
 
 <hlc-sbx-example-link-button href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/table.component.ts"
@@ -89,6 +89,45 @@
                 <clr-code-snippet [clrCode]="sort_column"></clr-code-snippet>
             </td>
         </tr>
+        <tr id="aggregate_row_property">
+            <td class="left">aggregateRow</td>
+            <td class="left"><a routerLink="." fragment="aggregate_row"> Table.AggregateRow </a></td>
+            <td class="left">
+                <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
+                aggregated data from other rows. Data will be aggregated only for visible rows.
+                <hlc-sbx-example-link-button
+                    [linkLike]="true"
+                    href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+            </td>
+        </tr>
+        <tr id="drag_enabled_property">
+            <td class="left">dragEnabled</td>
+            <td class="left">boolean (default false)</td>
+            <td class="left">
+                Allow rows to be drag / dropped, see related
+                <a [routerLink]="['..', 'table']" fragment="drop_event"> drop event</a>.
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-drag?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+            </td>
+        </tr>
+        <tr id="selected_rows_proeprty">
+            <td class="left">selectedRows</td>
+            <td class="left">(number | string)[] (default undefined)</td>
+            <td class="left">
+                <img align="right" style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected
+                rows ids. If this value is undefined UI won't allow user select rows in the list, if this value is array
+                (even empty), UI will display checkboxes which will allow user to select rows in the list. See related
+                <a [routerLink]="['..', 'table']" fragment="selected_rows_changed">selectedRowsChanged</a> event
+                <hlc-sbx-example-link-button
+                    href="https://stackblitz.com/edit/hlc-clr-list-selected-rows?file=src/app/planets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+            </td>
+        </tr>
     </tbody>
 </table>
 
@@ -146,3 +185,19 @@
         </tr>
     </tbody>
 </table>
+
+<h2 id="aggregate_row">Table.AggregateRow</h2>
+
+<p>
+    Provides interface to define aggregation row on the table. The aggregated row will be shown first in the list and
+    include aggregation data only from currently visible rows. For each column defined on the table you could provide
+    aggregation function. This interface is the Map object `columnId : aggregationFunction for the column`. The
+    aggregation function takes as a first param all values from all visible rows for this column and as second
+    additional rows all visible rows.
+
+    <hlc-sbx-example-link-button
+        href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
+        >Example
+    </hlc-sbx-example-link-button>
+</p>
+

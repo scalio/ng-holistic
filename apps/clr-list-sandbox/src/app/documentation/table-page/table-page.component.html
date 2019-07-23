@@ -1,6 +1,7 @@
 <h1>Table</h1>
 <p>
-    Table component renders table UI representation by definition provided in <a [routerLink]="['..', 'table-definition']">table definition</a>.
+    Table component renders table UI representation by definition provided in
+    <a [routerLink]="['..', 'table-definition']">table definition</a>.
 </p>
 
 <h2>Table properties</h2>
@@ -37,19 +38,6 @@
             </td>
         </tr>
         <tr>
-            <td class="left">aggregateRow</td>
-            <td class="left"><a routerLink="." fragment="aggregate_row"> Table.AggregateRow </a></td>
-            <td class="left">
-                <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
-                aggregated data from other rows. Data will be aggregated only for visible rows.
-                <hlc-sbx-example-link-button
-                    [linkLike]="true"
-                    href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
-                >
-                </hlc-sbx-example-link-button>
-            </td>
-        </tr>
-        <tr>
             <td class="left">setFirstRowActiveOnFocus</td>
             <td class="left">boolean (default true)</td>
             <td class="left">Will set first row active when table component recieve focus.</td>
@@ -64,7 +52,12 @@
             </td>
         </tr>
         <tr id="drag_enabled">
-            <td class="left">dragEnabled</td>
+            <td class="left">
+                <i>dragEnabled*</i> recommended to use
+                <a [routerLink]="['..', 'table-definition']" fragment="drag_enabled_property"
+                    >TableDescription.dragEnabled</a
+                >
+            </td>
             <td class="left">boolean (default false)</td>
             <td class="left">
                 Allow rows to be drag / dropped, see related
@@ -76,7 +69,12 @@
             </td>
         </tr>
         <tr id="selected_rows">
-            <td class="left">selectedRows</td>
+            <td class="left">
+                <i>selectedRows*</i> recommended to use
+                <a [routerLink]="['..', 'table-definition']" fragment="selected_rows_property"
+                    >TableDescription.selectedRows</a
+                >
+            </td>
             <td class="left">(number | string)[] (default undefined)</td>
             <td class="left">
                 <img align="right" style="height:100px;" src="assets/images/select-rows.png" /> The list of the selected
@@ -89,8 +87,35 @@
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
+        <tr>
+            <td class="left">
+                <span style="text-decoration: line-through">aggregateRow</span> obsolete, use
+                <a [routerLink]="['..', 'table-definition']" fragment="aggregate_row_property"
+                    >TableDescription.aggregateRow</a
+                >
+            </td>
+            <td class="left">
+                <a [routerLink]="['..', 'table-definition']" fragment="aggregate_row"> Table.AggregateRow </a>
+            </td>
+            <td class="left">
+                <img align="right" style="height:100px;" src="assets/images/aggregate-row.png" /> Display row with
+                aggregated data from other rows. Data will be aggregated only for visible rows.
+                <hlc-sbx-example-link-button
+                    [linkLike]="true"
+                    href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
+                >
+                </hlc-sbx-example-link-button>
+            </td>
+        </tr>
     </tbody>
 </table>
+
+<p>
+    * There is exacly same properties on Table and TableDescription object, the main difference here to understand table
+    definition object used only once on component initialization, after this changes on this object is not reflected on
+    the UI, most of the times its desired behaviour and you should use these properties on table definition object. But
+    if for some reason you want to change these properties dynamically, use ones from table component.
+</p>
 
 <h2>Table events</h2>
 <table class="table">
@@ -185,20 +210,5 @@
         </tr>
     </tbody>
 </table>
-
-<h2 id="aggregate_row">Table aggregate row</h2>
-
-<p>
-    Provides interface to define aggregation row on the table. The aggregated row will be shown first in the list and
-    include aggregation data only from currently visible rows. For each column defined on the table you could provide
-    aggregation function. This interface is the Map object `columnId : aggregationFunction for the column`. The
-    aggregation function takes as a first param all values from all visible rows for this column and as second
-    additional rows all visible rows.
-
-    <hlc-sbx-example-link-button
-        href="https://stackblitz.com/edit/hlc-clr-list-aggregate-row?file=src%2Fapp%2Fplanets-table.component.ts"
-        >Example
-    </hlc-sbx-example-link-button>
-</p>
 
 <clr-code-snippet [clrCode]="table_aggregate_row"></clr-code-snippet>

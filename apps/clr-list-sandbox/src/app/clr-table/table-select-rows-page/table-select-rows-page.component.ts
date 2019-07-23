@@ -39,7 +39,8 @@ const table: TableDescription = {
             customCell: true,
             title: 'Custom'
         }
-    ]
+    ],
+    selectedRows: []
 };
 
 const rows: Table.Row[] = [
@@ -71,14 +72,12 @@ export class TableSelectRowsPageComponent implements OnInit {
     table = table;
     dataProvider = dataProvider;
 
-    selectedRows: string[] = [];
-
     constructor() {}
 
     ngOnInit() {}
 
     onSelectedRowsChanged(r: Table.Row[]) {
-        this.selectedRows = r.map(m => m.id);
-        console.log('onSelectedRowsChanged', this.selectedRows);
+        // this.selectedRows = r.map(m => m.id);
+        console.log('onSelectedRowsChanged', r);
     }
 }

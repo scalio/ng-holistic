@@ -17,7 +17,8 @@ import {
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    OnInit
 } from '@angular/core';
 import { ClrDatagrid, ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
@@ -59,7 +60,7 @@ export const HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER = new InjectionToken<TableCusto
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [HlcHotkeysContainerService, HlcTableKeysManagerService]
 })
-export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, AfterViewInit {
+export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy, OnInit, AfterViewInit {
     private readonly cellMap: TableCellMap;
     private readonly cellFormatMap: TableCellFormatMap;
     private state: ClrDatagridStateInterface;
@@ -249,6 +250,20 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         keysManager.action.pipe(takeUntil(this.destroy$)).subscribe(type => {
             this.cellClick.emit({ row: this._activeRow as any, type });
         });
+    }
+
+    ngOnInit() {
+        if (this.table && this.table.selectedRows) {
+            this.selectedRows = this.table.selectedRows;
+        }
+
+        if (this.table && this.table.aggregateRow) {
+            this.aggregateRow = this.table.aggregateRow;
+        }
+
+        if (this.table && this.table.dragEnabled) {
+            this.dragEnabled = this.table.dragEnabled;
+        }
     }
 
     ngAfterViewInit() {

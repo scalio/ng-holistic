@@ -121,6 +121,9 @@ export interface TableDescription<TMapColumns = Table.MapColumns.Column> {
     rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
     details?: TableDetails;
     sort?: string | Table.SortColumn;
+    aggregateRow?: Table.AggregateRow;
+    dragEnabled?: boolean;
+    selectedRows?: (number | string) [];
 }
 
 export namespace Table.Data {
