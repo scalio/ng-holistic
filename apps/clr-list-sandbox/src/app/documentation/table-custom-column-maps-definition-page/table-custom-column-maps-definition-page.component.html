@@ -1,18 +1,47 @@
 <h1>Custom columns definition map</h1>
 
 <p>
-    If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
-    you could use configurable map for custom columns.    
-    `TMapColumns` is the generic parameter which passed TableDefinition class and has default value of
-    `Table.MapColumns.Column = LinkColumn | ImgColumn;` This column definition provides interface to insert into the
-    cell arbitrary predefined components. By default there is defined 2 custom mapped columns `LinkColumn | ImgColumn`.
-    You could extend predefined set of `TMapColumns` and then use their definitions inside any table definition.
+    According to <a [routerLink]="['/ddux']">Domain Design</a> principles in order to make application implementation
+    more robust hence easier to implement and understand, we should define some domain model and operate it inside our
+    application.
 </p>
+
+<p></p>
+
+<ul>
+    In context of this library this means following:
+    <li>
+        First of all we define the set of common column types specific for the application (we could call it domain
+        model of the app).
+    </li>
+    <li>
+        For each column type we implement specific component associated with it, for example there is could be
+        CardNumberColumnComponent which display card number and icon of the card's scheme (visa / master / etc), or some
+        PersonColumnComponent which will display highlighted name of the user and popup which will show additional user
+        info. These components should be developed by design team and verified by business domain experts.
+    </li>
+    <li>We configure link between column type and associated component.</li>
+    <li>
+        After this we could use these column types in any table definition across whole application just describing this
+        column in table definition object. So when domain expert asks developer to add column with CardNumber type to
+        some table there is no ambiguity how it should be done and what UI to use for this.
+    </li>
+</ul>
 
 <hlc-sbx-example-link-button
     href="https://stackblitz.com/edit/hlc-clr-list-custom-column-maps?file=src%2Fapp%2Ftable.component.ts"
     >Example
 </hlc-sbx-example-link-button>
+
+<!--
+<p>
+    If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
+    you could use configurable map for custom columns. `TMapColumns` is the generic parameter which passed
+    TableDefinition class and has default value of `Table.MapColumns.Column = LinkColumn | ImgColumn;` This column
+    definition provides interface to insert into the cell arbitrary predefined components. By default there is defined 2
+    custom mapped columns `LinkColumn | ImgColumn`. You could extend predefined set of `TMapColumns` and then use their
+    definitions inside any table definition.
+</p>
 
 <h3>LinkColumn</h3>
 
@@ -120,3 +149,4 @@
         </tr>
     </tbody>
 </table>
+-->

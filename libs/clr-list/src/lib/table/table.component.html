@@ -128,8 +128,7 @@
 <ng-template #rowCell let-cell="cell" let-row="row" let-parentRow="parentRow">
     <!-- TODO : move to component, contentAlign is wrong -->
     <div
-        aggrRow
-        [style.white-space]="cell.whitespaceWrap ? undefined : 'nowrap'"
+        [style.white-space]="cell.whitespaceWrap === false ? 'nowrap' : undefined"
         [style.display]="cell.alignContent === 'center' ? 'flex' : undefined"
         [style.justify-content]="cell.alignContent === 'center' ? 'center' : undefined"
         [style.text-align]="cell.alignContent === 'end' ? 'right' : undefined"
