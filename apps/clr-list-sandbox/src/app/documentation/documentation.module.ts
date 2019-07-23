@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ListDefinitionPageModule } from './list-definition-page/list-definition-page.module';
 import { TableColumnDefinitionPageModule } from './table-column-definition-page/table-column-definition-page.module';
 // tslint:disable-next-line:max-line-length
 import { TableCustomColumnDefinitionPageModule } from './table-custom-column-definition-page/table-custom-column-definition-page.module';
@@ -21,7 +22,8 @@ import { TablePageModule } from './table-page/table-page.module';
         TableDataProviderConfigPageModule,
         TableColumnDefinitionPageModule,
         TableCustomColumnDefinitionPageModule,
-        TableCustomColumnMapsDefinitionPageModule
+        TableCustomColumnMapsDefinitionPageModule,
+        ListDefinitionPageModule
     ]
 })
 export class DocumentationModule {}

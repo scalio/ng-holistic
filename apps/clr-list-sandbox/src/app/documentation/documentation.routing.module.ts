@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// tslint:disable-next-line:import-spacing
-import { TableColumnDefinitionPageComponent } 
-    from './table-column-definition-page/table-column-definition-page.component';
+// tslint:disable-next-line:max-line-length
+import { TableColumnDefinitionPageComponent } from './table-column-definition-page/table-column-definition-page.component';
 import { TableColumnDefinitionPageModule } from './table-column-definition-page/table-column-definition-page.module';
 // tslint:disable-next-line:max-line-length
 import { TableDataProviderConfigPageComponent } from './table-data-provider-config-page/table-data-provider-config-page.component';
@@ -15,11 +14,16 @@ import { TablePageModule } from './table-page/table-page.module';
 import { TableCustomColumnDefinitionPageComponent } from './table-custom-column-definition-page/table-custom-column-definition-page.component';
 // tslint:disable-next-line:max-line-length
 import { TableCustomColumnMapsDefinitionPageComponent } from './table-custom-column-maps-definition-page/table-custom-column-maps-definition-page.component';
+import { ListDefinitionPageComponent } from './list-definition-page/list-definition-page.component';
 
 export const routes: Routes = [
     {
         path: 'table',
         component: TablePageComponent
+    },
+    {
+        path: 'list',
+        component: ListDefinitionPageComponent
     },
     {
         path: 'data-provider',

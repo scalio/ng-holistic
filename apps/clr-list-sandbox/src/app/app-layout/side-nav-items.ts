@@ -25,6 +25,10 @@ export default [
                 path: ['/docs', 'table']
             },
             {
+                title: 'List',
+                path: ['/docs', 'list']
+            },
+            {
                 title: 'Data Provider',
                 path: ['/docs', 'data-provider']
             },
