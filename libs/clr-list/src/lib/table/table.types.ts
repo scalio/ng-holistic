@@ -97,7 +97,8 @@ export namespace Table {
 export namespace Table.MapColumns {
     export interface MapColumn<P = any> extends ColumnBase {
         kind: string;
-        props: P;
+        // props could be omitted if component has defult binding property
+        props?: P;
     }
 
     export type CellPropFun<T> = (val: any, row: any) => T;

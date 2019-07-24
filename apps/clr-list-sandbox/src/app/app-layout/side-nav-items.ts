@@ -69,6 +69,10 @@ export default [
         icon: 'view-list',
         children: [
             {
+                title: 'Invoices',
+                path: ['/clr-table', 'invoices']
+            },
+            {
                 title: 'Table',
                 path: ['/clr-table', 'table']
             },

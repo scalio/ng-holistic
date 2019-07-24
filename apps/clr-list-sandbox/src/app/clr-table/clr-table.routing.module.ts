@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InvoicesTablePageComponent } from './invoices-table-page/invoices-table-page.component';
+import { InvoicesTablePageModule } from './invoices-table-page/invoices-table-page.module';
 import { TableExpandRowCardPageComponent } from './table-expand-row-card-page/table-expand-row-card-page.component';
 import { TableExpandRowCardPageModule } from './table-expand-row-card-page/table-expand-row-card-page.module';
 import { TableExpandRowPageComponent } from './table-expand-row-page/table-expand-row-page.component';
@@ -14,6 +16,10 @@ import { TableSelectRowsPageComponent } from './table-select-rows-page/table-sel
 import { TableSelectRowsPageModule } from './table-select-rows-page/table-select-rows-page.module';
 
 export const routes: Routes = [
+    {
+        path: 'invoices',
+        component: InvoicesTablePageComponent
+    },
     {
         path: 'table',
         component: TablePageComponent
@@ -48,7 +54,8 @@ export const routes: Routes = [
         TableExpandRowPageModule,
         TableExpandRowCardPageModule,
         TableSelectRowsPageModule,
-        TableRowActionsPageModule
+        TableRowActionsPageModule,
+        InvoicesTablePageModule
     ],
     exports: [RouterModule],
     entryComponents: []
