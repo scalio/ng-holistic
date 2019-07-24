@@ -73,6 +73,25 @@ export namespace Table {
         name: string;
         direction: 'asc' | 'desc';
     }
+
+    export interface Details {
+        /*
+        Subset of root cols (by id), if cols not in the subset they will be ignored
+        */
+        cols?: (Table.Column | Table.CustomColumn | Table.MapColumns.Column)[];
+        rows: (parentRow: Table.Row) => any[];
+    }
+    
+    export interface Definition<TMapColumns = Table.MapColumns.Column> {
+        cols: (Table.Column | Table.CustomColumn | TMapColumns)[];
+        rowActions?: Table.RowAction[] | ((row: Table.Row) => Table.RowAction[]);
+        details?: Details;
+        sort?: string | Table.SortColumn;
+        aggregateRow?: Table.AggregateRow;
+        dragEnabled?: boolean;
+        selectedRows?: (number | string) [];
+    }
+
 }
 
 export namespace Table.MapColumns {
@@ -106,6 +125,7 @@ export namespace Table.MapColumns {
     }
 
     export type Column = LinkColumn | ImgColumn;
+
 }
 
 export interface TableDetails {

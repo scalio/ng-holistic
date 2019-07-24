@@ -20,10 +20,27 @@
             <td class="left">Provides interface to load data to the table.</td>
         </tr>
         <tr>
-            <td class="left">table</td>
-            <td class="left"><a [routerLink]="['..', 'table-definition']">TableDescription</a></td>
+            <td class="left">defintion</td>
+            <td class="left"><a [routerLink]="['..', 'table-definition']">Table.Definition</a></td>
             <td class="left">Define table UI representation: columns, sorting, etc in simple js object.</td>
         </tr>
+    </tbody>
+</table>
+<h2>Table seconadry properties</h2>
+
+<p>
+    These properties are for advanced cases and should be rarely used or changed from default values in most of the
+    applications
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
         <tr>
             <td class="left">hidePaginator</td>
             <td class="left">boolean (default false)</td>

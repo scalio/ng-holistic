@@ -30,9 +30,10 @@ import {
     HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
     TableCustomCellsProvider
 } from '../table/table.component';
-import { Table, TableDescription } from '../table/table.types';
+import { Table } from '../table/table.types';
 import { HlcListElementType, HlcListKeysManagerService } from '../utils/list-keys-manager';
 import { defaultListLabelsConfig, HLC_CLR_LIST_LABELS_CONFIG, ListLabelsConfig } from './list.config';
+import { List } from './list.types';
 
 @Component({
     selector: 'hlc-clr-list',
@@ -64,6 +65,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() rowSelectable = false;
 
     // Filter props delegator
+    // @obsolete use definition.filters instead
     @Input() filterFields: ClrFormFields.FormField[];
 
     // Table props delegators
@@ -78,7 +80,23 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
      * Regualr integration, just load data and keep them locally
      */
     @Input() dataProvider: Table.Data.DataProvider | undefined;
-    @Input() table: TableDescription | undefined;
+    // @obsolete, use definition
+    @Input() table: Table.Definition | undefined;
+
+    @Input() set definition(val: List.Definition | undefined) {
+        
+        
+        this.table = val;
+        if (val && val.filters) {
+            this.filterFields = val.filters;
+        } else {
+            this.filterFields = (undefined as unknown) as ClrFormFields.FormField[];
+        }
+    }
+
+    get defintion(): List.Definition | undefined {
+        return (this.table as unknown) as List.Definition | undefined;
+    }
 
     /**
      * Enable darg & drop

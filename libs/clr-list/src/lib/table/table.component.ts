@@ -41,7 +41,7 @@ import {
     TableCellMap,
     TableDataProviderConfig
 } from './table.config';
-import { Table, TableDescription } from './table.types';
+import { Table } from './table.types';
 import { mapPageState, omitUndefinedFileds } from './table.utils';
 import { HlcTableKeysManagerService } from './utils/table-keys-manager';
 
@@ -85,6 +85,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     @Input() rowDetail: RowDetailDirective | undefined;
 
+    /// @obsolete
     @Input() aggregateRow: Table.AggregateRow | undefined;
     @Input() rowSelectable = false;
 
@@ -174,7 +175,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Regualr integration, just load data and keep them locally
      */
     @Input() dataProvider: Table.Data.DataProvider | undefined;
-    @Input() table: TableDescription | undefined;
+    // @obsolete, use definition property instead
+    @Input() table: Table.Definition | undefined;
+    @Input() set definition (val: Table.Definition | undefined) { this.table = val; }
+    get definition () { return this.table; }
 
     @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
     @Input() isCompact = false;
