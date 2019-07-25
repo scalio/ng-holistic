@@ -6,7 +6,10 @@
     application.
 </p>
 
-<p></p>
+<hlc-sbx-example-link-button
+    href="https://stackblitz.com/edit/hlc-clr-list-custom-column-maps?file=src%2Fapp%2Ftable.component.ts"
+    >Example
+</hlc-sbx-example-link-button>
 
 <ul>
     In context of this library this means following:
@@ -28,125 +31,22 @@
     </li>
 </ul>
 
-<hlc-sbx-example-link-button
-    href="https://stackblitz.com/edit/hlc-clr-list-custom-column-maps?file=src%2Fapp%2Ftable.component.ts"
-    >Example
-</hlc-sbx-example-link-button>
+<h2>Data binding</h2>
 
-<!--
-<p>
-    If you application has some custom component which supposed to be used repeatedly in the cells of the various tables
-    you could use configurable map for custom columns. `TMapColumns` is the generic parameter which passed
-    TableDefinition class and has default value of `Table.MapColumns.Column = LinkColumn | ImgColumn;` This column
-    definition provides interface to insert into the cell arbitrary predefined components. By default there is defined 2
-    custom mapped columns `LinkColumn | ImgColumn`. You could extend predefined set of `TMapColumns` and then use their
-    definitions inside any table definition.
-</p>
+When we use custom component inside the cell we must bind values from row to the input properties of the component.
+There is two ways to do it:
 
-<h3>LinkColumn</h3>
+<h3>Binding via props</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="left">id, title, sort, cls</td>
-            <td class="left">-</td>
-            <td class="left">The same as in Table.Column</td>
-        </tr>
-        <tr>
-            <td class="left">kind</td>
-            <td class="left">'LinkColumn'</td>
-            <td class="left">
-                The flag which signal library: for content of this column should be generated link component
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props</td>
-            <td class="left">-</td>
-            <td class="left">Values to initialize properties of the link component</td>
-        </tr>
-        <tr>
-            <td class="left">props.title</td>
-            <td class="left">string | (val: any, row: any) => string</td>
-            <td class="left">
-                The text of the link. Also it could be a function which given col value and row returns appropriate
-                title.
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props.link (optional)</td>
-            <td class="left">string | (val: any, row: any) => string</td>
-            <td class="left">
-                The url for the link. Also it could be a function which given col value and row returns appropriate
-                title.
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props.clicked (optional)</td>
-            <td class="left">Subject</td>
-            <td class="left">On each link click subject will receive new event.</td>
-        </tr>
-    </tbody>
-</table>
+Every custom column definition object has 'props' property which used to bind row value to component input properties.
+The 'props' object is hashmap with keys equal to component's input property names, the values of this hashmap must be binding fumnctions
+which given value of the column and the row should return value supposed to be bound to this component property.
 
-<h3>ImgColumn</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="left">id, title, sort, cls</td>
-            <td class="left">-</td>
-            <td class="left">The same as in Table.Column</td>
-        </tr>
-        <tr>
-            <td class="left">kind</td>
-            <td class="left">'ImgColumn'</td>
-            <td class="left">
-                The flag which signal library: for content of this column should be generated image component
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props</td>
-            <td class="left">-</td>
-            <td class="left">Values to initialize properties of the image component</td>
-        </tr>
-        <tr>
-            <td class="left">props.src</td>
-            <td class="left">string | (val: any, row: any) => string</td>
-            <td class="left">
-                The path to the image. Also it could be a function which given col value and row returns appropriate
-                src.
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props.width (optional)</td>
-            <td class="left">string | (val: any, row: any) => string</td>
-            <td class="left">
-                The width of the image (example '100px'). Also it could be a function which given col value and row
-                returns appropriate width.
-            </td>
-        </tr>
-        <tr>
-            <td class="left">props.height (optional)</td>
-            <td class="left">string | (val: any, row: any) => string</td>
-            <td class="left">
-                The heigth of the image (example '100px'). Also it could be a function which given col value and row
-                returns appropriate height.
-            </td>
-        </tr>
-    </tbody>
-</table>
--->
+<h3>Binding via component default value property</h3>
+If custom component define some input property annotated with <i>@HlcDefaultBindValue</i> attribute, this property will be bound to the cell value implicitly
+so you don't need to bind it manually via 'props'.
+
+<h2>Output events binding</h2>
+
+TBD

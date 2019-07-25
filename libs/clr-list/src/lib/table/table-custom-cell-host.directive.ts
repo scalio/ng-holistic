@@ -41,6 +41,11 @@ export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChange
         this.view.destroy();
     }
 
+    private get boundValue() {
+        const bind = this.cell.bind || (x => x[this.cell.id]);
+        return bind(this.row);
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['row'] && changes['row'].previousValue !== changes['row'].currentValue) {
             if (this.view) {
@@ -48,7 +53,7 @@ export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChange
             }
 
             this.view = this.vcr.createEmbeddedView(this.directive.templateRef, {
-                $implicit: this.row[this.cell.id],
+                $implicit: this.row[this.boundValue],
                 row: this.row,
                 cell: this.cell,
                 parentRow: this.parentRow
