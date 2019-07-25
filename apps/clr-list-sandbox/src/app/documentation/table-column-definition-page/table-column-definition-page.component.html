@@ -13,20 +13,42 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr id="id_property">
             <td class="left">id</td>
             <td class="left">string</td>
             <td class="left">
-                Column identifier, when row provided to the table from json object, value from the object[id] property
-                will be provided for this column.
+                Column identifier, when row provided to the table from json object, value from the row[id] property will
+                be provided for this column if <a routerLink="." fragment="bind">bind</a> is not defined.
             </td>
         </tr>
-        <tr>
+        <tr id="bind_property">
+            <td class="left">bind (optional)</td>
+            <td class="left">(row: Table.Row) => any</td>
+            <td class="left">
+                This function provides value which must be displayed inside the cell.
+                <ul>
+                    <li>
+                        Given generated row this method must return some value to be displayed as cell
+                        content.
+                    </li>
+                    <li>
+                        If this property is not defined then default binding will be used, it will take value from row
+                        property with name <a routerLink="." fragment="id">id</a>.
+                    </li>
+                    <li>
+                        Before displaying the bound value could be
+                        <a routerLink="." fragment="format_property">formatted</a>.
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr id="title_property">
             <td class="left">title</td>
             <td class="left">string</td>
             <td class="left">Column title</td>
         </tr>
-        <tr>
+        <tr id="sort_property">
             <td class="left">sort (optional)</td>
             <td class="left">string | boolean (default false)</td>
             <td class="left">
@@ -46,7 +68,7 @@
                 </li>
             </td>
         </tr>
-        <tr>
+        <tr id="cls_property">
             <td class="left">cls (optional)</td>
             <td class="left">string</td>
             <td class="left">

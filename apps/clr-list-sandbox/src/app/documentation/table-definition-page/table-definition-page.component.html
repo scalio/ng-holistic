@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr id="cols_property">
             <td class="left">cols</td>
             <td class="left">
                 (<a [routerLink]="['..', 'column-definition']">Table.Column</a> |
@@ -32,14 +32,14 @@
                 <a [routerLink]="['..', 'configure-column-definition-map']">TMapColumns</a>)[]
             </td>
             <td class="left">
-                List of the columns definitions see bellow.
+                List of the columns definitions.
                 <hlc-sbx-example-link-button
                     href="https://stackblitz.com/edit/hlc-clr-list-basic?file=src/app/app.component.ts"
                     >Example
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr id="row_actions">
+        <tr id="row_actions_property">
             <td class="left">rowActions (optional)</td>
             <td class="left">
                 <a [routerLink]="['.']" fragment="table-row-action">Table.RowAction</a>[] | ((row: Table.Row) =>
@@ -58,7 +58,7 @@
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr>
+        <tr id="details_property">
             <td class="left">details (optional)</td>
             <td class="left"><a [routerLink]="['.']" fragment="table_details">Table.Details</a></td>
             <td class="left">
@@ -76,7 +76,7 @@
                 </hlc-sbx-example-link-button>
             </td>
         </tr>
-        <tr id="sort_column">
+        <tr id="sort_property">
             <td class="left">sort (optional)</td>
             <td class="left">string | Table.SortColumn</td>
             <td class="left">
