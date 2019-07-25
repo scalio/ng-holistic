@@ -69,6 +69,11 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
         }
     }
 
+    private get boundValue() {
+        const bind = this.cell.bind || (x => x[this.cell.id]);
+        return bind(this.row);
+    }
+
     private get props() {
         /**
          * Convert possible (row) => propVal properties definition into scalar ones
@@ -77,7 +82,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
             R.toPairs,
             R.map(([k, v]) => {
                 if (typeof v === 'function') {
-                    return [k, v(this.row[this.cell.id], this.row, this.parentRow)];
+                    return [k, v(this.boundValue, this.row, this.parentRow)];
                 } else {
                     return [k, v];
                 }
@@ -100,7 +105,6 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
 
     private updateComponentProps() {
         if (this.factory && this.componentRef) {
-            const defaultPropValue = this.row[this.cell.id];
             setComponentProperties(
                 [],
                 this.factory,
@@ -108,7 +112,7 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
                 this.destroy$,
                 this.componentRef.instance,
                 this.props,
-                defaultPropValue
+                this.boundValue
             );
         }
     }

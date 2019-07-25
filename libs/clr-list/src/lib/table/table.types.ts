@@ -9,6 +9,8 @@ export namespace Table {
     } 
     export interface ColumnBase {
         id: string;
+        // Function to bind row to the cell value, by default it will use row[cell.id] binding
+        bind?: (row: Row) => any;
         title: string;
         /** Sort column id or true if sort id = column id */
         sort?: string | boolean;

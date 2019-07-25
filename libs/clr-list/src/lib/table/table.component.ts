@@ -522,12 +522,18 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         return ClrDatagridSortOrder.UNSORTED;
     }
 
+    private getBoundValue(cell: Table.Column, row: Table.Row) {
+        const bind = cell.bind || (x => x[cell.id]);
+        return bind(row);
+
+    }
+
     private getCellFormatResult(cell: Table.Column, row: Table.Row): Table.FormatResult {
         const format = typeof cell.format === 'string' ? this.cellFormatMap[cell.format] : cell.format;
         if (!format) {
             return {};
         }
-        const formatResult = format(row[cell.id], row);
+        const formatResult = format(this.getBoundValue(cell, row), row);
         if (!formatResult) {
             return {};
         }
@@ -544,7 +550,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         if (typeof cell.cls === 'string') {
             res = cell.cls;
         } else if (typeof cell.cls === 'function') {
-            res = cell.cls(row[cell.id], row);
+            res = cell.cls(this.getBoundValue(cell, row), row);
         }
 
         // we can mix classes from cls and format result
@@ -565,7 +571,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             }
             return val;
         } else {
-            return row[cell.id];
+            return this.getBoundValue(cell, row);
         }
     }
 

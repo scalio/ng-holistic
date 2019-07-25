@@ -15,7 +15,7 @@ export const definition: App.Table.Defintion = {
         {
             id: 'orderDate',
             title: 'Order Date',
-            // bind: row => row.order.date,
+            bind: row => row.order.date,
             format: 'date'
         },
         {
