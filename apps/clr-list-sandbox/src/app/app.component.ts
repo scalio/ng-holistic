@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Router, Scroll } from '@angular/router';
+import { Router, Scroll, NavigationEnd } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
-import { filter, delay } from 'rxjs/operators';
+import { filter, delay, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -17,6 +17,7 @@ export class AppComponent implements OnDestroy {
 
         router.events
             .pipe(
+                takeUntil(this.destroy$),
                 filter(element => element instanceof Scroll),
                 delay(0)
             )
@@ -25,6 +26,14 @@ export class AppComponent implements OnDestroy {
                 if (scrollElement) {
                     scrollElement.scrollIntoView({ behavior: 'smooth' });
                 }
+            });
+        router.events
+            .pipe(
+                takeUntil(this.destroy$),
+                filter(element => element instanceof NavigationEnd)
+            )
+            .subscribe(() => {
+                viewportScroller.scrollToPosition([0, 0]);
             });
     }
 

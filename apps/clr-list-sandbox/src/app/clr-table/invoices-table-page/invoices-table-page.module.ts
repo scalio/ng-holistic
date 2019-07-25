@@ -7,6 +7,7 @@ import { OrderNumberColumnComponent } from './app-table-columns/order-number-col
 import { CardNumberColumnComponent } from './app-table-columns/card-number-column/card-number-column.component';
 import { AmountColumnComponent } from './app-table-columns/amount-column/amount-column.component';
 import { CurrencyColumnComponent } from './app-table-columns/currency-column/currency-column.component';
+import { InvoicesService } from './invoices.service';
 
 export function getAppForamtters(datePipe: DatePipe) {
     return {
@@ -26,6 +27,8 @@ export function getAppForamtters(datePipe: DatePipe) {
     imports: [CommonModule, HlcClrTableModule],
     exports: [InvoicesTablePageComponent],
     providers: [
+        InvoicesService,
+        DatePipe,
         {
             provide: HLC_CLR_TABLE_CELL_MAP,
             multi: true,

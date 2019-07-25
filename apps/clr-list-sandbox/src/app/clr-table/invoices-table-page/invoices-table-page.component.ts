@@ -1,28 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Table } from '@ng-holistic/clr-list';
-import { timer } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
 import { definition } from './invoices-table-page.defintion';
-
-const dataProvider: Table.Data.DataProvider = {
-    load(_) {
-        return timer(0).pipe(
-            mapTo({
-                rows: [
-                    {
-                        id: 0,
-                        customer: { name: 'Homer Simpson', avatar: 'http://lol' },
-                        order: { number: 'ABCD', image: 'http://lol', data: new Date().toISOString() },
-                        card: '12890-***-77',
-                        address: 'Springfield',
-                        amount: 1000,
-                        currency: 'USD'
-                    }
-                ]
-            })
-        );
-    }
-};
+import { InvoicesService } from './invoices.service';
 
 @Component({
     selector: 'hlc-clr-sandbox-invoices-table-page',
@@ -31,9 +10,11 @@ const dataProvider: Table.Data.DataProvider = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvoicesTablePageComponent implements OnInit {
-    dataProvider = dataProvider;
-    defintion = definition;
-    constructor() {}
+    readonly dataProvider: Table.Data.DataProvider;
+    definition = definition;
+    constructor(invoices: InvoicesService) {
+        this.dataProvider = { load: invoices.load };
+    }
 
     ngOnInit() {}
 }

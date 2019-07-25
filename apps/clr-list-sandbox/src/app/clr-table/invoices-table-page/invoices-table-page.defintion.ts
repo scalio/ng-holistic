@@ -1,4 +1,4 @@
-import { App } from './app-table.models';
+import { App } from './models/app-table.models';
 
 export const definition: App.Table.Defintion = {
     cols: [
@@ -29,11 +29,13 @@ export const definition: App.Table.Defintion = {
         },
         {
             id: 'amount',
-            title: 'Amount'
+            title: 'Amount',
+            kind: 'Amount'
         },
         {
             id: 'currency',
-            title: 'Currency'
+            title: 'Currency',
+            kind: 'Currency'
         }
     ]
 };
