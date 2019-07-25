@@ -8,6 +8,7 @@ import { CardNumberColumnComponent } from './app-table-columns/card-number-colum
 import { AmountColumnComponent } from './app-table-columns/amount-column/amount-column.component';
 import { CurrencyColumnComponent } from './app-table-columns/currency-column/currency-column.component';
 import { InvoicesService } from './invoices.service';
+import { ClrIconModule } from '@clr/angular';
 
 export function getAppForamtters(datePipe: DatePipe) {
     return {
@@ -24,7 +25,7 @@ export function getAppForamtters(datePipe: DatePipe) {
         AmountColumnComponent,
         CurrencyColumnComponent
     ],
-    imports: [CommonModule, HlcClrTableModule],
+    imports: [CommonModule, HlcClrTableModule, ClrIconModule],
     exports: [InvoicesTablePageComponent],
     providers: [
         InvoicesService,

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Invoices } from '../../models/invoices.models';
-import { HlcColumnBindValue } from '@ng-holistic/clr-list';
+import { HlcDefaultBindValue } from '@ng-holistic/forms';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -10,8 +10,8 @@ import { HlcColumnBindValue } from '@ng-holistic/clr-list';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomerNameColumnComponent implements OnInit {    
-    @Input()
-    @HlcColumnBindValue
+    @HlcDefaultBindValue
+    @Input()    
     customer: Invoices.Customer;
 
     constructor() {}

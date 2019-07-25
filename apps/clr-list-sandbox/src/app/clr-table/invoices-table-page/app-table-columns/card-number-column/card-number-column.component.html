@@ -1,3 +1,5 @@
-<p>
-  card-number-column works!
-</p>
+<ng-container [ngSwitch]="cardScheme">
+    <clr-icon *ngSwitchCase="'master'" shape="credit-card" style="color: blue" class="is-solid"></clr-icon>
+    <clr-icon *ngSwitchCase="'visa'" shape="world" style="color: green" class="is-solid"></clr-icon>
+</ng-container>
+{{ cardNumber }}

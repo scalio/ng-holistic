@@ -3,6 +3,22 @@ import * as R from 'ramda';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import 'reflect-metadata';
+
+const hlcDefaultBindValueSymbol = Symbol('custom:anotations:HlcDefaultBindValue');
+
+export function HlcDefaultBindValue(target: any, prop: any) {
+    Reflect.defineMetadata(hlcDefaultBindValueSymbol, true, target, prop);
+}
+
+const getDefaultBindProperty = (target: any, factory: ComponentFactory<any>) => {
+    const inputs = factory.inputs;
+    const defaultInputProperty = inputs.find(input =>
+        Reflect.getMetadata(hlcDefaultBindValueSymbol, target, input.propName)
+    );
+    return defaultInputProperty && defaultInputProperty.propName;
+};
+
 /**
  * Given name of the `template` input property name returns real property name if one exists
  * @param factory Factory of the component with property
@@ -100,10 +116,18 @@ export const setComponentProperties = (
     cdr: ChangeDetectorRef,
     destroy$: Observable<any>,
     component: any,
-    propsBag: any
+    propsBag: any,
+    defaultPropValue?: any
 ) => {
     R.pipe(
         R.omit(omitProps),
         R.forEachObjIndexed(setComponentProperty(componentFactory, cdr, destroy$, component))
     )(propsBag);
+
+    if (defaultPropValue !== undefined) {
+        const defaultBindProperty = getDefaultBindProperty(component, componentFactory);
+        if (defaultBindProperty) {
+            component[defaultBindProperty] = defaultPropValue;
+        }
+    }
 };

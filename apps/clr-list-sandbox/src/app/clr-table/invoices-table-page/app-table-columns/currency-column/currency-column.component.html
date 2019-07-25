@@ -1,3 +1,6 @@
-<p>
-  currency-column works!
-</p>
+{{ currency }}
+<ng-container [ngSwitch]="currency">
+    <clr-icon *ngSwitchCase="'USD'" shape="dollar"></clr-icon>
+    <clr-icon *ngSwitchCase="'EUR'" shape="euro"></clr-icon>
+    <clr-icon *ngSwitchCase="'RUB'" shape="ruble"></clr-icon>
+</ng-container>

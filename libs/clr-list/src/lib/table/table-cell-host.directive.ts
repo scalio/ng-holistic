@@ -100,13 +100,15 @@ export class TableCellHostDirective implements OnInit, OnDestroy, OnChanges {
 
     private updateComponentProps() {
         if (this.factory && this.componentRef) {
+            const defaultPropValue = this.row[this.cell.id];
             setComponentProperties(
                 [],
                 this.factory,
                 this.componentRef.changeDetectorRef,
                 this.destroy$,
                 this.componentRef.instance,
-                this.props
+                this.props,
+                defaultPropValue
             );
         }
     }
