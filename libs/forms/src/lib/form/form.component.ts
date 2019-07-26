@@ -150,9 +150,11 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
     }
 
     ngAfterViewInit() {
-        // Allow value subscribers of a form to take initial actions
-        this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
-        this.cdr.detectChanges();
+        if (this.formGroup) {
+            // Allow value subscribers of a form to take initial actions
+            this.formGroup.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+            this.cdr.detectChanges();
+        }
     }
 
     ngOnDestroy() {
