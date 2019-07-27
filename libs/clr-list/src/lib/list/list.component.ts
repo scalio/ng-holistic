@@ -84,8 +84,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() table: Table.Definition | undefined;
 
     @Input() set definition(val: List.Definition | undefined) {
-        
-        
         this.table = val;
         if (val && val.filters) {
             this.filterFields = val.filters;
@@ -94,7 +92,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         }
     }
 
-    get defintion(): List.Definition | undefined {
+    get definition(): List.Definition | undefined {
         return (this.table as unknown) as List.Definition | undefined;
     }
 
@@ -137,6 +135,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly elementRef: ElementRef,
         listKeysManager: HlcListKeysManagerService,
         private readonly hotkeysContainer: HlcHotkeysContainerService,
+        private readonly filterService: FilterService,
         @Optional()
         @Inject(HLC_CLR_LIST_LABELS_CONFIG)
         labelsConfig?: ListLabelsConfig,
@@ -153,6 +152,9 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     ngAfterViewInit() {
         if (!this.hasFilters) {
+            // table will use filter service to get filter value and only then request reload so
+            // setup filterService fake form here
+            this.filterService.setForm(null);
             // If there is no filters on init, loading still should be dispatched with empty filter
             this.setState({});
         }

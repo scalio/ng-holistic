@@ -6,16 +6,16 @@ import { filter, map } from 'rxjs/operators';
 
 @Injectable()
 export class FilterService {
-    readonly formSet$ = new BehaviorSubject<FormGroup | null>(null);
+    readonly formSet$ = new BehaviorSubject<FormGroup | null | undefined>(undefined);
 
-    setForm(form: FormGroup) {
+    setForm(form: FormGroup | null) {
         this.formSet$.next(form);
     }
 
     get value() {
         // delay value providing till form is set
         return this.formSet$.pipe(
-            filter(f => !!f),
+            filter(f => f !== undefined),
             map(form => form && form.value)
         );
     }
