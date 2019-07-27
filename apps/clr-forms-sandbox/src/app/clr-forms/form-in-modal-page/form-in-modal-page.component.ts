@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { HlcClrModalService } from '@ng-holistic/clr-common';
+import { ChangeDetectionStrategy, Component, ViewChild, Inject } from '@angular/core';
+import { HlcClrModalService, HLC_CONTAINER_DATA } from '@ng-holistic/clr-common';
 import { HlcClrFormComponent, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
 import { HLC_FIELDS_LAYOUT_CONFIG } from '@ng-holistic/forms';
 import { timer } from 'rxjs';
@@ -7,7 +7,10 @@ import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component'
 
 @Component({
     selector: 'hlc-form-in-modal',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>',
+    template: `
+        <h5>{{data.hint}}</h5>
+        <hlc-clr-form [group]="group"></hlc-clr-form>
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         InputErrorDisplayStartegy,
@@ -15,6 +18,11 @@ import { recalcFormGroup } from '../form-recalc-page/form-recalc-page.component'
     ]
 })
 export class FormInModalComponent {
+
+    constructor(@Inject(HLC_CONTAINER_DATA) public data: any) {
+
+    }
+
     group = recalcFormGroup;
 
     @ViewChild(HlcClrFormComponent, { static: false }) clrForm: HlcClrFormComponent;
@@ -153,6 +161,7 @@ export class FormInModalPageComponent {
     onShowModal() {
         this.modalService.showForm({
             title: 'Form in modal',
+            data: { hint: 'You can pass some data' },
             componentFormField: 'form$',
             contentComponentType: FormInModalComponent,
             allowOkWhenFormPristine: false,

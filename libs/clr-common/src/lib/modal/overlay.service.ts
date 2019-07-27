@@ -1,6 +1,6 @@
 import { GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ComponentPortal, TemplatePortal, PortalInjector } from '@angular/cdk/portal';
+import { Injectable, TemplateRef, ViewContainerRef, InjectionToken, Injector } from '@angular/core';
 
 export type LayoutPosition = 'left' | 'right' | 'center';
 
@@ -16,14 +16,18 @@ interface TemplateParams {
     kind: 'TemplateParams';
     templateRef: TemplateRef<any>;
     viewContainerRef: ViewContainerRef;
+    data?: any;
 }
 
 interface ComponentParams {
     kind: 'ComponentParams';
     componentType: any;
+    data?: any;
 }
 
 type ContentParams = TemplateParams | ComponentParams;
+
+export const HLC_CONTAINER_DATA = new InjectionToken<any>('HLC_CONTAINER_DATA');
 
 /**
  * Provides API to show / hide layout.
@@ -33,7 +37,7 @@ export class HlcClrOverlayService {
     private overlayRef: OverlayRef;
     private positionStrategy: GlobalPositionStrategy;
 
-    constructor(private readonly overlay: Overlay) {
+    constructor(private readonly overlay: Overlay, private readonly injector: Injector) {
         this.positionStrategy = this.overlay.position().global();
 
         // TODO: backdropClass overlay above modal when modal content created with delay
@@ -51,15 +55,20 @@ export class HlcClrOverlayService {
      * Given component type, displays it.
      * Component must be included in module `entryComponents`
      */
-    showComponent<T>(componentType: any, params: LayoutParams) {
-        return this.show<T>({ kind: 'ComponentParams', componentType }, params);
+    showComponent<T>(componentType: any, params: LayoutParams, data?: any) {
+        return this.show<T>({ kind: 'ComponentParams', componentType, data }, params);
     }
 
     /**
      * Given template display it's content.
      */
-    showTemplate<T>(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef, params: LayoutParams) {
-        return this.show<T>({ kind: 'TemplateParams', templateRef, viewContainerRef }, params);
+    showTemplate<T>(
+        templateRef: TemplateRef<any>,
+        viewContainerRef: ViewContainerRef,
+        params: LayoutParams,
+        data?: any
+    ) {
+        return this.show<T>({ kind: 'TemplateParams', templateRef, viewContainerRef, data }, params);
     }
 
     /**
@@ -86,10 +95,17 @@ export class HlcClrOverlayService {
         }
     }
 
+    private createInjector(data: any): PortalInjector {
+        const injectorTokens = new WeakMap();
+        injectorTokens.set(HLC_CONTAINER_DATA, data);
+        return new PortalInjector(this.injector, injectorTokens);
+    }
+
     private createPortal(content: ContentParams) {
+        const injector = content.data ? this.createInjector(content.data) : undefined;
         return content.kind === 'TemplateParams'
             ? new TemplatePortal(content.templateRef, content.viewContainerRef)
-            : new ComponentPortal(content.componentType);
+            : new ComponentPortal(content.componentType, undefined, injector);
     }
 
     private show<T>(content: ContentParams, params: LayoutParams) {

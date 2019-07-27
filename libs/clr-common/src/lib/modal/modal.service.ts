@@ -16,6 +16,7 @@ export interface ModalShowParams {
     // default true
     hideOnClickOverlay?: boolean;
     hideFooter?: boolean;
+    data?: any;
 }
 
 export interface ModalShowTemplateParams {
@@ -66,7 +67,8 @@ export class HlcClrModalService {
             HlcClrModalComponent,
             {
                 position: 'center'
-            }
+            },
+            params.data
         );
 
         instance.title = params.title;
