@@ -370,8 +370,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             // have to use them on initial search
             // map filter value -> state filter value
             state$ = this.filterService.value.pipe(
-                tap(console.log),
-                
                 map(
                     R.pipe(
                         R.toPairs,
