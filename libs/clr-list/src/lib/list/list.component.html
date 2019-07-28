@@ -17,10 +17,16 @@
     (drop)="drop.emit($event)"
 >
     <ng-container action-bar>
-        <div class="actionbar" tabindex="0" (focus)="filter.onFocus()" (blur)="filter.onBlur()">
+        <div
+            *ngIf="filterFields; else noFilters"
+            class="actionbar"
+            tabindex="0"
+            (focus)="filter.onFocus()"
+            (blur)="filter?.onBlur()"
+        >
             <!-- Toolbox & filter -->
             <div class="flex-row flex-space-between">
-                <div *ngIf="filterFields && !hideFilter">
+                <div *ngIf="!hideFilter">
                     <button class="btn btn-sm btn-link" (click)="onToggleFilter()" *ngIf="isFilterShown">
                         <clr-icon shape="angle" dir="down"></clr-icon>{{ labelsConfig.hideFilter }}
                     </button>
@@ -31,12 +37,16 @@
                 <div><ng-content select="[toolbox]"></ng-content></div>
             </div>
             <hlc-clr-filter
-                *ngIf="filterFields"
                 #filter
                 [fields]="filterFields"
                 (filter)="onFilter($event)"
                 [hidden]="!isFilterShown || hideFilter"
             ></hlc-clr-filter>
         </div>
+        <ng-template #noFilters>
+            <div class="actionbar" tabindex="0">
+                <div class="flex-row flex-space-between"><ng-content select="[toolbox]"></ng-content></div>
+            </div>
+        </ng-template>
     </ng-container>
 </hlc-clr-table>
