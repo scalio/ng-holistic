@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { GetLoadListMixedStorageDecorator, HlcClrTableComponent, Table, TableDescription } from '@ng-holistic/clr-list';
+import { GetLoadListMixedStorageDecorator, HlcClrTableComponent, Table } from '@ng-holistic/clr-list';
 import * as R from 'ramda';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -8,7 +8,7 @@ const aggregateRow: Table.AggregateRow = {
     amount: R.sum
 };
 
-const table: TableDescription = {
+const definition: Table.Definition = {
     sort: 'title',
     cols: [
         {
@@ -96,7 +96,7 @@ const dataProvider: { _load: any } & Table.Data.DataProvider = {
     }
 };
 
-const definition = `
+const _definition = `
 import { TableDescription } from '@ng-holistic/clr-list';
 
 const table: TableDescription = {
@@ -235,10 +235,10 @@ export class TablePageModule {}
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TablePageComponent implements OnInit {
-    table = table;
+    definition = definition;
     dataProvider = dataProvider;
 
-    definition = definition;
+    _definition = _definition;
     code = code;
 
     // @ts-ignore
