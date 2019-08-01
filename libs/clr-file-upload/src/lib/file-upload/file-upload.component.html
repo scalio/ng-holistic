@@ -7,6 +7,9 @@
     (filesAdded)="onAddFiles($event)"
 >
 </hlc-clr-file-uploader>
+<ng-container *ngIf="readonly && !files?.length">
+    Empty
+</ng-container>
 
 <ul class="list-unstyled list-compact">
     <li *ngFor="let file of files; trackBy: trackByFile; let i = index">
