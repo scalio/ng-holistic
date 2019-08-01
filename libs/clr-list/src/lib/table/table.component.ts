@@ -177,8 +177,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     @Input() dataProvider: Table.Data.DataProvider | undefined;
     // @obsolete, use definition property instead
     @Input() table: Table.Definition | undefined;
-    @Input() set definition (val: Table.Definition | undefined) { this.table = val; }
-    get definition () { return this.table; }
+    @Input() set definition(val: Table.Definition | undefined) {
+        this.table = val;
+    }
+    get definition() {
+        return this.table;
+    }
 
     @Input() sortFn: ((a: Table.Row, b: Table.Row) => number) | undefined;
     @Input() isCompact = false;
@@ -336,6 +340,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * force = true, will request data load even if request state is not changed
      */
     onRefresh(state: ClrDatagridStateInterface, force = false) {
+
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
             this._freezeInitialStateChange = false;
@@ -359,7 +364,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         }
 
         if (this._initState) {
-            state = this._initState;
+            state = { ...(state || {}), ...this._initState };
             this._initState = undefined;
         }
 
@@ -525,7 +530,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private getBoundValue(cell: Table.Column, row: Table.Row) {
         const bind = cell.bind || (x => x[cell.id]);
         return bind(row);
-
     }
 
     private getCellFormatResult(cell: Table.Column, row: Table.Row): Table.FormatResult {
