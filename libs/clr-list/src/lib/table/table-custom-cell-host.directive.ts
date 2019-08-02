@@ -47,13 +47,14 @@ export class TableCustomCellHostDirective implements OnInit, OnDestroy, OnChange
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
         if (changes['row'] && changes['row'].previousValue !== changes['row'].currentValue) {
             if (this.view) {
                 this.vcr.clear();
             }
 
             this.view = this.vcr.createEmbeddedView(this.directive.templateRef, {
-                $implicit: this.row[this.boundValue],
+                $implicit: this.boundValue,
                 row: this.row,
                 cell: this.cell,
                 parentRow: this.parentRow
