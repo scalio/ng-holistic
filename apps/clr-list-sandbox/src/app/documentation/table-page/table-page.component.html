@@ -15,9 +15,16 @@
     </thead>
     <tbody>
         <tr>
-            <td class="left">defintion</td>
+            <td class="left">definition</td>
             <td class="left"><a [routerLink]="['..', 'table-definition']">Table.Definition</a></td>
-            <td class="left">Define table UI representation: columns, sorting, etc in simple js object.</td>
+            <td class="left">
+                Define table UI representation: columns, sorting, etc in simple js object.<br /><span class="important-text"
+                    >Important!</span
+                >
+                This property defines table and couldn't be changed or initialized after component is created i.e.
+                component definition property must be readonly and not changed after component is created, in other case
+                you could experience unexpected behavior
+            </td>
         </tr>
         <tr>
             <td class="left">dataProvider</td>
