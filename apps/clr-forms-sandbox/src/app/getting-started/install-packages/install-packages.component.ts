@@ -1,5 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+const installPackages = `
+    npm install @angular/cdk
+        angular2-hotkeys property-watch-decorator ramda typescript-memoize 
+        @ng-holistic/clr-common @ng-holistic/forms @ng-holistic/clr-controls @ng-holistic/clr-forms
+        @ng-holistic/ng-select --save
+`;
+
+
 const addModuleCode = `
     import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 
@@ -23,7 +31,8 @@ const addModuleCode = `
 })
 export class InstallPackagesComponent implements OnInit {
     addModuleCode = addModuleCode;
-
+    installPackages = installPackages;
+    
     constructor() {}
 
     ngOnInit() {}

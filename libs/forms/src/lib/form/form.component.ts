@@ -49,10 +49,17 @@ export class HlcFormComponent implements OnInit, OnDestroy, AfterViewInit, Custo
      */
     initialValue: any;
     group: IFormGroup<any> | undefined;
+    // @obsolete
     @Input('group')
     set setGroup(val: FormLayoutConfig | undefined) {
         this.initForm(val);
     }
+
+    @Input('definition')
+    set setDefinition(val: FormLayoutConfig | undefined) {
+        this.initForm(val);
+    }
+
     @Input()
     set value(val: any) {
         if (this.formGroup) {

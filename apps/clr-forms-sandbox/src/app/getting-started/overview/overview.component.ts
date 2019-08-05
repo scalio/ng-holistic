@@ -6,10 +6,10 @@ import { ClrFormLayouts, HlcClrFormModule } from '@ng-holistic/clr-forms';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleFormComponent {
-    readonly group: ClrFormLayouts.ClrFormLayout = {
+    readonly definition: ClrFormLayouts.ClrFormLayout = {
         kind: 'fields',
         fields: [{ id: 'name', kind: 'TextField', props: { label: 'Name' } }]
     };
@@ -25,10 +25,10 @@ export class SampleFormModule {}
 const pageSampleFormCode = `
     @Component({
         selector: 'page-sample-form',
-        template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+        template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
     })
     export class PageSampleFormComponent {
-        readonly group: ClrFormLayouts.ClrFormLayout = {
+        readonly definition: ClrFormLayouts.ClrFormLayout = {
             kind: 'fields',
             fields: [{ id: 'name', kind: 'TextField', props: { label: 'Name' } }]
         };

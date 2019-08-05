@@ -8,10 +8,10 @@ import { map, take, takeUntil } from 'rxjs/operators';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleFormComponent {
-    readonly group: ClrFormLayouts.ClrFormLayout = {
+    readonly definition: ClrFormLayouts.ClrFormLayout = {
         kind: 'fields',
         fields: [{ id: 'name', kind: 'TextField', props: { label: 'Name', placeholder: 'enter person name' } }]
     };
@@ -27,10 +27,10 @@ export class PageSampleFormModule {}
 const pageSampleFormCode = `
     @Component({
         selector: 'page-sample-form',
-        template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+        template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
     })
     export class PageSampleFormComponent {
-        readonly group: ClrFormLayouts.ClrFormLayout = {
+        readonly definition: ClrFormLayouts.ClrFormLayout = {
             kind: 'fields',
             fields: [{ id: 'name', kind: 'TextField', props: { label: 'Name', placeholder: 'enter person name' } }]
         };
@@ -43,10 +43,10 @@ const pageSampleFormCode = `
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-obs-prop-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleFormObsPropComponent {
-    readonly group: ClrFormLayouts.ClrFormLayout = {
+    readonly definition: ClrFormLayouts.ClrFormLayout = {
         kind: 'fields',
         fields: [
             {
@@ -75,10 +75,10 @@ const pageSampleFormObservableProp = `
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-obs-prop-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleFormObsPropComponent {
-    readonly group: ClrFormLayouts.ClrFormLayout = {
+    readonly definition: ClrFormLayouts.ClrFormLayout = {
         kind: 'fields',
         fields: [
             {
@@ -103,16 +103,16 @@ export class PageSampleFormObsPropComponent {
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-output-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleOutputComponent implements OnDestroy {
     readonly destroy$ = new Subject();
     readonly subj = new Subject<string>();
 
-    readonly group: ClrFormLayouts.ClrFormLayout;
+    readonly definition: ClrFormLayouts.ClrFormLayout;
 
     constructor() {
-        this.group = {
+        this.definition = {
             kind: 'fields',
             fields: [
                 {
@@ -147,16 +147,16 @@ const pageSampleOutputForm = `
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'page-sample-output-form',
-    template: '<hlc-clr-form [group]="group"></hlc-clr-form>'
+    template: '<hlc-clr-form [definition]="definition"></hlc-clr-form>'
 })
 export class PageSampleOutputComponent implements OnDestroy {
     readonly destroy$ = new Subject();
     readonly subj = new Subject<string>();
 
-    readonly group: ClrFormLayouts.ClrFormLayout;
+    readonly definition: ClrFormLayouts.ClrFormLayout;
 
     constructor() {
-        this.group = {
+        this.definition = {
             kind: 'fields',
             fields: [
                 {

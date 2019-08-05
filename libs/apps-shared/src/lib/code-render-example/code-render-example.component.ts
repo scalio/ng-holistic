@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'hlc-code-render-example',
@@ -8,6 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class HlcCodeRenderExampleComponent implements OnInit {
 
+  @Input() code: string;
+  
   constructor() { }
 
   ngOnInit() {

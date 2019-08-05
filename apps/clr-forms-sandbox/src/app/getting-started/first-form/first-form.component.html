@@ -1,7 +1,6 @@
 <h1>Create basic form</h1>
 
-<hlc-code-render-example>
-    {{ pageSampleFormCode }}
+<hlc-code-render-example [code]="pageSampleFormCode">
     <page-sample-form render></page-sample-form>
 </hlc-code-render-example>
 
@@ -51,8 +50,7 @@ same name on 'props' field of the form definition object. There is another featu
 scalar value for initialziation of the components properties but 'observale' stream, which case the component property
 will be updated every time when stream emits some value.
 
-<hlc-code-render-example>
-    {{ pageSampleFormObservableProp }}
+<hlc-code-render-example [code]="pageSampleFormObservableProp">
     <page-sample-obs-prop-form render></page-sample-obs-prop-form>
 </hlc-code-render-example>
 
@@ -63,8 +61,7 @@ value, so it is possible to subscribe on it and recieve updates when them happen
 'props' object (same as for Input ones) but value of the property must be a Subject object, this way you could subscribe
 on this stream and recieve updates about any required event.
 
-<hlc-code-render-example>
-    {{ pageSampleOutputForm }}
+<hlc-code-render-example [code]="pageSampleOutputForm">
     <page-sample-output-form render></page-sample-output-form>
 </hlc-code-render-example>
 

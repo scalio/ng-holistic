@@ -1,11 +1,7 @@
 <div class="clr-row">
     <div class="clr-col-9">
         <h3>Code</h3>
-        <pre>
-            <code hlc-code-highlight="ts" marginTop="-70px">
-                <ng-content></ng-content>
-            </code>
-        </pre>
+        <clr-code-snippet [clrCode]="code || ''"></clr-code-snippet>
     </div>
     <div class="clr-col-3">
         <h3>Rendered UI</h3>

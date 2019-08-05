@@ -53,7 +53,11 @@ import { flatGroup } from './utils/form-utils';
 })
 export class HlcClrFormComponent implements CustomFieldsProvider, AfterViewInit, OnDestroy {
     @Input() id: any | undefined;
+    // @obsolete
     @Input() group: FormLayoutConfig | undefined;
+    @Input() set definition(val: FormLayoutConfig | undefined) {
+        this.group = val;
+    }
     @Input() value: any | undefined;
 
     @Output() formValueChanged = new EventEmitter<any>();
