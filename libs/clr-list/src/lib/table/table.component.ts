@@ -340,7 +340,6 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * force = true, will request data load even if request state is not changed
      */
     onRefresh(state: ClrDatagridStateInterface, force = false) {
-
         // sometimes we have to ignore onRefresh, see comments bellow
         if (this._freezeInitialStateChange === true) {
             this._freezeInitialStateChange = false;
@@ -468,6 +467,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
                     );
                     this.keysManager.onPagesChanged(pagesCount, this.paginator.pageIndex);
                 }
+                setTimeout(() => this.scrollToFirstRow(), 0);
             }),
             catchError(err => {
                 this.errorMessage = err;
@@ -570,9 +570,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     getCellDisplayValue(cell: Table.Column, row: Table.Row) {
         if (cell.format) {
             const { val } = this.getCellFormatResult(cell, row);
+            /*
+            // Formatted value could be null
             if (!val) {
                 console.warn('Table cell formatter not found', cell);
             }
+            */
             return val;
         } else {
             return this.getBoundValue(cell, row);
@@ -719,5 +722,13 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     onBlur() {
         this.hotkeysContainer.focus$.next(false);
+    }
+
+    private scrollToFirstRow() {
+        const firstRow = this.datagridRows && this.datagridRows.first;
+        if (!firstRow) {
+            return;
+        }
+        firstRow['el'].nativeElement.scrollIntoView(false);
     }
 }
