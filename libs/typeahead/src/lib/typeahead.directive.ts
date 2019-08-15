@@ -99,7 +99,7 @@ export class HlcTypeaheadDirective implements OnInit, OnDestroy {
             map($event => ($event.target as HTMLInputElement).value)
         );
 
-        this._focus$ = fromEvent<void>(_elementRef.nativeElement, 'focus');
+        this._focus$ = fromEvent<any>(_elementRef.nativeElement, 'focus');
 
         this._keyDown$ = fromEvent<KeyboardEvent>(_elementRef.nativeElement, 'keydown');
 
