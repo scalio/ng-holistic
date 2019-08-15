@@ -1,29 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-
-const code = (html = '<hlc-clr-form [group]="group"></hlc-clr-form>') => `
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { HlcClrFormModule } from '@ng-holistic/clr-forms';
-import { group } from './form-definition.ts';
-
-@Component({
-    selector: 'hlc-form-page',
-    template: \`${html}\`,
-})
-export class FormPageComponent {
-    group = group;
-}
-
-@NgModule({
-    declarations: [FormPageComponent],
-    imports: [
-        CommonModule,
-        HlcClrFormModule,
-    ],
-    exports: []
-})
-export class FormPageModule {}
-`;
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'hlc-sbx-render-def-code-example',
@@ -32,14 +8,21 @@ export class FormPageModule {}
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcSbxRenderDefCodeComponent implements OnInit {
-    @Input() html: string;
-    @Input() useDefaultCode = true;
+    // @obsolete
+    @Input() useDefaultCode: boolean;
 
-    get code() {
-        return code(this.html);
+    // @obsolete
+    @Input() html: string;
+
+    @Input() definition: string;
+    @Input() srcUrl: string;
+
+    constructor(private readonly sanitizer: DomSanitizer) {
     }
 
-    constructor() {}
+    get safeSrcUrl() {
+        return this.srcUrl && this.sanitizer.bypassSecurityTrustResourceUrl(this.srcUrl);
+    }
 
     ngOnInit() {}
 }

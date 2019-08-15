@@ -1,33 +1,16 @@
 <clr-tabs>
     <clr-tab>
         <button clrTabLink>Rendered UI</button>
-        <clr-tab-content *clrIfActive>
-            <ng-content select="[render]"></ng-content>
-        </clr-tab-content>
+        <clr-tab-content *clrIfActive> <ng-content select="[render]"></ng-content> </clr-tab-content>
     </clr-tab>
     <clr-tab>
         <button clrTabLink>Definition</button>
-        <clr-tab-content *clrIfActive>
-            <pre>
-                <code hlc-code-highlight="ts" marginTop="-70px">
-                    <ng-content select="[definition]"></ng-content>
-                </code>
-            </pre>
-        </clr-tab-content>
+        <clr-tab-content *clrIfActive> <clr-code-snippet [clrCode]="definition"> </clr-code-snippet> </clr-tab-content>
     </clr-tab>
-    <clr-tab>
+    <clr-tab *ngIf="safeSrcUrl">
         <button clrTabLink>Code</button>
         <clr-tab-content *clrIfActive>
-            <pre>
-                <code hlc-code-highlight="ts" [marginTop]="useDefaultCode ? '-160px' : '-70px'">
-                    <div #ref>
-                        <ng-content select="[code]"></ng-content>
-                    </div>
-                    <ng-template [ngIf]="useDefaultCode">
-                        {{code}}
-                    </ng-template>
-                </code>
-            </pre>
+            <iframe style="width: 100%; height: 80%;" [src]="safeSrcUrl"></iframe>
         </clr-tab-content>
     </clr-tab>
 </clr-tabs>

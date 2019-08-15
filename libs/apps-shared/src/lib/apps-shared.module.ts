@@ -7,8 +7,6 @@ import { HlcSbxExampleLinkButtonModule } from './example-link-button/example-lin
 import { HlcFormValueModule } from './form-value/form-value.module';
 import { HlcPrettyJsonModule } from './pretty-json.pipe';
 import { HlcSbxRenderDefCodeModule } from './render-def-code-tabs/render-def-code-example.module';
-import { CodeHighlight } from './code-highlight';
-import { CodeSnippet } from './code-snippet';
 
 @NgModule({
     imports: [
@@ -20,7 +18,7 @@ import { CodeSnippet } from './code-snippet';
         HlcFormValueModule,
         HlcSbxExampleLinkButtonModule
     ],
-    declarations: [HlcCodeRenderExampleComponent, CodeHighlight, CodeSnippet],
+    declarations: [HlcCodeRenderExampleComponent],
     exports: [
         HlcCodeHighlightDirective,
         HlcCodeRenderExampleComponent,
@@ -28,8 +26,7 @@ import { CodeSnippet } from './code-snippet';
         HlcCodeHighlightModule,
         HlcPrettyJsonModule,
         HlcFormValueModule,
-        HlcSbxExampleLinkButtonModule,
-        CodeSnippet
+        HlcSbxExampleLinkButtonModule
     ]
 })
 export class AppsSharedModule {}
