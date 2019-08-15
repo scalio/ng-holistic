@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ClrFormLayouts, InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { map } from 'rxjs/operators';
 
-const group: ClrFormLayouts.ClrFormLayout = {
+const getDefinition = (formGroup: FormGroup): ClrFormLayouts.ClrFormLayout => ({
     kind: 'fields',
     fields: [
         {
@@ -10,8 +11,14 @@ const group: ClrFormLayouts.ClrFormLayout = {
             kind: 'CustomField'
         },
         {
+            id: 'toggle',
+            kind: 'ToggleField',
+            label: 'Show custom control'
+        },
+        {
             id: 'customControl',
             kind: 'CustomField',
+            hidden: formGroup.valueChanges.pipe(map(val => !val.toggle)),
             /**
              * Will sync value changes of first component inside custom
              * field template container with form value
@@ -30,7 +37,7 @@ const group: ClrFormLayouts.ClrFormLayout = {
             validators: [Validators.required]
         }
     ]
-};
+});
 
 const definition = `
 const group: ClrFormLayouts.ClrFormLayout = {
@@ -95,7 +102,7 @@ const html = `
     providers: [InputErrorDisplayStartegy]
 })
 export class FormCustomFieldsPageComponent implements AfterViewInit {
-    group = group;
+    group = getDefinition;
     definition = definition;
     html = html;
 
