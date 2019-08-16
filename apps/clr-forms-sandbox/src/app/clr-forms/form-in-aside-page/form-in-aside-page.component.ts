@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
-import { group } from '../form-groups-page/form-groups-page.component';
-
 
 const definition = `
 export const group: ClrFormLayouts.ClrFormLayout = {
@@ -151,5 +149,5 @@ export class FormInAsidePageComponent {
     code = code;
 
     isOpen = false;
-    group = group;
+    group = definition;
 }
