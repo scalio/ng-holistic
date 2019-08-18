@@ -14,7 +14,7 @@ import { FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ClrFormFields } from '../models/form-fields.types';
-import { InputErrorDisplayStartegy } from './input-error-display-strategy';
+import { InputErrorDisplayStrategy } from './input-error-display-strategy';
 
 export interface InputContainerConfig {
     optionalLabel?: string;
@@ -54,7 +54,7 @@ export class HlcClrInputContainerComponent implements OnInit, OnDestroy {
         @SkipSelf()
         private formGroupDirective: FormGroupDirective,
         private readonly cdr: ChangeDetectorRef,
-        @Optional() private readonly strategy?: InputErrorDisplayStartegy,
+        @Optional() private readonly strategy?: InputErrorDisplayStrategy,
         @Optional() @Inject(INPUT_CONTAINER_CONFIG) private readonly config?: InputContainerConfig
     ) {}
 

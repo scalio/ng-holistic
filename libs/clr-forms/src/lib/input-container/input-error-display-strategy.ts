@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /**
- * Stategy to display control error, for example display errors only when control is dirty or form is submitted
+ * Strategy to display control error, for example display errors only when control is dirty or form is submitted
  */
 
 @Injectable()
-export class InputErrorDisplayStartegy {
+export class InputErrorDisplayStrategy {
     /*
     * Default strategy display errors only for dirty controls
     */

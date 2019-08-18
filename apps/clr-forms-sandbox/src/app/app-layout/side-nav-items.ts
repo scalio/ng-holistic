@@ -48,7 +48,7 @@ export default [
             {
                 title: 'Inline custom component',
                 path: ['/getting-started', 'custom-inline-component']
-            },
+            }
         ]
     },
     {
@@ -58,6 +58,10 @@ export default [
             {
                 title: 'Base Form',
                 path: ['/clr-forms', 'form']
+            },
+            {
+                title: 'Validation Errors Display Strategy',
+                path: ['/clr-forms', 'form-error-display-strategy']
             },
             {
                 title: 'Form Extra Controls',

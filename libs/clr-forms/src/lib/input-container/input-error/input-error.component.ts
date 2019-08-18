@@ -1,6 +1,6 @@
 import { Component, Input, Optional } from '@angular/core';
 import { HlcClrInputContainerComponent } from '../input-container.component';
-import { InputErrorDisplayStartegy } from '../input-error-display-strategy';
+import { InputErrorDisplayStrategy } from '../input-error-display-strategy';
 
 @Component({
     selector: 'hlc-input-error',
@@ -13,7 +13,7 @@ export class InputErrorComponent {
 
     constructor(
         private readonly container: HlcClrInputContainerComponent,
-        @Optional() private readonly strategy?: InputErrorDisplayStartegy
+        @Optional() private readonly strategy?: InputErrorDisplayStrategy
     ) {}
 
     get error() {

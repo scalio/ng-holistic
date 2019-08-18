@@ -1,7 +1,7 @@
 import { Component, Optional, Inject } from '@angular/core';
 import * as R from 'ramda';
 import { HlcClrInputContainerComponent } from '../input-container.component';
-import { InputErrorDisplayStartegy } from '../input-error-display-strategy';
+import { InputErrorDisplayStrategy } from '../input-error-display-strategy';
 import { ValidationErrorsMapConfig, VALIDATION_ERRORS_MAP_CONFIG } from './validation-errors-map-config';
 
 /**
@@ -16,7 +16,7 @@ import { ValidationErrorsMapConfig, VALIDATION_ERRORS_MAP_CONFIG } from './valid
 export class ValidationErrorsComponent {
     constructor(
         private readonly container: HlcClrInputContainerComponent,
-        @Optional() private readonly strategy?: InputErrorDisplayStartegy,
+        @Optional() private readonly strategy?: InputErrorDisplayStrategy,
         @Optional()
         @Inject(VALIDATION_ERRORS_MAP_CONFIG)
         private readonly validationErrorsMapConfig?: ValidationErrorsMapConfig
