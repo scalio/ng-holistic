@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { InputErrorDisplayStartegy } from '@ng-holistic/clr-forms';
+import { Validators } from '@angular/forms';
+import { ClrFormLayouts } from '@ng-holistic/clr-forms';
+import * as CONSTANTS from './form-in-aside-page.constants';
 
-const definition = `
-export const group: ClrFormLayouts.ClrFormLayout = {
+export const definition: ClrFormLayouts.ClrFormLayout = {
     kind: 'tabs',
     $content: [
         {
@@ -96,58 +97,15 @@ export const group: ClrFormLayouts.ClrFormLayout = {
         }
     ]
 };
-`;
 
-const code = `
-    import { CommonModule } from '@angular/common';
-    import { NgModule } from '@angular/core';
-    import { HlcClrFormModule } from '@ng-holistic/clr-forms';
-    import { group } from './form-definition.ts';
-
-    const template = \`
-        <hlc-clr-aside-panel *ngIf="isOpen" (close)="isOpen = false">
-            <hlc-clr-form content [group]="group" #clrForm></hlc-clr-form>
-            <div footer>
-                <hlc-clr-form-footer [form]="clrForm.form.formGroup" (save)="isOpen = false" (cancel)="isOpen = false">
-                </hlc-clr-form-footer>
-            </div>
-        </hlc-clr-aside-panel>
-        <button class="btn" (click)="isOpen = true">Show Aside</button>
-    \`;
-
-    @Component({
-        selector: 'hlc-form-page',
-        template: template,
-    })
-    export class FormPageComponent {
-        isOpen = false;
-        group = group;
-    }
-
-    @NgModule({
-        declarations: [FormPageComponent],
-        imports: [
-            CommonModule,
-            HlcClrFormModule,
-            HlcClrAsidePanelModule,
-            HlcClrFormFooterModule
-        ],
-        exports: []
-    })
-    export class FormPageModule {}
-
-`;
 @Component({
     selector: 'hlc-form-in-aside-page',
     templateUrl: './form-in-aside-page.component.html',
     styleUrls: ['./form-in-aside-page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [InputErrorDisplayStartegy]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormInAsidePageComponent {
-    definition = definition;
-    code = code;
-
+    CONSTANTS = CONSTANTS;
     isOpen = false;
-    group = definition;
+    definition = definition;
 }

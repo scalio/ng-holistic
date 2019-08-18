@@ -1,15 +1,6 @@
 <hlc-clr-aside-panel *ngIf="isOpen" (close)="isOpen = false">
-    <hlc-clr-form content [group]="group" #clrForm></hlc-clr-form>
-    <div footer>
-        <hlc-clr-form-footer [form]="clrForm.form?.formGroup" (save)="isOpen = false" (cancel)="isOpen = false">
-        </hlc-clr-form-footer>
-    </div>
+    <hlc-clr-form content [definition]="definition"></hlc-clr-form>
 </hlc-clr-aside-panel>
-<hlc-sbx-render-def-code-example [useDefaultCode]="false">
-    <div class="clr-row" render>
-        <div class="clr-col-8"><button class="btn" (click)="isOpen = true">Show Aside</button></div>
-        <div class="clr-col-4"></div>
-    </div>
-    <div definition>{{ definition }}</div>
-    <ng-container code>{{ code }}</ng-container>
+<hlc-sbx-render-def-code-example [definition]="CONSTANTS.definition" [srcUrl]="CONSTANTS.srcUrl">
+    <button class="btn" (click)="isOpen = true">Show Aside</button>
 </hlc-sbx-render-def-code-example>
