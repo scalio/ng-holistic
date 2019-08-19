@@ -26,6 +26,9 @@ import { FormReadWriteValuePageComponent } from './form-read-write-value-page/fo
 import { FormReadWriteValuePageModule } from './form-read-write-value-page/form-read-write-value-page.module';
 import { FormRecalcPageComponent } from './form-recalc-page/form-recalc-page.component';
 import { FormRecalcPageModule } from './form-recalc-page/form-recalc-page.module';
+// tslint:disable-next-line: max-line-length
+import { FormUseCustomWrapperPageComponent } from './form-use-custom-wrapper-page/form-use-custom-wrapper-page.component';
+import { FormUseCustomWrapperPageModule } from './form-use-custom-wrapper-page/form-use-custom-wrapper-page.module';
 
 export const routes: Routes = [
     {
@@ -75,6 +78,10 @@ export const routes: Routes = [
     {
         path: 'form-footer',
         component: FormFooterPageComponent
+    },
+    {
+        path: 'form-custom-wrapper',
+        component: FormUseCustomWrapperPageComponent
     }
 ];
 
@@ -92,7 +99,8 @@ export const routes: Routes = [
         FormInAsidePageModule,
         FormErrorDisplayStrategyPageModule,
         FormReadWriteValuePageModule,
-        FormFooterPageModule
+        FormFooterPageModule,
+        FormUseCustomWrapperPageModule
     ],
     exports: [RouterModule],
     providers: []

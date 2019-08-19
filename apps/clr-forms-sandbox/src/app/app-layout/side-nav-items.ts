@@ -102,7 +102,11 @@ export default [
             {
                 title: 'Form In Aside',
                 path: ['/clr-forms', 'form-in-aside']
-            }
+            },
+            {
+                title: 'Custom field wrapper',
+                path: ['/clr-forms', 'form-custom-wrapper']
+            }            
         ]
     },
     {
