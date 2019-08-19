@@ -15,7 +15,7 @@
     <a href="https://angular.io/api/forms/FormControl" target="_blank">FormControl</a> will be created for each defined
     field automatically and its value will be bound to the
     <a href="https://angular.io/api/forms/FormGroup" target="_blank">FormGroup</a> value. Though library has
-    <a href="#">default set</a> of the most common inputs, you could always
+    <a [routerLink]="['/inputs-list']">default set</a> of the most common inputs, you could always
     <a [routerLink]="['/clr-forms', 'form-extra']">extend</a> this set by configure additional inputs which then could
     be used across the whole application, also there is a way to include in form definitions custom field definitions
     which then would be bound to the particular component in template. Any custom component in case it implements
