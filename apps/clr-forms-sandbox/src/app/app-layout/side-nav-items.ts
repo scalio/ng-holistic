@@ -7,6 +7,11 @@ export default [
         path: ['/home']
     },
     {
+        title: 'Inputs list',
+        icon: 'form',
+        path: ['/inputs-list']
+    },
+    {
         title: 'Getting started',
         icon: 'lightbulb',
         children: [

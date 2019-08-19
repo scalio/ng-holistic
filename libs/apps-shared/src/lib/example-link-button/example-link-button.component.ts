@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'hlc-sbx-example-link-button',
@@ -7,17 +8,20 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcSbxExampleLinkButtonComponent implements OnInit {
-
     @Input() title = 'Example';
-    @Input() href: string;
+    @Input() href: string | string[];
 
     @Input() linkLike = true;
 
-    constructor() {}
+    constructor(private readonly router: Router) {}
 
     ngOnInit() {}
 
     onClick() {
-        window.open(this.href, '_blank');
+        if (typeof this.href === 'string') {
+            window.open(this.href, '_blank');
+        } else {
+            this.router.navigate(this.href);
+        }
     }
 }
