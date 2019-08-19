@@ -1,0 +1,9 @@
+<hlc-sbx-render-def-code-example [definition]="CONSTANTS.definition" [srcUrl]="CONSTANTS.srcUrl">
+    <div class="clr-row">
+        <div class="clr-col-8">
+            <hlc-clr-form #form [definition]="definition" #clrForm> </hlc-clr-form>
+            <hlc-clr-form-footer [form]="clrForm.formGroup" [dataAccess]="dataAccess"></hlc-clr-form-footer>
+        </div>
+        <div class="clr-col-4">{{ clrForm.formGroup?.value | json }}</div>
+    </div>
+</hlc-sbx-render-def-code-example>

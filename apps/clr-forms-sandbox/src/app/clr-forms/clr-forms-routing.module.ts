@@ -10,6 +10,8 @@ import { FormErrorDisplayStrategyPageComponent } from './form-error-display-stra
 import { FormErrorDisplayStrategyPageModule } from './form-error-display-strategy-page/form-error-display-strategy-page.module';
 import { FormExtraPageComponent } from './form-extra-page/form-extra-page.component';
 import { FormExtraPageModule } from './form-extra-page/form-extra-page.module';
+import { FormFooterPageComponent } from './form-form-footer-page/form-footer-page.component';
+import { FormFooterPageModule } from './form-form-footer-page/form-footer-page.module';
 import { FormFullPageComponent } from './form-full-page/form-full-page.component';
 import { FormFullPageModule } from './form-full-page/form-full-page.module';
 import { FormGroupsPageComponent } from './form-groups-page/form-groups-page.component';
@@ -69,6 +71,10 @@ export const routes: Routes = [
     {
         path: 'form-in-aside',
         component: FormInAsidePageComponent
+    },
+    {
+        path: 'form-footer',
+        component: FormFooterPageComponent
     }
 ];
 
@@ -85,7 +91,8 @@ export const routes: Routes = [
         FormInModalPageModule,
         FormInAsidePageModule,
         FormErrorDisplayStrategyPageModule,
-        FormReadWriteValuePageModule
+        FormReadWriteValuePageModule,
+        FormFooterPageModule
     ],
     exports: [RouterModule],
     providers: []
