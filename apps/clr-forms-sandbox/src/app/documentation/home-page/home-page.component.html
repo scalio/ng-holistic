@@ -1,0 +1,35 @@
+<h1>HOME</h1>
+
+<h2>Reasoning</h2>
+
+<p>
+    The purpose of this library is allow developers to create components (forms in particular) not by implementing them
+    with html, styles and code but by describing (defining) them. Then it is concern of the UX library to generate these
+    components, this way we effectively separate core (business) logic of the application from the UI implementation.
+</p>
+
+<h2>Forms</h2>
+
+<p>
+    With help of this library you define (describe) forms. Theses forms then will be generated with library;
+    <a href="https://angular.io/api/forms/FormControl" target="_blank">FormControl</a> will be created for each defined
+    field automatically and its value will be bound to the
+    <a href="https://angular.io/api/forms/FormGroup" target="_blank">FormGroup</a> value. Though library has
+    <a href="#">default set</a> of the most common inputs, you could always
+    <a [routerLink]="['/clr-forms', 'form-extra']">extend</a> this set by configure additional inputs which then could
+    be used across the whole application, also there is a way to include in form definitions custom field definitions
+    which then would be bound to the particular component in template. Any custom component in case it implements
+    <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank">ControlValueAccessor interface</a> and
+    added to the form definition will got the same capabilities as the default ones.
+</p>
+
+<h2>Benefits</h2>
+
+<p>
+    The major benefits from using this library could achieve large data driven applications with a lot of forms. 
+    Using this library you could easily and reliable describe desired form representations without concern how
+    inputs will be rendered and bound to the form value. Library provides strict set of API (aka description DSL) 
+    to render UI components, this allows large teams to stay sync on how to create and use forms inside application, no need to copy / paste html
+    css code when create new components or invent some base classes which abstracts common forms implementation for the
+    application.
+</p>

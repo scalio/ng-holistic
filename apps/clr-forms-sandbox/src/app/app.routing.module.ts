@@ -10,6 +10,7 @@ import { routes as clrFormsModuleRoutes } from './clr-forms/clr-forms-routing.mo
 import { ClrFormsModule } from './clr-forms/clr-forms.module';
 import { ClrWizardModule } from './clr-wizard/clr-wizard.module';
 import { routes as clrWziardRoutes } from './clr-wizard/clr-wizard.routing.module';
+import { DocumentationModule, rootRoutes } from './documentation/documentation.module';
 import { GettingStartedModule } from './getting-started/getting-started.module';
 import { routes as gettingStartedRoutes } from './getting-started/getting-started.routing.module';
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
         path: '',
         component: AppLayoutComponent,
         children: [
+            ...rootRoutes,
             {
                 path: 'getting-started',
                 children: gettingStartedRoutes
@@ -55,7 +57,8 @@ export const routes: Routes = [
         ClrControlsModule,
         ClrFormsModule,
         ClrFileUploadModule,
-        ClrWizardModule
+        ClrWizardModule,
+        DocumentationModule
     ],
     exports: [RouterModule]
 })

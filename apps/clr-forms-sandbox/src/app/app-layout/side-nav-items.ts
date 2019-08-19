@@ -2,8 +2,13 @@ import { SideNavItem } from '@ng-holistic/clr-common';
 
 export default [
     {
-        title: 'Getting started',
+        title: 'Home',
         icon: 'home',
+        path: ['/home']
+    },
+    {
+        title: 'Getting started',
+        icon: 'lightbulb',
         children: [
             {
                 title: 'Overview',
@@ -106,7 +111,7 @@ export default [
             {
                 title: 'Custom field wrapper',
                 path: ['/clr-forms', 'form-custom-wrapper']
-            }            
+            }
         ]
     },
     {
