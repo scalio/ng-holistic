@@ -17,6 +17,11 @@ export default [
         path: ['/ddux']
     },
     {
+        title: 'FAQ',
+        icon: 'help',
+        path: ['/faq']
+    },
+    {
         title: 'Getting started',
         icon: 'lightbulb',
         children: [
