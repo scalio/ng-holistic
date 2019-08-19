@@ -1,0 +1,60 @@
+<h1>Domain Driven UX</h1>
+
+<a href="https://en.wikipedia.org/wiki/Domain-driven_design" target="_blank">Domain Driven Design</a> is wildly used
+approach to software development. You could consider this library as an attempt to use the same principles to define
+user interfaces inside frontend data driven applications. Domain expert could describe customer invoice form in
+following terms
+
+<table class="table table-compact left">
+    <thead>
+        <th>Label</th>
+        <th>Input type</th>
+        <th>Validators</th>
+        <td>Description</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>First Name</td>
+            <td>Text</td>
+            <td>alpha, min-length:3, max-length:100</td>
+            <td>Customer first name</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>Text</td>
+            <td>required, alpha, min-length:3 max-length:100</td>
+            <td>Customer last name</td>
+        </tr>
+        <tr>
+            <td>Order Number</td>
+            <td>Number</td>
+            <td>required, min-length:5, max-length:10</td>
+            <td>Order number</td>
+        </tr>
+        <tr>
+            <td>Order Date</td>
+            <td>Date</td>
+            <td>required, past-only</td>
+            <td>Date when order was made</td>
+        </tr>
+        <tr>
+            <td>Card Number</td>
+            <td>Number</td>
+            <td>required, length:12</td>
+            <td>Credit card number</td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td>Number</td>
+            <td>required</td>
+            <td>Amount in USD (2 decimal digits)</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>String</td>
+            <td>Address of delivery, empty if self pick up</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Using this table developer could define form almost 1:1 reflecting domain expert definition</p>

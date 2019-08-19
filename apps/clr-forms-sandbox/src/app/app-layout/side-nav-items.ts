@@ -12,6 +12,11 @@ export default [
         path: ['/inputs-list']
     },
     {
+        title: 'Domain driven UX',
+        icon: 'organization',
+        path: ['/ddux']
+    },
+    {
         title: 'Getting started',
         icon: 'lightbulb',
         children: [
