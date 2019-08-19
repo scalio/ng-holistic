@@ -64,6 +64,10 @@ export default [
                 path: ['/clr-forms', 'form-error-display-strategy']
             },
             {
+                title: 'Read / Write Form Value',
+                path: ['/clr-forms', 'form-read-write-value']
+            },
+            {
                 title: 'Form Extra Controls',
                 path: ['/clr-forms', 'form-extra']
             },

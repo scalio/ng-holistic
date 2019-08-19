@@ -20,8 +20,10 @@ import { FormInModalPageComponent } from './form-in-modal-page/form-in-modal-pag
 import { FormInModalPageModule } from './form-in-modal-page/form-in-modal-page.module';
 import { FormPageComponent } from './form-page/form-page.component';
 import { FormPageModule } from './form-page/form-page.module';
+import { FormReadWriteValuePageComponent } from './form-read-write-value-page/form-read-write-value-page.component';
+import { FormReadWriteValuePageModule } from './form-read-write-value-page/form-read-write-value-page.module';
 import { FormRecalcPageComponent } from './form-recalc-page/form-recalc-page.component';
-import { FormReclcPageModule } from './form-recalc-page/form-recalc-page.module';
+import { FormRecalcPageModule } from './form-recalc-page/form-recalc-page.module';
 
 export const routes: Routes = [
     {
@@ -31,6 +33,10 @@ export const routes: Routes = [
     {
         path: 'form-error-display-strategy',
         component: FormErrorDisplayStrategyPageComponent
+    },
+    {
+        path: 'form-read-write-value',
+        component: FormReadWriteValuePageComponent
     },
     {
         path: 'form-extra',
@@ -72,13 +78,14 @@ export const routes: Routes = [
         FormPageModule,
         FormExtraPageModule,
         FormGroupsPageModule,
-        FormReclcPageModule,
+        FormRecalcPageModule,
         FormCustomFieldsPageModule,
         FormFullPageModule,
         FormDynaPageModule,
         FormInModalPageModule,
         FormInAsidePageModule,
-        FormErrorDisplayStrategyPageModule
+        FormErrorDisplayStrategyPageModule,
+        FormReadWriteValuePageModule
     ],
     exports: [RouterModule],
     providers: []

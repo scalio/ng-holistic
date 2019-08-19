@@ -11,4 +11,4 @@ import { FormRecalcPageComponent } from './form-recalc-page.component';
     imports: [CommonModule, ExampleSourceModule, HlcClrFormModule, AppsSharedModule],
     exports: [FormRecalcPageComponent]
 })
-export class FormReclcPageModule {}
+export class FormRecalcPageModule {}

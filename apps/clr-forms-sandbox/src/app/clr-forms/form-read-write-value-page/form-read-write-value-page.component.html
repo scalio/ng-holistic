@@ -1,0 +1,9 @@
+<hlc-sbx-render-def-code-example [definition]="CONSTANTS.definition" [srcUrl]="CONSTANTS.srcUrl">
+    <div class="clr-row">
+        <div class="clr-col-8">
+            <hlc-clr-form #form [definition]="definition" #clrForm> </hlc-clr-form>
+            <button [disabled]="!clrForm.formGroup?.valid" (click)="onSave(clrForm.formGroup?.value)">Save</button>
+        </div>
+        <div class="clr-col-4">{{ clrForm.formGroup?.value | json }}</div>
+    </div>
+</hlc-sbx-render-def-code-example>
