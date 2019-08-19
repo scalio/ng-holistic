@@ -4,6 +4,10 @@ import { FormCustomFieldsPageComponent } from './form-custom-fields-page/form-cu
 import { FormCustomFieldsPageModule } from './form-custom-fields-page/form-custom-fields-page.module';
 import { FormDynaPageComponent } from './form-dyna-page/form-dyna-page.component';
 import { FormDynaPageModule } from './form-dyna-page/form-dyna-page.module';
+// tslint:disable-next-line: max-line-length
+import { FormErrorDisplayStrategyPageComponent } from './form-error-display-strategy-page/form-error-display-strategy-page.component';
+// tslint:disable-next-line: max-line-length
+import { FormErrorDisplayStrategyPageModule } from './form-error-display-strategy-page/form-error-display-strategy-page.module';
 import { FormExtraPageComponent } from './form-extra-page/form-extra-page.component';
 import { FormExtraPageModule } from './form-extra-page/form-extra-page.module';
 import { FormFullPageComponent } from './form-full-page/form-full-page.component';
@@ -14,10 +18,6 @@ import { FormInAsidePageComponent } from './form-in-aside-page/form-in-aside-pag
 import { FormInAsidePageModule } from './form-in-aside-page/form-in-aside-page.module';
 import { FormInModalPageComponent } from './form-in-modal-page/form-in-modal-page.component';
 import { FormInModalPageModule } from './form-in-modal-page/form-in-modal-page.module';
-// tslint:disable-next-line: max-line-length
-import { FormPageErrorDisplayStrategyComponent } from './form-page-error-display-strategy/form-page-error-display-strategy.component';
-// tslint:disable-next-line: max-line-length
-import { FormPageErrorDisplayStrategyModule } from './form-page-error-display-strategy/form-page-error-display-strategy.module';
 import { FormPageComponent } from './form-page/form-page.component';
 import { FormPageModule } from './form-page/form-page.module';
 import { FormRecalcPageComponent } from './form-recalc-page/form-recalc-page.component';
@@ -30,7 +30,7 @@ export const routes: Routes = [
     },
     {
         path: 'form-error-display-strategy',
-        component: FormPageErrorDisplayStrategyComponent
+        component: FormErrorDisplayStrategyPageComponent
     },
     {
         path: 'form-extra',
@@ -78,7 +78,7 @@ export const routes: Routes = [
         FormDynaPageModule,
         FormInModalPageModule,
         FormInAsidePageModule,
-        FormPageErrorDisplayStrategyModule
+        FormErrorDisplayStrategyPageModule
     ],
     exports: [RouterModule],
     providers: []

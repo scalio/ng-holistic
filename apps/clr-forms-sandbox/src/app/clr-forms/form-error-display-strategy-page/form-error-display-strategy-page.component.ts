@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ClrFormLayouts } from '@ng-holistic/clr-forms';
 // This is for the sample info, ignore it
-import * as CONSTANTS from './form-page-error-display-strategy.consts';
+import * as CONSTANTS from './form-error-display-strategy-page.consts';
 
 const definition: ClrFormLayouts.ClrFormLayout = {
     kind: 'fields',
@@ -20,10 +20,10 @@ const definition: ClrFormLayouts.ClrFormLayout = {
 };
 
 @Component({
-    selector: 'hlc-form-page-error-display-strategy',
-    templateUrl: './form-page-error-display-strategy.component.html'
+    selector: 'hlc-form-error-display-strategy-page',
+    templateUrl: './form-error-display-strategy-page.component.html'
 })
-export class FormPageErrorDisplayStrategyComponent {
+export class FormErrorDisplayStrategyPageComponent {
     // This is for the sample info, ignore it
     CONSTANTS = CONSTANTS;
     definition = definition;

@@ -5,11 +5,11 @@ import { ClrButtonGroupModule } from '@clr/angular';
 import { HlcClrFormFooterModule } from '@ng-holistic/clr-common';
 import { HlcClrFormModule, InputErrorDisplayStrategy } from '@ng-holistic/clr-forms';
 import { ExampleSourceModule } from '../../example-source';
-import { FormPageErrorDisplayStrategyComponent } from './form-page-error-display-strategy.component';
+import { FormErrorDisplayStrategyPageComponent } from './form-error-display-strategy-page.component';
 
 ///
 @NgModule({
-    declarations: [FormPageErrorDisplayStrategyComponent],
+    declarations: [FormErrorDisplayStrategyPageComponent],
     imports: [
         CommonModule,
         ExampleSourceModule,
@@ -26,4 +26,4 @@ import { FormPageErrorDisplayStrategyComponent } from './form-page-error-display
         InputErrorDisplayStrategy
     ]
 })
-export class FormPageErrorDisplayStrategyModule {}
+export class FormErrorDisplayStrategyPageModule {}
