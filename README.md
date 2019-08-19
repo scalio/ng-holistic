@@ -1,19 +1,24 @@
-# Ng-Holistic
 
-This solution is umbrella for number of angular libraries which makes development of data driven applications faster.
+![ng-holistic at Scalio](https://raw.githubusercontent.com/scalio/ng-holistic/master/scalio-mark-h.svg?sanitize=true)
 
-There is 3 major topics which this solution is intended to help.
+<h1 align="center">ng-holistic</h1>
 
+<p align="center">
+  Make the development of data driven <a href="https://angular.io/">Angular</a> applications faster!
+</p>
+
+&nbsp;
+## How this library helps you
 1. Data driven forms
 2. Data driven tables
 3. Utils aka Common
 
 ## Data driven forms
 
-[Demo App](https://ngholistic.z6.web.core.windows.net)
+[Demo App](https://forms.ng-holistic.com/)
 
-[![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-forms-sandbox-app-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=11)
-![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/3/3)
+[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-forms-sandbox-app-CI)](https://ngholistic.scaliolabs.com/ng-holistic/_build/latest?definitionId=11)
+![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/3/3)
 
 ### Overview
 
@@ -35,10 +40,10 @@ These should support following scenarios:
 
 ## Data driven lists
 
-[Demo App](https://clr7list7sandbox7app.z6.web.core.windows.net/)
+[Demo App](https://lists.ng-holistic.com)
 
-[![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-list-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=21)
-![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/11/11)
+[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-list-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=21)
+![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/11/11)
 
 
 ### Overview
@@ -47,7 +52,21 @@ The target here is to create angular lists declaratively.
 
 ## Common
 
-[Demo App](https://clr7common7sandbox7app.z6.web.core.windows.net)
+[Demo App](https://common.ng-holistic.com/)
 
-[![Build status](https://baio.visualstudio.com/ng-holistic/_apis/build/status/clr-common-sandbox-app-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=20)
-![Deploy Status](https://baio.vsrm.visualstudio.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/10/10)
+[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-common-sandbox-app-CI)](https://ngholistic.scaliolabs.com/ng-holistic/_build/latest?definitionId=20)
+![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/10/10)
+
+## Author
+Created by [@baio](https://github.com/baio/) @ [Scalio](https://scal.io/)
+
+## About us
+<p align="center">
+    <br/>
+    <a href="https://scal.io/">
+        <img src="https://raw.githubusercontent.com/scalio/bazel-status/master/assets/scalio-logo.svg?sanitize=true" />
+    </a>
+    <br/>
+</p>
+
+
