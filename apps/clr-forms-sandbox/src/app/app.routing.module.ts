@@ -17,7 +17,7 @@ import { routes as gettingStartedRoutes } from './getting-started/getting-starte
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/clr-forms/form',
+        redirectTo: '/home',
         pathMatch: 'full'
     },
     {
