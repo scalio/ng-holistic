@@ -72,7 +72,7 @@ export default [
         ]
     },
     {
-        title: 'Clr Forms',
+        title: 'Examples',
         icon: 'align-left-text',
         children: [
             {
@@ -138,7 +138,7 @@ export default [
                 path: ['/clr-wizard', 'wizard-base']
             }
         ]
-    },
+    }/*,
     {
         title: 'Clr Controls',
         icon: 'blocks-group',
@@ -190,5 +190,5 @@ export default [
                 path: ['/clr-file-upload', 'file-uploader']
             }
         ]
-    }
+    }*/
 ] as SideNavItem[];
