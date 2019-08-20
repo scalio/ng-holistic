@@ -17,9 +17,6 @@
 
 [Demo App](https://forms.ng-holistic.com/)
 
-[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-forms-sandbox-app-CI)](https://ngholistic.scaliolabs.com/ng-holistic/_build/latest?definitionId=11)
-![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/3/3)
-
 ### Overview
 
 The target here is to create angular forms declaratively now matter how simple or complex they are.
@@ -42,9 +39,6 @@ These should support following scenarios:
 
 [Demo App](https://lists.ng-holistic.com)
 
-[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-list-CI)](https://baio.visualstudio.com/ng-holistic/_build/latest?definitionId=21)
-![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/11/11)
-
 
 ### Overview
 
@@ -54,8 +48,6 @@ The target here is to create angular lists declaratively.
 
 [Demo App](https://common.ng-holistic.com/)
 
-[![Build status](https://ngholistic.scaliolabs.com/ng-holistic/_apis/build/status/clr-common-sandbox-app-CI)](https://ngholistic.scaliolabs.com/ng-holistic/_build/latest?definitionId=20)
-![Deploy Status](https://ngholistic.scaliolabs.com/_apis/public/Release/badge/814e043a-d890-4fe8-bde7-30b8343d7f7b/10/10)
 
 ## Author
 Created by [@baio](https://github.com/baio/) @ [Scalio](https://scal.io/)
