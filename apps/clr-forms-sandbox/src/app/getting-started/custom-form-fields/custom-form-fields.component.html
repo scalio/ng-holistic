@@ -1,0 +1,100 @@
+<h1>Custom form fields</h1>
+
+<h2>Globally defined custom fields</h2>
+
+<hlc-sbx-example-link-button [href]="['/clr-forms/form-extra']"></hlc-sbx-example-link-button>
+
+<p>
+    You could configure application to include custom inputs inside you form definition, they will be abide the same
+    <a [routerLink]="['/getting-started/form-field-props']">rules</a> as default ones if they implement
+    <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank">ControlValueAccessor</a> interface.
+</p>
+
+<ul>
+    To configure custom input definition do following
+    <li>
+        Create component which implements
+        <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank">ControlValueAccessor</a> interface
+    </li>
+    <li>
+        Configure it by using with holistic library
+        <ul>
+            <li>
+                Include component in app root module declarations section or if this component exported by some module
+                import one to root module
+            </li>
+            <li>
+                Add this component to
+                <a href="https://angular.io/guide/entry-components" target="_blank">entryComponents</a> of app root
+                module
+            </li>
+            <li>
+                Configure HlcClrFormModule to use it as following
+                <i>HlcClrFormModule.forRoot({{ '{' }}myCustomField: CustomFieldComponent{{ '}' }}) </i>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a
+            href="https://stackblitz.com/edit/hlc-clr-form-extra?embed=1&file=src/app/form-layout.types.ts"
+            target="_blank"
+            >Define</a
+        >
+        custom <i>FormLayout</i> type derived from holistic <i>ClrFormLayouts.ClrFormLayout</i> type in order to
+        typescript getting know this custom component belongs new FormLayout definition.
+    </li>
+    <li>
+        Now use this new <i>FormLayout</i> interface to define form with this custom component included across your
+        application like any other standard one. Notice
+        <a [routerLink]="['/getting-started/form-field-props']" fragment="kind-prop">kind</a> of this component will be
+        <i>myCustomField</i>.
+    </li>
+</ul>
+
+<h2>Custom fields defined inside the form</h2>
+
+<hlc-sbx-example-link-button [href]="['/clr-forms/form-custom-fields']"></hlc-sbx-example-link-button>
+
+<p>
+    If you want to use some specific component inside of form which is not included in global components definition
+    layout there is option to do this in-place.
+</p>
+<ul>
+    <li>
+        Create component with optional implementation of
+        <a href="https://angular.io/api/forms/ControlValueAccessor" target="_blank">ControlValueAccessor</a> interface
+        if you suppose to bind this components value to form one.
+    </li>
+    <li>Include component in module declarations section or if this component exported by some module import one.</li>
+    <li>
+        Add this component to <a href="https://angular.io/guide/entry-components" target="_blank">entryComponents</a> of
+        the module.
+    </li>
+    <li>
+        Include this component to form definition as following
+        <pre>
+        {{ '{' }}
+            id: 'customControlId',
+            kind: 'CustomField',
+            valueAccessor: 'self'
+        {{ '{' }}
+        </pre>
+    </li>
+    <li>
+        If you component supports binding via <i>ControlValueAccessor</i> interface, you could provide
+        <i>valueAccessor</i> property which could have following
+        <ul>
+            values
+            <li>'self' - will bind value of the root component from template to the form value</li>
+            <li>
+                'first-child' - will bind value of the first child of the root component from template to the form
+                value, this option is to support case when bound component placed inside some wrapper
+            </li>
+        </ul>
+    </li>
+    <li>
+        Inside form template create <i>ng-template</i> with <i>*hlcCustomField="'customControlId'"</i> directive, it will
+        be generated for the definition; control value will be bound and other
+        <a routerLink="/getting-started/form-field-props">rules</a> will be applied.
+    </li>
+</ul>

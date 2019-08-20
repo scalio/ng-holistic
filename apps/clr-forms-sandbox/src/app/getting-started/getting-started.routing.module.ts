@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CustomFormFieldsComponent } from './custom-form-fields/custom-form-fields.component';
+import { CustomFormFieldsModule } from './custom-form-fields/custom-form-fields.module';
 import { FirstFormComponent } from './first-form/first-form.component';
 import { FirstFormModule } from './first-form/first-form.module';
 import { FormFieldPropsComponent } from './form-field-props/form-field-props.component';
@@ -43,6 +45,10 @@ export const routes: Routes = [
     {
         path: 'form-layout',
         component: FormLayoutComponent
+    },
+    {
+        path: 'custom-form-fields',
+        component: CustomFormFieldsComponent
     }
 ];
 
@@ -55,7 +61,8 @@ export const routes: Routes = [
         FormValuesPageModule,
         FormFieldPropsModule,
         FormFieldWrapperModule,
-        FormLayoutModule
+        FormLayoutModule,
+        CustomFormFieldsModule
     ],
     exports: [RouterModule],
     entryComponents: []

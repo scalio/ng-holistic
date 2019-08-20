@@ -46,28 +46,16 @@ export default [
                 path: ['/getting-started', 'form-field-props']
             },
             {
-                title: 'Form field wrapper',
-                path: ['/getting-started', 'form-field-wrapper']
+                title: 'Custom form fields',
+                path: ['/getting-started', 'custom-form-fields']
             },
             {
                 title: 'Form layout',
                 path: ['/getting-started', 'form-layout']
             },
             {
-                title: 'Custom form field',
-                path: ['/getting-started', 'custom-form-field']
-            },
-            {
-                title: 'Custom form field warpper',
-                path: ['/getting-started', 'custom-form-field-wrapper']
-            },
-            {
-                title: 'Custom layout',
-                path: ['/getting-started', 'custom-layout']
-            },
-            {
-                title: 'Inline custom component',
-                path: ['/getting-started', 'custom-inline-component']
+                title: 'Form field wrapper',
+                path: ['/getting-started', 'form-field-wrapper']
             }
         ]
     },
@@ -92,8 +80,12 @@ export default [
                 path: ['/clr-forms', 'form-footer']
             },
             {
-                title: 'Form Extra Controls',
+                title: 'Global Custom Fields',
                 path: ['/clr-forms', 'form-extra']
+            },
+            {
+                title: 'Form Custom Fields',
+                path: ['/clr-forms', 'form-custom-fields']
             },
             {
                 title: 'Form With Groups',
@@ -102,10 +94,6 @@ export default [
             {
                 title: 'Form Recalc',
                 path: ['/clr-forms', 'form-recalc']
-            },
-            {
-                title: 'Form Custom Fields',
-                path: ['/clr-forms', 'form-custom-fields']
             },
             {
                 title: 'Form Hide Elements',
