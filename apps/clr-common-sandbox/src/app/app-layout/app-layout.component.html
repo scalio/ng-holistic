@@ -2,12 +2,15 @@
     <hlc-main-header
         main-header
         [navLinks]="navLinks"
+        [titleHref]="titleHref"
         [activeNavLinkIndex]="activeNavLinkIndex"
         title="NG-HOLISTIC / CLR-COMMON"
     >
         <div actions class="header-actions">
-            <a class="nav-link nav-icon" (click)="onConfig()"> <clr-icon shape="cog"></clr-icon> </a>
+            <a class="nav-link nav-icon" href="https://github.com/scalio/ng-holistic" target="_blank"
+                ><img class="nav-link-img" src="assets/images/github.png" />
+            </a>
         </div>
     </hlc-main-header>
-    <ng-template #content> </ng-template>
+    <ng-template #content> <router-outlet></router-outlet> </ng-template>
 </hlc-main-layout>
