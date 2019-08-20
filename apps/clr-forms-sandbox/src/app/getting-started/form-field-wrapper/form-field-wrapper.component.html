@@ -1,9 +1,9 @@
 <h1>Form field wrapper</h1>
 
-Usually when control is placed on form it supposed to have some accompanied features
-which doesn't belong to it directly but which create context of that control. The inextricate example of such context is
-labels and validation errors. So when form control is rendered it will be placed inside container component. Default
-'ng-holistic' container component has following features.
+Usually when control is placed on form it supposed to have some accompanied features which doesn't belong to it directly
+but which create context of that control. The inextricable example of such context is labels and validation errors. So
+when form control is rendered it will be placed inside container component. Default 'ng-holistic' container component
+has following features.
 
 <ul>
     <li>Label</li>
@@ -11,16 +11,32 @@ labels and validation errors. So when form control is rendered it will be placed
     <li>Errors hint</li>
 </ul>
 
-See source of the defualt wrapper <a href="" target="_blank">here</a>.
-<br>
-Any input / output property of the wrapper component could be initialized by the same rules as a form field
-control <a routerLink="/getting-started/form-field-props">see 'props' field of the definition object</a>
+See source of the default wrapper
+<a
+    href="https://github.com/scalio/ng-holistic/blob/master/libs/clr-forms/src/lib/input-container/input-container.component.ts"
+    target="_blank"
+    >here</a
+>. <br />
+Any input / output property of the wrapper component could be initialized by the same
+<a routerLink="/getting-started/form-field-props">props</a> rules as a form field control
 
-<h3>Required fields hint</h3>
+<h2>Custom wrappers</h2>
 
-When control has 'required' validator on it we could hint user that this field is
-required or optional, you could configure this behaviour.
-On application start just provide configuartion using `InputContainerConfig` interface
+For you application you could define global custom field wrapper, it will be applied to the all holistic forms of the
+app <a [routerLink]="['/clr-forms/form-custom-wrapper']">Example</a>. <br />
+Also you could override global field wrapper for particular form by using HLC_FORM_FIELD_WRAPPER provider on the form
+<a
+    href="https://github.com/scalio/ng-holistic/blob/master/apps/clr-forms-sandbox/src/app/clr-forms/form-use-custom-wrapper-page/form-use-custom-wrapper-page.component.ts"
+    target="_blank"
+    >Example</a
+>.
 
-<hlc-code-render-example [code]="inputContainerConfig1">
-</hlc-code-render-example>
+<h2>Required fields hint</h2>
+
+Default implementation of the input wrapper could display hints for required fields. When control has 'required'
+validator on it we could hint user that this field is required or optional
+<a
+    href="https://stackblitz.com/edit/hlc-clr-form-input-wrapper-config?embed=1&file=src/app/app.module.ts"
+    target="_blank"
+    >Example</a
+>.
