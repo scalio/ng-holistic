@@ -5,6 +5,20 @@
     inside the modals.
 </p>
 
+<button class="btn" (click)="onForm()">Form</button>
+
+<button class="btn" (click)="onAlert()">Alert</button>
+
+<hlc-sbx-example-link-button
+    title="Example 1"
+    href="https://stackblitz.com/edit/hlc-clr-form-in-modal?file=src/app/app.component.ts"
+></hlc-sbx-example-link-button>
+
+<hlc-sbx-example-link-button
+    title="Example 2"
+    href="https://stackblitz.com/edit/hlc-clr-form-in-modal-simple"
+></hlc-sbx-example-link-button>
+
 <h2>HlcClrModalService</h2>
 
 <p>Service provides methods to display modals</p>
@@ -214,7 +228,10 @@
         </tr>
         <tr>
             <td class="left">hideFooter: boolean (default: false)</td>
-            <td class="left">By default modal will be displayed with footer including OK / Cancel buttons. Set this property to <i>true</i> if want to hide footer.</td>
+            <td class="left">
+                By default modal will be displayed with footer including OK / Cancel buttons. Set this property to
+                <i>true</i> if want to hide footer.
+            </td>
         </tr>
     </tbody>
 </table>
@@ -243,7 +260,10 @@
         </tr>
         <tr>
             <td class="left">hideFooter: boolean (default: false)</td>
-            <td class="left">By default modal will be displayed with footer including OK / Cancel buttons. Set this property to <i>true</i> if want to hide footer.</td>
+            <td class="left">
+                By default modal will be displayed with footer including OK / Cancel buttons. Set this property to
+                <i>true</i> if want to hide footer.
+            </td>
         </tr>
     </tbody>
 </table>
@@ -286,7 +306,3 @@
         </tr>
     </tbody>
 </table>
-
-<button class="btn" (click)="onForm()">Form</button>
-
-<button class="btn" (click)="onAlert()">Alert</button>
