@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AlertType } from '../../common.types';
 
 @Component({
@@ -11,7 +11,7 @@ export class HlcClrAlertModalComponent implements OnInit {
     @Input() message: string;
     @Input() alertType: AlertType;
 
-    constructor() {}
+    constructor(public readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {}
 }

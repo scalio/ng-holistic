@@ -10,7 +10,7 @@ import { flatMap } from 'rxjs/operators';
     template: `
         <form clrForm [formGroup]="form">
             <clr-input-container>
-                <label>Text (required)</label> <input clrInput type="text" formControlName="text" />
+                <label>Text</label> <input clrInput type="text" formControlName="text" />
             </clr-input-container>
         </form>
     `
@@ -38,7 +38,7 @@ export class ModalPageComponent implements OnInit {
 
     onForm() {
         this.modalService.showForm({
-            title: 'form',
+            title: 'Title',
             componentFormField: 'form',
             contentComponentType: ModalPageFormComponent,
             dataAccess: {
@@ -50,6 +50,6 @@ export class ModalPageComponent implements OnInit {
     }
 
     onAlert() {
-        this.modalService.alert('Title', 'Message', 'success');
+        this.modalService.alert('Title', 'Success message', 'success');
     }
 }

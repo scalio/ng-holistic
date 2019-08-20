@@ -243,6 +243,7 @@ export class HlcClrModalService {
             title: title,
             contentComponentType: HlcClrAlertModalComponent
         });
+
         modalInstance.hideCancel = true;
 
         instance$
@@ -253,6 +254,7 @@ export class HlcClrModalService {
             .subscribe(inst => {
                 inst.alertType = alertType;
                 inst.message = message;
+                inst.cdr.detectChanges();
             });
 
         return ok;
