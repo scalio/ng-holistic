@@ -1,0 +1,19 @@
+<h1>Form Layout</h1>
+
+<hlc-sbx-example-link-button [href]="['/clr-forms/form-groups']"></hlc-sbx-example-link-button>
+<p>
+    Holistic library not only allows to created forms with list of the input fields but also grouping these fields in
+    different groups.
+</p>
+<ul>
+    By default library includes following groups
+    <li>Fields - this is container for the input fields, every form must contains at least one group of this type</li>
+    <li>
+        Group - this is grouping section inside which could be placed other form groups, you could customize this group
+        view by applying styles to hlc-clr-group-layout component
+    </li>
+    <li>Tabs - this should contain list of Tab groups</li>
+    <li>Tab - this is grouping section for parent Tabs group it could contain other Group, Tabs or Fields groups</li>
+</ul>
+
+<p>Notice: The Group, Tabs / Tab groups could be recursively included in one another</p>

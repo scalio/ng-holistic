@@ -6,6 +6,8 @@ import { FormFieldPropsComponent } from './form-field-props/form-field-props.com
 import { FormFieldPropsModule } from './form-field-props/form-field-props.module';
 import { FormFieldWrapperComponent } from './form-field-wrapper/form-field-wrapper.component';
 import { FormFieldWrapperModule } from './form-field-wrapper/form-field-wrapper.module';
+import { FormLayoutComponent } from './form-layout/form-layout.component';
+import { FormLayoutModule } from './form-layout/form-layout.module';
 import { FormValuesPageComponent } from './form-values-page/form-values-page.component';
 import { FormValuesPageModule } from './form-values-page/form-values-page.module';
 import { InstallPackagesComponent } from './install-packages/install-packages.component';
@@ -37,6 +39,10 @@ export const routes: Routes = [
     {
         path: 'form-field-wrapper',
         component: FormFieldWrapperComponent
+    },
+    {
+        path: 'form-layout',
+        component: FormLayoutComponent
     }
 ];
 
@@ -48,7 +54,8 @@ export const routes: Routes = [
         FirstFormModule,
         FormValuesPageModule,
         FormFieldPropsModule,
-        FormFieldWrapperModule
+        FormFieldWrapperModule,
+        FormLayoutModule
     ],
     exports: [RouterModule],
     entryComponents: []
