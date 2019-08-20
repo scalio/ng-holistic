@@ -9,7 +9,11 @@ import { AppRoutingModule } from './app.routing.module';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+        RouterModule.forRoot([], {
+            initialNavigation: 'enabled',
+            scrollPositionRestoration: 'enabled',
+            onSameUrlNavigation: 'reload'
+        }),
         AppRoutingModule,
         HotkeyModule.forRoot()
     ],

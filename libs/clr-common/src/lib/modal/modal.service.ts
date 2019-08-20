@@ -33,8 +33,6 @@ export interface ModalShowFormParams extends ModalShowParams {
     allowOkWhenFormPristine?: boolean;
     value?: any;
     closeOnOk?: boolean;
-    // default false, since we dont wont user lost entered data when ocasionally click on background
-    hideOnClickOverlay?: boolean;
     // Will emit both ok (value from form) and cancel (null) events
     emitOkCancel?: boolean;
 }

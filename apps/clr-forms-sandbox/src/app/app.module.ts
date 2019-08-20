@@ -11,11 +11,11 @@ import {
     HlcClrImageUploadModule
 } from '@ng-holistic/clr-file-upload';
 import { HlcClrFormModule } from '@ng-holistic/clr-forms';
+import { HlcNgSelectComponent, HlcNgSelectModule } from '@ng-holistic/ng-select';
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { hlcConfigProviders } from './hlc.config';
 import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
-import { HlcNgSelectComponent, HlcNgSelectModule } from '@ng-holistic/ng-select';
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,7 +24,7 @@ import { HlcNgSelectComponent, HlcNgSelectModule } from '@ng-holistic/ng-select'
         AppRoutingModule,
         ClrMainContainerModule,
         ClrLayoutModule,
-        RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true }),
+        RouterModule.forRoot(routes, { initialNavigation: 'enabled', useHash: true, onSameUrlNavigation: 'reload' }),
         HlcClrFormModule.forRoot({
             RichTextField: HlcClrRichTextComponent,
             ImageUploadField: HlcClrImageUploadComponent,

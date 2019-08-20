@@ -1,4 +1,292 @@
-<button class="btn" (click)="onForm()">Form</button>
+<h1>Modals</h1>
 
+<p>
+    Library includes services to display different types of modals. Also it provides utilities for forms integration
+    inside the modals.
+</p>
+
+<h2>HlcClrModalService</h2>
+
+<p>Service provides methods to display modals</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Args</th>
+            <th>Result type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">showForm</td>
+            <td class="left">params: <a [routerLink]="['.']" fragment="ModalShowFormParams">ModalShowFormParams</a></td>
+            <td class="left"><a [routerLink]="['.']" fragment="ShowModalResult">ShowModalResult</a></td>
+            <td class="left">
+                Show modal with content of some <i>Component</i> and integrated form capabilities, such as OK / Cancel
+                buttons binding.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">show</td>
+            <td class="left">params: <a [routerLink]="['.']" fragment="ModalShowParams">ModalShowParams</a></td>
+            <td class="left"><a [routerLink]="['.']" fragment="ShowModalResult">ShowModalResult</a></td>
+            <td class="left">Show modal with content of some <i>Component</i> type.</td>
+        </tr>
+        <tr>
+            <td class="left">showTemplate</td>
+            <td class="left">
+                params: <a [routerLink]="['.']" fragment="ModalShowTemplateParams">ModalShowTemplateParams</a>
+            </td>
+            <td class="left"><a [routerLink]="['.']" fragment="ShowModalResult">ShowModalResult</a></td>
+            <td class="left">Show modal with content from some <i>template</i>.</td>
+        </tr>
+        <tr>
+            <td class="left">confirm</td>
+            <td class="left">
+                title: title of the form, message: message to display as modal content, confirmParams:
+                <a [routerLink]="['.']" fragment="ConfirmParams"></a>
+            </td>
+            <td class="left">Observable{{ '<' }}any{{ '>' }}</td>
+            <td class="left">Show modal with confirmation and 2 buttons OK / Cancel.</td>
+        </tr>
+        <tr>
+            <td class="left">alert</td>
+            <td class="left" style="width: 20%">
+                title: title of the form, message: message to display as modal content, alertType: 'danger' | 'warning'
+                | 'info' | 'success' (the style of the alert)
+            </td>
+            <td class="left">Observable{{ '<' }}any{{ '>' }}</td>
+            <td class="left">Show modal with notification of particular type.</td>
+        </tr>
+        <tr>
+            <td class="left">hide</td>
+            <td></td>
+            <td></td>
+            <td class="left">Hide currently displayed form.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ModalShowFormParams">ModalShowFormParams interface</h2>
+
+<h3>Inherited from <a [routerLink]="['.']" fragment="ModalShowParams">ModalShowParams</a> interface</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">componentFormField: string (required)</td>
+            <td class="left">
+                The name of the content component property of type
+                <a href="https://angular.io/api/forms/FormGroup" target="blank">FormGroup</a>. This FormGroup state will
+                be be used to enable / disable OK button when necessary and provide value for data access.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                dataAccess: <a [routerLink]="['.']" fragment="FormFooterDataAccess">FormFooterDataAccess</a>
+            </td>
+            <td class="left">
+                Controller used to save form data. When user click OK button form value should be saved via this
+                controller.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">allowOkWhenFormPristine: boolean (default: false)</td>
+            <td class="left">
+                By default OK button will be enabled only after some field was modified. To always enable OK button set
+                allowOkWhenFormPristine to true
+            </td>
+        </tr>
+        <tr>
+            <td class="left">value: any</td>
+            <td class="left">Object to initialize form value.</td>
+        </tr>
+        <tr>
+            <td class="left">closeOnOk: boolean (default true)</td>
+            <td class="left">
+                After user click OK and value was successfully stored using dataAccess controller, form will be closed
+                by default. Set this property to false, if don't want to close form after successful save.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">emitOkCancel: boolean (default false)</td>
+            <td class="left">
+                By default <a [routerLink]="['.']" fragment="ShowModalResult_ok">ShowModalResult.ok</a> will emit value
+                only after successful save, set this property to true then it will emit null value in case modal was
+                canceled.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ModalShowParams">ModalShowParams interface</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">title: string (required)</td>
+            <td class="left">Title of the modal</td>
+        </tr>
+        <tr>
+            <td class="left">contentComponentType: any (required)</td>
+            <td class="left">
+                Component type for modal content, must be included in
+                <a href="https://angular.io/guide/entry-components" _target="blank">entryComponents</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="left">hideOnClickOverlay: boolean (default: true)</td>
+            <td class="left">Close modal on background click</td>
+        </tr>
+        <tr>
+            <td class="left">hideFooter: boolean (default: false)</td>
+            <td class="left">By default modal will be displayed with footer with OK / Cancel buttons</td>
+        </tr>
+        <tr>
+            <td class="left">data: any</td>
+            <td class="left">
+                Data to inject in content component constructor via <i>HLC_CONTAINER_DATA</i> injector.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="FormFooterDataAccess">FormFooterDataAccess interface</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property / method</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">update: (data: any) ={{ '>' }} Observable{{ '<' }}any{{ '>' }}</td>
+            <td class="left">
+                Method used to store form value, given form value it should store it and on success emit stored data
+                value. If some error happens it must throw string error which case it will be displayed in modal
+                notification area.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">updateSuccess$: Subject{{ '<' }}any{{ '>' }}</td>
+            <td class="left">If provided will emit successfully stored value after update success.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ModalShowTemplateParams">ModalShowTemplateParams interface</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">title: string (required)</td>
+            <td class="left">Title of the modal</td>
+        </tr>
+        <tr>
+            <td class="left">contentComponentTemplate: TemplateRef{{ '<' }}any{{ '>' }} (required)</td>
+            <td class="left">Template for modal content</td>
+        </tr>
+        <tr>
+            <td class="left">hideOnClickOverlay: boolean (default: true)</td>
+            <td class="left">Close modal on background click</td>
+        </tr>
+        <tr>
+            <td class="left">hideFooter: boolean (default: false)</td>
+            <td class="left">By default modal will be displayed with footer including OK / Cancel buttons. Set this property to <i>true</i> if want to hide it.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ModalShowParams">ModalShowTemplateParams interface</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">title: string (required)</td>
+            <td class="left">Title of the modal</td>
+        </tr>
+        <tr>
+            <td class="left">contentComponentTemplate: TemplateRef{{ '<' }}any{{ '>' }} (required)</td>
+            <td class="left">Template for modal content</td>
+        </tr>
+        <tr>
+            <td class="left">hideOnClickOverlay: boolean (default: true)</td>
+            <td class="left">Close modal on background click</td>
+        </tr>
+        <tr>
+            <td class="left">hideFooter: boolean (default: false)</td>
+            <td class="left">By default modal will be displayed with footer with OK / Cancel buttons</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="ShowModalResult">ShowModalResult{{ '<' }}T{{ '>' }} interface</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>property / method</th>
+            <th>description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">instance$: Observable{{ '<' }}T{{ '>' }}</td>
+            <td class="left">
+                Will emit instance of content object after it created, could use it to initialize some component
+                properties.
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                modalInstance:
+                <a
+                    href="https://github.com/scalio/ng-holistic/blob/master/libs/clr-common/src/lib/modal/modal/modal.component.ts"
+                    target="blank"
+                    >HlcClrModalComponent</a
+                >
+            </td>
+            <td class="left">Instance of modal component itself could tweak some properties here.</td>
+        </tr>
+        <tr id="ShowModalResult_ok">
+            <td class="left">ok: Observable{{ '<' }}any{{ '>' }}</td>
+            <td class="left">Will emit value after form value was successfully stored.</td>
+        </tr>
+        <tr>
+            <td class="left">cancel: Observable{{ '<' }}any{{ '>' }}</td>
+            <td class="left">Will emit after modal was canceled.</td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn" (click)="onForm()">Form</button>
 
 <button class="btn" (click)="onAlert()">Alert</button>
