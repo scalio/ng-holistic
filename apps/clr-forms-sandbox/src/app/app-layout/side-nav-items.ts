@@ -42,7 +42,7 @@ export default [
                 path: ['/getting-started', 'form-values']
             },
             {
-                title: 'Form field',
+                title: 'Form field definition',
                 path: ['/getting-started', 'form-field-props']
             },
             {

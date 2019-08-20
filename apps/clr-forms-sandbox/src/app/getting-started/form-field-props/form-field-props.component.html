@@ -1,7 +1,7 @@
 <h1>Form field common properties</h1>
 
-Every form declaration contains some group with fields list. The items from this list describe set of components and
-their properties which will be rendered and bound to form value. Here base class declaration for any FromField.
+Every form declaration contains some group with fields list. The items from this list describe the set of components and
+their properties which will be rendered and bound to the form value. Here base class declaration for any FromField.
 
 <clr-code-snippet [clrCode]="classDef"></clr-code-snippet>
 
@@ -28,40 +28,50 @@ their properties which will be rendered and bound to form value. Here base class
         <tr>
             <td>kind</td>
             <td class="left">
-                Type of the generated control, there is number of the <a href="#">most common controls</a> already
-                included in the library, you could <a href="#">add any custom component</a> to be generated on the form.
+                Type of the generated control, there is number of the
+                <a [routerLink]="['/inputs-list']">most common controls</a> already included in the library, you could
+                <a [routerLink]="['.', 'custom-form-field']">add any custom component</a> to be generated on the form.
             </td>
         </tr>
         <tr>
             <td>props</td>
             <td class="left">
-                Contains set of values for generated component's Input properties. In the example above 'placeholder'
+                Contains set of values for generated component's Input properties. For example 'placeholder'
                 property exists on the component associated with TextField kind, so the component 'placeholder' property
                 will be initialized from value of the 'props.placeholder' field. 'label' property exists on the
-                <a href="#">control wrapper</a>, so it also will be initialzied from here.
+                <a [routerLink]="['..', 'form-field-wrapper']">control wrapper</a>, so it also will be
+                initialized there.
+            </td>
+        </tr>
+        <tr>
+            <td>label</td>
+            <td class="left">
+                Convention property, the same as props.label, since supposedly each field definition will have 'label'
+                property and it would be inconvenient to define each time it in props object.
             </td>
         </tr>
         <tr>
             <td>validators</td>
             <td class="left">
-                Contains array of regualr angular validators to be applied to the generated form control, works the same
-                way as in standard 'FormGroup' control initialization. Also this value could be observable with the same
-                array of validators as emitted value, this case control validators will be updated accordingly to the
-                emitted value.
+                Contains array of regular angular validators to be applied to the generated form control, works the same
+                way as in standard
+                <a href="https://angular.io/api/forms/Validators" target="_blank">FormGroup control initialization</a>.
+                Also this value could be observable with the same array of validators as emitted value, this case
+                control validators will be updated accordingly to the emitted value.
             </td>
         </tr>
         <tr>
             <td>hidden</td>
             <td class="left">
                 Observable - hide / show control on the form, when controls is hidden it value will be removed from
-                formGroup automatically. See example <a href="#" [routerLink]="['/clr-forms/form-recalc']">here</a>.
+                formGroup automatically. <a [routerLink]="['/clr-forms/form-full']">Example</a>
             </td>
         </tr>
         <tr>
             <td>value</td>
             <td class="left">
-                Observable - define the current value of the control, the way to implement form fields values
-                recalculation. See example <a href="#" [routerLink]="['/clr-forms/form-recalc']">here</a>.
+                Observable - defines the current value of the control, the way to implement form fields values
+                recalculation. <a [routerLink]="['/clr-forms/form-recalc']">Example</a>
             </td>
         </tr>
     </tbody>
