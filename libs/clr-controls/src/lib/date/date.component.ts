@@ -68,8 +68,8 @@ export class HlcClrDateComponent implements OnInit, OnInit, ControlValueAccessor
                   R.when(
                       R.always(this.value) as any,
                       R.pipe(
-                          setHours(getHours(this.value)),
-                          setMinutes(getMinutes(this.value))
+                          setHours(getHours(this.value as any)),
+                          setMinutes(getMinutes(this.value as any))
                       )
                   ),
                   this.formatToDomainStr

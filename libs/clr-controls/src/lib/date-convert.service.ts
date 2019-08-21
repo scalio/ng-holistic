@@ -26,7 +26,7 @@ const translateDateStr = (parseStr: string, formatStr: string, str: string | nul
     }
     return pipe(
         parse(parseStr),
-        formatDate(formatStr)
+        x => x && formatDate(formatStr)(x)
     )(str);
 };
 

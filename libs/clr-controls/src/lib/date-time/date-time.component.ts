@@ -66,12 +66,12 @@ export class HlcClrDateTimeComponent implements OnInit, OnInit, ControlValueAcce
         this.value = !val
             ? null
             : R.pipe(
-                  // if perviouse value not empty take hours + minutes from there
+                  // if pervious value not empty take hours + minutes from there
                   R.when(
                       R.always(this.value) as any,
                       R.pipe(
-                          setHours(getHours(this.value)),
-                          setMinutes(getMinutes(this.value))
+                          setHours(getHours(this.value as any)),
+                          setMinutes(getMinutes(this.value as any))
                       )
                   ),
                   this.formatToDomainStr
