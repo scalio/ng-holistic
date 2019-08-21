@@ -1502,10 +1502,12 @@
     parchment "^1.1.2"
     quill-delta "^4.0.1"
 
-"@types/ramda@0.25.39":
-  version "0.25.39"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.39.tgz#7f6ddc0baa6e7f99860e7752dcfbeae5655bf525"
-  integrity sha512-GJr1BOUjtdLexxQLhflMw1tCDav3csdUTC7twHx0GZUF9RTWGnJkYnUFAZE5cv1YnefgZabdfC8GvtJgVmQL7A==
+"@types/ramda@^0.26.19":
+  version "0.26.19"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.19.tgz#400580597566c016e9743f17c1c48bf4671cda81"
+  integrity sha512-lJuMZDXqZ8W2hl0Gz+wEPUhXcf/tZRuaO5vrxFD3Dv2XMqgTZVw+bvfS6iQAsio9XQV+uhkggtT4eLhDmUpI5g==
+  dependencies:
+    ts-toolbelt "^3.2.22"
 
 "@types/resolve@0.0.8":
   version "0.0.8"
@@ -10896,6 +10898,11 @@ ts-node@~8.3.0:
     make-error "^1.1.1"
     source-map-support "^0.5.6"
     yn "^3.0.0"
+
+ts-toolbelt@^3.2.22:
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-3.8.3.tgz#7f87689f0432932e9d8936582d78d1ba90a9b2d9"
+  integrity sha512-/MnLA9Pr7ppDIxMf8sGSbNoiQDORQtzdcma8IsepArmikqZbu7CiwP+aAYaZnVXjOxLAleIEyxe20LJx0WgcCw==
 
 tsconfig-paths-webpack-plugin@3.2.0:
   version "3.2.0"
