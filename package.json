@@ -1,6 +1,6 @@
 {
     "name": "ng-holistic",
-    "version": "0.0.64",
+    "version": "0.0.77",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
