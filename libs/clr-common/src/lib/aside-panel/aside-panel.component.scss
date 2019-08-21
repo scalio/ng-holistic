@@ -1,4 +1,20 @@
-@import 'global-vars';
+// TODO: Fix it
+$gray-light-midtone: lightgrey;
+$clr-modal-bg-color: white;
+$clr-global-borderradius: 0;
+$clr-modal-content-padding-top: 10px;
+$clr-modal-content-padding-left: 10px;
+$clr-modal-content-padding-right: 10px;
+$clr-modal-content-padding-bottom: 10px;
+$clr-modal-content-box-shadow-color: darkgrey;
+
+$clr-grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
 
 ::ng-deep {
     .aside-content {
