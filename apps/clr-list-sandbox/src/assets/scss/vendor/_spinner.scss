@@ -1,9 +1,0 @@
-// spinner-inverse
-.spinner.spinner-inverse {
-    background: generateSpinnerIcon($clr-spinner-bg-color-inverse, $clr-spinner-color, $clr-spinner-opacity);
-}
-
-// spinner-md
-.spinner.spinner-md {
-    @include min-height(2rem);
-}

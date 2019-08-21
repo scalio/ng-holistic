@@ -1,8 +1,0 @@
-// dropdown-toggle
-.dropdown-toggle {
-    .fa-caret-down {
-        @include layer(50%, 0.5rem, auto, auto);
-        color: inherit;
-        transform: translateY(-50%);
-    }
-}
