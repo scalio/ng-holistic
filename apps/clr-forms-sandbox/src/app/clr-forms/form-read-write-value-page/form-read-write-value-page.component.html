@@ -2,7 +2,7 @@
     <div class="clr-row">
         <div class="clr-col-8">
             <hlc-clr-form #form [definition]="definition" #clrForm> </hlc-clr-form>
-            <button [disabled]="!clrForm.formGroup?.valid" (click)="onSave(clrForm.formGroup?.value)">Save</button>
+            <button class="btn" [disabled]="!clrForm.formGroup?.valid" (click)="onSave(clrForm.formGroup?.value)">Save</button>
         </div>
         <div class="clr-col-4">{{ clrForm.formGroup?.value | json }}</div>
     </div>

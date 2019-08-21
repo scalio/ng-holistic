@@ -5,6 +5,7 @@ import { ClrInputModule } from '@clr/angular';
 import { HlcClrAsidePanelModule, HlcClrModalModule } from '@ng-holistic/clr-common';
 import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { AsidePageComponent } from './aside-page.component';
+import { AppsSharedModule } from '@apps/shared';
 
 @NgModule({
     declarations: [AsidePageComponent],
@@ -14,7 +15,8 @@ import { AsidePageComponent } from './aside-page.component';
         ReactiveFormsModule,
         HlcClrFormModule,
         ClrInputModule,
-        HlcClrAsidePanelModule
+        HlcClrAsidePanelModule,
+        AppsSharedModule
     ],
     exports: [AsidePageComponent]
 })

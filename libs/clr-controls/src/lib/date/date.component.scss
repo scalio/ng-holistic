@@ -1,8 +1,12 @@
+
 :host {
-    display: flex;
+    ::ng-deep readonly .datepicker-trigger-icon {
+        display: none;
+    }    
+
+    ::ng-deep .clr-form-control {
+        margin-top: 0;
+    }
 }
 
-::ng-deep readonly .datepicker-trigger-icon {
-    display: none;
-}
 

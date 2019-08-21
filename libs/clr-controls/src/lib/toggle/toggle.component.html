@@ -1,4 +1,4 @@
-<div class="toggle-switch">
+<div class="clr-toggle-wrapper">
     <input type="checkbox" [checked]="value ? 'checked' : undefined" (change)="onChange($event.target.checked)" [attr.id]="id" />
     <label [attr.for]="id">{{ text }}</label>
 </div>
