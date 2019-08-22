@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 const installPackages = `
-    npm install @angular/cdk
-        angular2-hotkeys property-watch-decorator ramda typescript-memoize 
-        @ng-holistic/clr-common @ng-holistic/forms @ng-holistic/clr-controls @ng-holistic/clr-forms
-        @ng-holistic/ng-select --save
+    npm install @angular/cdk angular2-hotkeys property-watch-decorator ramda typescript-memoize @ng-holistic/clr-common @ng-holistic/forms @ng-holistic/clr-controls @ng-holistic/clr-forms @ng-holistic/ng-select @ng-holistic/typeahead --save
+
+    yarn add @angular/cdk angular2-hotkeys property-watch-decorator ramda typescript-memoize date-fns @ng-holistic/clr-common @ng-holistic/forms @ng-holistic/clr-controls @ng-holistic/clr-forms @ng-holistic/ng-select @ng-holistic/typeahead -S        
 `;
 
 
