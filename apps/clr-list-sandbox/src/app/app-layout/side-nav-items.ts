@@ -53,7 +53,7 @@ export default [
                 path: ['/docs', 'configure-column-definition-map']
             }
         ]
-    },
+    }/*,
     {
         title: 'Clr Filter Example',
         icon: 'filter',
@@ -107,5 +107,5 @@ export default [
                 path: ['/clr-list', 'list']
             }
         ]
-    }
+    }*/
 ] as SideNavItem[];
