@@ -340,6 +340,6 @@ export class ListPageComponent implements OnInit {
     ngOnInit() {}
 
     onUpdateRow() {
-        this.list.upadteRow({ id: '1', title: 'updated' });
+        this.list.updateRow({ id: '1', title: 'updated' });
     }
 }

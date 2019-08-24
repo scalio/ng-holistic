@@ -236,7 +236,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
         if (rowsManagerService) {
             rowsManagerService.addRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.addRow(row));
-            rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.upadteRow(row));
+            rowsManagerService.updateRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.updateRow(row));
             rowsManagerService.removeRow$.pipe(takeUntil(this.destroy$)).subscribe(row => this.removeRow(row));
         }
 
@@ -591,7 +591,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
         this.cdr.markForCheck();
     }
 
-    upadteRow(row: Table.Row) {
+    updateRow(row: Table.Row) {
         const index = R.findIndex(R.eqProps('id', row), this.rows);
         if (index !== -1) {
             this.rows = R.update(index, row, this.rows);

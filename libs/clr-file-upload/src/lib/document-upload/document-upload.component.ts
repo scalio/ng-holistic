@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     EventEmitter,
@@ -19,7 +18,7 @@ import docImage64 from './doc-image';
     selector: 'hlc-clr-document-upload',
     templateUrl: './document-upload.component.html',
     styleUrls: ['./document-upload.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -150,6 +149,7 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
 
     writeValue(obj: any) {
         this.value = obj;
+        console.log('????', this.value);
     }
 
     registerOnChange(fn: any) {

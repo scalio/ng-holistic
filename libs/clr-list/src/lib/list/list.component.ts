@@ -70,14 +70,10 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
 
     // Table props delegators
 
-    /**
-     * Redux like integration with external store for rows
-     */
-    @Input() rows: Table.Row[];
     @Input() loading = false;
 
     /**
-     * Regualr integration, just load data and keep them locally
+     * Regular integration, just load data and keep them locally
      */
     @Input() dataProvider: Table.Data.DataProvider | undefined;
     // @obsolete, use definition
@@ -150,6 +146,10 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         });
     }
 
+    setRows(rows: Table.Row[]) {
+        this.tableComponent.rows = rows;
+    }
+
     ngAfterViewInit() {
         if (!this.hasFilters) {
             // table will use filter service to get filter value and only then request reload so
@@ -186,8 +186,8 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         this.tableComponent.addRow(row);
     }
 
-    upadteRow(row: Table.Row) {
-        this.tableComponent.upadteRow(row);
+    updateRow(row: Table.Row) {
+        this.tableComponent.updateRow(row);
     }
 
     removeRow(row: Table.Row) {
