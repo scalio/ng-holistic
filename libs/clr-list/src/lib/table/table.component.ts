@@ -1,46 +1,22 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    InjectionToken,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    ViewChild,
-    ViewChildren,
-    OnInit
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, 
+    Component, ContentChild, ContentChildren, ElementRef, EventEmitter, 
+    Inject, InjectionToken, Input, OnDestroy, OnInit, Optional, Output, 
+    QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { ClrDatagrid, ClrDatagridRow, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { HlcHotkeysContainerService } from '@ng-holistic/clr-common';
 import * as R from 'ramda';
-import { of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 import { catchError, filter, finalize, flatMap, map, take, takeUntil, tap } from 'rxjs/operators';
 import { Memoize } from 'typescript-memoize';
 import { FilterService } from '../filter.service';
 import { RowsManagerService } from '../rows-manager.service';
 import { CustomCellDirective } from './custom-cell.directive';
 import { RowDetailDirective } from './row-detail.directive';
-import {
-    defaultTableDataProviderConfig,
-    HLC_CLR_TABLE_CELL_FORMAT_MAP,
-    HLC_CLR_TABLE_CELL_MAP,
-    HLC_CLR_TABLE_DATA_PROVIDER_CONFIG,
-    HLC_CLR_TABLE_PAGINATOR_ITEMS,
-    PaginatorItems,
-    TableCellFormatMap,
-    TableCellMap,
-    TableDataProviderConfig
-} from './table.config';
+import { defaultTableDataProviderConfig, HLC_CLR_TABLE_CELL_FORMAT_MAP, 
+    HLC_CLR_TABLE_CELL_MAP, HLC_CLR_TABLE_DATA_PROVIDER_CONFIG, 
+    HLC_CLR_TABLE_PAGINATOR_ITEMS, PaginatorItems, TableCellFormatMap, 
+    TableCellMap, TableDataProviderConfig } from './table.config';
 import { Table } from './table.types';
 import { mapPageState, omitUndefinedFileds } from './table.utils';
 import { HlcTableKeysManagerService } from './utils/table-keys-manager';
@@ -68,8 +44,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private _dataProviderState: any;
     private _paginator: Table.Data.Paginator | undefined;
     private _activeRow: Table.RowBase | undefined;
-    private _rows: Table.Row[];
-
+    
     /**
      * FIX : Control unexpected behaviour
      * See following comments for this variable
@@ -79,6 +54,10 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
     private destroy$ = new Subject();
     readonly dataProviderConfig: TableDataProviderConfig;
     errorMessage: string | undefined;
+
+    private readonly _rows$ = new BehaviorSubject<Table.Row[]>([]);
+
+    get rows$() { return this._rows$.asObservable(); }
 
     @Input() hidePaginator = false;
     @Input() disableSorting = false;
@@ -141,12 +120,12 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
      * Redux like integration with external store for rows
      */
     @Input() set rows(val: Table.Row[]) {
-        this._rows = val;
+        this._rows$.next(val);
         this.keysManager.onRowsChanged(val);
     }
 
     get rows() {
-        return this._rows;
+        return this._rows$.getValue();
     }
 
     @Input() set paginator(val: Table.Data.Paginator | undefined) {
