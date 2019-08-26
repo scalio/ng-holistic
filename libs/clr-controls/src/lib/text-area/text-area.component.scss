@@ -1,9 +1,14 @@
 ::ng-deep textarea {
-	border-color: #F6F6F6;
+    border-color: #f6f6f6;
     border-bottom: 1px solid #9a9a9a;
     background-color: transparent;
-	&:focus {
-		box-shadow: none;
-		border-bottom: 2px solid #0094d2;
-	}
+    &:focus {
+        box-shadow: none;
+        border-bottom: 2px solid #0094d2;
+    }
+
+    &:read-only {
+        border-width: 0px;
+        box-shadow: none!important;
+    }
 }
