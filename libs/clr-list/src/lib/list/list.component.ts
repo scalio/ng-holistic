@@ -156,7 +156,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
             // setup filterService fake form here
             this.filterService.setForm(null);
             // If there is no filters on init, loading still should be dispatched with empty filter
-            this.setState({});
+            // this.setState({});
         }
         // Suppose here list is single focusable root component on the page
         this.hotkeysContainer.focus$.next(true);

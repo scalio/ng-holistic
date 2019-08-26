@@ -229,6 +229,7 @@ export class HlcClrModalService {
             )
             .subscribe(inst => {
                 inst.message = message;
+                inst.cdr.detectChanges();
             });
 
         if (confirmParams && confirmParams.emitOkCancel) {

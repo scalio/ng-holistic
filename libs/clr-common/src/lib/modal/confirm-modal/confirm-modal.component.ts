@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'hlc-clr-confirm-modal',
@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 export class HlcClrConfirmModalComponent implements OnInit {
     @Input() message: string;
 
-    constructor() {}
+    constructor(readonly cdr: ChangeDetectorRef) {}
 
     ngOnInit() {}
 }

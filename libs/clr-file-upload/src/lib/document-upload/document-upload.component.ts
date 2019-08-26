@@ -149,7 +149,6 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
 
     writeValue(obj: any) {
         this.value = obj;
-        console.log('????', this.value);
     }
 
     registerOnChange(fn: any) {
