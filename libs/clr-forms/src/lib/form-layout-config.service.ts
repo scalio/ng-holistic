@@ -9,7 +9,6 @@ export enum HlcClrFormLayoutType {
     Compact = 'compact'
 }
 
-// TODO: Refactor simplar to hotkeys.config
 @Injectable({ providedIn: 'root' })
 export class HlcClrFormLayoutConfigService implements FieldsLayoutConfig {
     private static readonly _layoutType$ = new BehaviorSubject(HlcClrFormLayoutType.Vertical);

@@ -8,9 +8,9 @@ import {
     OnDestroy,
     OnInit,
     Optional,
+    Output,
     TemplateRef,
-    ViewChild,
-    Output
+    ViewChild
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -26,6 +26,8 @@ export interface FormProvider {
     allowOkWhenFormPristine?: boolean;
 }
 
+export type ModalSize = 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl';
+
 @Component({
     selector: 'hlc-clr-modal',
     templateUrl: './modal.component.html',
@@ -35,7 +37,7 @@ export interface FormProvider {
 })
 export class HlcClrModalComponent implements OnInit, OnDestroy {
     error: string | undefined;
-    @Input() modalSize: 'modal-sm' | 'modal-lg' | 'modal-md' | 'modal-xl' | undefined;
+    @Input() modalSize: ModalSize | undefined;
     @Input() title: string;
     @Input() contentComponentType: any;
     @Input() contentComponentTemplate: TemplateRef<any>;
@@ -44,6 +46,7 @@ export class HlcClrModalComponent implements OnInit, OnDestroy {
     @Input() cancelText: string;
     @Input() hideFooter = false;
     @Input() fixedHeight = false;
+    @Input() inOverlay = true;
     /**
      * Expect content has form, in this case will be used form-footer component
      */

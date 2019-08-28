@@ -1,4 +1,4 @@
-import { Mask, TypeaheadConfig, HlcClrOptionsViewType, MonthYearSelectValue } from '@ng-holistic/clr-controls';
+import { HlcClrOptionsViewType, Mask, MonthYearSelectValue, TypeaheadConfig } from '@ng-holistic/clr-controls';
 import { FormFields } from '@ng-holistic/forms';
 import { Subject } from 'rxjs';
 
@@ -16,6 +16,12 @@ export namespace ClrFormFields {
     export type BaseFieldProps<TVal, TExtProps = {}> = BaseBaseFieldProps<TVal> &
         TExtProps & {
             toggleInputControl?: FormFields.FormFieldProp<'on' | 'off' | undefined>;
+            /**
+             * Dictionary of validation error key / message for control.
+             * @example
+             * { required : 'This field is required' }
+             */
+            validatorsErrorsMap?: FieldValidatorsErrorsMap;
         };
 
     export type BaseFieldPropsP<TVal, TExtProps = {}> = BaseFieldProps<
@@ -26,12 +32,13 @@ export namespace ClrFormFields {
     >;
 
     export interface BaseFieldWithProps<TKind extends string, TProps> extends FormFields.FormField<TKind, TProps> {
+        // TODO ?
         /**
          * Dictionary of validation error key / message for control.
          * @example
          * { required : 'This field is required' }
          */
-        validatorsErrorsMap?: FieldValidatorsErrorsMap;
+        // validatorsErrorsMap?: FieldValidatorsErrorsMap;
     }
 
     /**

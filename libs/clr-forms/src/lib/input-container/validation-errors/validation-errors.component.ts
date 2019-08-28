@@ -1,4 +1,4 @@
-import { Component, Optional, Inject } from '@angular/core';
+import { Component, Inject, Optional } from '@angular/core';
 import * as R from 'ramda';
 import { HlcClrInputContainerComponent } from '../input-container.component';
 import { InputErrorDisplayStrategy } from '../input-error-display-strategy';
@@ -20,20 +20,17 @@ export class ValidationErrorsComponent {
         @Optional()
         @Inject(VALIDATION_ERRORS_MAP_CONFIG)
         private readonly validationErrorsMapConfig?: ValidationErrorsMapConfig
-    ) {
-    }
+    ) {}
 
     /**
      * Get error text from `container.validatorsErrorsMap` or global config `ValidationErrorsMapConfig`
      * @param validationName
      */
     private getErrorTextFromMap(validationName: string): string | undefined {
-
-
         const err = R.propOr(undefined, validationName, this.container.validatorsErrorsMap);
 
         if (err) {
-            return err as unknown as  string;
+            return (err as unknown) as string;
         }
 
         const validation = this.validationErrorsMapConfig && this.validationErrorsMapConfig[validationName];
