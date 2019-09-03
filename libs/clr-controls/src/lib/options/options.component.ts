@@ -42,6 +42,9 @@ export class HlcClrOptionsComponent implements OnInit, ControlValueAccessor, Opt
     ngOnInit() {}
 
     onChange(val: any) {
+        if (this.readonly) {
+            return;
+        }
         this.value = val || null;
         this.valueChange.emit(this.value);
         this.propagateChange(this.value);

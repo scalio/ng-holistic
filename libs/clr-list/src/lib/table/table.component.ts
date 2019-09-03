@@ -543,7 +543,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
             res = (res ? res + ' ' : '') + cls;
         }
 
-        return res;
+        return (res ? res + ' ' : '') + ('hlc-row-cell-' + cell.id);
     }
 
     getCellDisplayValue(cell: Table.Column, row: Table.Row) {

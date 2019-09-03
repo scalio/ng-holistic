@@ -1,6 +1,7 @@
 <ng-container *ngIf="viewType === 'simple'; else buttonsView">
     <clr-radio-wrapper *ngFor="let item of items; trackBy: trackBy; let index = index">
         <input
+            [class.disabled]="readonly"
             type="radio"
             clrRadio
             [checked]="isChecked(item)"
@@ -12,7 +13,7 @@
 </ng-container>
 <ng-template #buttonsView>
     <div class="btn-group">
-        <div class="radio btn" *ngFor="let item of items; trackBy: trackBy" (click)="onChange(mapKey(item))">
+        <div class="radio btn" [class.disabled]="readonly"  *ngFor="let item of items; trackBy: trackBy" (click)="onChange(mapKey(item))">
             <input type="radio" [checked]="isChecked(item)" [value]="mapKey(item)" />
             <label>{{ mapLabel(item) }}</label>
         </div>
