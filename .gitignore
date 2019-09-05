@@ -38,4 +38,4 @@ testem.log
 .DS_Store
 Thumbs.db
 .ionide/
-settings.json
+.vscode/settings.json
