@@ -22,7 +22,6 @@ import { ClrFormFields } from '@ng-holistic/clr-forms';
 import { concat } from 'ramda';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FilterService } from '../filter.service';
 import { CustomCellDirective } from '../table/custom-cell.directive';
 import { RowDetailDirective } from '../table/row-detail.directive';
 import {
@@ -45,7 +44,6 @@ import { List } from './list.types';
             provide: HLC_CLR_TABLE_CUSTOM_CELLS_PROVIDER,
             useExisting: forwardRef(() => HlcClrListComponent)
         },
-        FilterService,
         HlcListKeysManagerService,
         HlcHotkeysContainerService
     ]
@@ -131,7 +129,6 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         private readonly elementRef: ElementRef,
         listKeysManager: HlcListKeysManagerService,
         private readonly hotkeysContainer: HlcHotkeysContainerService,
-        private readonly filterService: FilterService,
         @Optional()
         @Inject(HLC_CLR_LIST_LABELS_CONFIG)
         labelsConfig?: ListLabelsConfig,
@@ -154,7 +151,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
         if (!this.hasFilters) {
             // table will use filter service to get filter value and only then request reload so
             // setup filterService fake form here
-            this.filterService.setForm(null);
+            // this.filterService.setForm(null);
             // If there is no filters on init, loading still should be dispatched with empty filter
             // this.setState({});
         }
