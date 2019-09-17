@@ -24,7 +24,9 @@ export class HlcClrLinkCellComponent implements OnInit {
 
     ngOnInit() {}
 
-    onClick() {
+    onClick(event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
         this.clicked.emit(this.link);
     }
 }

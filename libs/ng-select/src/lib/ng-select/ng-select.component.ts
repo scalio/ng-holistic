@@ -91,6 +91,12 @@ export class HlcNgSelectComponent implements OnInit, OnDestroy, ControlValueAcce
 
     writeValue(obj: any) {
         this.value = obj;
+        if (obj) {
+            const items = this.items || [];
+            if (!items.includes(obj)) {
+                this.items = [obj, ...items];
+            }
+        }
     }
 
     registerOnChange(fn: any) {
