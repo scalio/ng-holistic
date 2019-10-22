@@ -1,6 +1,4 @@
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     EventEmitter,
     forwardRef,
@@ -18,7 +16,7 @@ import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file
     selector: 'hlc-clr-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
