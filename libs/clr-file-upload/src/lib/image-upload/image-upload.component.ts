@@ -6,7 +6,8 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
@@ -17,7 +18,7 @@ import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file
     selector: 'hlc-clr-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -151,6 +152,7 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
     writeValue(obj: any) {
         this.src = obj;
+        this.cdr.markForCheck();
     }
 
     registerOnChange(fn: any) {
