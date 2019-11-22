@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
 @Component({
     selector: 'hlc-clr-aside-panel',
@@ -6,6 +6,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
     styleUrls: ['./aside-panel.component.scss']
 })
 export class HlcClrAsidePanelComponent implements OnInit {
+
+    @Input() bodyClass: string;
     @Output()
     close = new EventEmitter();
 

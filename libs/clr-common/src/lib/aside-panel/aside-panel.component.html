@@ -7,7 +7,7 @@
         <div class="aside-title"><ng-content select="[header]"></ng-content></div>
     </div>
 
-    <div class="aside-body"><ng-content select="[content]"></ng-content></div>
+    <div class="aside-body" [ngClass]="bodyClass"><ng-content select="[content]"></ng-content></div>
 
     <ng-content select="[footer]"></ng-content>
 </ng-template>

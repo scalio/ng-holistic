@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { HlcDefaultBindValue } from '@ng-holistic/forms';
 
 @Component({
     selector: 'hlc-clr-img-cell',
@@ -7,6 +8,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcClrImgCellComponent implements OnInit {
+    @HlcDefaultBindValue
     @Input() src: string;
     @Input() width: number;
     @Input() height: number;
