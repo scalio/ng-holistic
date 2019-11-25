@@ -98,6 +98,7 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     @Input() hidePaginator = false;
     @Input() disableSorting = false;
+    @Input() disableActions = false;
 
     @Input() rowDetail: RowDetailDirective | undefined;
 
@@ -706,6 +707,9 @@ export class HlcClrTableComponent implements TableCustomCellsProvider, OnDestroy
 
     //
     getRowActions(row: Table.Row) {
+        if (this.disableActions) {
+            return undefined;
+        }
         const actions =
             this.table &&
             this.table.rowActions &&

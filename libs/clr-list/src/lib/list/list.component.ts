@@ -55,6 +55,7 @@ export class HlcClrListComponent implements TableCustomCellsProvider, AfterViewI
     @Input() hideFilter = false;
     @Input() hidePaginator = false;
     @Input() disableSorting = false;
+    @Input() disableActions = false;
 
     @Input() isFilterShown = true;
     @Input() aggregateRow: Table.AggregateRow | undefined;
