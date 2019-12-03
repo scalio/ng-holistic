@@ -87,11 +87,14 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
             this.propagateChange(this._value);
             return;
         }
-        if (file instanceof File) {
+        // The actual condition should be File instanceof File
+        // But files created with cypress is not recognized as instanceof File here
+        // if (File instanceof File) {
+        if (file.constructor && file.constructor.name === 'File') {
             this.src = await this.imageUtilsService.encodeFile64(file);
             this.value = file;
             this.cdr.detectChanges();
-            this.propagateChange(this._value);
+            this.propagateChange(this._value);            
         } else {
             this.value = file.src;
             this.propagateChange(this._value);
