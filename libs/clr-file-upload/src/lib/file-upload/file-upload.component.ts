@@ -17,6 +17,7 @@ import { empty, merge, Observable, Subject, throwError } from 'rxjs';
 import { catchError, debounceTime, finalize, take, takeUntil, tap } from 'rxjs/operators';
 import { FileUploadConfig, HLC_CLR_FILE_UPLOAD_CONFIG } from './file-upload.config';
 import { AttachmentType } from './model';
+import { isFileInstance } from '../is-file-instance';
 
 export type UploadFileFun = (file: File) => Observable<any>;
 export type RemoveFileFun = (file: any) => Observable<any>;
@@ -92,7 +93,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     }
 
     get filesObjects() {
-        return (this.files || []).filter(file => file instanceof File);
+        return (this.files || []).filter(isFileInstance);
     }
 
     get uploadedFiles() {
@@ -100,7 +101,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     }
 
     getFileName(file: any) {
-        return file instanceof File ? file.name : this.config && this.config.getName(file);
+        return isFileInstance(file) ? file.name : this.config && this.config.getName(file);
     }
 
     //
@@ -110,7 +111,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
     }
 
     isFileUploading(file: any) {
-        return file instanceof File;
+        return isFileInstance(file);
     }
 
     isFileRemoving(file: any) {
@@ -249,7 +250,7 @@ export class HlcClrFileUploadComponent implements OnInit, OnDestroy, ControlValu
 
     private getFileIndex(file: any, files: any[]) {
         return files.findIndex(f =>
-            file instanceof File ? file === f : !!this.config && this.config.getId(file) === this.config.getId(f)
+            isFileInstance(file) ? file === f : !!this.config && this.config.getId(file) === this.config.getId(f)
         );
     }
 

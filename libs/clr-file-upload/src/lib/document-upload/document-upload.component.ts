@@ -13,6 +13,7 @@ import { ImageState } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
 import docImage64 from './doc-image';
+import { isFileInstance } from '../is-file-instance';
 
 @Component({
     selector: 'hlc-clr-document-upload',
@@ -81,7 +82,7 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
             this.propagateChange(this.value);
             return;
         }
-        if (file instanceof File) {
+        if (isFileInstance(file)) {
             this.value = file;
             this.cdr.detectChanges();
             this.propagateChange(this.value);
@@ -135,14 +136,14 @@ export class HlcClrDocumentUploadComponent implements OnInit, ControlValueAccess
     }
 
     get fileName() {
-        if (this.file instanceof File) {
+        if (isFileInstance(this.file)) {
             return this.file.name;
         }
         return this.file && typeof this.file === 'string' && this.file.substr(this.file.indexOf('/'));
     }
 
     get isSrcUploaded() {
-        return !(this.value instanceof File);
+        return !(isFileInstance(this.value));
     }
 
     //

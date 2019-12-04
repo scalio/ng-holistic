@@ -1,18 +1,19 @@
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     forwardRef,
     Input,
     OnInit,
     Output,
-    ViewChild,
-    ChangeDetectorRef,
-    ChangeDetectionStrategy
+    ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
+import { isFileInstance } from '../is-file-instance';
 
 @Component({
     selector: 'hlc-clr-image-upload',
@@ -87,14 +88,11 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
             this.propagateChange(this._value);
             return;
         }
-        // The actual condition should be File instanceof File
-        // But files created with cypress is not recognized as instanceof File here
-        // if (File instanceof File) {
-        if (file.constructor && file.constructor.name === 'File') {
+        if (isFileInstance(file)) {
             this.src = await this.imageUtilsService.encodeFile64(file);
             this.value = file;
             this.cdr.detectChanges();
-            this.propagateChange(this._value);            
+            this.propagateChange(this._value);
         } else {
             this.value = file.src;
             this.propagateChange(this._value);
@@ -145,7 +143,7 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     }
 
     get fileName() {
-        if (this.file instanceof File) {
+        if (isFileInstance(this.file)) {
             return this.file.name;
         }
         return this.src && typeof this.src === 'string' ? this.src.substr(this.src.lastIndexOf('/') + 1) : null;
