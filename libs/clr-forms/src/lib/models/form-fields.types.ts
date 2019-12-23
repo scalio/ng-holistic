@@ -60,6 +60,8 @@ export namespace ClrFormFields {
         'TextField',
         string,
         {
+            warningLimit?: FormFields.FormFieldProp<number>; 
+            maxLength?: FormFields.FormFieldProp<number>;
             valueChange?: Subject<string>;
         }
     >;

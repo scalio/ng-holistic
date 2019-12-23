@@ -12,7 +12,9 @@ const definition: ClrFormLayouts.ClrFormLayout = {
             kind: 'TextField',
             props: {
                 label: 'Text',
-                placeholder: 'Type something'
+                placeholder: 'Type something',
+                maxLength: 10,
+                warningLimit: 3
             }
         },
         {
