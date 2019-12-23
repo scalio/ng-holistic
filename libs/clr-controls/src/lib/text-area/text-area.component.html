@@ -7,4 +7,7 @@
         [rows]="rows"
         (keyup)="onChange($event)"
     ></textarea>
+    <span *ngIf="maxLength" class="text-counter" [ngClass]="counterStyle">
+        {{ leftCounter }}
+    </span>
 </div>

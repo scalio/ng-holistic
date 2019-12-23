@@ -60,7 +60,7 @@ export namespace ClrFormFields {
         'TextField',
         string,
         {
-            warningLimit?: FormFields.FormFieldProp<number>; 
+            warningLimit?: FormFields.FormFieldProp<number>;
             maxLength?: FormFields.FormFieldProp<number>;
             valueChange?: Subject<string>;
         }
@@ -85,7 +85,15 @@ export namespace ClrFormFields {
 
     export type DateField = BaseField<'DateField', string>;
 
-    export type TextAreaField = BaseFieldP<'TextAreaField', string, { rows?: FormFields.FormFieldProp<number> }>;
+    export type TextAreaField = BaseFieldP<
+        'TextAreaField',
+        string,
+        {
+            rows?: FormFields.FormFieldProp<number>;
+            warningLimit?: FormFields.FormFieldProp<number>;
+            maxLength?: FormFields.FormFieldProp<number>;
+        }
+    >;
 
     export type ToggleField = BaseField<
         'ToggleField',
