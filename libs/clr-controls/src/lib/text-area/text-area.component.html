@@ -8,6 +8,6 @@
         (keyup)="onChange($event)"
     ></textarea>
     <span *ngIf="maxLength" class="text-counter" [ngClass]="counterStyle">
-        {{ leftCounter }}
+        <span>{{ maxLength - leftCounter }}</span> / <span>{{maxLength}}</span>
     </span>
 </div>

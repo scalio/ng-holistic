@@ -70,7 +70,11 @@ export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextVa
             return null;
         } else if (this.leftCounter <= 0) {
             return 'text-counter-danger';
-        } else if (!isNil(this.warningLimit) && this.leftCounter <= this.warningLimit) {
+        } else if (
+            !isNil(this.warningLimit) &&
+            !isNil(this.maxLength) &&
+            this.warningLimit >= this.leftCounter
+        ) {
             return 'text-counter-warning';
         }
     }
