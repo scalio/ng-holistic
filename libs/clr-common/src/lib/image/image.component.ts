@@ -11,8 +11,10 @@ export type ImageState = 'ready' | 'loading' | 'empty';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlcClrImageComponent implements OnInit {
-    static intancesCount = 0;
+    static instancesCount = 0;
     instanceId: string;
+    croppedImage = '';
+    isCropOn = false;
 
     constructor(private readonly filePreviewOverlay: HlcFilePreviewOverlayService) {}
 
@@ -20,6 +22,7 @@ export class HlcClrImageComponent implements OnInit {
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
+    @Input() allowCrop = true;
     @Input() state: ImageState | undefined;
     @Input() src: string | undefined;
     @Input() emptySrc: string;
@@ -31,10 +34,11 @@ export class HlcClrImageComponent implements OnInit {
     @Output() removeClick = new EventEmitter();
     @Output() uploadFile = new EventEmitter<File>();
     @Output() previewClick = new EventEmitter();
+    @Output() srcChanged = new EventEmitter<string>();
 
     ngOnInit() {
-        this.instanceId = `image_component_${HlcClrImageComponent.intancesCount}`;
-        HlcClrImageComponent.intancesCount++;
+        this.instanceId = `image_component_${HlcClrImageComponent.instancesCount}`;
+        HlcClrImageComponent.instancesCount++;
     }
 
     get _emptySrc() {
@@ -78,4 +82,31 @@ export class HlcClrImageComponent implements OnInit {
 
         this.uploadFile.emit(files[0]);
     }
+
+    //
+
+    onCropOn() {
+        this.isCropOn = true;
+    }
+
+    onCropAccept() {
+        this.isCropOn = false;
+        this.src = this.croppedImage;
+        this.croppedImage = '';
+        this.srcChanged.emit(this.src);
+    }
+
+    onCropCancel() {
+        this.isCropOn = false;
+        this.croppedImage = '';
+    }
+
+    get isSrcData() {
+        return this.src && this.src.startsWith('data:image');
+    }
+
+
+    imageCropped(event: any) {
+        this.croppedImage = event.base64;
+    }    
 }

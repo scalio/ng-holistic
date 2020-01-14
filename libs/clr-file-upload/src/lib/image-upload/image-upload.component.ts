@@ -47,6 +47,7 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
+    @Input() allowCrop = true;
     @Input() state: ImageState | undefined;
     @Input() src: string | undefined;
     @Input() emptySrc: string;
@@ -89,7 +90,8 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
             return;
         }
         if (isFileInstance(file)) {
-            this.src = await this.imageUtilsService.encodeFile64(file);
+            const fileSrc = await this.imageUtilsService.encodeFile64(file);
+            this.src = fileSrc;
             this.value = file;
             this.cdr.detectChanges();
             this.propagateChange(this._value);
@@ -105,6 +107,15 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
     onUploadFile(file: any) {
         this.fileUploadComponent.onSetFiles([file]);
+    }
+
+    onSrcChanged(src: string) {
+        const blob = this.imageUtilsService.dataURItoBlob(src);
+        const file = new File([blob], this.file.name);
+        this.src = src;
+        this.value = file;
+        this.cdr.detectChanges();
+        this.propagateChange(this._value);
     }
 
     _uploadFileFun = (file: any) => {

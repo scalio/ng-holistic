@@ -26,6 +26,11 @@ export class HlcClrTextAreaComponent implements OnInit, ControlValueAccessor, Te
     @Input() readonly: boolean;
 
     @Input() rows: number;
+    @Input() maxLength: number | undefined;
+    /**
+     * Left characters from maxLength for applying waring style on displayed left chars text
+     */
+    @Input() warningLimit: number | undefined;
 
     propagateChange = (_: any) => {};
 
@@ -55,5 +60,19 @@ export class HlcClrTextAreaComponent implements OnInit, ControlValueAccessor, Te
 
     get cleanValue() {
         return isNil(this.value) ? '' : this.value;
+    }
+
+    get leftCounter() {
+        return isNil(this.maxLength) ? null : this.maxLength - (isNil(this.value) ? 0 : this.value.length);
+    }
+
+    get counterStyle() {
+        if (isNil(this.leftCounter)) {
+            return null;
+        } else if (this.leftCounter <= 0) {
+            return 'text-counter-danger';
+        } else if (!isNil(this.warningLimit) && this.leftCounter <= this.warningLimit) {
+            return 'text-counter-warning';
+        }
     }
 }

@@ -32,7 +32,7 @@ export const definition = (form: FormGroup): ClrFormLayouts.ClrFormLayout => ({
             },
             // it makes sence to remove validators for readOnly state
             validators: form.valueChanges.pipe(map(({ select }) => (select !== '0' ? [Validators.required] : []))),
-            validatorsErrorsMap: { required: 'This field is required ' },
+            // validatorsErrorsMap: { required: 'This field is required ' },
             hidden: form.valueChanges.pipe(map(({ select }) => select === '3'))
         },
         {

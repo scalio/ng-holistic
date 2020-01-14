@@ -6,5 +6,8 @@
         [value]="cleanValue"
         (keyup)="onChange($event)"
         type="text"
-    >
+    />
+    <span *ngIf="maxLength" class="text-counter" [ngClass]="counterStyle">
+        <span>{{ maxLength - leftCounter }}</span> / <span>{{maxLength}}</span>
+    </span>
 </div>
