@@ -1,10 +1,11 @@
-<ng-container *ngIf="isSrcData">
-    <button *ngIf="isCropOn" class="btn btn-link btn-sm" (click)="onCropAccept()">Accept</button>
-    <button *ngIf="isCropOn" class="btn btn-link btn-sm" (click)="onCropAccept()">Cancel</button>
+<ng-container *ngIf="isSrcData && isCropOn">
+    <button class="btn btn-link btn-sm" (click)="onCropAccept()">Accept</button>
+    <button *ngIf="allowCancelCrop" class="btn btn-link btn-sm" (click)="onCropCancel()">Cancel</button>
     <image-cropper
-        *ngIf="isCropOn"
+        [aspectRatio]="aspectRatio"
+        [maintainAspectRatio]="maintainAspectRatio"
         [imageBase64]="src"
-        [maintainAspectRatio]="false"
+        [alignImage]="alignImage"
         format="png"
         (imageCropped)="imageCropped($event)"
     ></image-cropper>
@@ -32,7 +33,13 @@
         />
         <clr-icon class="overlay-icon" *ngIf="allowRemove" shape="trash" size="36" (click)="onRemoveClick()"></clr-icon>
         <clr-icon class="overlay-icon" *ngIf="allowPreview" shape="eye" size="36" (click)="onPreviewClick()"></clr-icon>
-        <clr-icon class="overlay-icon" *ngIf="isSrcData && allowCrop" shape="scissors" size="36" (click)="onCropOn()"></clr-icon>
+        <clr-icon
+            class="overlay-icon"
+            *ngIf="isSrcData && allowCrop"
+            shape="scissors"
+            size="36"
+            (click)="onCropOn()"
+        ></clr-icon>
         <ng-content select="[last-button]"></ng-content>
     </ng-container>
     <ng-template #processingTmpl> <span class="spinner"> Processing... </span> </ng-template>

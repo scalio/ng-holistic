@@ -68,12 +68,12 @@ export class HlcClrTextComponent implements OnInit, ControlValueAccessor, TextVa
     get counterStyle() {
         if (isNil(this.leftCounter)) {
             return null;
-        } else if (this.leftCounter <= 0) {
+        } else if (this.leftCounter < 0) {
             return 'text-counter-danger';
         } else if (
             !isNil(this.warningLimit) &&
             !isNil(this.maxLength) &&
-            this.warningLimit >= this.leftCounter
+            this.warningLimit > this.leftCounter
         ) {
             return 'text-counter-warning';
         }

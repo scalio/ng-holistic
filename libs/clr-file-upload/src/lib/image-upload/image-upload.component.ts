@@ -10,7 +10,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
+import { HlcClrImageComponent, ImageState, ImageUtilsService } from '@ng-holistic/clr-common';
 import { finalize } from 'rxjs/operators';
 import { HlcClrFileUploadComponent, RemoveFileFun, UploadFileFun } from '../file-upload/file-upload.component';
 import { isFileInstance } from '../is-file-instance';
@@ -29,6 +29,7 @@ import { isFileInstance } from '../is-file-instance';
     ]
 })
 export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor {
+    isCropOn = false;
     /**
      * If this function is not provided, control value will be changed immmediately after new file is added,
      * so in value could be both `domain` files and `raw` just uploaded files.
@@ -47,13 +48,17 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
     @Input() allowUpload = true;
     @Input() allowRemove = true;
     @Input() allowPreview = true;
-    @Input() allowCrop = true;
     @Input() state: ImageState | undefined;
     @Input() src: string | undefined;
     @Input() emptySrc: string;
     @Input() title: string;
     @Input() height: number;
     @Input() width: number;
+    @Input() allowCrop = true;
+    @Input() acceptWithAspectRatioOnly = false;
+    @Input() aspectRatio = 1;
+    @Input() maintainAspectRatio = false;
+    @Input() alignImage: 'center' | 'left' = 'center';
     @Input() set value(val: string | File | null) {
         this._value = val;
         if (typeof val === 'string') {
@@ -72,6 +77,8 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
     // @ts-ignore
     @ViewChild(HlcClrFileUploadComponent, { static: false }) fileUploadComponent: HlcClrFileUploadComponent;
+    // @ts-ignore
+    @ViewChild(HlcClrImageComponent, { static: false }) imageComponent: HlcClrImageComponent;
     processing = false;
 
     private _value: string | File | null;
@@ -80,7 +87,9 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
 
     constructor(private readonly cdr: ChangeDetectorRef, private readonly imageUtilsService: ImageUtilsService) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.isCropOn = this.acceptWithAspectRatioOnly;
+    }
 
     async onFilesChanged(files: any[]) {
         const file = files[0];
@@ -93,6 +102,9 @@ export class HlcClrImageUploadComponent implements OnInit, ControlValueAccessor 
             const fileSrc = await this.imageUtilsService.encodeFile64(file);
             this.src = fileSrc;
             this.value = file;
+            if (this.allowCrop && this.acceptWithAspectRatioOnly) {
+                this.imageComponent.onCropOn();
+            }
             this.cdr.detectChanges();
             this.propagateChange(this._value);
         } else {

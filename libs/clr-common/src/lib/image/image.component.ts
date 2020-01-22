@@ -13,11 +13,11 @@ export type ImageState = 'ready' | 'loading' | 'empty';
 export class HlcClrImageComponent implements OnInit {
     static instancesCount = 0;
     instanceId: string;
-    croppedImage = '';
-    isCropOn = false;
+    croppedImage = '';   
+    isCropOn = false; 
 
     constructor(private readonly filePreviewOverlay: HlcFilePreviewOverlayService) {}
-
+    
     @Input() processing = false;
     @Input() allowUpload = true;
     @Input() allowRemove = true;
@@ -29,6 +29,11 @@ export class HlcClrImageComponent implements OnInit {
     @Input() title: string;
     @Input() height: number;
     @Input() width: number;
+    
+    @Input() allowCancelCrop = false;
+    @Input() aspectRatio = 1;
+    @Input() maintainAspectRatio = false;
+    @Input() alignImage: 'center' | 'left' = 'center';
 
     @Output() click = new EventEmitter();
     @Output() removeClick = new EventEmitter();
