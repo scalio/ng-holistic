@@ -18,6 +18,7 @@ export class HlcClrImageComponent implements OnInit {
 
     constructor(private readonly filePreviewOverlay: HlcFilePreviewOverlayService) {}
     
+    @Input() accept: string;
     @Input() processing = false;
     @Input() allowUpload = true;
     @Input() allowRemove = true;

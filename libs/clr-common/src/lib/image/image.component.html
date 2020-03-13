@@ -27,7 +27,7 @@
             class="file"
             [id]="instanceId"
             type="file"
-            accept=".jpg, .jpeg, .png, .gif"
+            [accept]="accept || '.jpg, .jpeg, .png, .gif'"
             [multiple]="false"
             (change)="onUploadFile($event)"
         />
