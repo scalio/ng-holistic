@@ -148,7 +148,7 @@
     "tsickle": "0.38.1",
     "tslib": "^1.11.1",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3",
+    "typescript": "~3.7.5",
     "wallaby-webpack": "^3.9.15",
     "webpack-bundle-analyzer": "^3.6.1"
   }
