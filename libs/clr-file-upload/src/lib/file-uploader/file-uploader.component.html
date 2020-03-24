@@ -2,38 +2,40 @@
     <ng-container *ngIf="accept; else acceptAll">{{ labels.acceptFilesLabel }} {{ accept }}</ng-container>
     <ng-template #acceptAll> &nbsp; </ng-template>
 </span>
-<file-drop
+<ngx-file-drop
     customstyle="file-drop"
     (onFileDrop)="onFileDrop($event)"
     (onFileLeave)="onFileLeave($event)"
     (onFileOver)="onFileOver($event)"
 >
-    <div class="clr-break-row">
-        <div class="clr-col">
-            <h5 class="file-drop__title">{{ _dragLabel }}</h5>
-        </div>
-        <div class="clr-break-row"></div>
-        <div class="clr-col">
-            <div class="file-drop__separator">
-                <span>{{ labels.orLabel }}</span>
+    <ng-template ngx-file-drop-content-tmp>
+        <div class="clr-break-row">
+            <div class="clr-col">
+                <h5 class="file-drop__title">{{ _dragLabel }}</h5>
+            </div>
+            <div class="clr-break-row"></div>
+            <div class="clr-col">
+                <div class="file-drop__separator">
+                    <span>{{ labels.orLabel }}</span>
+                </div>
+            </div>
+            <div class="clr-break-row"></div>
+            <div class="clr-col">
+                <label class="btn btn-outline" [ngClass]="{ disabled: disabled }" [for]="fileUploaderName">
+                    <clr-icon shape="upload"></clr-icon>
+                    {{ _clickForUploadLabel }}
+                </label>
+
+                <input
+                    class="file"
+                    [id]="fileUploaderName"
+                    type="file"
+                    [accept]="accept"
+                    [multiple]="!single"
+                    [disabled]="disabled"
+                    (change)="onFileChange($event)"
+                />
             </div>
         </div>
-        <div class="clr-break-row"></div>
-        <div class="clr-col">
-            <label class="btn btn-outline" [ngClass]="{ disabled: disabled }" [for]="fileUploaderName">
-                <clr-icon shape="upload"></clr-icon>
-                {{ _clickForUploadLabel }}
-            </label>
-
-            <input
-                class="file"
-                [id]="fileUploaderName"
-                type="file"
-                [accept]="accept"
-                [multiple]="!single"
-                [disabled]="disabled"
-                (change)="onFileChange($event)"
-            />
-        </div>
-    </div>
-</file-drop>
+    </ng-template>
+</ngx-file-drop>

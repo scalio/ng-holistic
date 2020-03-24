@@ -8,7 +8,7 @@ import {
     Optional,
     Output
 } from '@angular/core';
-import { UploadEvent } from 'ngx-file-drop';
+// import { UploadEvent } from 'ngx-file-drop';
 import { FileUploaderConfig, FileUploaderLabels, HLC_CLR_FILE_UPLOADER_CONFIG } from './file-uploader.config';
 
 const defaultLabels: FileUploaderLabels = {
@@ -67,7 +67,7 @@ export class HlcClrFileUploaderComponent implements OnInit {
         this.addFiles(files);
     }
 
-    async onFileDrop(event: UploadEvent) {
+    async onFileDrop(event: any) {
         const res = Array.prototype.slice.call(event.files, 0);
         if (!res || res.length === 0) {
             return;

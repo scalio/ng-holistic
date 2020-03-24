@@ -1,15 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/clr-forms-sandbox",
-    "types": []
-  },
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts",
-    "karma.conf.ts"
-  ],
-  "include": [
-    "**/*.ts"
-  ]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/out-tsc/apps/clr-forms-sandbox",
+        "types": []
+    },
+    "exclude": ["src/test.ts", "**/*.spec.ts", "karma.conf.ts"],
+    "include": ["src/**/*.d.ts"],
+    "files": ["src/main.ts", "src/polyfills.ts"]
 }
