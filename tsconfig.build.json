@@ -11,5 +11,8 @@
             "@ng-holistic/clr-wizard": ["dist/libs/clr-wizard"],
             "@ng-holistic/typeahead": ["dist/libs/typeahead"]
         }
+    },
+    "angularCompilerOptions": {
+        "enableIvy": false
     }
 }

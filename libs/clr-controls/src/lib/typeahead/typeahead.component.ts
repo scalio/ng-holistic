@@ -43,7 +43,7 @@ export class HlcClrTypeaheadComponent implements OnInit, ControlValueAccessor {
     valueChange = new EventEmitter<any>();
 
     @Output()
-    addNew = new EventEmitter<string>();
+    addNew = new EventEmitter<any>();
 
     //@ts-ignore
     @ViewChild('input', { static: false })

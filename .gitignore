@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 .ionide/
 .vscode/settings.json
+__ivy_ngcc__
