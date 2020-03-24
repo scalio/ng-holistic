@@ -8,12 +8,12 @@ import {
     HlcFormModule,
     HLC_FIELDS_LAYOUT_MAP,
     HLC_FORM_FIELD_WRAPPER,
-    HLC_GROUPS_LAYOUT
+    HLC_GROUPS_LAYOUT,
 } from '@ng-holistic/forms';
 import {
     clrFieldsLayoutComponents,
     clrFieldsLayoutMap,
-    clrFieldsLayoutModules
+    clrFieldsLayoutModules,
 } from '../fields-layout/fields-layout-map';
 import { GroupLayoutModule } from '../group-layout/group-layout.module';
 import { clrGroupLayoutsMap } from '../group-layouts-map';
@@ -31,11 +31,11 @@ import { HlcClrFormComponent } from './form.component';
         GroupLayoutModule,
         HlcClrInputContainerModule,
         HlcHotKeysModule,
-        ...clrFieldsLayoutModules
+        ...clrFieldsLayoutModules,
     ],
     declarations: [HlcClrFormComponent],
     exports: [HlcClrFormComponent, HlcFieldsLayoutModule],
-    entryComponents: clrFieldsLayoutComponents
+    entryComponents: clrFieldsLayoutComponents,
 })
 export class HlcClrFormModule {
     static forRoot(
@@ -49,29 +49,29 @@ export class HlcClrFormModule {
                 {
                     provide: HLC_FIELDS_LAYOUT_MAP,
                     multi: true,
-                    useValue: fieldsLayoutMap
+                    useValue: fieldsLayoutMap,
                 },
                 {
                     provide: HLC_FIELDS_LAYOUT_MAP,
                     multi: true,
-                    useValue: clrFieldsLayoutMap
+                    useValue: clrFieldsLayoutMap,
                 },
                 {
                     provide: HLC_GROUPS_LAYOUT,
                     multi: true,
-                    useValue: clrGroupLayoutsMap
+                    useValue: clrGroupLayoutsMap,
                 },
                 {
                     provide: HLC_GROUPS_LAYOUT,
                     multi: true,
-                    useValue: groupsLayoutMap
+                    useValue: groupsLayoutMap,
                 },
                 {
                     provide: HLC_FORM_FIELD_WRAPPER,
-                    useValue: inputContainer || HlcClrInputContainerComponent
+                    useValue: inputContainer || HlcClrInputContainerComponent,
                 },
-                ...(HlcHotKeysModule.forRoot().providers || [])
-            ]
+                ...(HlcHotKeysModule.forRoot().providers || []),
+            ],
         };
     }
 }

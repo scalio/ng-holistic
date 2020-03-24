@@ -8,7 +8,7 @@ import {
     HlcClrFileUploadComponent,
     HlcClrFileUploadModule,
     HlcClrImageUploadComponent,
-    HlcClrImageUploadModule
+    HlcClrImageUploadModule,
 } from '@ng-holistic/clr-file-upload';
 import { HlcClrFormModule } from '@ng-holistic/clr-forms';
 import { HlcNgSelectComponent, HlcNgSelectModule } from '@ng-holistic/ng-select';
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, routes } from './app.routing.module';
 import { hlcConfigProviders } from './hlc.config';
 import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,22 +31,23 @@ import { HlcClrRichTextComponent, HlcClrRichTextModule } from './shared';
             ImageUploadField: HlcClrImageUploadComponent,
             FileUploadField: HlcClrFileUploadComponent,
             DocumentUploadField: HlcClrDocumentUploadComponent,
-            NgSelectField: HlcNgSelectComponent
+            NgSelectField: HlcNgSelectComponent,
         }),
         HlcClrRichTextModule,
         HlcClrImageUploadModule,
         HlcClrFileUploadModule,
         HlcClrDocumentUploadModule,
-        HlcNgSelectModule
+        HlcNgSelectModule,
+        QuillModule.forRoot(),
     ],
     bootstrap: [AppComponent],
     entryComponents: [
         HlcClrRichTextComponent,
         HlcClrImageUploadComponent,
         HlcClrDocumentUploadComponent,
-        HlcNgSelectComponent
+        HlcNgSelectComponent,
     ],
-    providers: [...hlcConfigProviders]
+    providers: [...hlcConfigProviders],
 })
 export class AppModule {
     constructor() {}

@@ -12,3 +12,4 @@ export * from './lib/input-container/validation-errors/validation-errors.compone
 export * from './lib/models/form-fields.types';
 export * from './lib/models/form-layout.types';
 export * from './lib/tabs-layout/tabs-layout.config';
+export * from './lib/input-container/input-error/input-error.component';

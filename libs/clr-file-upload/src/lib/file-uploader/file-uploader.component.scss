@@ -26,7 +26,7 @@ $border: #ccc;
 }
 
 // file-drop
-::ng-deep.file-drop {
+::ng-deep.ngx-file-drop {
     input[type='file'] {
         display: none;
     }
@@ -34,7 +34,7 @@ $border: #ccc;
 }
 
 // file-drop-over
-::ng-deep.file-drop.over {
+::ng-deep.ngx-file-drop.over {
     background: $gray-lighter !important;
     border-color: $gray-dark-midtone;
     border-width: 1px;
@@ -42,13 +42,13 @@ $border: #ccc;
 }
 
 // file-drop selected
-::ng-deep.file-drop__selected {
+::ng-deep.ngx-file-drop__selected {
     margin-bottom: ($clr-grid-gutter-width / 4);
 }
 
 // file-drop content
 ::ng-deep.content {
-    .file-drop & {
+    .ngx-file-drop & {
         flex-direction: column;
         padding: $clr-grid-gutter-width 0;
         height: auto !important;
@@ -57,12 +57,12 @@ $border: #ccc;
 }
 
 // file-drop title
-::ng-deep.file-drop__title {
+::ng-deep.ngx-file-drop__title {
     margin-bottom: 0;
 }
 
 // file-drop separator
-::ng-deep.file-drop__separator {
+::ng-deep.ngx-file-drop__separator {
     position: relative;
     font-size: $clr-typography-smalltext;
     font-weight: $clr-typography-sboldfont;
