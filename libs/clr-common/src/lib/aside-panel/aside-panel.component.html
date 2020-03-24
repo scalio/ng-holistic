@@ -1,4 +1,4 @@
-<ng-template hlcAside (backdropClicked)="close.emit()">
+<ng-template hlcAside #asideContent (backdropClicked)="close.emit()">
     <div class="aside-header">
         <button aria-label="Close" class="close" type="button" (click)="close.emit()">
             <clr-icon aria-hidden="true" shape="close"></clr-icon>

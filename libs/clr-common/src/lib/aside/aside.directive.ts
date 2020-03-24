@@ -1,14 +1,15 @@
 import {
+    AfterContentInit,
+    AfterViewInit,
+    ChangeDetectorRef,
     ContentChild,
     Directive,
     EventEmitter,
     Input,
     OnDestroy,
-    OnInit,
     Output,
     TemplateRef,
     ViewContainerRef,
-    ChangeDetectorRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HlcAsideService } from './aside.service';
@@ -28,13 +29,14 @@ import { HlcAsideService } from './aside.service';
 @Directive({
     selector: '[hlcAside]',
 })
-export class HlcAsideDirective implements OnInit, OnDestroy {
+export class HlcAsideDirective implements AfterViewInit, OnDestroy, AfterContentInit {
     private bkpClickedSub: Subscription | null;
 
     constructor(
+        public templateRef: TemplateRef<any>,
         private readonly asideService: HlcAsideService,
         private readonly viewContainerRef: ViewContainerRef,
-        private readonly cdr: ChangeDetectorRef,
+        private readonly cdr: ChangeDetectorRef
     ) {}
 
     @Input()
@@ -46,16 +48,21 @@ export class HlcAsideDirective implements OnInit, OnDestroy {
     @Output()
     backdropClicked = new EventEmitter();
 
-    //@ts-ignore
-    @ContentChild(TemplateRef, { static: true })
+    @ContentChild('asideContent')
     content: TemplateRef<any>;
 
-    ngOnInit() {
+    ngAfterContentInit() {
+        console.log('1111' + this.content, this.templateRef);
+    }
+
+    ngAfterViewInit() {
+        console.log('!!!' + this.content);
+
         const params = {
             position: this.position ? this.position : 'right',
         };
 
-        const bkpClicks$ = this.asideService.showTemplate(this.content, this.viewContainerRef, params);
+        const bkpClicks$ = this.asideService.showTemplate(this.templateRef, this.viewContainerRef, params);
 
         if (bkpClicks$) {
             this.bkpClickedSub = bkpClicks$.subscribe(() => {
