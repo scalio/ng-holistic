@@ -11,7 +11,7 @@ import {
     QueryList,
     ViewChild,
     ViewChildren,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import {
     ExtractFieldsFun,
@@ -19,21 +19,20 @@ import {
     FormGroupProvider,
     HLC_FORM_EXTRACT_FIELDS,
     HLC_FORM_GROUP_PROVIDER,
-    IFormGroup
+    IFormGroup,
 } from '@ng-holistic/forms';
 import * as R from 'ramda';
 import { merge, Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { HlcFormKeysManagerService } from '../form/utils/form-keys-manager.service';
 import { HLC_CLR_TABS_LAYOUT_CONFIG, TabsLayoutConfig } from './tabs-layout.config';
 
 @Component({
     selector: 'hlc-tab-layout',
     template: '<div class="clr-row"><div class="clr-col-sm-10"><ng-container #vc></ng-container></div></div>',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabLayoutComponent {
-
     //@ts-ignore
     @ViewChild('vc', { read: ViewContainerRef, static: false })
     vc: ViewContainerRef;
@@ -45,7 +44,7 @@ export class TabLayoutComponent {
     selector: 'hlc-clr-tabs-layout',
     templateUrl: './tabs-layout.component.html',
     styleUrls: ['./tabs-layout.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject();
@@ -74,8 +73,8 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // Set first tab as active, then current active is hiding
         const hide$ = this.$content
-            .map((tab, i) => tab.$hidden && tab.$hidden.pipe(map(f => [i, f])))
-            .filter(f => !!f) as Observable<[number, boolean]>[];
+            .map((tab, i) => tab.$hidden && tab.$hidden.pipe(map((f) => [i, f])))
+            .filter((f) => !!f) as Observable<[number, boolean]>[];
 
         merge(...hide$)
             .pipe(takeUntil(this.destroy$))
@@ -83,6 +82,12 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
                 if (i === this.activeTab && f) {
                     this.activeTab = 0;
                 }
+            });
+
+        this.formGroupProvider.form.valueChanges
+            .pipe(takeUntil(this.destroy$), distinctUntilChanged(R.equals))
+            .subscribe(() => {
+                this.cdr.markForCheck();
             });
     }
 
@@ -105,11 +110,12 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
     tabHasErrors(tab: IFormGroup<any, any>) {
         const tabFields = this.extractFieldsFun(tab);
         const form = this.formGroupProvider.form;
-        return R.pipe(
+        const res = R.pipe(
             R.pluck('id'),
-            R.map(id => form.controls[id as string]),
-            R.any(ctr => !!ctr.errors)
+            R.map((id) => form.controls[id as string]),
+            R.any((ctr) => !!ctr.errors)
         )(tabFields);
+        return res;
     }
 
     // TODO: Move to key manager + focus by tab number
@@ -137,9 +143,7 @@ export class HlcClrTabsLayoutComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             focusFirstInput(
                 this.elementRef,
-                `[aria-index="${this.activeTab}"] .hlc-form-input input, [aria-index="${
-                    this.activeTab
-                }"] .hlc-form-input select`
+                `[aria-index="${this.activeTab}"] .hlc-form-input input, [aria-index="${this.activeTab}"] .hlc-form-input select`
             );
         }, 0);
     }
