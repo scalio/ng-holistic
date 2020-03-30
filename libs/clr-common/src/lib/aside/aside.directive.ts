@@ -48,16 +48,12 @@ export class HlcAsideDirective implements AfterViewInit, OnDestroy, AfterContent
     @Output()
     backdropClicked = new EventEmitter();
 
-    @ContentChild('asideContent')
+    @ContentChild(TemplateRef, { static: true })
     content: TemplateRef<any>;
 
-    ngAfterContentInit() {
-        console.log('1111' + this.content, this.templateRef);
-    }
+    ngAfterContentInit() {}
 
     ngAfterViewInit() {
-        console.log('!!!' + this.content);
-
         const params = {
             position: this.position ? this.position : 'right',
         };
