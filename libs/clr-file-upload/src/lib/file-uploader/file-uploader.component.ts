@@ -68,7 +68,7 @@ export class HlcClrFileUploaderComponent implements OnInit {
     }
 
     async onFileDrop(event: any) {
-        const res = Array.prototype.slice.call(event.files, 0);
+        const res = event; // Array.prototype.slice.call(event.files, 0);
         if (!res || res.length === 0) {
             return;
         }
