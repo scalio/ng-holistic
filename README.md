@@ -15,7 +15,7 @@
 
 ## Data driven forms
 
-[Demo App](https://forms.ng-holistic.com/)
+[Demo App](https://ngholistic.z6.web.core.windows.net/)
 
 ### Overview
 
@@ -37,7 +37,7 @@ These should support following scenarios:
 
 ## Data driven lists
 
-[Demo App](https://lists.ng-holistic.com)
+[Demo App](https://ngholistic.z6.web.core.windows.net/)
 
 
 ### Overview
@@ -46,7 +46,7 @@ The target here is to create angular lists declaratively.
 
 ## Common
 
-[Demo App](https://common.ng-holistic.com/)
+[Demo App](https://ngholistic.z6.web.core.windows.net/)
 
 
 ## Author
