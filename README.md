@@ -15,8 +15,6 @@
 
 ## Data driven forms
 
-[Demo App](https://ngholistic.z6.web.core.windows.net/)
-
 ### Overview
 
 The target here is to create angular forms declaratively now matter how simple or complex they are.
@@ -37,17 +35,12 @@ These should support following scenarios:
 
 ## Data driven lists
 
-[Demo App](https://ngholistic.z6.web.core.windows.net/)
-
 
 ### Overview
 
 The target here is to create angular lists declaratively.
 
 ## Common
-
-[Demo App](https://ngholistic.z6.web.core.windows.net/)
-
 
 ## Author
 Created by [@baio](https://github.com/baio/) @ [Scalio](https://scal.io/)
